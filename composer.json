@@ -1,0 +1,51 @@
+{
+  "name": "pdir/maklermodul-bundle",
+  "type":"contao-bundle",
+  "description": "maklermodul for Contao 4",
+  "keywords":["contao","real estate","open immo", "immobilien","import","maklersoftware"],
+  "homepage": "https://www.maklermodul.de",
+  "license": "paid extension - domain licence available",
+  "authors": [
+    {
+      "name": "Webdesign für Dresden",
+      "homepage": "https://pdir.de",
+      "email" : "develop@pdir.de",
+      "role" : "Developer"
+    },
+    {
+      "name": "Immobilien Erweiterung für Contao",
+      "homepage": "https://www.maklermodul.de",
+      "email" : "info@maklermodul.de",
+      "role" : "Developer"
+    }
+  ],
+  "support" : {
+    "email" : "develop@pdir.de",
+    "issues" : "https://github.com/pdir/maklermodul-bundle/issues",
+    "source" : "https://github.com/pdir/maklermodul-bundle"
+  },
+  "require": {
+    "php": ">=7.1.0",
+    "contao/core-bundle": "^4.4"
+  },
+  "conflict": {
+    "contao/core": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pdir\\MaklermodulBundle\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManagerPlugin"
+  }
+}

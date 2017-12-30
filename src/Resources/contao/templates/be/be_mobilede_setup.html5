@@ -1,0 +1,93 @@
+<div class="tl_listing_container">
+  <div id="pdir" class="be_maklermodul_setup clr">
+    <h1 id="tl_welcome">Maklermodul (Version: <?= $this->version ?>)</h1>
+    <div class="intro">
+      <div class="right">
+        <a href="https://www.maklermodul.de" target="_blank"><img
+          src="https://pdir.de/files/01_inhalte/bilder/mobilemodul_logo_267x45px.png"
+          alt="mobile.de Inserate für Contao" width="267" height="45" class="logo"></a>
+        <p>Das Maklermodul für Contao ist ein Produkt der <a href="http://www.pdir.de/" target="_blank">pdir
+          / digital agentur</a></p>
+        <h2>Interessante Links</h2>
+        <ul class="link-list">
+        <li><a href="https://docs.pdir.de/" target="_blank"
+                    style="text-decoration: underline;">Dokumentation</a></li>
+        <li><a href="https://docs.maklermodul.de" target="_blank"
+                    style="text-decoration: underline;">Demo</a></li>
+        <li><a href="https://github.com/pdir/maklermodul-bundle/issues" target="_blank"
+                    style="text-decoration: underline;">Probleme melden</a></li>
+        <li><a href="https://www.maklermodul.de" target="_blank"
+              style="text-decoration: underline;">Mehr zur Erweiterung bei pdir</a></li>
+        </ul>
+      </div>
+      <div class="left">
+        <h2>Willkommen bei Maklermodul für Contao</h2>
+        <p>add DESC here</p>
+        <p>Besuchen Sie die offizielle <a href="https://www.maklermodul.de"
+                                          target="_blank">Maklermodul Website</a> für aktuelle News und
+          Konfigurationsanleitungen.</p>
+        <p><strong>Preis</strong><br>
+          Domainlizenz, einmalig 350€ zzgl. MwSt.<br>
+          Update/Support Abonnement 150€/Jahr zzgl. MwSt.*&sup2;
+        </p>
+        <p>Ihr Team der pdir / digital agentur</p>
+      </div>
+      <div class="clr"></div>
+    </div>
+    <hr>
+    <div class="tools">
+
+      <?php if( is_array($this->message) ): ?>
+        <p class="tl_<?= $this->message[1] ?>"><?= $this->message[0] ?></p>
+      <?php endif; ?>
+
+      <h2>Tools</h2>
+      <?php if($this->extMode == 'DEMO'): ?>
+        <div class="tl_info">Achtung! Das Modul läuft im Demo Modus.</div>
+      <?php endif; ?>
+      <div class="left">
+        <div class="button">
+          <a href="/contao/main.php?do=maklermodulSetup&act=download">
+            <div class="kreis">
+              <img src="bundles/pdirmaklermodul/img/icon_download.png"
+               alt="Download Vollversion" width="60" height="60"/>
+            </div>
+            <br/>Download Vollversion
+          </a>
+        </div>
+        <div class="button">
+          <a href="mailto:info@maklermodul.de?subject=Maklermodul Erweiterung bestellen&body=<?= $this->emailBody ?>">
+            <div class="kreis">
+              <img src="bundles/pdirmaklermodul/img/icon_buy.png"
+                alt="Lizenz per Email bestellen" width="60" height="60"/></div>
+            <br/>Lizenz per Email bestellen
+          </a>
+        </div>
+      </div>
+      <div class="right">
+        Debug Infos<br>
+        <h2 class="api-status">API Status <span id="pdirApiStatus" class="blink"></span></h2>
+        <div class="debug-info">
+          Modus: <?= $this->extModeTxt ?><br>
+          IP: <?= $this->ip ?><br>
+          Hostname: <?= $this->hostname ?><br>
+          Domain: <?= $this->domain ?><br>
+        </div>
+      </div>
+      <div class="clr"></div>
+    </div>
+    <hr>
+    <div class="feed">
+      <h2>DevLog</h2>
+      <div id="devlog" class="devlog"></div>
+      <p><a href="https://pdir.de/devlog.html" target="_blank"> [ Alle lesen ] </a></div></p>
+    </div>
+    <div class="tools">
+      <p><small>add desc here
+        &sup2; Updates sind solange kostenlos, bis die Version einen kompletten Versionssprung (Upgrade) macht.
+        Hast du beispielsweise Version 1.1 sind alle Updates in der Version 1.x für dich kostenlos, erst mit Upgrade auf Version 2.0 oder höher ist ein vergünstigter Upgrade Preis (wir nennen Abonnement bzw. Subscription) zu zahlen.
+        <a href="https://www.maklermodul.de">Mehr Infos</a>.
+      </small></p>
+    </div>
+  </div>
+</div>

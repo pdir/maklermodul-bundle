@@ -1,0 +1,23 @@
+{
+  "name": "pdir/maklermodul-bundle",
+  "version": "0.0.1",
+  "description": "maklermodul for Contao 4",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pdir/maklermodul-bundle.git"
+  },
+  "keywords": [
+    "Contao",
+    "real estate",
+    "open immo",
+    "immobillien",
+    "import",
+    "maklersoftware"
+  ],
+  "author": "pdir / digital agentur",
+  "license": "paid extension - domain licence available",
+  "bugs": {
+    "url": "https://github.com/pdir/maklermodul-bundle/issues"
+  }
+}
