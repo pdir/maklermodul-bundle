@@ -204,7 +204,7 @@ class Attachment extends FieldRenderer {
     }
 
     private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode) {
-        return $this->imageViewHelper->get($orgPath, $maxWidth, $maxHeight, $mode);
+        return TL_ROOT . \Image::get($orgPath, $maxWidth, $maxHeight, $mode) ;
     }
 
     private function getThumbnailTemplate($resized = false) {
