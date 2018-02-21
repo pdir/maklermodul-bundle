@@ -24,6 +24,7 @@ use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
+use Pdir\MaklermodulBundle\Util\Helper;
 
 /**
  * Class DetailView
@@ -95,11 +96,14 @@ class DetailView extends \Module
         //$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
         //$this->Template->referer = 'javascript:history.go(-1)';
 
-        print_r("<br>Alias: ".$this->alias."<br>");
-
         if ($this->alias == "") {
             $this->Template->objectData = null;
             return;
+        }
+
+        if($this->makler_useModuleDetailCss)
+        {
+            $GLOBALS['TL_CSS'][] = Helper::assetFolder . '/css/estate-detail.scss||static';
         }
 
         $this->Template->estate = $this->createFieldRendererFactory($this->alias);

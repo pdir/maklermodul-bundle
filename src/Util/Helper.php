@@ -19,6 +19,7 @@
  */
 namespace Pdir\MaklermodulBundle\Util;
 
+
 class Helper extends \Frontend
 {
     /**
@@ -37,6 +38,12 @@ class Helper extends \Frontend
      * @var string
      */
     static $apiUrl = 'https://pdir.de/api/maklermodul/';
+
+    /**
+     * API Url
+     * @var string
+     */
+    const assetFolder = 'bundles/pdirmaklermodul';
 
     public function getAds($customerID, $apiUsr, $apiPwd)
     {

@@ -252,6 +252,14 @@
         <source>Use module css in list view.</source>
         <target>Bindet das moduleigene CSS in das Template ein.</target>
       </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleDetailCss.0">
+        <source>include CSS</source>
+        <target>CSS einbinden</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleDetailCss.1">
+        <source>Use module css in list view.</source>
+        <target>Bindet das moduleigene CSS in das Template ein.</target>
+      </trans-unit>
       <trans-unit id="tl_module.makler_useModuleJs.0">
         <source>include JS</source>
         <target>Javascript einbinden</target>

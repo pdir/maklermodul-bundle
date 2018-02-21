@@ -187,6 +187,12 @@
       <trans-unit id="tl_module.makler_useModuleCss.1">
         <source>Use module css in list view.</source>
       </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleDetailCss.0">
+        <source>include CSS</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleDetailCss.1">
+        <source>Use module css in list view.</source>
+      </trans-unit>
       <trans-unit id="tl_module.makler_useModuleJs.0">
         <source>include JS</source>
       </trans-unit>
@@ -229,7 +235,7 @@
       	<source>show placeholder image (only list view)</source>
         <target>show placeholder image (only list view)</target>
       </trans-unit>
-    <trans-unit id="tl_module.makler_detailViewPlaceholder.0">
+      <trans-unit id="tl_module.makler_detailViewPlaceholder.0">
       	<source>placeholder image</source>
         <target>placeholder image</target>
       </trans-unit>

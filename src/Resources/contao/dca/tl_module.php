@@ -31,7 +31,8 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
 	= '{title_legend},name,headline,type;'
 	. '{template_legend},immo_listPage,immo_readerTemplate,makler_gmapApiKey,makler_detailViewPlaceholder;'
-	. '{image_legend},imgSize;';
+	. '{image_legend},imgSize;'
+    . '{option_legend},makler_useModuleDetailCss';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
 	= '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder;'
@@ -111,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_filterListPage'] = array
     'exclude'                 => true,
     'inputType'               => 'pageTree',
     'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50 autoheight'),
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
@@ -326,6 +327,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleCss'] = array
 		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
 		'sql'                     =>  "int(1) NOT NULL default '1'"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleDetailCss'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_useModuleDetailCss'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'default'                  => true,
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
+    'sql'                     =>  "int(1) NOT NULL default '1'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleJs'] = array

@@ -1,4 +1,3 @@
-<?php $GLOBALS['TL_CSS']['estate_detail'] = 'system/modules/makler_modul_mplus/assets/css/estate-detail.scss|static'; ?>
 <?php
     if (!is_object($this->estate)) {
 echo "<h1>Makler Modul M+ - Detailansicht</h1>";

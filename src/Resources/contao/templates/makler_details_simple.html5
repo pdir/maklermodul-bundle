@@ -1,4 +1,3 @@
-<?php $GLOBALS['TL_CSS']['estate_detail'] = 'system/modules/makler_modul_mplus/assets/css/estate-detail.scss|static'; ?>
 <?php
     if (!is_object($this->estate)) {
 echo "<h1>Makler Modul M+ - Detailansicht</h1>";
@@ -131,7 +130,7 @@ else:
             </div>
             <div class="dlh_googlemap block" id="dlh_googlemap_5" style="width:100%;height:500px;"></div>
 
-            <script src="http://maps.google.com/maps/api/js?key=<?= $this->gmapApiKey ?>&language={{page::language}}&amp;sensor=false"></script>
+            <script src="https://maps.google.com/maps/api/js?key=<?= $this->gmapApiKey ?>&language={{page::language}}&amp;sensor=false"></script>
             <script>
                 var geocoder = new google.maps.Geocoder();
                 geocodeAddress(geocoder);
