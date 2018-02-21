@@ -23,6 +23,7 @@ use Contao\CoreBundle\Exception\PageNotFoundException;
 use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 
 /**
  * Class DetailView
@@ -71,7 +72,13 @@ class DetailView extends \Module
             return $objTemplate->parse();
         }
 
-        echo "<br>TEST2!!!";
+        // Set auto item
+        if (!isset($_GET['estate']) && \Config::get('useAutoItem') && isset($_GET['expose'])) {
+            \Input::setGet('estate', \Input::get('expose'));
+        }
+
+        // get alias from auto item
+        $this->alias = \Input::get('estate');
 
         return parent::generate();
     }
@@ -88,14 +95,14 @@ class DetailView extends \Module
         //$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
         //$this->Template->referer = 'javascript:history.go(-1)';
 
-        echo "<br>TEST3!!!";
+        print_r("<br>Alias: ".$this->alias."<br>");
 
-        if (!isset($_GET['objectId'])) {
+        if ($this->alias == "") {
             $this->Template->objectData = null;
             return;
         }
 
-        $this->Template->estate = $this->createFieldRendererFactory($_GET['objectId']);
+        $this->Template->estate = $this->createFieldRendererFactory($this->alias);
         $this->Template->gmapApiKey = ($this->makler_gmapApiKey != '') ? $this->makler_gmapApiKey : '';
         $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? $this->makler_detailViewPlaceholder : "system/modules/makler_modul_mplus/assets/images/platzhalterbild.jpg";
     }
@@ -103,6 +110,7 @@ class DetailView extends \Module
     private function createFieldRendererFactory($objectId) {
         $repository = EstateRepository::getInstance();
         $estate = $repository->findByObjectId($objectId);
+        //print_r($estate);
         return new FieldRendererFactory($estate, $this->getTranslationMap());
     }
 

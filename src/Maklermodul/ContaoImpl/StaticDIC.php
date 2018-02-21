@@ -31,11 +31,6 @@ class StaticDIC {
 
     private static $filterConfig = null;
 
-    public static function getImageViewHelper() {
-        require_once __DIR__ . '/ViewHelper/ImageProxy.php';
-        return new \MaklerModulMplus\ContaoImpl\ViewHelper\ImageProxy();
-    }
-
     public static function getTranslationMap($useCore = true) {
         if (!isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['language_loaded'])) {
             if ($useCore) {

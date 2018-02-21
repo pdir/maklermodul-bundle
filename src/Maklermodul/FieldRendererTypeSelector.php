@@ -62,7 +62,7 @@ class FieldRendererTypeSelector {
     /**
      * Methode für die Rückgabe als Text.
      *
-     * @return \MaklerModulMplus\FieldRenderer\Text
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text
      */
     public function asText() {
         return new Text($this->getKey(), $this->getValue(), $this->translator);
@@ -74,7 +74,7 @@ class FieldRendererTypeSelector {
      * In den Klammern wird der Wert eingetragen, wieviele Nachkommastellen angezeigt werden sollen.
      *
      * @param int $digestCount
-     * @return \MaklerModulMplus\FieldRenderer\Number
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number
      */
     public function asNumber($digestCount = 0) {
         return new Number($this->getKey(), $this->getValue(), $this->translator, $digestCount);
@@ -85,7 +85,7 @@ class FieldRendererTypeSelector {
      *
      * Ausgbeformat dd.mm.yyyy
      *
-     * @return \MaklerModulMplus\FieldRenderer\Date
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Date
      */
     public function asDate() {
         return new Date($this->getKey(), $this->getValue(), $this->translator);
@@ -96,7 +96,7 @@ class FieldRendererTypeSelector {
      *
      * @param $yesValue
      * @param $noValue
-     * @return \MaklerModulMplus\FieldRenderer\Flag
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Flag
      */
     public function asFlag($yesValue = 'true', $noValue = 'false') {
         return new Flag($this->getKey(), $this->getValue(), $this->translator, $yesValue, $noValue);
@@ -105,16 +105,16 @@ class FieldRendererTypeSelector {
     /**
      * Methode für die Rückgabe eines Bildes
      *
-     * @return \MaklerModulMplus\FieldRenderer\Attachment
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment
      */
     public function asAttachment() {
-        return new Attachment($this->getKey(), $this->getValue(), $this->translator, StaticDIC::getImageViewHelper());
+        return new Attachment($this->getKey(), $this->getValue(), $this->translator);
     }
 
     /**
      * Methode für die Rückgabe als Überschrift.
      *
-     * @return \MaklerModulMplus\FieldRenderer\Heading
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading
      */
     public function asHeading($tag = 'div') {
     	return new Heading($this->getKey(), $this->getValue(), $this->translator, $tag);

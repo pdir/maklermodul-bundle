@@ -25,16 +25,13 @@ use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
 class Attachment extends FieldRenderer {
-    private $imageViewHelper;
 
-    public function __construct($key, $value, FieldTranslator $translator, \MaklerModulMplus\ViewHelper\Image $image, $group = 'BILD') {
+    public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD') {
         parent::__construct(
             $key,
             $value,
             $translator
         );
-
-        $this->imageViewHelper = $image;
 
         if($GLOBALS['TL_CONFIG']['websitePath']) $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
 
@@ -184,6 +181,7 @@ class Attachment extends FieldRenderer {
             // @todo make it changeable in the config file
             if($location == 'REMOTE') $url = str_replace(".jpg", "_small.jpg", $url);
             if($location == 'EXTERN') {
+
             	$path = $this->resizeImage($path, $width, $height, $mode);
             	$url = $this->getUrlOfPath($path);
             }
@@ -204,7 +202,7 @@ class Attachment extends FieldRenderer {
     }
 
     private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode) {
-        return TL_ROOT . \Image::get($orgPath, $maxWidth, $maxHeight, $mode) ;
+        return \Image::get('/files/maklermodul/data' . $orgPath, $maxWidth, $maxHeight, $mode) ;
     }
 
     private function getThumbnailTemplate($resized = false) {

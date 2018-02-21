@@ -16,7 +16,7 @@ $GLOBALS['TL_KEYWORDS']=join(',', $matches[0]);
 ?>
 <?php
 // DUMP LIST OF ALL AVAILABLE FIELDS
-// echo "<pre>"; var_dump($this->estate); echo "</pre>";
+#echo "<pre>"; var_dump($this->estate); echo "</pre>";
 if($this->estate->renderer('freitexte.objekttitel')->asText()->value(true) == ''):
 // no objects
 echo $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['noestate'];

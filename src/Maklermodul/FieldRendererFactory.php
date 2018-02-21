@@ -35,7 +35,7 @@ class FieldRendererFactory {
      * das Objekt sein.
      *
      * @param String $key
-     * @return \MaklerModulMplus\FieldRendererTypeSelector
+     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRendererTypeSelector
      */
     public function renderer($key) {
         return new FieldRendererTypeSelector($key, $this->rawValue($key), $this->translationMap);
@@ -50,7 +50,7 @@ class FieldRendererFactory {
      * @return misc
      */
     public function rawValue($key) {
-        if (is_a($this->estateData, '\MaklerModulMplus\Domain\Model\Estate')) {
+        if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
             return $this->estateData->getValueOf($key);
         }
 
@@ -74,7 +74,7 @@ class FieldRendererFactory {
      * @return misc
      */
     public function keyExists($key) {
-    	if (is_a($this->estateData, '\MaklerModulMplus\Domain\Model\Estate')) {
+    	if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
     		return $this->estateData->checkIfKeyExists($key);
     	}
 
@@ -84,7 +84,7 @@ class FieldRendererFactory {
     /**
      * Methode für die Rückgabe eines Arrays mit Bildern
      *
-     * @return \MaklerModulMplus\AttachmentFieldRendererCollection
+     * @return \Pdir\MaklermodulBundle\Maklermodul\AttachmentFieldRendererCollection
      */
     public function attachments() {
         return new AttachmentFieldRendererCollection($this->getFilteredValuesBy('anhaenge'), $this->translationMap);
@@ -94,7 +94,7 @@ class FieldRendererFactory {
         $returnValue = array();
         $estateData = $this->estateData;
 
-        if (is_a($estateData, '\MaklerModulMplus\Domain\Model\Estate')) {
+        if (is_a($estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
             $estateData = $estateData->getFieldsIterator();
         }
         if(!$estateData) return array();
@@ -115,7 +115,7 @@ class FieldRendererFactory {
      * Detailansicht.
      * Achtung diese Funktion nutzt $_SERVER['HTTP_REFERER'], $_SERVER['QUERY_STRING']
      *
-     * @returns \MaklerModulMplus\BackButtonRenderer
+     * @returns \Pdir\MaklermodulBundle\Maklermodul\BackButtonRenderer
      */
     public function backButton() {
         $referer = $_SERVER['HTTP_REFERER'];
@@ -127,7 +127,7 @@ class FieldRendererFactory {
     /**
      * Methode für die Rückgabe der Energiepassangaben
      *
-     * @return \MaklerModulMplus\EnergyPassRenderer
+     * @return \Pdir\MaklermodulBundle\Maklermodul\EnergyPassRenderer
      */
     public function energyPass() {
         return new EnergyPassRenderer($this->getFilteredValuesBy('zustand_angaben'), $this->translationMap,  $this->getFilteredValuesBy('ausstattung'));

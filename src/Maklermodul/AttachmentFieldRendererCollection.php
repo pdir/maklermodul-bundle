@@ -77,7 +77,7 @@ class AttachmentFieldRendererCollection implements \Iterator {
         $this->attachments = array();
 
         foreach ($this->data as $key => $value) {
-            $this->attachments[] = new Attachment($key, $value, $this->translator, StaticDIC::getImageViewHelper());
+            $this->attachments[] = new Attachment($key, $value, $this->translator);
         }
     }
 
@@ -107,7 +107,7 @@ class AttachmentFieldRendererCollection implements \Iterator {
             $value = $iterator->current();
         };
 
-        return new Attachment($key, $value, $this->translator, StaticDIC::getImageViewHelper(), 'TITELBILD');
+        return new Attachment($key, $value, $this->translator, 'TITELBILD');
     }
 
     /**

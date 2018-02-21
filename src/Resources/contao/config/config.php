@@ -59,7 +59,7 @@ $GLOBALS['FE_MOD']['pdirMaklermodul'] = array
 /**
  * auto items
  */
-$GLOBALS['TL_AUTO_ITEM'] = array('estate');
+$GLOBALS['TL_AUTO_ITEM'][] = 'estate';
 
 /**
  * Javascript for Backend
