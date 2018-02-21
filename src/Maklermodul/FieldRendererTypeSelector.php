@@ -1,0 +1,122 @@
+<?php
+
+/**
+ * maklermodul for Contao Open Source CMS
+ *
+ * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ *
+ * @package    maklermodul
+ * @link       https://www.maklermodul.de
+ * @license    pdir license - All-rights-reserved - commercial extension
+ * @author     pdir GmbH <develop@pdir.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * Namespace
+ */
+namespace Pdir\MaklermodulBundle\Maklermodul;
+
+use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment;
+use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Date;
+use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Flag;
+use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading;
+use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number;
+use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text;
+
+class FieldRendererTypeSelector {
+    private $key;
+    private $value;
+
+    /**
+     * @var FieldTranslator
+     */
+    private $translator;
+
+    public function __construct($key, $value, FieldTranslator $translator) {
+        $this->key = $key;
+        $this->value = $value;
+        $this->translator = $translator;
+    }
+
+    /**
+     * Holt den Index eines Wertes.
+     *
+     * @return mixed
+     */
+    public function getKey() {
+        return $this->key;
+    }
+
+    /**
+     * Methode zum holen eines Wertes.
+     *
+     * @return mixed
+     */
+    public function getValue() {
+        return $this->value;
+    }
+
+    /**
+     * Methode für die Rückgabe als Text.
+     *
+     * @return \MaklerModulMplus\FieldRenderer\Text
+     */
+    public function asText() {
+        return new Text($this->getKey(), $this->getValue(), $this->translator);
+    }
+
+    /**
+     * Methode für die Rückgabe von Ganz- und Dezimalzahlen.
+     *
+     * In den Klammern wird der Wert eingetragen, wieviele Nachkommastellen angezeigt werden sollen.
+     *
+     * @param int $digestCount
+     * @return \MaklerModulMplus\FieldRenderer\Number
+     */
+    public function asNumber($digestCount = 0) {
+        return new Number($this->getKey(), $this->getValue(), $this->translator, $digestCount);
+    }
+
+    /**
+     * Methode für die Rückgabe als Datum.
+     *
+     * Ausgbeformat dd.mm.yyyy
+     *
+     * @return \MaklerModulMplus\FieldRenderer\Date
+     */
+    public function asDate() {
+        return new Date($this->getKey(), $this->getValue(), $this->translator);
+    }
+
+    /**
+     * Methode für die Rückgabe von Ja/Nein.
+     *
+     * @param $yesValue
+     * @param $noValue
+     * @return \MaklerModulMplus\FieldRenderer\Flag
+     */
+    public function asFlag($yesValue = 'true', $noValue = 'false') {
+        return new Flag($this->getKey(), $this->getValue(), $this->translator, $yesValue, $noValue);
+    }
+
+    /**
+     * Methode für die Rückgabe eines Bildes
+     *
+     * @return \MaklerModulMplus\FieldRenderer\Attachment
+     */
+    public function asAttachment() {
+        return new Attachment($this->getKey(), $this->getValue(), $this->translator, StaticDIC::getImageViewHelper());
+    }
+
+    /**
+     * Methode für die Rückgabe als Überschrift.
+     *
+     * @return \MaklerModulMplus\FieldRenderer\Heading
+     */
+    public function asHeading($tag = 'div') {
+    	return new Heading($this->getKey(), $this->getValue(), $this->translator, $tag);
+    }
+}

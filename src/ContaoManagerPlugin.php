@@ -1,4 +1,5 @@
 <?php
+
 /**
  * maklermodul for Contao Open Source CMS
  *
@@ -30,7 +31,6 @@ class ContaoManagerPlugin implements BundlePluginInterface
 		return [
 			BundleConfig::create(PdirMaklermodulBundle::class)
 				->setLoadAfter([ContaoCoreBundle::class])
-				->setReplace(['pdirMaklermodul'])
                 ->setReplace(['makler_modul_mplus']),
 		];
 	}

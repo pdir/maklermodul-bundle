@@ -1,0 +1,250 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="system/modules/makler_module_mplus/languages/en/tl_module.php" source-language="en">
+    <body>
+      <trans-unit id="tl_module.field_legend">
+        <source>Fields and Filter</source>
+      </trans-unit>
+      <trans-unit id="tl_module.option_legend">
+        <source>Options</source>
+      </trans-unit>
+
+      <trans-unit id="tl_module.immo_readerPage.0">
+        <source>Estate Reader</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerPage.1">
+        <source>Please select the page with the estate details module.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerTemplate.0">
+        <source>Estate Reader</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerTemplate.1">
+        <source>Please select the template with the estate readermodule.</source>
+      </trans-unit>
+
+      <trans-unit id="tl_module.immo_listPage.0">
+        <source>Estatelist</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listPage.1">
+        <source>Please select the page with the estate list module.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listTemplate.0">
+        <source>Estate List</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listTemplate.1">
+        <source>Please select the template with the estate list module.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listContent.0">
+        <source>Estate List Content</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listContent.1">
+        <source>Please add the column keys which should be visible in the estate list module.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listFilter.0">
+        <source>Estate List Filter</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listFilter.1">
+        <source>Please add the filter rules which should be used for display the filter of this liste.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplate.0">
+        <source>Filter template</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplate.1">
+        <source>Please select a template to use for filters.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplateOptions.select">
+        <source>Select fields</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplateOptions.button">
+        <source>Buttons</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_sort_legend">
+          <source>Sortierung</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listSort.0">
+        <source>Estate List Sorting</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listSort.1">
+        <source>Please add the sorting rule which should be used for display the sorting of this list.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAsc.0">
+      	<source>sorting</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAsc.1">
+      	<source>sorting</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAscOptions.true">
+      	<source>true</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAscOptions.false">
+      	<source>false</source>
+        <target>Absteigend</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortType.0">
+      	<source>field type</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortType.1">
+      	<source>which field type you want to use?</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortTypeOptions.int">
+      	<source>int</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortTypeOptions.float">
+      	<source>float</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortTypeOptions.text">
+      	<source>text</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_cond_legend">
+          <source>Bedingungen</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listCondition.0">
+        <source>Estate List Condition</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listCondition.1">
+        <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=leipzig</strong></source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listImageWidth.0">
+        <source>Estate List Image Width (deprecated)</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listImageWidth.1">
+        <source>Image width is used to specify the image dimensions in pixel in list view. (default: 293px)</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listImageHeight.0">
+        <source>Estate List Image Height (deprecated)</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listImageHeight.1">
+        <source>Image height is used to specify the image dimensions in pixel in list view. (default: 220px)</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listImageMode.0">
+        <source>Estate List Image Mode (deprecated)</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listImageMode.1">
+        <source>Set image modus used in list view. Example <strong>proportional, box, crop, left_top, center_top, right_top, left_center, center_center, right_center, left_bottom, center_bottom, right_bottom</strong> (default: center_center)</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listDebug.0">
+          <source>Debug</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listDebug.1">
+          <source>Enable to show all available field keys</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listInSitemap.0">
+          <source>Show in sitemap navigation</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listInSitemap.1">
+          <source>Enable to show all available field keys</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_staticFilter.0">
+        <source>Filter only</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_staticFilter.1">
+        <source>Do not show filter result list</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_filterListPage.0">
+          <source>Page Listview</source>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_filterListPage.1">
+          <source>
+            If submit button is pressed, the user is redirected to this page.
+            Filter settings are forwarded.
+          </source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_pagination_legend">
+          <source>Pagination</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_addListPagination.0">
+        <source>Add Pagination</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_addListPagination.1">
+        <source>When active, the output of the pagination is activated in the template.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationCount.0">
+        <source>Number of objects</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationCount.1">
+        <source>Specifies how many objects should be displayed on one page.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationShowtitle.0">
+        <source>Show title?</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationShowtitle.1">
+        <source>Should the title be displayed?</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationLinkCount.0">
+        <source>Number of links</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationLinkCount.1">
+        <source>Specifies how many links should be displayed in the pagination.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationUseIsotope.0">
+        <source>use isotope</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationUseIsotope.1">
+        <source>Use Isotope(JS) for pagination.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleCss.0">
+        <source>include CSS</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleCss.1">
+        <source>Use module css in list view.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleJs.0">
+        <source>include JS</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleJs.1">
+        <source>Use module js in list view.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_compatibilityMode.0">
+        <source>activate backwards compatibility</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_compatibilityMode.1">
+        <source>Activate to use old template functions in list view (earlyer versions &lt;1.4.0). Please rebuild index after change.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_gmapApiKey.0">
+        <source>Google Maps API Key</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_gmapApiKey.1">
+        <source>Add Google Maps API Key here.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showHeadline.0">
+      	<source>Show headline</source>
+        <target>Show headline</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showHeadline.1">
+      	<source>Show headline in header image</source>
+        <target>Show headline in header image</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showBackgroundImage.0">
+      	<source>Show background image</source>
+        <target>Show background image</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showBackgroundImage.1">
+      	<source>Show background image by css instead of image tag in header image</source>
+        <target>Show background image by css instead of image tag in header image</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listViewPlaceholder.0">
+      	<source>placeholder image</source>
+        <target>placeholder image</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listViewPlaceholder.1">
+      	<source>show placeholder image (only list view)</source>
+        <target>show placeholder image (only list view)</target>
+      </trans-unit>
+    <trans-unit id="tl_module.makler_detailViewPlaceholder.0">
+      	<source>placeholder image</source>
+        <target>placeholder image</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_detailViewPlaceholder.1">
+      	<source>show placeholder image (only detail view)</source>
+        <target>show placeholder image (only detail view)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImagePlaceholder.0">
+      	<source>placeholder image</source>
+        <target>placeholder image</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImagePlaceholder.1">
+      	<source>show placeholder image (only header image)</source>
+        <target>show placeholder image (only header image)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

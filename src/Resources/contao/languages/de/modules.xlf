@@ -1,0 +1,69 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="system/modules/news/languages/en/modules.php" source-language="en">
+    <body>
+      <trans-unit id="MOD.makler_modul_mplus">
+        <source>estate modul</source>
+        <target>makler modul</target>
+      </trans-unit>
+      <trans-unit id="FMD.immoDetailView.0">
+        <source>Estate reader</source>
+        <target>Expose</target>
+      </trans-unit>
+      <trans-unit id="FMD.immoDetailView.1">
+        <source>Add a single estate to page.</source>
+        <target>Fügt der Seite eine einzelne Immobilie hinzu.</target>
+      </trans-unit>
+      <trans-unit id="FMD.immoListView.0">
+        <source>Estatelist</source>
+        <target>Immobilienliste</target>
+      </trans-unit>
+      <trans-unit id="FMD.immoListView.1">
+        <source>Add a estate list to page.</source>
+        <target>Fügt der Seite eine Immobilienliste hinzu.</target>
+      </trans-unit>
+      <trans-unit id="MOD.makler.0">
+        <source>estate module</source>
+        <target>makler modul</target>
+      </trans-unit>
+      <trans-unit id="MOD.makler.1">
+        <source>estate module tools</source>
+        <target>makler modul Tools</target>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.0">
+        <source>tools</source>
+        <target>Tools</target>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.1">
+        <source>show tools </source>
+        <target>Tools anzeigen</target>
+      </trans-unit>
+      <trans-unit id="MOD.makler.maklerSetup.0">
+        <source>tools</source>
+        <target>Tools</target>
+      </trans-unit>
+
+      <trans-unit id="MOD.maklerSetup.message.emptyFolder">
+      	<source>Folder was emptied</source>
+        <target>Ordner wurde geleert</target>
+      </trans-unit>
+
+      <trans-unit id="MOD.maklerSetup.label.emptyDataFolder">
+      	<source>empty data folder</source>
+        <target>Data Ordner leeren</target>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.label.emptyTmpFolder">
+      	<source>empty temp folder</source>
+        <target>Temp Ordner leeren</target>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.label.emptyUploadFolder">
+      	<source>empty upload folder</source>
+        <target>Upload Ordner leeren</target>
+      </trans-unit>
+			<trans-unit id="MOD.makler_modul_mplus">
+      	<source>estate modul</source>
+        <target>makler modul</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,54 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="system/modules/news/languages/en/modules.php" source-language="en">
+    <body>
+      <trans-unit id="MOD.makler_modul_mplus">
+        <source>estate modul</source>
+      </trans-unit>
+      <trans-unit id="FMD.immoDetailView.0">
+        <source>Estate reader</source>
+      </trans-unit>
+      <trans-unit id="FMD.immoDetailView.1">
+        <source>Add a single estate to page.</source>
+      </trans-unit>
+      <trans-unit id="FMD.immoListView.0">
+        <source>Estatelist</source>
+      </trans-unit>
+      <trans-unit id="FMD.immoListView.1">
+        <source>Add a estate list to page.</source>
+      </trans-unit>
+      <trans-unit id="MOD.makler.0">
+        <source>estate module</source>
+      </trans-unit>
+      <trans-unit id="MOD.makler.1">
+        <source>estate module tools</source>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.0">
+        <source>tools</source>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.1">
+        <source>show tools </source>
+      </trans-unit>
+      <trans-unit id="MOD.makler.maklerSetup.0">
+        <source>tools</source>
+      </trans-unit>
+
+      <trans-unit id="MOD.maklerSetup.message.emptyFolder">
+      	<source>Folder was emptied</source>
+      </trans-unit>
+
+      <trans-unit id="MOD.maklerSetup.label.emptyDataFolder">
+      	<source>empty data folder</source>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.label.emptyTmpFolder">
+      	<source>empty temp folder</source>
+      </trans-unit>
+      <trans-unit id="MOD.maklerSetup.label.emptyUploadFolder">
+      	<source>empty upload folder</source>
+      </trans-unit>
+			<trans-unit id="MOD.makler_modul_mplus">
+      	<source>estate modul</source>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

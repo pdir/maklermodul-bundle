@@ -46,6 +46,12 @@
     ]
   },
   "extra": {
-    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManagerPlugin"
+    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManagerPlugin",
+    "contao": {
+      "runonce":[
+        "src/Maklermodul/Runonce.php"
+      ]
+    }
   }
+
 }

@@ -1,4 +1,8 @@
 
+.be_maklermodul_setup {
+	line-height: 1.2em;
+}
+
 .be_maklermodul_setup a {
 	color: #7abfbc;
 }
@@ -20,6 +24,10 @@
 
 .be_maklermodul_setup h2 {
 	margin-bottom: 10px;
+}
+
+.be_maklermodul_setup h3 {
+	font-size: 0.9em;
 }
 
 .be_maklermodul_setup hr {
@@ -48,6 +56,16 @@
     float: left;
     text-align: center;
     margin-right: 25px;
+	width: 170px;
+}
+
+.be_maklermodul_setup .clearall {
+	margin-top: 15px;
+	clear: both;
+}
+
+.be_maklermodul_setup .license {
+	margin-top: 30px;
 }
 
 .be_maklermodul_setup .kreis {

@@ -1,0 +1,15 @@
+    <?php foreach ($this->filterConfig['groups'] as $filter): ?>
+<div class="<?= $filter['key'] ?>">
+    <span class="header"><?= $filter['name'] ?></span>
+    <span class="buttons content">
+        <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
+            <button class="button
+                <?php if($this->Input->get($filter['key']) == $values['css']):?> active<?php endif; ?>"
+                onClick="filterByButton(this); return false;"
+                data-filter=".<?= $filter['key'] ?>-<?= $values['css'] ?>">
+                <?= ucfirst(strtolower($values['name'])) ?>
+            </button>
+        <?php endforeach; ?>
+    </span>
+</div>
+<?php endforeach; ?>

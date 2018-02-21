@@ -20,6 +20,6 @@
 
 $GLOBALS['TL_LANG']['MOD']['pdir'][0] = "pdir Apps";
 $GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][0]   = "Maklermodul Setup";
-$GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][1]   = "Verwalten Sie hier Ihre Maklermodul App";
+$GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][1]   = "Verwalten Sie hier Ihr Maklermodul";
 
 $GLOBALS['TL_LANG']['MAKLERMODUL']['emailBody'] = "<br>Hallo pdir Team,<br><br>wir haben die Maklermodul Schnittstelle für Contao 4 installiert, getestet und würden diese gerne erwerben und für unseren Kunden einsetzten.<br><br>Die Domain lautet: [HIER DOMAIN ANGEBEN] <br><br>Die Rechnung soll auf folgende Adresse ausgestellt werden:<br><br>[HIER RECHNUNGSANSCHRIFT ANGEBEN]<br><br>Die Serverdaten aus dem Backend lauten wie folgt:<br>IP: :IP:<br>Hostname: :HOST: <br>Domain: :DOMAIN: <br><br>Mit freundlichen Grüßen<br>";

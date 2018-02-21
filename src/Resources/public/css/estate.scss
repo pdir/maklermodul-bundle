@@ -1,0 +1,373 @@
+/**
+ * makler modul für Contao - www.maklermodul.de
+ * estate.css
+ */
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('../fonts/Cairo-Regular.ttf') format('truetype');
+}
+
+.mod_immoListView {
+  font-family: 'Cairo',Arial,sans-serif;
+}
+
+#estate_list {
+  width: calc(100% + 20px);
+  margin-left: -10px;
+}
+
+.mod_immoListView .estate {
+  width: 33.33%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+
+  .inner {
+    background: #f2f2f2;
+    margin: 10px;
+    height: 480px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    color: #3d566e;
+    height: 95px;
+    border-bottom: 3px solid #3d566e;
+    margin-bottom: 10px;
+    padding: 0;
+    margin-top: 0;
+    text-transform: inherit;
+    font-weight: 700;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  ul {
+    color: #000;
+    padding: 0;
+
+    li {
+      list-style-type: none;
+      padding: 0;
+      line-height: 25px;
+
+      .label, .value {
+        width: 50%;
+        display: inline-block;
+        font-size: 16px;
+        color: #3d566e;
+      }
+
+      .label {
+        font-weight: 700;
+      }
+    }
+  }
+
+  sup {
+    vertical-align: initial;
+  }
+
+  .item {
+    height: 200px;
+    overflow: hidden;
+  }
+
+  img {
+    min-height: 200px;
+  }
+}
+
+.estate:hover .inner {
+  background: #e6e6e6;
+}
+
+/**** Filter ****/
+
+#estate_filter_list {
+  margin: 0;
+
+  > div {
+    background: #f2f2f2;
+    padding: 15px;
+    border-bottom: 2px solid #fff;
+  }
+
+  > div:nth-child(odd) {
+    border-right: 2px solid #fff;
+  }
+
+  .header {
+    display: block;
+    font-weight: 700;
+    color: #3d566e;
+    padding-bottom: 5px;
+    font-size: 16px;
+    margin-bottom: .5rem;
+  }
+
+  button {
+    background: #6d96bd;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 0;
+    font-size: 17px;
+    line-height: 17px;
+    padding: 5px;
+    transition: none;
+    margin: 2px 2px 2px 0;
+    display: block;
+    float: left;
+  }
+
+  .button.active {
+    background: #3d566e !important;
+  }
+
+  button:focus {
+    outline: 0;
+  }
+}
+
+#estate_filter_list.select-filter {
+  display: table;
+  width: 100%;
+
+  > div {
+    display: table-cell;
+  }
+
+  > div:nth-child(even) {
+    border-right: 2px solid #fff;
+  }
+
+  > div:last-child {
+    border: none;
+  }
+
+  select {
+    width: 100%;
+    background: #fff;
+    padding: 0 5px;
+    font-size: 17px;
+  }
+
+  select:focus {
+    outline: 0;
+  }
+}
+
+.btn.btn-reset-filter {
+  background: #f2f2f2;
+  border-radius: 0;
+  color: #3d566e;
+  margin: 20px 0;
+  padding: 10px 15px;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+#estate_filter_list.button-filter {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+
+  > div {
+    background: #f2f2f2;
+    padding: 15px;
+    border-bottom: 2px solid #fff;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    box-sizing: border-box;
+	max-width: 50%;
+  }
+}
+
+.btn.btn-reset-filter:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+/**** Pagination ****/
+
+.mod_immoListView .pagination {
+  display: block;
+  margin: 20px 0 0;
+
+  p {
+    font-size: 17px;
+    text-align: center;
+  }
+
+  ul {
+    text-align: center;
+    width: 100%;
+    padding: 0;
+
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin: 5px;
+
+      a {
+        background: #f2f2f2;
+        padding: 8px 12px;
+        color: #3d566e;
+        display: block;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      a:hover {
+        background: #e6e6e6;
+        color: #3d566e;
+      }
+    }
+
+    li.active a {
+      background: #3d566e;
+      color: #fff;
+    }
+  }
+
+  li:last-child {
+    margin-right: 0;
+  }
+}
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+      -ms-transition-duration: 0.5s;
+       -o-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+
+  .isotope-item {
+    -webkit-transition-property: -webkit-transform, opacity;
+    -moz-transition-property:    -moz-transform, opacity;
+    -ms-transition-property:     -ms-transform, opacity;
+    -o-transition-property:      -o-transform, opacity;
+    transition-property:         transform, opacity;
+  }
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+/**** IE and firefox fixes ****/
+
+.ie, .firefox {
+  .mod_immoListView .estate h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/**** mobile ****/
+
+@media (max-width:991px) {
+  #estate_filter_list.select-filter > div:nth-child(even) {
+    border-right: none;
+  }
+
+  #estate_filter_list.select-filter {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    > div {
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+      box-sizing: border-box;
+    }
+  }
+
+  .mod_immoListView .estate {
+    width: 50%;
+
+    h2 {
+      height: 100px;
+    }
+  }
+}
+
+@media (max-width:767px) {
+  .mod_immoListView .estate {
+    width: 100%;
+
+    .inner {
+      height: initial;
+    }
+
+    h2 {
+      height: initial;
+      padding-bottom: 10px;
+    }
+
+    .item {
+      height: initial;
+
+      img {
+        min-height: initial;
+      }
+    }
+  }
+
+  #estate_filter_list.button-filter > div {
+    flex: 0 0 100%;
+    border-right: none;
+	max-width: 100%;
+  }
+}
+
+@media (max-width:350px) {
+  #estate_filter_list.select-filter {
+    display: block;
+
+    > div {
+      display: block;
+    }
+
+    > div:nth-child(odd) {
+      border-right: none;
+    }
+  }
+}

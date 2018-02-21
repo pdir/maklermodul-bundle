@@ -15,8 +15,8 @@
  */
 
 /**
-* Backend modules
-*/
+ * Backend modules
+ */
 if (!is_array($GLOBALS['BE_MOD']['pdir']))
 {
 	array_insert($GLOBALS['BE_MOD'], 1, array('pdir' => array()));
@@ -28,14 +28,43 @@ array_insert($GLOBALS['BE_MOD']['pdir'], 0, array
 (
 	'maklermodulSetup' => array
 	(
-		'callback'          => 'Pdir\Maklermodul\MaklermodulSetup',
+		'callback'          => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
 		'icon'              => $assetsDir . '/img/icon.png',
 		//'javascript'        =>  $assetsDir . '/js/backend.min.js',
 		'stylesheet'		=>  $assetsDir . '/css/backend.css'
 	),
 ));
 
+/**
+ * Frontend modules
+ */
+$GLOBALS['FE_MOD']['pdirMaklermodul'] = array
+(
+    'immoListView' => 'Pdir\MaklermodulBundle\Module\ListView',
+    'immoDetailView' => 'Pdir\MaklermodulBundle\Module\DetailView',
+    //'immoHeaderImageView' => 'Pdir\MaklermodulBundle\Module\HeaderImageView'
+);
+
+/**
+ * Hooks
+ */
+// $GLOBALS['TL_HOOKS']['getPageIdFromUrl'][]    	= array('MaklerModulMplus\DetailViewHooks', 'hookGetPageIdFromUrl');
+// $GLOBALS['TL_HOOKS']['getSearchablePages'][]	= array('MaklerModulMplus\Helper', 'addProductsToSearchIndex');
+// $GLOBALS['TL_HOOKS']['parseTemplate'][] 		= array('MaklerModulMplus\ListPaginationHook', 'hookAddListPagination');
+// $GLOBALS['TL_HOOKS']['generateBreadcrumb'][]    = array('MaklerModulMplus\Helper', 'addProductToBreadcrumb');
+// $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array('MaklerModulMplus\Helper', 'parseOpenImmoFeedbackTemplate');
+
+// $GLOBALS['TL_HOOKS']['addDashboardWidget'][] 	= array('MaklerModulMplus\ListPaginationHook', 'hookAddDashboardWidget');
+
+/**
+ * auto items
+ */
+$GLOBALS['TL_AUTO_ITEM'] = array('estate');
+
+/**
+ * Javascript for Backend
+ */
 if (TL_MODE == 'BE')
 {
-	$GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
+    $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
 }
