@@ -43,6 +43,7 @@ console.log('file loaded!');
             .on( 'click', '.anfrage-btn', listView.showObjectRequest )
             .on( 'keyup', '.mm-quicksearch', listView.quicksearch )
             .on( 'input', '.mm-nearby', listView.nearby ) // bind nearby input
+            .on( 'click', '.mod_immoListView .pagination a', listView.registerScrollTopPagination )
         ;
 
         // for dev listView.body.on( 'click', '.mm-user-position', listView.setUserPosition ) // bind user position buttons
@@ -251,6 +252,7 @@ console.log('file loaded!');
             listView.paginationFilter = 'page1';
             listView.pagination.show();
         }
+
         if(typeof listView.qsRegex != 'undefined' || typeof listView.checkboxFilter != 'undefined' ||
             typeof listView.selectFilter != 'undefined' || typeof listView.rangeFilter != 'undefined')
             delete listView.paginationFilter;
@@ -340,7 +342,7 @@ console.log('file loaded!');
         });
 
         // reset selects
-        listView.selects.each(function(){
+        /*listView.selects.each(function(){
             $(this).find('option').each(function() {
                 $(this).show();
             });
@@ -348,7 +350,7 @@ console.log('file loaded!');
                 $(this).removeAttr('selected');
             });
             $(this).trigger("chosen:updated");
-        });
+        });*/
 
         // reset nearby
         listView.nearbyField.val('');
@@ -373,7 +375,7 @@ console.log('file loaded!');
         // reset hash
         delete listView.paginationFilter;
         listView.resetFilter = true;
-        listView.filter();
+        listView.filter("*");
     };
 
     listView.shuffle = function() {
@@ -463,6 +465,7 @@ console.log('file loaded!');
             listView.selectFilter = filters;
 
         listView.selectFilter = filters;
+        console.log("filters: " + filters);
 
         // call filter
         listView.filter();
@@ -490,8 +493,10 @@ console.log('file loaded!');
         }
 
         listView.hashFilter = filterValue;
+        console.log(e);
 
-        listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
+        //listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
+        listView.estateList.isotope({ filter: listView.hashFilter });
 
         listView.setWindowHash();
         setTimeout(function(){
@@ -506,7 +511,7 @@ console.log('file loaded!');
                 }
             }
             // move special box
-            listView.moveSpecialBox();
+            //listView.moveSpecialBox();
         },600);
     };
 
@@ -697,6 +702,14 @@ console.log('file loaded!');
             // init Isotope
             listView.render();
         });
+    };
+
+    listView.registerScrollTopPagination = function() {
+        var href = '.mod_immoListView';
+        $('html, body').animate({
+            scrollTop:$(href).offset().top - 10
+        },'slow');
+        e.preventDefault();
     };
 
     $(document).on( 'ready', listView.init );
