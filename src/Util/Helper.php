@@ -40,10 +40,16 @@ class Helper extends \Frontend
     static $apiUrl = 'https://pdir.de/api/maklermodul/';
 
     /**
-     * API Url
+     * Path to Asset Folder
      * @var string
      */
     const assetFolder = 'bundles/pdirmaklermodul';
+
+    /**
+     * Path to Image
+     * @var string
+     */
+    const imagePath = '/files/maklermodul/data';
 
     public function getAds($customerID, $apiUsr, $apiPwd)
     {

@@ -61,7 +61,7 @@
                     <?php // Ausgabe des Objektbildes ?>
 
                     <?php if(!isset($obj['anhaenge-anhang-#1-daten-pfad'])): ?>
-                        {{image::<?= $this->placeholderImg; ?>?width=300&height=200}}
+                        <img src="<?= $this->placeholderImg; ?>" alt="Platzhalter <?= $obj['freitexte-objekttitel'] ?>" width="300" height="200">
                     <?php else: ?>
                         {{image::files/maklermodul/data/<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>?mode=<?= $this->listImageMode; ?>&width=<?= $this->listImageWidth; ?>&height=<?= $this->listImageHeight; ?>&alt=<?= $obj['freitexte-objekttitel'] ?>}}
                     <?php endif; ?>

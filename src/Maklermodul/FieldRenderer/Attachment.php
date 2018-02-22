@@ -23,6 +23,7 @@ use Contao\Image;
 use Contao\ContentMedia;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
+use Pdir\MaklermodulBundle\Util\Helper;
 
 class Attachment extends FieldRenderer {
 
@@ -140,7 +141,7 @@ class Attachment extends FieldRenderer {
 
 			        $template = $this->getShortTemplate();
 			        return sprintf($template,
-			            $this->getUrlOfPath($this->getValueOf('daten.pfad')),
+			            $this->getUrlOfPath(Helper::imagePath . $this->getValueOf('daten.pfad')),
 			            $this->getValueOf('anhangtitel'),
 			            $renderedThumbnail
 			        );
@@ -202,7 +203,7 @@ class Attachment extends FieldRenderer {
     }
 
     private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode) {
-        return \Image::get('/files/maklermodul/data' . $orgPath, $maxWidth, $maxHeight, $mode) ;
+        return \Image::get(Helper::imagePath . $orgPath, $maxWidth, $maxHeight, $mode) ;
     }
 
     private function getThumbnailTemplate($resized = false) {

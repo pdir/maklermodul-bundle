@@ -1,7 +1,7 @@
 <?php
-    if (!is_object($this->estate)) {
-echo "<h1>Makler Modul M+ - Detailansicht</h1>";
-return;
+if (!is_object($this->estate)) {
+    echo "<h1>Makler Modul M+ - Detailansicht</h1>";
+    return;
 }
 ?>
 <?php
@@ -34,7 +34,7 @@ else:
             <?php if($this->estate->renderer('anhaenge.anhang.#1.daten.pfad')->asText()->withoutLabel()->value(true)): ?>
                 <?php $this->estate->attachments()->first()->withoutLabel()->size(600,350)->render() ?>
             <?php else: ?>
-                {{image::<?= $this->placeholderImg; ?>?width=600&height=350}}
+                <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="600" height="350">
             <?php endif; ?>
         </div>
         <div class="small-pics">

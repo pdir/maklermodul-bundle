@@ -23,6 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
+use Pdir\MaklermodulBundle\Util\Helper;
 
 // check
 use Exception;
@@ -182,8 +183,7 @@ class ListView extends \Module
             return $this->formatValue($strVal);
         };
 
-
-        $this->Template->placeholderImg = $this->makler_listViewPlaceholder ? $this->makler_listViewPlaceholder : "bundles/pdirmaklermodul/img/platzhalterbild.jpg";
+        $this->Template->placeholderImg = $this->makler_listViewPlaceholder ? \FilesModel::findByUuid($this->makler_listViewPlaceholder)->path : Helper::assetFolder . "/img/platzhalterbild.jpg";
 
         //// get immo objects from xml file
         $pages = array();

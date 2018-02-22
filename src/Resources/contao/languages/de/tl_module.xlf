@@ -277,6 +277,47 @@
         <source>Activate to use old template functions in list view (earlyer versions &lt;1.4.0). Please rebuild index after change.</source>
         <target>Nach Aktivierung werden die alten Template-Funktionen in der Listenansicht verwendet (frühere Versionen &lt;1.4.0). Index muss nach einer Änderung neu aufgebaut werden.</target>
       </trans-unit>
+
+      <trans-unit id="tl_module.makler_showHeadline.0">
+      	<source>Show headline</source>
+        <target>Überschrift anzeigen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showHeadline.1">
+      	<source>Show headline in header image</source>
+        <target>Überschrift in Kopfbild anzeigen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showBackgroundImage.0">
+      	<source>Show background image</source>
+        <target>als Hintergrundbild anzeigen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showBackgroundImage.1">
+      	<source>Show background image by css instead of image tag in header image</source>
+        <target>als Hintergrundbild per CSS statt Image-Tag im Kopfbild anzeigen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listViewPlaceholder.0">
+      	<source>placeholder image</source>
+        <target>Platzhalter-Bild</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listViewPlaceholder.1">
+      	<source>show placeholder image (only list view)</source>
+        <target>Platzhalter-Bild anzeigen (nur Listenansicht)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_detailViewPlaceholder.0">
+      	<source>placeholder image</source>
+        <target>Platzhalter-Bild</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_detailViewPlaceholder.1">
+      	<source>show placeholder image (only detail view)</source>
+        <target>Platzhalter-Bild anzeigen (nur Detailansicht)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImagePlaceholder.0">
+      	<source>placeholder image</source>
+        <target>Platzhalter-Bild</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImagePlaceholder.1">
+      	<source>show placeholder image (only header image)</source>
+        <target>Platzhalter-Bild anzeigen (nur Kopfbild)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

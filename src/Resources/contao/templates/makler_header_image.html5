@@ -1,0 +1,13 @@
+<div class="estate-header-image"<?php if($this->showBackgroundImage): ?> style="background-image:url('<?= $this->headerImage ?>')" <?php endif; ?>>
+  <?php if ($this->showHeadline): ?>
+    <div class="ce_text first block">
+        <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+    </div>
+  <?php endif; ?>
+
+  <?php if(!$this->showBackgroundImage): ?>
+    <div class="ce_image last block">
+        <img src="<?= $this->headerImage ?>" alt="<?= $this->headline ?>">
+    </div>
+  <?php endif; ?>
+</div>

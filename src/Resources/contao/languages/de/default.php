@@ -17,6 +17,9 @@
 $GLOBALS['TL_LANG']['MSC']['totalPages']    = 'Seite %s von %s';
 $GLOBALS['TL_LANG']['MSC']['points'] = '...';
 
+$GLOBALS['TL_LANG']['CTE']['makler_headerImage'] = array('MaklerModul Kopfbild', 'MaklerModul Kopfbild');
+$GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'] = array('MaklerModul Kopfbild', 'MaklerModul Kopfbild');
+
 $strErrorDefault = 'Makler Modul Fehler: ';
 $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = $strErrorDefault . 'Bitte w&auml;hlen Sie eine Detailansicht in Ihrer Listenansicht aus.';
 

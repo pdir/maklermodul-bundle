@@ -14,6 +14,7 @@
  * file that was distributed with this source code.
  */
 
+
 /**
  * Namespace
  */
@@ -30,25 +31,19 @@ use Pdir\MaklermodulBundle\Util\Helper;
  * Class DetailView
  *
  * @copyright  pdir / digital agentur
- * @author     Mathias Arzberger
- * @package    maklermodul
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @package    Devtools
  */
-class DetailView extends \Module
+class HeaderImageView extends \Module
 {
-    const PARAMETER_KEY = 'expose';
-
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'makler_details_simple';
+    protected $strTemplate  = 'makler_header_image';
 
     public function __construct($objModule, $strColumn = 'main') {
         parent::__construct( $objModule, $strColumn );
-
-        if (!empty($this->arrData['immo_readerTemplate']) AND TL_MODE != 'BE') {
-            $this->strTemplate = $this->arrData['immo_readerTemplate'];
-        }
     }
 
     /**
@@ -59,10 +54,15 @@ class DetailView extends \Module
     {
         if (TL_MODE == 'BE')
         {
+            /*$this->strTemplate = 'be_wildcard';
+            $this->Template = new \BackendTemplate($this->strTemplate);
+            $this->Template->wildcard = '### Kopfbild / Makler Modul ###';
+            $this->Template->title = $this->name;*/
+
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoDetailView'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -83,30 +83,37 @@ class DetailView extends \Module
     }
 
     /**
-     * Generate module
-     * @return void
+     * Generate the module
      */
     protected function compile()
     {
-        /** @var PageModel $objPage */
-        global $objPage;
-
-        //$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
-        //$this->Template->referer = 'javascript:history.go(-1)';
-
         if ($this->alias == "") {
             $this->Template->objectData = null;
             return;
         }
 
-        if($this->makler_useModuleDetailCss)
+        $estate = $this->createFieldRendererFactory($this->alias);
+
+        if($this->makler_showHeadline == true)
         {
-            $GLOBALS['TL_CSS'][] = Helper::assetFolder . '/css/estate-detail.scss||static';
+            $this->Template->headline = $this->headline ? $this->headline : $estate->rawValue('freitexte.objekttitel');
+            $this->Template->showHeadline = true;
         }
 
-        $this->Template->estate = $this->createFieldRendererFactory($this->alias);
-        $this->Template->gmapApiKey = ($this->makler_gmapApiKey != '') ? $this->makler_gmapApiKey : '';
-        $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder ."/img/platzhalterbild.jpg";
+        $this->Template->showBackgroundImage = $this->makler_showBackgroundImage;
+
+        if($estate->rawValue('anhaenge.anhang.#1.daten.pfad') != "") {
+            $this->Template->headerImage = Helper::imagePath . $estate->rawValue('anhaenge.anhang.#1.daten.pfad');
+        } else {
+            $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder . "/img/platzhalterbild.jpg";
+            if($placeholder != Helper::assetFolder . "/img/platzhalterbild.jpg") {
+                $objFile = \FilesModel::findByUuid($placeholder);
+                $this->Template->headerImage = $objFile->path;
+            } else {
+                $this->Template->headerImage = $placeholder;
+            }
+        }
+
     }
 
     private function createFieldRendererFactory($objectId) {
@@ -117,34 +124,5 @@ class DetailView extends \Module
 
     private function getTranslationMap() {
         return StaticDIC::getTranslationMap();
-    }
-
-    /**
-     * @param array $arrFragments all url parameters exploded by /
-     * @return array
-     *
-     * @see http://de.contaowiki.org/Strukturierte_URLs
-     */
-    public static function hookGetPageIdFromUrl($arrFragments)
-    {
-        if (!$_GET['objectId']) {
-            $parameterKeyFound = false;
-            foreach ($arrFragments as $key => $value) {
-                if ($parameterKeyFound AND $value != 'auto_item') {
-                    $_GET['objectId'] = $value;
-                    break;
-                }
-
-                if ($value == self::PARAMETER_KEY) {
-                    $parameterKeyFound = true;
-                }
-            }
-
-            if ($parameterKeyFound) {
-                return array($arrFragments[0]);
-            }
-        }
-
-        return $arrFragments;
     }
 }

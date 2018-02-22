@@ -485,11 +485,11 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
 	color: #3d566e;
 	font-weight: 700;
 	text-align: center;
+    z-index: 1;
   }
 
   h1 {
 	font-size: 2rem;
-    z-index: 1;
   }
 
   .ce_text {

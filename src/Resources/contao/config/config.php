@@ -42,7 +42,12 @@ $GLOBALS['FE_MOD']['pdirMaklermodul'] = array
 (
     'immoListView' => 'Pdir\MaklermodulBundle\Module\ListView',
     'immoDetailView' => 'Pdir\MaklermodulBundle\Module\DetailView',
-    //'immoHeaderImageView' => 'Pdir\MaklermodulBundle\Module\HeaderImageView'
+    'immoHeaderImageView' => 'Pdir\MaklermodulBundle\Module\HeaderImageView'
+);
+
+$GLOBALS['TL_CTE']['pdirMaklermodul'] = array
+(
+    'makler_headerImage' => 'Pdir\MaklermodulBundle\Module\HeaderImageView'
 );
 
 /**
