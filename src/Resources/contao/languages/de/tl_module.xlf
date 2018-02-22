@@ -318,6 +318,22 @@
       	<source>show placeholder image (only header image)</source>
         <target>Platzhalter-Bild anzeigen (nur Kopfbild)</target>
       </trans-unit>
+      <trans-unit id="tl_module.makler_gmapApiKey.0">
+        <source>Google Maps API Key</source>
+        <target>Google Maps API Key</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_gmapApiKey.1">
+        <source>Add Google Maps API Key here.</source>
+        <target>Hier den Google Maps API Key angeben der zur Kartendarstellung genutzt werden soll.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showMap.0">
+        <source>Show Google Map</source>
+        <target>Google Maps Karte anzeigen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showMap.1">
+        <source>Include Google Maps</source>
+        <target>Bindet die Google Maps Karte ein.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

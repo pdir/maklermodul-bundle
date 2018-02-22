@@ -251,6 +251,14 @@
       	<source>show placeholder image (only header image)</source>
         <target>show placeholder image (only header image)</target>
       </trans-unit>
+      <trans-unit id="tl_module.makler_showMap.0">
+        <source>Show Google Map</source>
+        <target>Show Google Map</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showMap.1">
+        <source>Include Google Maps</source>
+        <target>Include Google Maps</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

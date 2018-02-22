@@ -253,6 +253,7 @@
 		font-size: 1.4rem;
 		width: 100%;
 		box-sizing: border-box;
+        border: none;
 	  }
 
 	  .field {
@@ -277,6 +278,11 @@
 	  }
 	}
   }
+}
+
+.mm-error {
+  color: #c74848;
+  font-weight: 700;
 }
 
 /* Neuer Energiepass */

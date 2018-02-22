@@ -1,0 +1,106 @@
+<h3>Energieausweis</h3>
+
+<?php if($this->heizungsart): ?>
+    <li class="field heizung">
+        <div class="label">Heizung</div>
+        <div class="value">
+            <?= $this->heizungsart ?>
+        </div>
+    </li>
+<?php endif; ?>
+<?php if($this->energietraeger): ?>
+    <li class="field heizung">
+        <div class="label">Energieträger</div>
+        <div class="value">
+            <?= $this->energietraeger ?>
+        </div>
+    </li>
+<?php endif; ?>
+<li class="field epass_epart">
+    <div class="label">Ausweisart</div>
+    <div class="value">
+        <?= $this->epart ?>
+    </div>
+</li>
+
+<?php if($this->baujahr): ?>
+<li class="field epass_epart">
+    <div class="label">Baujahr</div>
+    <div class="value">
+        <?= $this->baujahr ?>
+    </div>
+</li>
+<?php endif; ?>
+
+<?php if($this->stromwert): ?>
+    <li class="field epass_stromwert">
+        <div class="label">Stromjahr</div>
+        <div class="value">
+            <?= $this->stromwert ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->waermewert): ?>
+    <li class="field epass_waermewert">
+        <div class="label">Wärmewert</div>
+        <div class="value">
+            <?= $this->waermewert ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->mitwarmwasser): ?>
+    <li class="field epass_mitwarmwasser">
+        <div class="label">Mit Warmwasser</div>
+        <div class="value">
+            <?= $this->mitwarmwasser ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php
+if($this->energyClass == "A+") { $eClassAplus = "class='active_eclass'";}
+if($this->energyClass == "A") { $eClassA = "class='active_eclass'"; }
+if($this->energyClass == "B") { $eClassB = "class='active_eclass'"; }
+if($this->energyClass == "C") { $eClassC = "class='active_eclass'"; }
+if($this->energyClass == "D") { $eClassD = "class='active_eclass'"; }
+if($this->energyClass == "E") { $eClassE = "class='active_eclass'"; }
+if($this->energyClass == "F") { $eClassF = "class='active_eclass'"; }
+if($this->energyClass == "G") { $eClassG = "class='active_eclass'"; }
+if($this->energyClass == "H") { $eClassH = "class='active_eclass'"; }
+?>
+
+<?php if($this->energy != 0): ?>
+    <div class="energie-scale">
+        <li class="field energieverbrauchskennwert"><?php if($this->epart == 'Bedarf'): ?><div class="label">Energiebedarfskennwert</div><?php else: ?><div class="label">Energieverbrauchskennwert</div><?php endif; ?> <div class="value-number"><?php echo $this->energy; ?> kWh/(m²*a)</div></li>
+        <li class="field energieeffizienzklasse">Energieeffizienzklasse <?php echo $this->energyClass; ?></li>
+        <div class="energy-slider">
+            <ul>
+                <li <?php echo $eClassAplus; ?> style="width:11.1111%;">A+</li>
+                <li <?php echo $eClassA; ?> style="width:7.4074%;">A</li>
+                <li <?php echo $eClassB; ?> style="width:9.2592%;">B</li>
+                <li <?php echo $eClassC; ?> style="width:9.2592%;">C</li>
+                <li <?php echo $eClassD; ?> style="width:11.1111%;">D</li>
+                <li <?php echo $eClassE; ?> style="width:11.1111%;">E</li>
+                <li <?php echo $eClassF; ?> style="width:14.8148%;">F</li>
+                <li <?php echo $eClassG; ?> style="width:18.5185%;">G</li>
+                <li <?php echo $eClassH; ?> style="width:7.4074%;">H</li>
+            </ul>
+            <div class="legende_eclass">
+                <span>0</span>
+                <span>25</span>
+                <span>50</span>
+                <span>75</span>
+                <span>100</span>
+                <span>125</span>
+                <span>150</span>
+                <span>175</span>
+                <span>200</span>
+                <span>225</span>
+                <span>&gt;250</span>
+            </div>
+            <input id="slider" type="range" min="0" max="270" step="1" value="<?php echo $this->energy ?>" readonly disabled />
+        </div>
+    </div>
+<?php endif; ?>
