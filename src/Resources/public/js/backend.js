@@ -29,7 +29,6 @@ window.addEvent("domready", function() {
 
                     var newItem = new Element("div").addClass("item").set("html", itemHTML);
                     devlog.adopt(newItem);
-                    console.log(i);
                 });
             }
         }).send();

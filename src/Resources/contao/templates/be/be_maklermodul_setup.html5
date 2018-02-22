@@ -1,3 +1,18 @@
+<?php $GLOBALS['TL_CSS'][''] = 'bundles/pdirmaklermodul/css/bootstrap.css'; ?>
+<?php $GLOBALS['TL_JAVASCRIPT'][''] = 'bundles/pdirmaklermodul/js/bootstrap.min.js'; ?>
+<?php $GLOBALS['TL_BODY'][''] = '
+
+'; ?>
+
+<script>
+    jQuery(function($) {
+        // show modal dialog
+        $("a.mm-license").click(function(event) {
+            event.preventDefault();
+        });
+    });
+</script>
+
 <div class="tl_listing_container">
   <div id="pdir" class="be_maklermodul_setup clr">
     <h1 id="tl_welcome">Maklermodul (Version: <?= $this->version ?>)</h1>
@@ -52,17 +67,22 @@
       <?php endif; ?>
       <div class="folders clearall">
         <div class="left">
-          <h3>Import & Index</h3>
-          <div class="button">
-              <a href="<?= $this->base ?>system/modules/makler_modul_mplus/assets/cron.php" target="_blank">
-                  <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="60" height="60" /></div>
-                  <br />Import ausführen</a>
-          </div>
-          <div class="button">
-              <a href="<?= $this->base ?>system/modules/makler_modul_mplus/assets/indexer.php" target="_blank">
-                  <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="60" height="60" /></div>
-                  <br />Index aufbauen</a>
-          </div>
+              <h3>Import & Index</h3>
+              <div class="button">
+                  <a href="<?= $this->base ?>system/modules/makler_modul_mplus/assets/cron.php" target="_blank">
+                      <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="60" height="60" /></div>
+                      <br />Import ausführen</a>
+              </div>
+              <div class="button">
+                  <a href="<?= $this->base ?>system/modules/makler_modul_mplus/assets/indexer.php" target="_blank">
+                      <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="60" height="60" /></div>
+                      <br />Index aufbauen</a>
+              </div>
+              <div class="button">
+                  <a href="contao/main.php?do=maklermodulSetup&act=downloadDemoData">
+                      <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_download.png" alt="Demodaten herunterladen" width="60" height="60" /></div>
+                      <br />Demodaten herunterladen</a>
+              </div>
         </div>
         <div class="right">
           <h3>Ordner leeren</h3>
@@ -80,9 +100,9 @@
               <br/>Download Vollversion</a>
           </div>
           <div class="button">
-            <a href="mailto:info@maklermodul.de?subject=Maklermodul Erweiterung bestellen&body=<?= $this->emailBody ?>">
-              <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_buy.png" alt="Lizenz per Email bestellen" width="60" height="60"/></div>
-              <br/>Lizenz per Email bestellen</a>
+            <a href="#" class="mm-license" data-toggle="modal" data-target="#mmLicenseModal">
+              <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_buy.png" alt="Lizenz bestellen" width="60" height="60"/></div>
+              <br/>Lizenz bestellen</a>
           </div>
         </div>
         <div class="right">
@@ -112,4 +132,20 @@
       </small></p>
     </div>
   </div>
+</div>
+
+<div class="modal mm-license fade" id="mmLicenseModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Maklermodul Lizenz bestellen</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://www.maklermodul.de/demo-bestellformular.html"></iframe>
+            </div>
+        </div>
+    </div>
 </div>

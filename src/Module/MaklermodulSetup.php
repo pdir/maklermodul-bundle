@@ -80,6 +80,9 @@ class MaklermodulSetup extends \BackendModule
                 $files->rrdir($storageDirectoryPath.'org', true);
                 $this->Template->message[] = array('', 'info');
                 break;
+            case 'downloadDemoData':
+                $this->downloadDemoData();
+                break;
             default:
                 $this->Template->base = $this->Environment->base;
                 $this->Template->version = self::VERSION;
@@ -103,4 +106,13 @@ class MaklermodulSetup extends \BackendModule
 		$arrReplace = array($this->Template->ip, $this->Template->hostname, $this->Template->domain, '%0d%0a');
 		return str_replace( $arrSearch, $arrReplace, $GLOBALS['TL_LANG']['MAKLERMODUL']['emailBody'] );
 	}
+
+    protected function downloadDemoData()
+    {
+        file_put_contents("/", fopen("http://pdir.de/api/data/maklermodul/demo-data.zip", 'r'));
+
+
+
+        return;
+    }
 }
