@@ -169,10 +169,6 @@ class IndexConfig implements IndexConfigInterface {
         return $returnValue;
     }
 
-    public function getPreFilterConfig() {
-
-	}
-
 	public function getStorageFileUri() {
 		return $this->resultSet['immo_actIndexFile'];
 	}

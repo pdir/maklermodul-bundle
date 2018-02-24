@@ -25,7 +25,6 @@ interface IndexConfigInterface {
 	public function getDetailViewUri(Estate $estate);
 	public function getColumnConfig();
     public function getFilterColumnConfig();
-	public function getPreFilterConfig();
 
 	public function getStorageFileUri();
 	public function setStorageFileUri($newUri);
