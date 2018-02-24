@@ -143,18 +143,16 @@
 </script>
 <?php endif; ?>
 
-<script type="text/javascript">
+<?= '<script type="text/javascript">' ?>
     // Sortierung
-    <?php if($this->sorting != ''): ?>
-    var sorting = <?php echo $this->sorting; ?>;
-    <?php endif; ?>
+    <?php if($this->sorting !== ''): ?>var sorting = '<?php echo $this->sorting; ?>';<?php endif; ?>
     var maklerTemplate = 'v2';
-    var sourceIndexUri = "files/maklermodul/data/<?php echo $this->helper->getListSourceUri(); ?>";
-    var detailViewPrefix = "<?php echo $this->helper->getDetailViewPrefix(); ?>";
+    var sourceIndexUri = 'files/maklermodul/data/<?php echo $this->helper->getListSourceUri(); ?>';
+    var detailViewPrefix = '<?php echo $this->helper->getDetailViewPrefix(); ?>';
 
     <?php if ($this->staticFilter) : ?>var staticFilter = true;<?php endif; ?>
     <?php if ($this->paginationUseIsotope) : ?>var paginationUseIsotope = true;<?php endif; ?>
     <?php if ($this->addListPagination) : ?>var addListPagination = true;<?php endif; ?>
-</script>
+<?= '</script>' ?>
 
 <?php if (isset($this->debugbarRenderer)) { echo $this->debugbarRenderer->render(); } ?>

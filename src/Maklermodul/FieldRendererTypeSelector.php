@@ -113,7 +113,7 @@ class FieldRendererTypeSelector {
 
     /**
      * Methode für die Rückgabe als Überschrift.
-     *
+     * @param string $tag html tag
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading
      */
     public function asHeading($tag = 'div') {

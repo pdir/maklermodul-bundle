@@ -51,7 +51,7 @@ class Helper extends \Frontend
      */
     const imagePath = '/files/maklermodul/data';
 
-    public function getAds($customerID, $apiUsr, $apiPwd)
+    public function getAds()
     {
         // only used for demo presentation
         $json = file_get_contents(self::$apiUrl . 'list/all/' . \Environment::get('server'));
@@ -59,7 +59,7 @@ class Helper extends \Frontend
         return $arrAds; // load from local cache
     }
 
-    public function getAdDetail($customerID, $alias)
+    public function getAdDetail($alias)
     {
         // only used for demo presentation
         $json = file_get_contents(self::$apiUrl . 'ad/' . $alias . '/' . \Environment::get('server'));

@@ -9,7 +9,7 @@
 }
 
 .mod_immoListView {
-  font-family: 'Cairo',Arial,sans-serif;
+  font-family: 'Cairo', Arial, sans-serif;
 }
 
 #estate_list {
@@ -186,7 +186,7 @@
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     box-sizing: border-box;
-	max-width: 50%;
+    max-width: 50%;
   }
 }
 
@@ -258,25 +258,22 @@
 .isotope,
 .isotope .isotope-item {
   -webkit-transition-duration: 0.5s;
-     -moz-transition-duration: 0.5s;
-      -ms-transition-duration: 0.5s;
-       -o-transition-duration: 0.5s;
-          transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
 }
 
 .isotope {
   -webkit-transition-property: height, width;
-     -moz-transition-property: height, width;
-      -ms-transition-property: height, width;
-       -o-transition-property: height, width;
-          transition-property: height, width;
+  -moz-transition-property: height, width;
+  -o-transition-property: height, width;
+  transition-property: height, width;
 
   .isotope-item {
     -webkit-transition-property: -webkit-transform, opacity;
-    -moz-transition-property:    -moz-transform, opacity;
-    -ms-transition-property:     -ms-transform, opacity;
-    -o-transition-property:      -o-transform, opacity;
-    transition-property:         transform, opacity;
+    -moz-transition-property: -moz-transform, opacity;
+    -o-transition-property: -o-transform, opacity;
+    transition-property: transform, opacity;
   }
 }
 
@@ -286,10 +283,9 @@
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
   -webkit-transition-duration: 0s;
-     -moz-transition-duration: 0s;
-      -ms-transition-duration: 0s;
-       -o-transition-duration: 0s;
-          transition-duration: 0s;
+  -moz-transition-duration: 0s;
+  -o-transition-duration: 0s;
+  transition-duration: 0s;
 }
 
 /**** IE and firefox fixes ****/
@@ -302,7 +298,7 @@
 
 /**** mobile ****/
 
-@media (max-width:991px) {
+@media (max-width: 991px) {
   #estate_filter_list.select-filter > div:nth-child(even) {
     border-right: none;
   }
@@ -329,7 +325,7 @@
   }
 }
 
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .mod_immoListView .estate {
     width: 100%;
 
@@ -354,11 +350,11 @@
   #estate_filter_list.button-filter > div {
     flex: 0 0 100%;
     border-right: none;
-	max-width: 100%;
+    max-width: 100%;
   }
 }
 
-@media (max-width:350px) {
+@media (max-width: 350px) {
   #estate_filter_list.select-filter {
     display: block;
 

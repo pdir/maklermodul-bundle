@@ -46,27 +46,10 @@ class EstateRepository {
 		$directoryIterator = new \DirectoryIterator($this->storageDirectoryPath);
 		$returnValue = array();
 
-		$count = 0;
 		foreach ($directoryIterator as $child) {
 			if($this->isRelevantJson($child->getPathname())) {
 				$estate = $this->loadJsonFile($child->getPathname());
 				$returnValue[] = $estate;
-			}
-		}
-		return $returnValue;
-	}
-
-	public function findByStorageFile($fileNamePath) {
-		$returnValue = array();
-
-		$jsonContent = file_get_contents($fileNamePath);
-		$index = json_decode($jsonContent, true);
-		if(!count($index['data'])) return $this->findAll();
-
-		foreach ($index['data'] as $obj) {
-			if($this->isRelevantJson($filename)) {
-				$estate = $this->loadJsonFile($filename);
-				$returnValue[] = new Estate($estate);
 			}
 		}
 		return $returnValue;
@@ -81,7 +64,6 @@ class EstateRepository {
 			return false;
 		return true;
 	}
-
 
 	public static function getInstance() {
         $container = \System::getContainer();

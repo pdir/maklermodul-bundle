@@ -19,10 +19,6 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl;
 
-use Contao\System;
-use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\Enviroment;
-// use Contao\Folder;
-
 class StaticDIC {
 
     const CONFIG_ROOT = '../../config';
@@ -34,7 +30,7 @@ class StaticDIC {
     public static function getTranslationMap($useCore = true) {
         if (!isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['language_loaded'])) {
             if ($useCore) {
-                System::loadLanguageFile('makler_modul_mplus');
+                \System::loadLanguageFile('makler_modul_mplus');
             } else {
                 // could not detect language in index processing so we could not use
                 // contao's build in feature: System::loadLanguageFile('makler_modul_mplus');
@@ -71,23 +67,4 @@ class StaticDIC {
         return self::$filterConfig;
 
     }
-
-    /**
-     * @param $fileName
-     *
-     * @return \Contao\File
-     */
-    public static function getFileHelper($fileName) {
-        return new FileHelper($fileName, false);
-    }
-
-    /**
-     * @param $folderName
-     *
-     * @return \Contao\Folder
-     */
-    public static function getFolderHelper($folderName) {
-        return new FileHelper($folderName, true);
-    }
-
 }

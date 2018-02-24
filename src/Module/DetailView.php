@@ -94,9 +94,8 @@ class DetailView extends \Module
         //$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
         //$this->Template->referer = 'javascript:history.go(-1)';
 
-        if ($this->alias == "") {
-            $this->Template->objectData = null;
-            return;
+        if ($this->alias === "") {
+            throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
         }
 
         if($this->makler_useModuleDetailCss)
@@ -118,34 +117,5 @@ class DetailView extends \Module
 
     private function getTranslationMap() {
         return StaticDIC::getTranslationMap();
-    }
-
-    /**
-     * @param array $arrFragments all url parameters exploded by /
-     * @return array
-     *
-     * @see http://de.contaowiki.org/Strukturierte_URLs
-     */
-    public static function hookGetPageIdFromUrl($arrFragments)
-    {
-        if (!$_GET['objectId']) {
-            $parameterKeyFound = false;
-            foreach ($arrFragments as $key => $value) {
-                if ($parameterKeyFound AND $value != 'auto_item') {
-                    $_GET['objectId'] = $value;
-                    break;
-                }
-
-                if ($value == self::PARAMETER_KEY) {
-                    $parameterKeyFound = true;
-                }
-            }
-
-            if ($parameterKeyFound) {
-                return array($arrFragments[0]);
-            }
-        }
-
-        return $arrFragments;
     }
 }

@@ -54,11 +54,6 @@ class HeaderImageView extends \Module
     {
         if (TL_MODE == 'BE')
         {
-            /*$this->strTemplate = 'be_wildcard';
-            $this->Template = new \BackendTemplate($this->strTemplate);
-            $this->Template->wildcard = '### Kopfbild / Makler Modul ###';
-            $this->Template->title = $this->name;*/
-
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
@@ -87,9 +82,8 @@ class HeaderImageView extends \Module
      */
     protected function compile()
     {
-        if ($this->alias == "") {
-            $this->Template->objectData = null;
-            return;
+        if ($this->alias === "") {
+            throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
         }
 
         $estate = $this->createFieldRendererFactory($this->alias);

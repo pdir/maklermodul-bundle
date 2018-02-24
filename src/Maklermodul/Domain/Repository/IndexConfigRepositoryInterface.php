@@ -17,7 +17,7 @@
 /**
  * Namespace
  */
-namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Domain\Repository;
+namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 

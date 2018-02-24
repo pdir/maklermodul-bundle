@@ -47,7 +47,7 @@ class FieldRendererFactory {
      * $key - Index des Wertes im Array
      *
      * @param $key
-     * @return misc
+     * @return string
      */
     public function rawValue($key) {
         if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
@@ -71,7 +71,7 @@ class FieldRendererFactory {
      * $key - Index des Wertes im Array
      *
      * @param $key
-     * @return misc
+     * @return string
      */
     public function keyExists($key) {
     	if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {

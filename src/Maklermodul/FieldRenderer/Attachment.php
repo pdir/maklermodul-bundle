@@ -19,13 +19,19 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
-use Contao\Image;
-use Contao\ContentMedia;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 use Pdir\MaklermodulBundle\Util\Helper;
 
 class Attachment extends FieldRenderer {
+
+    public $websitePath;
+
+    /*
+     * Element Template
+     * @var string
+     */
+    public $template;
 
     public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD') {
         parent::__construct(
@@ -108,6 +114,7 @@ class Attachment extends FieldRenderer {
         return $this->getShortString();
     }
 
+    /** @noinspection PhpInconsistentReturnPointsInspection */
     private function getShortString() {
     	// show only given group
     	if(strpos($this->getSetting('group'), $this->getValueOf('@gruppe')) !== false) {
@@ -117,8 +124,8 @@ class Attachment extends FieldRenderer {
     			case 'DOKUMENTE';
     			case 'FILMLINK';
 					// render doc list
-					$template = $this->getShortTemplateDoc();
-					return sprintf($template,
+					$this->template = $this->getShortTemplateDoc();
+					return sprintf($this->template,
 							$this->getUrlOfPath($this->getValueOf('daten.pfad')),
 							substr($this->getValueOf('format'), 1),
 							$this->getValueOf('anhangtitel'),
@@ -126,10 +133,11 @@ class Attachment extends FieldRenderer {
 					);
 					break;
     			case 'FILM';
-    				$template = $this->getShortTemplateMedia();
+    				$this->template = $this->getShortTemplateMedia();
     				return 'FILM';
     				break;
     			default;
+                    // fallback for xml data without group definition
 					// render image
 			        $renderedThumbnail = $this->getThumbnailString(
 			            $this->getValueOf('daten.pfad'),
@@ -139,31 +147,15 @@ class Attachment extends FieldRenderer {
 
 			        if($this->getSetting('link')) return $renderedThumbnail;
 
-			        $template = $this->getShortTemplate();
-			        return sprintf($template,
+			        $this->template = $this->getShortTemplate();
+			        return sprintf($this->template,
 			            $this->getUrlOfPath(Helper::imagePath . $this->getValueOf('daten.pfad')),
 			            $this->getValueOf('anhangtitel'),
 			            $renderedThumbnail
 			        );
-			        break;
 			}
-
-			// fallback for xml data without group definition
-			$renderedThumbnail = $this->getThumbnailString(
-					$this->getValueOf('daten.pfad'),
-					$this->getValueOf('anhangtitel'),
-					$this->getValueOf('@location')
-			);
-
-			if($this->getSetting('link')) return $renderedThumbnail;
-
-			$template = $this->getShortTemplate();
-			return sprintf($template,
-					$this->getUrlOfPath($this->getValueOf('daten.pfad')),
-					$this->getValueOf('anhangtitel'),
-					$renderedThumbnail
-			);
     	}
+    	return '';
     }
 
     private function getUrlOfPath($path) {
@@ -186,19 +178,19 @@ class Attachment extends FieldRenderer {
             	$path = $this->resizeImage($path, $width, $height, $mode);
             	$url = $this->getUrlOfPath($path);
             }
-            $template = $this->getThumbnailTemplate(true);
-            $result = sprintf($template, $url, $width, $height, $alt);
+            $this->template = $this->getThumbnailTemplate(true);
+            $result = sprintf($this->template, $url, $width, $height, $alt);
 
             return $result;
         } catch (\InvalidArgumentException $e) {
-            $template = $this->getThumbnailTemplate();
+            $this->template = $this->getThumbnailTemplate();
             $url = $path;
             // @todo make it changeable in the config file
             if($location == 'REMOTE') $url = str_replace(".jpg", "_small.jpg", $url);
             if($location == 'EXTERN')
             	$url = $this->getUrlOfPath($path);
 
-            return sprintf($template, $url, $alt);
+            return sprintf($this->template, $url, $alt);
         }
     }
 

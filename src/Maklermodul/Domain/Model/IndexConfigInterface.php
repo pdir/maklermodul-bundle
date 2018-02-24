@@ -19,8 +19,6 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Model;
 
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
-
 interface IndexConfigInterface {
 	public function getUid();
 

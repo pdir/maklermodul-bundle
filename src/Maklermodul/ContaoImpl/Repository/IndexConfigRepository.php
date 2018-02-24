@@ -33,7 +33,9 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \MaklerModulMplus\Domain\Repository\IndexConfigRepositoryInterface::update()
+	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::update()
+     * @param \Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface $config index config
+     * @return void
 	 */
 	public function update(IndexConfigInterface $config) {
 		$objquery = $this->Database->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE id=?');
@@ -42,8 +44,9 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \MaklerModulMplus\Domain\Repository\IndexConfigRepositoryInterface::findById()
+	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findById()
 	 * @param int $configId contao modul id
+     * @return object
 	 */
 	public function findById($configId) {
 		$result = $this->Database->prepare("SELECT * FROM tl_module WHERE id=?")->execute($configId);
@@ -58,7 +61,7 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \MaklerModulMplus\Domain\Repository\IndexConfigRepositoryInterface::findAll()
+	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findAll()
 	 */
 	public function findAll() {
 		$result = $this->Database->prepare("SELECT * FROM tl_module WHERE type=?")->execute(self::CONTAO_MODULE_TYPE_LIST);

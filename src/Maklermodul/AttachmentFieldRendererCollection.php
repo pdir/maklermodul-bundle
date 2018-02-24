@@ -151,7 +151,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @return mixed Can return any type.
      */
     public function current() {
-        // TODO: Implement current() method.
+        // @@todo: Implement current() method.
+        return '';
     }
 
     /**
@@ -162,7 +163,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @return void Any returned value is ignored.
      */
     public function next() {
-        // TODO: Implement next() method.
+        // @todo: Implement next() method.
+        return '';
     }
 
     /**
@@ -173,7 +175,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @return mixed scalar on success, or null on failure.
      */
     public function key() {
-        // TODO: Implement key() method.
+        // @todo: Implement key() method.
+        return '';
     }
 
     /**
@@ -185,7 +188,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * Returns true on success or false on failure.
      */
     public function valid() {
-        // TODO: Implement valid() method.
+        // @todo: Implement valid() method.
+        return '';
     }
 
     /**
@@ -196,7 +200,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @return void Any returned value is ignored.
      */
     public function rewind() {
-        // TODO: Implement rewind() method.
+        // @todo: Implement rewind() method.
+        return '';
     }
 
 }

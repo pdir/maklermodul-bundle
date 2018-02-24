@@ -15,268 +15,267 @@
   line-height: 1.5;
 
   .content {
-	width: 60%;
-	float: left;
+    width: 60%;
+    float: left;
   }
 
   .right {
-	width: 40%;
-	padding: 0;
-	float: left;
+    width: 40%;
+    padding: 0;
+    float: left;
   }
 
   h1 {
-	color: #3d566e;
-	font-weight: 700;
-	font-size: 2rem;
-	position: relative;
-	margin-bottom: 40px;
-	margin-top: 0;
-	padding-bottom: 10px;
-	line-height: 2.5rem;
+    color: #3d566e;
+    font-weight: 700;
+    font-size: 2rem;
+    position: relative;
+    margin-bottom: 40px;
+    margin-top: 0;
+    padding-bottom: 10px;
+    line-height: 2.5rem;
   }
 
   h1:after {
-	position: absolute;
-	content: "";
-	left: 0;
-	bottom: 0;
-	width: 100px;
-	border-bottom: 3px solid #3d566e;
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    width: 100px;
+    border-bottom: 3px solid #3d566e;
   }
 
   h2 {
-	margin-bottom: 0;
-	color: #3d566e;
-	font-weight: 700;
+    margin-bottom: 0;
+    color: #3d566e;
+    font-weight: 700;
   }
 
   h3 {
-	margin: 20px 0 10px;
-	font-weight: 700;
-	font-size: 1.3rem;
-	padding: 10px 0 5px;
-	width: 100%;
-	color: #3d566e;
-	border-bottom: 3px solid #3d566e;
+    margin: 20px 0 10px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    padding: 10px 0 5px;
+    width: 100%;
+    color: #3d566e;
+    border-bottom: 3px solid #3d566e;
   }
 
   h4 {
-	margin: 20px 0 10px;
-	font-weight: 700;
-	font-size: 1.2rem;
-	padding: 0;
-	width: 100%;
-	color: #3d566e;
+    margin: 20px 0 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 100%;
+    color: #3d566e;
   }
 
   .field.verwaltung_techn-objektnr_extern {
-	color: #7abfbc;
-	font-size: 17px;
-	overflow: hidden;
-	padding: 15px 0 3px;
+    color: #7abfbc;
+    font-size: 17px;
+    overflow: hidden;
+    padding: 15px 0 3px;
   }
 
   .verwaltung_techn-objektnr_extern .label {
-	width: initial;
-	margin-right: 5px;
+    width: initial;
+    margin-right: 5px;
   }
 
   .label {
-	width: 240px;
-	float: left;
+    width: 240px;
+    float: left;
   }
 
   .value-text {
-	float: left;
+    float: left;
   }
 
   .obj-details {
-	float: left;
-	min-width: 100%;
-	color: #3d566e;
+    float: left;
+    min-width: 100%;
+    color: #3d566e;
 
-	h3 {
-	  margin-top: 0;
-	  padding-top: 0;
-	}
+    h3 {
+      margin-top: 0;
+      padding-top: 0;
+    }
 
-	.field > div:last-child {
-	  text-align: right;
-	}
+    .field > div:last-child {
+      text-align: right;
+    }
   }
 
   .big-img {
-	padding: 0;
-	overflow: hidden;
-	margin-right: 40px;
+    padding: 0;
+    overflow: hidden;
+    margin-right: 40px;
   }
 
   .small-pics {
-	width: 100%;
-	display: table;
-	padding-left: 0;
+    width: 100%;
+    display: table;
+    padding-left: 0;
   }
 
   .pic {
-	float: left;
-	width: initial;
-	margin: 10px 10px 8px 0;
+    float: left;
+    width: initial;
+    margin: 10px 10px 8px 0;
   }
 
   .more-pic {
-	float: left;
-	margin-right: 10px;
-	margin-top: 8px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 8px;
   }
 
   .any-pics {
-	overflow: hidden;
+    overflow: hidden;
   }
 
   .description {
-	clear: left;
+    clear: left;
   }
 
   .description, .contact, .maps, .obj-header {
-	padding: 0;
-	width: 100%;
-	color: #3d566e;
+    padding: 0;
+    width: 100%;
+    color: #3d566e;
   }
 
   .field {
-	padding-bottom: 4px;
-	list-style-type: none;
-	overflow: hidden;
+    padding-bottom: 4px;
+    list-style-type: none;
+    overflow: hidden;
   }
 
   .field .field {
-	padding: 0;
+    padding: 0;
   }
 
   .back.footer {
-	clear: left;
+    clear: left;
   }
 
   .preis.energie {
-	padding-bottom: 20px;
-	overflow: hidden;
-	.field {
-	  list-style-type: none;
-	}
+    padding-bottom: 20px;
+    overflow: hidden;
+    .field {
+      list-style-type: none;
+    }
   }
 
   .energy-scale {
-	width: 50%;
+    width: 50%;
   }
 
   .preis.energie .obj-details {
-	padding: 0;
-	margin-bottom: 0 !important;
-	margin-left: 0;
+    padding: 0;
+    margin-bottom: 0 !important;
+    margin-left: 0;
   }
 
   .energy-scale input[type='range'] {
-	border-radius: 0 0 10px 10px;
-	height: 10px;
-	width: 100%;
-	margin: 0 0 0 0;
-	behavior: url('assets/css3pie/1.0.0/PIE.htc');
-	-webkit-appearance: none;
-	box-shadow: inset 0 0 5px #333;
-	background: #22bf47;
-	/* Old browsers */
-	background: -moz-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right top, color-stop(0%, #22bf47), color-stop(30%, #cbea41), color-stop(46%, #fff547), color-stop(55%, #fff547), color-stop(70%, #ffd747), color-stop(100%, #ff4747));
-	/* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* Opera 11.10+ */
-	background: -ms-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* IE10+ */
-	background: linear-gradient(to right, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#22bf47', endColorstr='#ff4747', GradientType=1);
-	/* IE6-9 */
+    border-radius: 0 0 10px 10px;
+    height: 10px;
+    width: 100%;
+    margin: 0 0 0 0;
+    -webkit-appearance: none;
+    box-shadow: inset 0 0 5px #333;
+    background: #22bf47;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #22bf47), color-stop(30%, #cbea41), color-stop(46%, #fff547), color-stop(55%, #fff547), color-stop(70%, #ffd747), color-stop(100%, #ff4747));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* IE10+ */
+    background: linear-gradient(to right, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#22bf47', endColorstr='#ff4747', GradientType=1);
+    /* IE6-9 */
   }
 
   .dlh_googlemap {
-	margin-top: 15px;
+    margin-top: 15px;
   }
 
   .back a {
-	color: #6d96bd;
-	text-decoration: none;
-	display: block;
-	font-size: 19px;
-	margin-top: 20px;
+    color: #6d96bd;
+    text-decoration: none;
+    display: block;
+    font-size: 19px;
+    margin-top: 20px;
   }
 }
 
 .estate-detail.extended {
   .content {
-	width: 100%;
-	float: none;
+    width: 100%;
+    float: none;
   }
 
   .right {
-	width: 100%;
-	padding: 0;
+    width: 100%;
+    padding: 0;
 
-	.field {
-	  margin: 0;
-	}
+    .field {
+      margin: 0;
+    }
 
-	.obj-details {
-	  display: -ms-flexbox;
-	  display: flex;
-	  -ms-flex-wrap: wrap;
-	  flex-wrap: wrap;
-	  width: calc(100% + 30px);
-	  margin-left: -15px;
+    .obj-details {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      width: calc(100% + 30px);
+      margin-left: -15px;
 
-	  > div {
-		padding: 15px;
-		border-bottom: 2px solid #fff;
-		-ms-flex: 0 0 33.33%;
-		flex: 0 0 33.33%;
-		box-sizing: border-box;
-		max-width: 33.33%;
-	  }
+      > div {
+        padding: 15px;
+        border-bottom: 2px solid #fff;
+        -ms-flex: 0 0 33.33%;
+        flex: 0 0 33.33%;
+        box-sizing: border-box;
+        max-width: 33.33%;
+      }
 
-	  h2 {
-		background: #f2f2f2;
-		padding: 5px 10px;
-		margin: 10px 0;
-		font-size: 1.4rem;
-		width: 100%;
-		box-sizing: border-box;
+      h2 {
+        background: #f2f2f2;
+        padding: 5px 10px;
+        margin: 10px 0;
+        font-size: 1.4rem;
+        width: 100%;
+        box-sizing: border-box;
         border: none;
-	  }
+      }
 
-	  .field {
-		padding-bottom: 4px;
-		display: block;
-		overflow: hidden;
+      .field {
+        padding-bottom: 4px;
+        display: block;
+        overflow: hidden;
 
-		.label, div:last-child {
-		  width: 50%;
-		  float: left;
-		  font-size: 19px;
-		  color: #3d566e;
-		}
+        .label, div:last-child {
+          width: 50%;
+          float: left;
+          font-size: 19px;
+          color: #3d566e;
+        }
 
-		.label {
-		  font-weight: 700;
-		}
+        .label {
+          font-weight: 700;
+        }
 
-		div:last-child {
-		  text-align: right;
-		}
-	  }
-	}
+        div:last-child {
+          text-align: right;
+        }
+      }
+    }
   }
 }
 
@@ -288,57 +287,55 @@
 /* Neuer Energiepass */
 .estate-detail {
   .energy-slider {
-	width: 500px;
+    width: 500px;
   }
 
   .preis.energie {
-	padding-bottom: 20px;
-	overflow: hidden;
+    padding-bottom: 20px;
+    overflow: hidden;
 
-	.field {
-	  list-style-type: none;
-	}
+    .field {
+      list-style-type: none;
+    }
   }
   .energie-scale {
-	width: 100%;
-	margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
   }
   .preis.energie .obj-details {
-	padding: 0;
-	margin-bottom: 0 !important;
-	margin-left: 0;
+    padding: 0;
+    margin-bottom: 0 !important;
+    margin-left: 0;
   }
   .energie-scale input[type='range'] {
-	border-radius: 0 0 10px 10px;
-	height: 10px;
-	width: 100%;
-	margin: 0 0 0 0;
-	behavior: url('assets/css3pie/1.0.0/PIE.htc');
-	-webkit-appearance: none;
-	box-shadow: inset 0 0 5px #333;
-	background: #22bf47;
-	/* Old browsers */
-	background: -moz-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right top, color-stop(0%, #22bf47), color-stop(30%, #cbea41), color-stop(46%, #fff547), color-stop(55%, #fff547), color-stop(70%, #ffd747), color-stop(100%, #ff4747));
-	/* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* Opera 11.10+ */
-	background: -ms-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* IE10+ */
-	background: linear-gradient(to right, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
-	/* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#22bf47', endColorstr='#ff4747', GradientType=1);
-	/* IE6-9 */
+    border-radius: 0 0 10px 10px;
+    height: 10px;
+    width: 100%;
+    margin: 0 0 0 0;
+    -webkit-appearance: none;
+    box-shadow: inset 0 0 5px #333;
+    background: #22bf47;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, #22bf47), color-stop(30%, #cbea41), color-stop(46%, #fff547), color-stop(55%, #fff547), color-stop(70%, #ffd747), color-stop(100%, #ff4747));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* IE10+ */
+    background: linear-gradient(to right, #22bf47 0%, #cbea41 30%, #fff547 46%, #fff547 55%, #ffd747 70%, #ff4747 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#22bf47', endColorstr='#ff4747', GradientType=1);
+    /* IE6-9 */
   }
 }
 
 .energie-scale ul {
   width: 100%;
   margin: 0 0 0 0;
-  behavior: url('assets/css3pie/1.0.0/PIE.htc');
   -webkit-appearance: none;
   box-shadow: inset 0 0 5px #333;
   background: #22bf47;
@@ -361,31 +358,29 @@
 
 .estate-detail {
   .energie-scale input[type='range'] {
-	&::-moz-range-track {
-	  -moz-appearance: none;
-	}
+    &::-moz-range-track {
+      -moz-appearance: none;
+    }
 
-	&::-webkit-slider-thumb {
-	  width: 15px;
-	  height: 15px;
-	  background-color: #C9BA9E;
-	  border: 1px solid #999;
-	  border-radius: 20px;
-	  behavior: url('assets/css3pie/1.0.0/PIE.htc');
-	  -webkit-appearance: none !important;
-	  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-	}
+    &::-webkit-slider-thumb {
+      width: 15px;
+      height: 15px;
+      background-color: #C9BA9E;
+      border: 1px solid #999;
+      border-radius: 20px;
+      -webkit-appearance: none !important;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
 
-	&::-moz-range-thumb {
-	  width: 15px;
-	  height: 15px;
-	  background-color: #C9BA9E;
-	  border: 1px solid #999;
-	  border-radius: 20px;
-	  behavior: url('assets/css3pie/1.0.0/PIE.htc');
-	  -moz-appearance: none;
-	  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-	}
+    &::-moz-range-thumb {
+      width: 15px;
+      height: 15px;
+      background-color: #C9BA9E;
+      border: 1px solid #999;
+      border-radius: 20px;
+      -moz-appearance: none;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
   }
 }
 
@@ -398,6 +393,7 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-track {
   border: none;
   color: transparent;
 }
+
 body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
   border: none;
   height: 12px;
@@ -419,32 +415,31 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
   color: #000;
 
   li {
-	list-style-type: none;
-	float: left;
-	margin: 0;
-	padding: 0;
-	font-size: 0.8em;
-	position: relative;
-	line-height: 25px;
-	text-align: center;
+    list-style-type: none;
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    position: relative;
+    line-height: 25px;
+    text-align: center;
 
-	&:after {
-	  position: absolute;
-	  content: "|";
-	  right: 0;
-	  font-weight: normal !important;
-	  font-size: 15px !important;
-	  right: -1px;
-	}
+    &:after {
+      position: absolute;
+      content: "|";
+      font-weight: normal !important;
+      font-size: 15px !important;
+      right: -1px;
+    }
 
-	&:last-child:after {
-	  position: absolute;
-	  content: "";
-	}
-	&.active_eclass {
-	  font-weight: bold;
-	  font-size: 1.2em;
-	}
+    &:last-child:after {
+      position: absolute;
+      content: "";
+    }
+    &.active_eclass {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
   }
 }
 
@@ -474,34 +469,33 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
 
 .estate-header-image {
   height: 400px;
-  background-repeat: no-repeat;
   background-size: 100%;
-  background-position: center;
+  background: no-repeat center;
   font-family: 'Cairo', Arial, sans-serif;
   position: relative;
   overflow: hidden;
 
   h1, h2, h3, h4, h5, h6 {
-	background: rgba(255, 255, 255, 0.9);
-	display: inline-block;
-	width: initial;
-	padding: 10px 30px;
-	margin: 0 auto;
-	max-width: 80%;
-	color: #3d566e;
-	font-weight: 700;
-	text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    display: inline-block;
+    width: initial;
+    padding: 10px 30px;
+    margin: 0 auto;
+    max-width: 80%;
+    color: #3d566e;
+    font-weight: 700;
+    text-align: center;
     z-index: 1;
   }
 
   h1 {
-	font-size: 2rem;
+    font-size: 2rem;
   }
 
   .ce_text {
-	height: 100%;
-	display: flex;
-	align-items: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .ce_image {
@@ -513,7 +507,7 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
   }
 
   img {
-	width: 100%;
+    width: 100%;
   }
 }
 
@@ -521,74 +515,74 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
 
 @media (max-width: 1024px) {
   .estate-header-image {
-	height: 300px;
+    height: 300px;
   }
 
   .estate h2 {
-	height: 120px;
+    height: 120px;
   }
 }
 
 @media (max-width: 991px) {
   .estate-detail {
-	.right {
-	  width: 100%;
-	  padding: 0;
-	}
+    .right {
+      width: 100%;
+      padding: 0;
+    }
 
-	.verwaltung_techn-objektnr_extern, .obj-details {
-	  margin: 0;
-	}
+    .verwaltung_techn-objektnr_extern, .obj-details {
+      margin: 0;
+    }
 
-	.energy-slider {
-	  width: 100%;
-	}
+    .energy-slider {
+      width: 100%;
+    }
   }
 
   .estate-detail.extended .right .obj-details {
     display: block;
-	  > div {
-		max-width: 100%;
-	  }
+    > div {
+      max-width: 100%;
+    }
   }
 }
 
 @media (max-width: 767px) {
   .estate-detail {
-	margin: 0 10px;
+    margin: 0 10px;
 
-	.label {
-	  width: initial;
-	}
+    .label {
+      width: initial;
+    }
 
-	.field > div:last-child {
-	  float: right;
-	}
+    .field > div:last-child {
+      float: right;
+    }
 
-	.content {
-	  width: 100%;
-	}
+    .content {
+      width: 100%;
+    }
 
-	.big-img {
-	  margin: 0;
-	}
+    .big-img {
+      margin: 0;
+    }
   }
 
   .estate-header-image {
-	height: 200px;
+    height: 200px;
 
-	h1 {
-	  font-size: 1.5rem;
-	}
+    h1 {
+      font-size: 1.5rem;
+    }
   }
 
   .select #estate_filter_list > div {
-	display: block;
-	width: 50%;
-	float: left;
+    display: block;
+    width: 50%;
+    float: left;
   }
 
   #estate_filter_list > div:nth-child(odd) {
-	border-right: none;
+    border-right: none;
   }
 }

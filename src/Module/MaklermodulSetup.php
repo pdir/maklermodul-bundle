@@ -68,6 +68,7 @@ class MaklermodulSetup extends \BackendModule
 					// \File::putContent($className, $strHelperData);
 					$this->Template->message[] = array('Vollversion wurde erfolgreich heruntergeladen!', 'confirm');
 				}
+                break;
             case 'emptyDataFolder':
                 $files->rrdir($storageDirectoryPath.'data', true);
                 $this->Template->message[] = array('', 'info');

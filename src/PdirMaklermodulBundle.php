@@ -14,6 +14,7 @@
  */
 
 namespace Pdir\MaklermodulBundle;
+
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**

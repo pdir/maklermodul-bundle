@@ -19,23 +19,12 @@
  */
 namespace Pdir\MaklermodulBundle\Module;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Contao\CoreBundle\Exception\PageNotFoundException;
 use Patchwork\Utf8;
-use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
-use Pdir\MaklermodulBundle\Util\Helper;
-
-// check
-use Exception;
-use Frontend;
-
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
-
-
-use DebugBar\StandardDebugBar;
-use DebugBar\JavascriptRenderer;
-use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\Enviroment;
+use Pdir\MaklermodulBundle\Util\Helper;
 
 /**
  * Class ListView
@@ -55,12 +44,12 @@ class ListView extends \Module
 	protected $strTemplate  = self::DEFAULT_TEMPLATE;
 
 	/**
-	 * @var Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository
+	 * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository
 	 */
 	private $repository;
 
 	/**
-	 * @var Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface
+	 * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface
 	 */
 	private $config;
 
@@ -191,8 +180,15 @@ class ListView extends \Module
         $data = file_get_contents($this->getListSourceUri(true));
         $json = json_decode($data, true);
 
+        if(count($json) === 0)
+        {
+            throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
+        }
+
+        $newEstates = array();
+        $pageCount = 1;
         if($this->makler_addListPagination && $this->Input->get('estate-filter') == 'true') {
-            $newEstates = array();
+
             foreach ($json['data'] as $estate):
                 foreach ($_REQUEST as $key => $value) {
                     if (strpos($estate['css-filter-class-string'], $key.'-'.$value) !== FALSE) { // Yoshi version
@@ -205,7 +201,6 @@ class ListView extends \Module
 
         } elseif($this->makler_addListPagination && $this->makler_paginationUseIsotope) {
             $count = 1;
-            $pageCount = 1;
             foreach ($json['data'] as $estate):
                 $estate['css-filter-class-string'] = $estate['css-filter-class-string']." page".$pageCount;
                 $newEstates[] = $estate;
@@ -304,8 +299,8 @@ class ListView extends \Module
 		    $path = $storageDirectoryPath . $this->Template->config->getStorageFileUri();
         else
             $path = $this->Template->config->getStorageFileUri();
+
         return $path;
-        // return Enviroment::getInstance()->pathToUri($path);
 	}
 
 	public function getDetailViewPrefix() {
@@ -334,6 +329,8 @@ class ListView extends \Module
 
     /**
      * manipulate filter names
+     * @param string $str
+     * @return string
      */
     public function setFilterName($str)
     {
