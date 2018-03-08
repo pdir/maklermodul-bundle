@@ -7,3 +7,6 @@
 
 # PhpStorm
 .idea
+
+*.css
+*.css.map
