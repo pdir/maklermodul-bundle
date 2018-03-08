@@ -4,7 +4,7 @@
   "description": "maklermodul for Contao 4",
   "keywords":["contao","real estate","open immo", "immobilien","import","maklersoftware"],
   "homepage": "https://www.maklermodul.de",
-  "license": "paid extension - domain licence available",
+  "license": "proprietary",
   "authors": [
     {
       "name": "Webdesign für Dresden",
