@@ -1,8 +1,6 @@
 <?php $GLOBALS['TL_CSS'][''] = 'bundles/pdirmaklermodul/css/bootstrap.css'; ?>
 <?php $GLOBALS['TL_JAVASCRIPT'][''] = 'bundles/pdirmaklermodul/js/bootstrap.min.js'; ?>
-<?php $GLOBALS['TL_BODY'][''] = '
-
-'; ?>
+<?php #$GLOBALS['TL_BODY'][''] = ''; ?>
 
 <script>
     jQuery(function($) {
@@ -80,7 +78,7 @@
               </div>
               <div class="button">
                   <a href="contao/main.php?do=maklermodulSetup&act=downloadDemoData">
-                      <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_download.png" alt="Demodaten herunterladen" width="60" height="60" /></div>
+                      <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_demodata.png" alt="Demodaten herunterladen" width="60" height="60" /></div>
                       <br />Demodaten herunterladen</a>
               </div>
         </div>
@@ -94,11 +92,11 @@
       <div class="license clearall">
         <div class="left">
           <h3>Lizenz</h3>
-          <div class="button">
+          <!--<div class="button">
             <a href="/contao/main.php?do=maklermodulSetup&act=download">
               <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_download.png" alt="Download Vollversion" width="60" height="60"/></div>
               <br/>Download Vollversion</a>
-          </div>
+          </div>-->
           <div class="button">
             <a href="#" class="mm-license" data-toggle="modal" data-target="#mmLicenseModal">
               <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_buy.png" alt="Lizenz bestellen" width="60" height="60"/></div>

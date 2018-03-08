@@ -27,10 +27,10 @@ class MaklermodulSetup extends \BackendModule
     const VERSION = '2.0.0';
 
     /**
-    * Template
-    * @var string
-    */
-    protected $strTemplate = 'be_maklermodul_setup';
+     * Extension mode
+     * @var boolean
+     */
+    const MODE = 'DEMO';
 
 	/**
 	 * API Url
@@ -39,10 +39,22 @@ class MaklermodulSetup extends \BackendModule
 	static $apiUrl = 'https://pdir.de/api/maklermodul/';
 
     /**
-     * Extension mode
-     * @var boolean
+     * Template
+     * @var string
      */
-    const MODE = 'DEMO';
+    protected $strTemplate = 'be_maklermodul_setup';
+
+    /**
+     * Storage directory path
+     * @var string
+     */
+    protected $storageDirectoryPath;
+
+    /**
+     * Demo data filename
+     * @var string
+     */
+    protected $demoDataFilename = 'data/demo-data.zip';
 
     /**
     * Generate the module
@@ -50,15 +62,16 @@ class MaklermodulSetup extends \BackendModule
     */
     protected function compile()
     {
+        $this->storageDirectoryPath = \Config::get('uploadPath') . '/maklermodul/';
+
 		// $className = '/vendor/pdir/maklermodul-bundle/src/Resources/contao/Classes/Helper.php';
 		$strDomain = \Environment::get('httpHost');
 
 		/* @todo empty cache folder from backend */
         $files = \Files::getInstance();
-        $storageDirectoryPath = $GLOBALS['TL_CONFIG']['uploadPath'] . '/makler_modul_mplus/';
 
 		switch (\Input::get('act')) {
-			case 'download':
+/*			case 'download':
 				$strHelperData = file_get_contents(self::$apiUrl . 'download/latest/'.$strDomain);
 
 				$this->Template->message[] = array('Für Ihre IP/Domain wurde noch keine Lizenz gekauft.', 'error');
@@ -68,26 +81,27 @@ class MaklermodulSetup extends \BackendModule
 					// \File::putContent($className, $strHelperData);
 					$this->Template->message[] = array('Vollversion wurde erfolgreich heruntergeladen!', 'confirm');
 				}
-                break;
+                break;*/
             case 'emptyDataFolder':
-                $files->rrdir($storageDirectoryPath.'data', true);
+                $files->rrdir($this->storageDirectoryPath.'data', true);
                 $this->Template->message[] = array('', 'info');
                 break;
             case 'emptyUploadFolder':
-                $files->rrdir($storageDirectoryPath.'upload', true);
+                $files->rrdir($this->storageDirectoryPath.'upload', true);
                 $this->Template->message[] = array('', 'info');
                 break;
             case 'emptyTmpFolder':
-                $files->rrdir($storageDirectoryPath.'org', true);
+                $files->rrdir($this->storageDirectoryPath.'org', true);
                 $this->Template->message[] = array('', 'info');
                 break;
             case 'downloadDemoData':
                 $this->downloadDemoData();
+                $this->Template->message[] = array('Demo Daten wurden heruntergeladen.', 'info');
                 break;
             default:
                 $this->Template->base = $this->Environment->base;
                 $this->Template->version = self::VERSION;
-                $this->Template->storageDirectoryPath = $storageDirectoryPath;
+                $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
 		}
 
 		$this->Template->extMode = self::MODE;
@@ -110,9 +124,37 @@ class MaklermodulSetup extends \BackendModule
 
     protected function downloadDemoData()
     {
-        file_put_contents("/", fopen("http://pdir.de/api/data/maklermodul/demo-data.zip", 'r'));
+        $strFile = $this->storageDirectoryPath . $this->demoDataFilename;
 
+        try
+        {
+            \File::putContent($strFile, file_get_contents('https://pdir.de/api/data/maklermodul/demo-data.zip'));
+        }
+        catch (\Exception $e)
+        {
+            \Message::addError($e->getMessage());
+        }
 
+        $this->unzipDemoData();
+    }
+
+    protected function unzipDemoData()
+    {
+        $objArchive = new \ZipReader($this->storageDirectoryPath . $this->demoDataFilename);
+
+        // Extract all files
+        while ($objArchive->next())
+        {
+            // Extract the files
+            try
+            {
+                \File::putContent($this->storageDirectoryPath . 'data/' . $objArchive->file_name, $objArchive->unzip());
+            }
+            catch (\Exception $e)
+            {
+                \Message::addError($e->getMessage());
+            }
+        }
 
         return;
     }
