@@ -176,7 +176,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listCondition'] = array
 		'exclude'                 => true,
 		'inputType'               => 'textarea',
 		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'sql'                     => "text NOT NULL"
+		'sql'                     => "text NULL"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listImageWidth'] = array
