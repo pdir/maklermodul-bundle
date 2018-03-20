@@ -52,12 +52,9 @@
     <hr>
     <div class="tools">
 
-      <?php if( is_array($this->message) ): ?>
-        <p class="tl_<?= $this->message[1] ?>"><?= $this->message[0] ?></p>
-      <?php endif; ?>
-      <?php if ($this->message): ?>
-        <p class="tl_confirm"><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'] ?></p>
-      <?php endif; ?>
+      <?php if( $this->debugMessages ): foreach( $this->debugMessages as $message): ?>
+        <p class="tl_<?= $message[1] ?>"><?= $message[0] ?></p>
+      <?php endforeach; echo '<br>'; endif; ?>
 
       <h2>Tools</h2>
       <?php if($this->extMode == 'DEMO'): ?>
@@ -66,13 +63,13 @@
       <div class="folders clearall">
         <div class="left">
               <h3>Import & Index</h3>
-              <div class="button">
-                  <a href="<?= $this->base ?>system/modules/makler_modul_mplus/assets/cron.php" target="_blank">
+              <div class="button<?php if($this->extMode == 'DEMO'): ?>inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
+                  <a href="contao/main.php?do=maklermodulSetup&act=import">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="60" height="60" /></div>
                       <br />Import ausführen</a>
               </div>
-              <div class="button">
-                  <a href="<?= $this->base ?>system/modules/makler_modul_mplus/assets/indexer.php" target="_blank">
+              <div class="button<?php if($this->extMode == 'DEMO'): ?>inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
+                  <a href="contao/main.php?do=maklermodulSetup&act=index">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="60" height="60" /></div>
                       <br />Index aufbauen</a>
               </div>
@@ -84,9 +81,9 @@
         </div>
         <div class="right">
           <h3>Ordner leeren</h3>
-          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklerSetup&act=emptyDataFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>data wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?></a></div>
-          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklerSetup&act=emptyTmpFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>org wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?></a></div>
-          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklerSetup&act=emptyUploadFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>upload wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?></a></div>
+          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyDataFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>data wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?></a></div>
+          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyTmpFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>org wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?></a></div>
+          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyUploadFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>upload wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?></a></div>
         </div>
       </div>
       <div class="license clearall">

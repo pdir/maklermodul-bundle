@@ -108,6 +108,24 @@
 	margin-top: 15px;
 }
 
+.be_maklermodul_setup .button.inactive img {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: url(desaturate.svg#greyscale);
+    filter: gray;
+    -webkit-filter: grayscale(1);
+}
+
+.be_maklermodul_setup .button.inactive a {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+}
+
 @media (min-width:768px) {
     #main .modal-dialog {
         width: 80%;

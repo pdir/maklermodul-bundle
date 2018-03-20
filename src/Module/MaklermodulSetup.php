@@ -57,6 +57,12 @@ class MaklermodulSetup extends \BackendModule
     protected $demoDataFilename = 'data/demo-data.zip';
 
     /**
+     * Debug message Array
+     * @var array
+     */
+    public $debugMessages;
+
+    /**
     * Generate the module
     * @throws \Exception
     */
@@ -71,32 +77,21 @@ class MaklermodulSetup extends \BackendModule
         $files = \Files::getInstance();
 
 		switch (\Input::get('act')) {
-/*			case 'download':
-				$strHelperData = file_get_contents(self::$apiUrl . 'download/latest/'.$strDomain);
-
-				$this->Template->message[] = array('Für Ihre IP/Domain wurde noch keine Lizenz gekauft.', 'error');
-
-				if ($strHelperData != 'error')
-				{
-					// \File::putContent($className, $strHelperData);
-					$this->Template->message[] = array('Vollversion wurde erfolgreich heruntergeladen!', 'confirm');
-				}
-                break;*/
             case 'emptyDataFolder':
                 $files->rrdir($this->storageDirectoryPath.'data', true);
-                $this->Template->message[] = array('', 'info');
+                $this->debugMessages[] = array($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info');
                 break;
             case 'emptyUploadFolder':
                 $files->rrdir($this->storageDirectoryPath.'upload', true);
-                $this->Template->message[] = array('', 'info');
+                $this->debugMessages[] = array($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info');
                 break;
             case 'emptyTmpFolder':
                 $files->rrdir($this->storageDirectoryPath.'org', true);
-                $this->Template->message[] = array('', 'info');
+                $this->debugMessages[] = array($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info');
                 break;
             case 'downloadDemoData':
                 $this->downloadDemoData();
-                $this->Template->message[] = array('Demo Daten wurden heruntergeladen.', 'info');
+                $this->debugMessages[] = array('Demo Daten wurden heruntergeladen.', 'info');
                 break;
             default:
                 $this->Template->base = $this->Environment->base;
@@ -104,12 +99,15 @@ class MaklermodulSetup extends \BackendModule
                 $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
 		}
 
-		$this->Template->extMode = self::MODE;
-		$this->Template->extModeTxt = self::MODE=='FULL' ? 'Vollversion' : 'Demo';
+		$this->Template->extMode = static::MODE;
+		$this->Template->extModeTxt = static::MODE=='FULL' ? 'Vollversion' : 'Demo';
 		$this->Template->version = self::VERSION;
 		$this->Template->hostname = gethostname();
 		$this->Template->ip = \Environment::get('server');
 		$this->Template->domain = $strDomain;
+
+        $this->Template->params = $this->configParameters; // for debug
+        $this->Template->debugMessages = $this->getDebugMessages();
 
 		// email body
 		$this->Template->emailBody = $this->getEmailBody();
@@ -157,5 +155,24 @@ class MaklermodulSetup extends \BackendModule
         }
 
         return;
+    }
+
+    public function debug($message)
+    {
+        if(!is_array($message))
+        {
+            $this->debugMessages[] = array($message, 'info');
+            return;
+        }
+
+        if (!defined('CRONJOB') OR CRONJOB == false) {
+            $this->debugMessages[] = $message;
+        }
+        return;
+    }
+
+    public function getDebugMessages()
+    {
+        return $this->debugMessages;
     }
 }

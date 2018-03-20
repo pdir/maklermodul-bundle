@@ -176,6 +176,7 @@ class ListView extends \Module
 
         //// get immo objects from xml file
         $pages = array();
+
         /* @todo replace with contao file class */
         $data = file_get_contents($this->getListSourceUri(true));
         $json = json_decode($data, true);
@@ -289,7 +290,6 @@ class ListView extends \Module
         $container = \System::getContainer();
         $strRootDir = $container->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . $container->getParameter('contao.upload_path');
         $storageDirectoryPath = $strRootDir . DIRECTORY_SEPARATOR . 'maklermodul' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
-        // $storageDirectoryPath = $this->getRootDir();
 
         if(!method_exists ($this->Template->config, 'getStorageFileUri')) {
             echo $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'];
