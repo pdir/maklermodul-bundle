@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * maklermodul for Contao Open Source CMS
  *
@@ -31,7 +29,7 @@ class PdirMaklermodulExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $mergedConfig, ContainerBuilder $container): void
+    public function load(array $mergedConfig, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader(
             $container,
