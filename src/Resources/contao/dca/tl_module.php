@@ -50,7 +50,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_actIndexFile'] = array
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_actIndexFile'],
     'exclude'                 => true,
     'inputType'               => 'text',
-    'sql'                     =>  "text NOT NULL default '00index-demo-00001.json'"
+    'sql'                     => "varchar(255) NOT NULL default '00index-demo-00001.json'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['immo_readerTemplate'] = array
