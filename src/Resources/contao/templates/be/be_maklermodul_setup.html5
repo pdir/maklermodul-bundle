@@ -63,12 +63,12 @@
       <div class="folders clearall">
         <div class="left">
               <h3>Import & Index</h3>
-              <div class="button<?php if($this->extMode == 'DEMO'): ?>inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
+              <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
                   <a href="contao/main.php?do=maklermodulSetup&act=import">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="60" height="60" /></div>
                       <br />Import ausführen</a>
               </div>
-              <div class="button<?php if($this->extMode == 'DEMO'): ?>inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
+              <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
                   <a href="contao/main.php?do=maklermodulSetup&act=index">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="60" height="60" /></div>
                       <br />Index aufbauen</a>
