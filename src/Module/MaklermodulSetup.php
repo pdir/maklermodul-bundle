@@ -24,7 +24,7 @@ class MaklermodulSetup extends \BackendModule
     /**
      * Maklermodul version
      */
-    const VERSION = '1.1.1';
+    const VERSION = '1.1.2';
 
     /**
      * Extension mode
