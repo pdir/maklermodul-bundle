@@ -126,6 +126,17 @@
     color: black;
 }
 
+.be_maklermodul_setup .buttoninactive, .be_maklermodul_setup .button {
+    width: 33.33%;
+    float: left;
+    text-align: center;
+    margin: 0;
+}
+
+.be_maklermodul_setup .kreis {
+    width: 100%;
+}
+
 @media (min-width:768px) {
     #main .modal-dialog {
         width: 80%;
