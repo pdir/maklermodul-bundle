@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listContent'] = array
     'inputType'               => 'textarea',
     'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
    // 'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
-    'sql'                     => "text NOT NULL"
+    'sql'                     => "text NULL"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listPage'] = array
@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listFilter'] = array
 		'inputType'               => 'textarea',
 		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 		// 'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
-		'sql'                     => "text NOT NULL"
+		'sql'                     => "text NULL"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_listFilterTemplate'] = array

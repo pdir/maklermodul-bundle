@@ -41,7 +41,7 @@ class Runonce
      * Import folder
      * @var string
      */
-    static $strImportFolder = self::strFolder . 'import';
+    static $strImportFolder = self::strFolder . 'upload';
 
     /**
      * Org folder
