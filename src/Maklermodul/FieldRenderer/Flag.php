@@ -42,7 +42,7 @@ class Flag extends FieldRenderer {
     public function value($doNotPrint = false) {
         $returnValue = $this->getSetting('prefix');
 
-        if ($this->getValue() === true OR $this->getValue() == 'true' OR $this->getValue() == '1') {
+        if ($this->getValue() === true OR $this->getValue() == 'true' OR $this->getValue() == '1' OR $this->getValue() == 'Ja' OR $this->getValue() == 'JA') {
             $returnValue .= $this->getSetting('yesValue');
         } else {
             $returnValue .= $this->getSetting('noValue');
