@@ -72,8 +72,8 @@ class Runonce
             new \Folder(self::$strOrgFolder);
         }
 
-        if(!file_exists(self::$strDataFolder . DIRECTORY_SEPARATOR . '.public')) {
-            new \File(self::$strDataFolder . DIRECTORY_SEPARATOR . '.public');
+        if(!file_exists(self::strFolder . DIRECTORY_SEPARATOR . '.public')) {
+            new \File(self::strFolder . DIRECTORY_SEPARATOR . '.public');
         }
     }
 }
