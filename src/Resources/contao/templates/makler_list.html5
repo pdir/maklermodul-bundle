@@ -107,7 +107,7 @@
                 <p>Seite <span id="pagPage">1</span> von <?= $this->pageCount ?></p>
                 <ul>
                     <?php for ($i = 1; $i <= $this->pageCount; $i++): ?>
-                        <li<?php if($i == 1):?> class="active"<?php endif; ?>><a href="#" class="link" title="<?= $i ?>" onclick="filterByPage(this);return false;" data-filter=".page<?= $i ?>"><?= $i ?></a></li>
+                        <li<?php if($i == 1):?> class="active"<?php endif; ?>><a href="#" class="link" title="<?= $i ?>" data-filter=".page<?= $i ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
                 </ul>
             </div>
@@ -136,7 +136,6 @@
 <?php // Filterwert Vorlage Button ?>
 <script type="text/html" id="estate_filter_value_template">
     <span class="button"
-          onClick="filterByButton(this); return false;"
           data-template-bind='{"attribute": "data-filter", "value":"css"}'
           data-content="name">
             </span>
