@@ -249,6 +249,7 @@ class ListView extends \Module
         }
 
         $this->Template->storageDirectoryPath = $this->getRootDir();
+        $this->Template->staticFilter = $this->immo_staticFilter ? true : false;
     }
 
     private function isJsonString($str) {
