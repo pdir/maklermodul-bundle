@@ -37,6 +37,7 @@ console.log('file loaded!');
             .on( 'click', '.mm-reset', listView.reset ) // bind reset buttons
             .on( 'click', '.mm-shuffle', listView.shuffle ) // bind shuffle buttons
             .on( 'click', '.mm-filter-ckb', listView.filterByCheckbox ) // bind checkboxes
+            .on( 'click', '.mm-filter-btn', listView.filterByButton ) // bind buttons
             .on( 'click', '.pagination li a.link', listView.filterByPage ) // bind pagination links
             .on( 'change', '.mm-filter-sel', listView.filterBySelect ) // bind select fields
             .on( 'slideStop', '.mm-filter-range', listView.filterByRange ) // bind range sliders
@@ -163,6 +164,7 @@ console.log('file loaded!');
         listView.searchFields = $('.mm-quicksearch');
         listView.nearbyField = $('.mm-nearby');
         listView.checkboxes = $('.mm-filter-ckb');
+        listView.buttons = $('.mm-filter-btn');
         listView.selects = $('.mm-filter-sel');
         listView.ranges = $('.mm-filter-range');
         listView.pagination = $('.mod_immoListView .pagination');
@@ -221,11 +223,20 @@ console.log('file loaded!');
                     listView.selectFilter = arrSelects.join(",");
                 }
 
-                // checkboxes
+                // checkboxes & buttons
                 $(listView.checkboxes).each(function(i, obj) {
                     var val = $(obj).val();
                     if(!value.indexOf(val) || value.indexOf(val) !== -1) {
                         $(obj).prop('checked', true);
+                        arrCheckboxes.push(val);
+                    }
+                });
+
+                $(listView.buttons).each(function(i, obj) {
+                    var val = $(obj).val();
+                    console.log(val);
+                    console.log($(obj).hasClass('active'));
+                    if($(obj).hasClass('active')) {
                         arrCheckboxes.push(val);
                     }
                 });
@@ -246,6 +257,7 @@ console.log('file loaded!');
 			typeof listView.paginationFilter == 'undefined' &&
 			typeof listView.rangeFilter == 'undefined'
 		) {
+			console.log('set pagination filter to page1');
             listView.paginationFilter = 'page1';
             listView.pagination.show();
         }
@@ -267,7 +279,16 @@ console.log('file loaded!');
         } else {
             listView.pagination.hide();
         }
-
+        /*
+         console.log('search: '+listView.qsRegex);
+         console.log('searchSel: '+listView.qsSelector);
+         console.log('checkbox: ' +listView.checkboxFilter);
+         console.log('select: ' +listView.selectFilter);
+         console.log('range' +listView.rangeFilters);
+         console.log(listView.rangeFilters);
+         console.log('paginationStatus: ' +listView.paginationStatus);
+         console.log('paginationFilter: ' +listView.paginationFilter);
+         */
 /* @todo implement special box
         var specialBox = listView.estateList.find('.special-box');
         specialBox.removeClass('.isotope-hidden')
@@ -331,6 +352,10 @@ console.log('file loaded!');
         // reset checkboxes
         listView.checkboxes.filter(':checked').each(function(){
             $(this).prop( "checked", false );
+        });
+        // reset buttons
+        listView.checkboxes.filter(':checked').each(function(){
+            $(this).removeClass('active');
         });
         // reset search
         listView.searchFields.each(function(){
@@ -400,7 +425,15 @@ console.log('file loaded!');
     };
 
     listView.changeCounter = function () {
+        //console.log($('#estate_list .estate').length);
+        //console.log(listView.estateList.find('.special-box').hasClass('isotope-hidden').length);
+        //console.log(jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length);
+        //console.log(listView.objCnt);
         listView.objCnt = jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length;
+
+        console.log(listView.hashFilter);
+        console.log(listView.rangeFilter);
+        console.log(listView.qsString);
 
         // get all items for pagination
         if(listView.hashFilter && listView.hashFilter.indexOf('.page') > -1 && !listView.qsString && !listView.rangeFilter
@@ -437,6 +470,35 @@ console.log('file loaded!');
         listView.filter();
     };
 
+    listView.filterByButton = function(e) {
+        var filters = [];
+
+        // unset pagination filter
+        delete listView.paginationFilter;
+
+        // toogle active
+        if($(this).hasClass('active')){
+            $(this).removeClass('active')
+        } else {
+            $(this).addClass('active')
+        }
+
+        listView.buttons.filter('.active').each(function() {
+            filters.push( $(this).attr('data-filter') );
+        });
+
+        // filters = filters.join(', '); 	//OR
+        filters = filters.join(''); 		//AND
+
+        if(filters === '')
+            delete listView.checkboxFilter;
+        else
+            listView.checkboxFilter = filters;
+
+        // call filter
+        listView.filter();
+    };
+
     listView.filterBySelect = function() {
         // unset pagination filter
         delete listView.paginationFilter;
@@ -458,6 +520,7 @@ console.log('file loaded!');
             listView.selectFilter = filters;
 
         listView.selectFilter = filters;
+        console.log("filters: " + filters);
 
         // call filter
         listView.filter();
@@ -477,6 +540,9 @@ console.log('file loaded!');
         // combine filters
         var filterValue = listView.concatValues( filters );
 
+        console.log(filterValue);
+        console.log(listView.paginationStatus);
+
         if (typeof listView.paginationStatus == 'undefined')
         {
         	delete listView.paginationFilter;
@@ -495,6 +561,7 @@ console.log('file loaded!');
 		}
 
         listView.hashFilter = filterValue;
+        console.log(e);
 
         //listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
         listView.estateList.isotope({ filter: listView.hashFilter });
@@ -674,6 +741,7 @@ console.log('file loaded!');
 
     listView.showObjectRequest = function() {
         document.getElementById("obid-value").innerHTML = this.getAttribute("data-obj");
+        //console.log("button clicked");
         $('input[name="objektnummer"]').val(this.getAttribute("data-obj"));
     };
 
