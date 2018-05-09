@@ -49,7 +49,7 @@ class Helper extends \Frontend
      * Path to Image
      * @var string
      */
-    const imagePath = '/files/maklermodul/data';
+    const imagePath = '/files/maklermodul/data/';
 
     public function getAds()
     {

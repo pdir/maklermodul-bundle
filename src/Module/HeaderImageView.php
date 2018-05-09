@@ -97,7 +97,7 @@ class HeaderImageView extends \Module
         $this->Template->showBackgroundImage = $this->makler_showBackgroundImage;
 
         if($estate->rawValue('anhaenge.anhang.#1.daten.pfad') != "") {
-            $this->Template->headerImage = Helper::imagePath . "/" . $estate->rawValue('anhaenge.anhang.#1.daten.pfad');
+            $this->Template->headerImage = Helper::imagePath . $estate->rawValue('anhaenge.anhang.#1.daten.pfad');
         } else {
             $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder . "/img/platzhalterbild.jpg";
             if($placeholder != Helper::assetFolder . "/img/platzhalterbild.jpg") {
