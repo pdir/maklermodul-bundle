@@ -238,37 +238,36 @@ console.log('file loaded!');
         }
 
         // use pagination if active and no other filter is set
+        listView.noPagination = false;
         if(listView.paginationStatus &&
-            typeof listView.qsRegex === 'undefined' &&
-            typeof listView.checkboxFilter === 'undefined' &&
-            typeof listView.selectFilter === 'undefined' &&
-            typeof listView.paginationFilter === 'undefined' &&
-            typeof listView.rangeFilter === 'undefined'
-        ) {
-            console.log('set pagination filter to page1');
+			typeof listView.qsRegex == 'undefined' &&
+			typeof listView.checkboxFilter == 'undefined' &&
+			typeof listView.selectFilter == 'undefined' &&
+			typeof listView.paginationFilter == 'undefined' &&
+			typeof listView.rangeFilter == 'undefined'
+		) {
             listView.paginationFilter = 'page1';
             listView.pagination.show();
         }
-
-        if(typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
-            typeof listView.selectFilter !== 'undefined' || typeof listView.rangeFilter !== 'undefined')
+        else if(typeof listView.paginationStatus == 'undefined' &&
+            typeof listView.qsRegex == 'undefined' &&
+            typeof listView.checkboxFilter == 'undefined' &&
+            typeof listView.selectFilter == 'undefined' &&
+            typeof listView.paginationFilter == 'undefined' &&
+            typeof listView.rangeFilter == 'undefined')
+        {
+            listView.noPagination = true;
+		}
+        if(typeof listView.qsRegex != 'undefined' || typeof listView.checkboxFilter != 'undefined' ||
+            typeof listView.selectFilter != 'undefined' || typeof listView.rangeFilter != 'undefined')
             delete listView.paginationFilter;
 
-        if(listView.paginationStatus && typeof listView.paginationFilter !== 'undefined') {
+        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined') {
             listView.pagination.show();
         } else {
             listView.pagination.hide();
         }
-        /*
-         console.log('search: '+listView.qsRegex);
-         console.log('searchSel: '+listView.qsSelector);
-         console.log('checkbox: ' +listView.checkboxFilter);
-         console.log('select: ' +listView.selectFilter);
-         console.log('range' +listView.rangeFilters);
-         console.log(listView.rangeFilters);
-         console.log('paginationStatus: ' +listView.paginationStatus);
-         console.log('paginationFilter: ' +listView.paginationFilter);
-         */
+
 /* @todo implement special box
         var specialBox = listView.estateList.find('.special-box');
         specialBox.removeClass('.isotope-hidden')
@@ -401,15 +400,7 @@ console.log('file loaded!');
     };
 
     listView.changeCounter = function () {
-        //console.log($('#estate_list .estate').length);
-        //console.log(listView.estateList.find('.special-box').hasClass('isotope-hidden').length);
-        //console.log(jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length);
-        //console.log(listView.objCnt);
         listView.objCnt = jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length;
-
-        console.log(listView.hashFilter);
-        console.log(listView.rangeFilter);
-        console.log(listView.qsString);
 
         // get all items for pagination
         if(listView.hashFilter && listView.hashFilter.indexOf('.page') > -1 && !listView.qsString && !listView.rangeFilter
@@ -451,9 +442,14 @@ console.log('file loaded!');
         delete listView.paginationFilter;
 
         var filters = listView.selects.children('option:selected', this).map(function(){
-            var id = $(this).parent('select').attr('id');
-            if(id === 'geo-ort')
-                return $(this).attr('value');
+			var id = $(this).parent('select').attr('id');
+
+        	if(id == 'geo-ort')
+            	return $(this).attr('value');
+
+        	if(typeof $(this).attr('value') != 'undefined' && $(this).attr('value') != '-1' && $(this).attr('value') != 'alle' && id != 'sorting' && id != 'zimmer' && id != 'umkreis')
+            	return $(this).attr('value');
+
         }).get().join(',');
 
         if(filters === '')
@@ -462,7 +458,6 @@ console.log('file loaded!');
             listView.selectFilter = filters;
 
         listView.selectFilter = filters;
-        console.log("filters: " + filters);
 
         // call filter
         listView.filter();
@@ -482,15 +477,24 @@ console.log('file loaded!');
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        if(filters.length === 0 || filterValue === '') {
-            listView.paginationFilter = 'page1';
-            filterValue = '.page1';
-        } else {
-            delete listView.paginationFilter;
-        }
+        if (typeof listView.paginationStatus == 'undefined')
+        {
+        	delete listView.paginationFilter;
+            // set filter to * | show all
+            if(filters.length == 0 || filterValue == '' ||filterValue == -1)
+				filterValue = '*';
+    	}
+    	else(listView.paginationStatus && filters.length == 0 || listView.paginationStatus && filterValue == '')
+    	{
+    		// if no filter is set, use page1 of pagination
+            if(filters.length == 0 || filterValue == '')
+            {
+                listView.paginationFilter = 'page1';
+                filterValue = '.page1';
+			}
+		}
 
         listView.hashFilter = filterValue;
-        console.log(e);
 
         //listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
         listView.estateList.isotope({ filter: listView.hashFilter });
@@ -670,7 +674,6 @@ console.log('file loaded!');
 
     listView.showObjectRequest = function() {
         document.getElementById("obid-value").innerHTML = this.getAttribute("data-obj");
-        //console.log("button clicked");
         $('input[name="objektnummer"]').val(this.getAttribute("data-obj"));
     };
 
@@ -701,19 +704,20 @@ console.log('file loaded!');
         });
     };
 
-    listView.registerScrollTopPagination = function() {
+    listView.registerScrollTopPagination = function(event) {
+        event.preventDefault();
+
         var href = '.mod_immoListView';
         $('html, body').animate({
             scrollTop:$(href).offset().top - 10
         },'slow');
-        e.preventDefault();
     };
 
     $(document).on( 'ready', listView.init );
     $(window).on( 'hashchange', listView.onHashchange );
 
     var postcodeArr = [];
-    $.getJSON("files/cto_layout/scripts/plz.json", function(json) {
+    $.getJSON("bundles/pdirmaklermodul/js/plz.json", function(json) {
         postcodeArr = json;
     });
 

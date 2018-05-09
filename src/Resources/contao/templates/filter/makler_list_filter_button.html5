@@ -5,7 +5,6 @@
         <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
             <button class="button
                 <?php if($this->Input->get($filter['key']) == $values['css']):?> active<?php endif; ?>"
-                onClick="filterByButton(this); return false;"
                 data-filter=".<?= $filter['key'] ?>-<?= $values['css'] ?>">
                 <?= ucfirst(strtolower($values['name'])) ?>
             </button>
