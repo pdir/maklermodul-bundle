@@ -64,6 +64,11 @@
         <target>makler modul</target>
       </trans-unit>
 
+			<trans-unit id="MOD.maklermodulPrivacy">
+      	<source>If you use the OpenImmo Feedback Form on the Exposé pages, data protection relevant information could be collected.</source>
+        <target>Wenn Sie das OpenImmo Feedback Formular auf den Exposé Seiten einsetzen, könnten datenschutzrelevante Informationen erhoben werden.</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

@@ -61,6 +61,8 @@ $GLOBALS['TL_CTE']['pdirMaklermodul'] = array
 
 // $GLOBALS['TL_HOOKS']['addDashboardWidget'][] 	= array('MaklerModulMplus\ListPaginationHook', 'hookAddDashboardWidget');
 
+$GLOBALS['TL_HOOKS']['addPrivacyWidget'][] = array('Pdir\MaklermodulBundle\Util\Helper', 'addPrivacyWidget');
+
 /**
  * auto items
  */

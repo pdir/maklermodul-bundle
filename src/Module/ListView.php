@@ -239,7 +239,7 @@ class ListView extends \Module
         if ($this->arrData['immo_listDebug'] == 1)
         {
             /* @todo replace with contao file class */
-            $keyIndexString = file_get_contents(TL_ROOT . DIRECTORY_SEPARATOR . $GLOBALS['TL_CONFIG']['uploadPath'] . '/makler_modul_mplus/data/key-index.json');
+            $keyIndexString = file_get_contents(TL_ROOT . Helper::imagePath . '/key-index.json');
             $keyIndex = json_decode($keyIndexString, true);
             natsort($keyIndex);
             $this->Template->debug = true;
