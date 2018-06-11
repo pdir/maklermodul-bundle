@@ -19,7 +19,7 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 
 interface IndexConfigRepositoryInterface {
 	public function findById($configId);
