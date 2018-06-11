@@ -19,9 +19,8 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository;
 
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface;
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 
 class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryInterface {
 
@@ -34,7 +33,7 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
 	/**
 	 * (non-PHPdoc)
 	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::update()
-     * @param \Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface $config index config
+     * @param \Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface $config index config
      * @return void
 	 */
 	public function update(IndexConfigInterface $config) {

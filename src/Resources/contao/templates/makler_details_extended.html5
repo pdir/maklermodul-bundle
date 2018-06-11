@@ -31,7 +31,7 @@ else:
     <div class="content">
         <div class="big-img">
             <?php if($this->estate->renderer('anhaenge.anhang.#1.daten.pfad')->asText()->withoutLabel()->value(true)): ?>
-                <img src="Pdir\MaklermodulBundle\Util\Helper::imagePath . <?= $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="700" height="500">
+                <img src="<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="700" height="500">
             <?php else: ?>
                 <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="700" height="500">
             <?php endif; ?>

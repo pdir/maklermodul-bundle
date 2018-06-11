@@ -21,9 +21,9 @@ namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl;
 
 class StaticDIC {
 
-    const CONFIG_ROOT = '../../config';
+    const CONFIG_ROOT = '../../Resources/contao/config';
     const FILTER_CSS_MAPPING = 'filter.ini';
-    const USER_FILTER_CSS_MAPPING = 'files/makler_modul_mplus/data.filter.ini';
+    const USER_FILTER_CSS_MAPPING = 'files/maklermodul/data.filter.ini';
 
     private static $filterConfig = null;
 
