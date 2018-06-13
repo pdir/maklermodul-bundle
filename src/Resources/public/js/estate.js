@@ -40,6 +40,7 @@ console.log('file loaded!');
             .on( 'click', '.mm-filter-btn', listView.filterByButton ) // bind buttons
             .on( 'click', '.pagination li a.link', listView.filterByPage ) // bind pagination links
             .on( 'change', '.mm-filter-sel', listView.filterBySelect ) // bind select fields
+            .on( 'change', '.mm-only-filter .mm-filter-sel', listView.appendFilter ) // append filter settings to url (filter only)
             .on( 'slideStop', '.mm-filter-range', listView.filterByRange ) // bind range sliders
             .on( 'click', '.anfrage-btn', listView.showObjectRequest )
             .on( 'keyup', '.mm-quicksearch', listView.quicksearch )
@@ -640,6 +641,14 @@ console.log('file loaded!');
         // @todo deactivate via modul $('html,body').animate({ scrollTop: $("#slider .mod_article.last").offset().top - 85 }, 600);
 
         listView.filter();
+    };
+
+    listView.appendFilter = function() {
+        var filterPage = $(".search-estate").attr("href");
+        if(filterPage.indexOf("#") != -1) {
+            var filterPage = filterPage.substr(0,filterPage.indexOf("#"));
+        }
+        $(".search-estate").attr("href",filterPage + "#filter=" + listView.selectFilter);
     };
 
     listView.renderRangeSliders = function() {
