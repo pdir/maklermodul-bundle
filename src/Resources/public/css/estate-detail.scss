@@ -511,6 +511,55 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
   }
 }
 
+/* google maps */
+.estate-detail .dlh_googlemap {
+    display: flex;
+    align-items: center;
+}
+
+#confirm-googlemaps {
+    width: 50%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+
+    h3 {
+        width: calc(100% + 30px);
+        padding: 15px;
+        background: #f2f2f2;
+        color: #b91e1e;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin: -15px 0 0 -15px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    p {
+        padding: 15px 0;
+        margin: 0;
+    }
+
+    a.btn {
+        background: #d45a5a;
+        box-shadow: none;
+        color: #fff;
+        font-weight: 400;
+        font-size: 15px;
+        padding: 8px 12px;
+        margin-top: -15px;
+        display: inline-block;
+
+        &:hover {
+            background: #b91e1e;
+        }
+    }
+}
+
 /* mobile */
 
 @media (max-width: 1024px) {
@@ -548,41 +597,46 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
 }
 
 @media (max-width: 767px) {
-  .estate-detail {
-    margin: 0 10px;
+    .estate-detail {
+        margin: 0 10px;
 
-    .label {
-      width: initial;
+        .label {
+            width: initial;
+        }
+
+        .field > div:last-child {
+            float: right;
+        }
+
+        .content {
+            width: 100%;
+        }
+
+        .big-img {
+            margin: 0;
+        }
     }
 
-    .field > div:last-child {
-      float: right;
+    .estate-header-image {
+        height: 200px;
+
+        h1 {
+          font-size: 1.5rem;
+        }
     }
 
-    .content {
-      width: 100%;
+    .select #estate_filter_list > div {
+        display: block;
+        width: 50%;
+        float: left;
     }
 
-    .big-img {
-      margin: 0;
+    #estate_filter_list > div:nth-child(odd) {
+        border-right: none;
     }
-  }
 
-  .estate-header-image {
-    height: 200px;
-
-    h1 {
-      font-size: 1.5rem;
+    #confirm-googlemaps {
+        width: 100%;
+        margin: 15px;
     }
-  }
-
-  .select #estate_filter_list > div {
-    display: block;
-    width: 50%;
-    float: left;
-  }
-
-  #estate_filter_list > div:nth-child(odd) {
-    border-right: none;
-  }
 }

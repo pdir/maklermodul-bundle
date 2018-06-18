@@ -49,6 +49,10 @@
       	<source>estate modul</source>
       </trans-unit>
 
+			<trans-unit id="MOD.maklermodulPrivacy">
+      	<source>If you use the OpenImmo Feedback Form on the Exposé pages, data protection relevant information could be collected.</source>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

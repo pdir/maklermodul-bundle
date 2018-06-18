@@ -19,6 +19,8 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Model;
 
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
+
 class Estate {
 
 	private $rawData;

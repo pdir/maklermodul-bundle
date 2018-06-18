@@ -10,3 +10,7 @@
 
 *.css
 *.css.map
+
+#Docker Compose
+.env
+docker-compose.yml

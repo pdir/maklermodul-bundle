@@ -19,7 +19,6 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model;
 
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\ColumnConfig;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 

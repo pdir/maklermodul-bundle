@@ -37,8 +37,10 @@ console.log('file loaded!');
             .on( 'click', '.mm-reset', listView.reset ) // bind reset buttons
             .on( 'click', '.mm-shuffle', listView.shuffle ) // bind shuffle buttons
             .on( 'click', '.mm-filter-ckb', listView.filterByCheckbox ) // bind checkboxes
+            .on( 'click', '.mm-filter-btn', listView.filterByButton ) // bind buttons
             .on( 'click', '.pagination li a.link', listView.filterByPage ) // bind pagination links
             .on( 'change', '.mm-filter-sel', listView.filterBySelect ) // bind select fields
+            .on( 'change', '.mm-only-filter .mm-filter-sel', listView.appendFilter ) // append filter settings to url (filter only)
             .on( 'slideStop', '.mm-filter-range', listView.filterByRange ) // bind range sliders
             .on( 'click', '.anfrage-btn', listView.showObjectRequest )
             .on( 'keyup', '.mm-quicksearch', listView.quicksearch )
@@ -163,6 +165,7 @@ console.log('file loaded!');
         listView.searchFields = $('.mm-quicksearch');
         listView.nearbyField = $('.mm-nearby');
         listView.checkboxes = $('.mm-filter-ckb');
+        listView.buttons = $('.mm-filter-btn');
         listView.selects = $('.mm-filter-sel');
         listView.ranges = $('.mm-filter-range');
         listView.pagination = $('.mod_immoListView .pagination');
@@ -221,11 +224,20 @@ console.log('file loaded!');
                     listView.selectFilter = arrSelects.join(",");
                 }
 
-                // checkboxes
+                // checkboxes & buttons
                 $(listView.checkboxes).each(function(i, obj) {
                     var val = $(obj).val();
                     if(!value.indexOf(val) || value.indexOf(val) !== -1) {
                         $(obj).prop('checked', true);
+                        arrCheckboxes.push(val);
+                    }
+                });
+
+                $(listView.buttons).each(function(i, obj) {
+                    var val = $(obj).val();
+                    console.log(val);
+                    console.log($(obj).hasClass('active'));
+                    if($(obj).hasClass('active')) {
                         arrCheckboxes.push(val);
                     }
                 });
@@ -238,23 +250,32 @@ console.log('file loaded!');
         }
 
         // use pagination if active and no other filter is set
+        listView.noPagination = false;
         if(listView.paginationStatus &&
-            typeof listView.qsRegex === 'undefined' &&
-            typeof listView.checkboxFilter === 'undefined' &&
-            typeof listView.selectFilter === 'undefined' &&
-            typeof listView.paginationFilter === 'undefined' &&
-            typeof listView.rangeFilter === 'undefined'
-        ) {
-            console.log('set pagination filter to page1');
+			typeof listView.qsRegex == 'undefined' &&
+			typeof listView.checkboxFilter == 'undefined' &&
+			typeof listView.selectFilter == 'undefined' &&
+			typeof listView.paginationFilter == 'undefined' &&
+			typeof listView.rangeFilter == 'undefined'
+		) {
+			console.log('set pagination filter to page1');
             listView.paginationFilter = 'page1';
             listView.pagination.show();
         }
-
-        if(typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
-            typeof listView.selectFilter !== 'undefined' || typeof listView.rangeFilter !== 'undefined')
+        else if(typeof listView.paginationStatus == 'undefined' &&
+            typeof listView.qsRegex == 'undefined' &&
+            typeof listView.checkboxFilter == 'undefined' &&
+            typeof listView.selectFilter == 'undefined' &&
+            typeof listView.paginationFilter == 'undefined' &&
+            typeof listView.rangeFilter == 'undefined')
+        {
+            listView.noPagination = true;
+		}
+        if(typeof listView.qsRegex != 'undefined' || typeof listView.checkboxFilter != 'undefined' ||
+            typeof listView.selectFilter != 'undefined' || typeof listView.rangeFilter != 'undefined')
             delete listView.paginationFilter;
 
-        if(listView.paginationStatus && typeof listView.paginationFilter !== 'undefined') {
+        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined') {
             listView.pagination.show();
         } else {
             listView.pagination.hide();
@@ -332,6 +353,10 @@ console.log('file loaded!');
         // reset checkboxes
         listView.checkboxes.filter(':checked').each(function(){
             $(this).prop( "checked", false );
+        });
+        // reset buttons
+        listView.checkboxes.filter(':checked').each(function(){
+            $(this).removeClass('active');
         });
         // reset search
         listView.searchFields.each(function(){
@@ -446,14 +471,48 @@ console.log('file loaded!');
         listView.filter();
     };
 
+    listView.filterByButton = function(e) {
+        var filters = [];
+
+        // unset pagination filter
+        delete listView.paginationFilter;
+
+        // toogle active
+        if($(this).hasClass('active')){
+            $(this).removeClass('active')
+        } else {
+            $(this).addClass('active')
+        }
+
+        listView.buttons.filter('.active').each(function() {
+            filters.push( $(this).attr('data-filter') );
+        });
+
+        // filters = filters.join(', '); 	//OR
+        filters = filters.join(''); 		//AND
+
+        if(filters === '')
+            delete listView.checkboxFilter;
+        else
+            listView.checkboxFilter = filters;
+
+        // call filter
+        listView.filter();
+    };
+
     listView.filterBySelect = function() {
         // unset pagination filter
         delete listView.paginationFilter;
 
         var filters = listView.selects.children('option:selected', this).map(function(){
-            var id = $(this).parent('select').attr('id');
-            if(id === 'geo-ort')
-                return $(this).attr('value');
+			var id = $(this).parent('select').attr('id');
+
+        	if(id == 'geo-ort')
+            	return $(this).attr('value');
+
+        	if(typeof $(this).attr('value') != 'undefined' && $(this).attr('value') != '-1' && $(this).attr('value') != 'alle' && id != 'sorting' && id != 'zimmer' && id != 'umkreis')
+            	return $(this).attr('value');
+
         }).get().join(',');
 
         if(filters === '')
@@ -482,12 +541,25 @@ console.log('file loaded!');
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        if(filters.length === 0 || filterValue === '') {
-            listView.paginationFilter = 'page1';
-            filterValue = '.page1';
-        } else {
-            delete listView.paginationFilter;
-        }
+        console.log(filterValue);
+        console.log(listView.paginationStatus);
+
+        if (typeof listView.paginationStatus == 'undefined')
+        {
+        	delete listView.paginationFilter;
+            // set filter to * | show all
+            if(filters.length == 0 || filterValue == '' ||filterValue == -1)
+				filterValue = '*';
+    	}
+    	else(listView.paginationStatus && filters.length == 0 || listView.paginationStatus && filterValue == '')
+    	{
+    		// if no filter is set, use page1 of pagination
+            if(filters.length == 0 || filterValue == '')
+            {
+                listView.paginationFilter = 'page1';
+                filterValue = '.page1';
+			}
+		}
 
         listView.hashFilter = filterValue;
         console.log(e);
@@ -569,6 +641,14 @@ console.log('file loaded!');
         // @todo deactivate via modul $('html,body').animate({ scrollTop: $("#slider .mod_article.last").offset().top - 85 }, 600);
 
         listView.filter();
+    };
+
+    listView.appendFilter = function() {
+        var filterPage = $(".search-estate").attr("href");
+        if(filterPage.indexOf("#") != -1) {
+            var filterPage = filterPage.substr(0,filterPage.indexOf("#"));
+        }
+        $(".search-estate").attr("href",filterPage + "#filter=" + listView.selectFilter);
     };
 
     listView.renderRangeSliders = function() {
@@ -701,19 +781,20 @@ console.log('file loaded!');
         });
     };
 
-    listView.registerScrollTopPagination = function() {
+    listView.registerScrollTopPagination = function(event) {
+        event.preventDefault();
+
         var href = '.mod_immoListView';
         $('html, body').animate({
             scrollTop:$(href).offset().top - 10
         },'slow');
-        e.preventDefault();
     };
 
     $(document).on( 'ready', listView.init );
     $(window).on( 'hashchange', listView.onHashchange );
 
     var postcodeArr = [];
-    $.getJSON("files/cto_layout/scripts/plz.json", function(json) {
+    $.getJSON("bundles/pdirmaklermodul/js/plz.json", function(json) {
         postcodeArr = json;
     });
 

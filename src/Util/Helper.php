@@ -23,9 +23,9 @@ namespace Pdir\MaklermodulBundle\Util;
 class Helper extends \Frontend
 {
     /**
-     * mobilede version
+     * maklermodul version
      */
-    const VERSION = '2.0.0';
+    const VERSION = '1.1.5';
 
     /**
      * Extension mode
@@ -49,7 +49,7 @@ class Helper extends \Frontend
      * Path to Image
      * @var string
      */
-    const imagePath = '/files/maklermodul/data';
+    const imagePath = '/files/maklermodul/data/';
 
     public function getAds()
     {
@@ -65,5 +65,16 @@ class Helper extends \Frontend
         $json = file_get_contents(self::$apiUrl . 'ad/' . $alias . '/' . \Environment::get('server'));
         $arrAd = json_decode( $json, true );
         return $arrAd;
+    }
+
+    public function addPrivacyWidget($arrWidgets) {
+
+        $arrWidgets[] = array(
+            'title' => 'pdir/maklermodul-bundle',
+            'content' => $GLOBALS['TL_LANG']['MOD']['maklermodulPrivacy'],
+            'class' => 'orange icon'
+        );
+
+        return $arrWidgets;
     }
 }
