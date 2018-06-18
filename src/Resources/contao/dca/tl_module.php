@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
 	= '{title_legend},name,headline,type;'
-	. '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_gmapApiKey,makler_detailViewPlaceholder;'
+	. '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
 	. '{image_legend},imgSize;'
     . '{option_legend},makler_useModuleDetailCss';
 
@@ -360,16 +360,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_compatibilityMode'] = array
 		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
 		'sql'                     =>  "int(1) NOT NULL default '0'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_gmapApiKey'] = array
-(
-		'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_gmapApiKey'],
-		'inputType'               	=> 'text',
-		'default'				  	=> false,
-		'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_gmapApiKey'],
-		'eval'                    	=> array('tl_class'=>'w50'),
-		'sql'                     	=> "varchar(64) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_showHeadline'] = array
