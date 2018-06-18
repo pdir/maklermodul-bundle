@@ -38,8 +38,11 @@
 
     <!-- indexer::stop -->
     <?php // Ausgabe Filter ?>
-    <div id="estate_filter_list" class="estate-filter <?= $this->filterClass ?>">
+    <div id="estate_filter_list" class="estate-filter <?= $this->filterClass ?><?php if($this->staticFilter): ?> mm-only-filter<?php endif; ?>">
         <?= $this->filter ?>
+        <?php if($this->staticFilter): ?>
+            <a href="<?= $this->staticListPage ?>" class="btn search-estate">Immobilien suchen</a>
+        <?php endif; ?>
     </div>
     <!-- indexer::continue -->
 
