@@ -9,14 +9,24 @@
     </li>
 <?php endif; ?>
 <?php if($this->energietraeger): ?>
-    <li class="field heizung">
-        <div class="label">Energieträger</div>
+    <li class="field energietraeger">
+        <div class="label">Befeuerung</div>
         <div class="value">
             <?= $this->energietraeger ?>
         </div>
     </li>
 <?php endif; ?>
-<li class="field epass_epart">
+
+<?php if($this->primaererEnergietraeger): ?>
+    <li class="field epass_primaererEnergietraeger">
+        <div class="label">Wesentliche Energieträger</div>
+        <div class="value">
+            <?= $this->primaererEnergietraeger ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<li class="field epass_ausweisart">
     <div class="label">Ausweisart</div>
     <div class="value">
         <?= $this->epart ?>
@@ -24,12 +34,21 @@
 </li>
 
 <?php if($this->baujahr): ?>
-<li class="field epass_epart">
-    <div class="label">Baujahr</div>
-    <div class="value">
-        <?= $this->baujahr ?>
-    </div>
-</li>
+    <li class="field epass_baujahr">
+        <div class="label">Baujahr</div>
+        <div class="value">
+            <?= $this->baujahr ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->jahrgang): ?>
+    <li class="field epass_jahrgang">
+        <div class="label">Jahrgang</div>
+        <div class="value">
+            <?= $this->jahrgang ?>
+        </div>
+    </li>
 <?php endif; ?>
 
 <?php if($this->stromwert): ?>
@@ -59,6 +78,33 @@
     </li>
 <?php endif; ?>
 
+<?php if($this->gueltigBis): ?>
+    <li class="field epass_gueltig">
+        <div class="label">Gültig bis</div>
+        <div class="value">
+            <?= date('d.m.Y',strtotime($this->gueltigBis)) ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->ausstelldatum): ?>
+    <li class="field epass_ausstelldatum">
+        <div class="label">Ausstelldatum</div>
+        <div class="value">
+            <?= date('d.m.Y',strtotime($this->ausstelldatum)) ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->gebaeudeart): ?>
+    <li class="field epass_gebaeudeart">
+        <div class="label">Gebäudeart</div>
+        <div class="value">
+            <?= $this->gebaeudeart ?>
+        </div>
+    </li>
+<?php endif; ?>
+
 <?php
 if($this->energyClass == "A+") { $eClassAplus = "class='active_eclass'";}
 if($this->energyClass == "A") { $eClassA = "class='active_eclass'"; }
@@ -74,7 +120,7 @@ if($this->energyClass == "H") { $eClassH = "class='active_eclass'"; }
 <?php if($this->energy != 0): ?>
     <div class="energie-scale">
         <li class="field energieverbrauchskennwert"><?php if($this->epart == 'Bedarf'): ?><div class="label">Energiebedarfskennwert</div><?php else: ?><div class="label">Energieverbrauchskennwert</div><?php endif; ?> <div class="value-number"><?php echo $this->energy; ?> kWh/(m²*a)</div></li>
-        <li class="field energieeffizienzklasse">Energieeffizienzklasse <?php echo $this->energyClass; ?></li>
+        <li class="field energieeffizienzklasse"><div class="label">Energieeffizienzklasse</div> <div class="value"><?php echo $this->energyClass; ?></div></li>
         <div class="energy-slider">
             <ul>
                 <li <?php echo $eClassAplus; ?> style="width:11.1111%;">A+</li>
