@@ -73,7 +73,7 @@ class Runonce
         }
 
         if(!file_exists(self::strFolder . '.public')) {
-            new \File(self::strFolder . '.public');
+            \File::putContent(self::strFolder . '.public', '');
         }
     }
 }
