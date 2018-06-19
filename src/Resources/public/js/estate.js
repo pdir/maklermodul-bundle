@@ -3,9 +3,6 @@
  * module website https://www.maklermodul.de
  * for documentation visit https://docs.maklermodul.de
  */
-
-console.log('file loaded!');
-
 (function(window, document, $, undefined){
     'use strict';
     window.listView = {};
@@ -235,8 +232,6 @@ console.log('file loaded!');
 
                 $(listView.buttons).each(function(i, obj) {
                     var val = $(obj).val();
-                    console.log(val);
-                    console.log($(obj).hasClass('active'));
                     if($(obj).hasClass('active')) {
                         arrCheckboxes.push(val);
                     }
@@ -249,12 +244,9 @@ console.log('file loaded!');
             });
         }
 
-        console.log('paginationUseIsotope');
-        console.log(paginationUseIsotope);
-
         // use pagination if active and no other filter is set
         listView.noPagination = false;
-        if(listView.paginationStatus && paginationUseIsotope &&
+        if(listView.paginationStatus &&
 			typeof listView.qsRegex == 'undefined' &&
 			typeof listView.checkboxFilter == 'undefined' &&
 			typeof listView.selectFilter == 'undefined' &&
@@ -262,11 +254,10 @@ console.log('file loaded!');
 			typeof listView.rangeFilter == 'undefined'
 		) {
 			console.log('set pagination filter to page1');
-			console.log(filterValue);
-            console.log(listView.paginationStatus);
-
             listView.paginationFilter = 'page1';
             listView.pagination.show();
+            listView.hashFilter = '.page1';
+            listView.setWindowHash();
         }
         else if(typeof listView.paginationStatus == 'undefined' &&
             typeof listView.qsRegex == 'undefined' &&
@@ -547,8 +538,8 @@ console.log('file loaded!');
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        //console.log(filterValue);
-        //console.log(listView.paginationStatus);
+        console.log(filterValue);
+        console.log(listView.paginationStatus);
 
         if (typeof listView.paginationStatus == 'undefined')
         {
