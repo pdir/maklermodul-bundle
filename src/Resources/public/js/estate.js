@@ -249,9 +249,12 @@ console.log('file loaded!');
             });
         }
 
+        console.log('paginationUseIsotope');
+        console.log(paginationUseIsotope);
+
         // use pagination if active and no other filter is set
         listView.noPagination = false;
-        if(listView.paginationStatus &&
+        if(listView.paginationStatus && paginationUseIsotope &&
 			typeof listView.qsRegex == 'undefined' &&
 			typeof listView.checkboxFilter == 'undefined' &&
 			typeof listView.selectFilter == 'undefined' &&
@@ -259,6 +262,9 @@ console.log('file loaded!');
 			typeof listView.rangeFilter == 'undefined'
 		) {
 			console.log('set pagination filter to page1');
+			console.log(filterValue);
+            console.log(listView.paginationStatus);
+
             listView.paginationFilter = 'page1';
             listView.pagination.show();
         }
@@ -541,8 +547,8 @@ console.log('file loaded!');
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        console.log(filterValue);
-        console.log(listView.paginationStatus);
+        //console.log(filterValue);
+        //console.log(listView.paginationStatus);
 
         if (typeof listView.paginationStatus == 'undefined')
         {

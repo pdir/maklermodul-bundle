@@ -19,6 +19,7 @@
  */
 namespace Pdir\MaklermodulBundle\Util;
 
+use Pdir\MaklermodulBundle\Module\ListPaginationView;
 
 class Helper extends \Frontend
 {
@@ -76,5 +77,18 @@ class Helper extends \Frontend
         );
 
         return $arrWidgets;
+    }
+
+    public function addListPagination($objTemplate)
+    {
+        if(strpos(get_class($objTemplate), 'FrontendTemplate') !== false) {
+            $objTemplate->hookAddListPagination = function() use ($objTemplate) {
+                if($objTemplate->addListPagination) {
+                    $objListPaginationView = new ListPaginationView($objTemplate);
+                    return($objListPaginationView->generate());
+                }
+                return '';
+            };
+        }
     }
 }
