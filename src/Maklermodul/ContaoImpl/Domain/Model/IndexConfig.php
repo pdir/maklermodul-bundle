@@ -176,23 +176,6 @@ class IndexConfig implements IndexConfigInterface {
 		$this->resultSet['immo_actIndexFile'] = $newUri;
 	}
 
-	public function getImageDimensions() {
-		if(isset($this->resultSet['immo_listImageWidth']) && isset($this->resultSet['immo_listImageHeight']) &&
-			$this->resultSet['immo_listImageWidth'] != '' && $this->resultSet['immo_listImageHeight'] != '') {
-			return array(
-				'width' => $this->resultSet['immo_listImageWidth'],
-				'height' => $this->resultSet['immo_listImageHeight'],
-				'mode'	=>  $this->resultSet['immo_listImageMode']
-			);
-		} else {
-			return array(
-				'width' => 293,
-				'height' => 220,
-				'mode' => 'proportional'
-			);
-		}
-	}
-
 	public function getConditionsConfig() {
 		$condArr = array();
 		$arr = explode("\n", $this->resultSet['immo_listCondition']);
