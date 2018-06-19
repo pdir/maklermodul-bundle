@@ -54,14 +54,11 @@ $GLOBALS['TL_CTE']['pdirMaklermodul'] = array
  * Hooks
  */
 // $GLOBALS['TL_HOOKS']['getPageIdFromUrl'][]    	= array('MaklerModulMplus\DetailViewHooks', 'hookGetPageIdFromUrl');
-// $GLOBALS['TL_HOOKS']['getSearchablePages'][]	= array('MaklerModulMplus\Helper', 'addProductsToSearchIndex');
-// $GLOBALS['TL_HOOKS']['parseTemplate'][] 		= array('MaklerModulMplus\ListPaginationHook', 'hookAddListPagination');
-// $GLOBALS['TL_HOOKS']['generateBreadcrumb'][]    = array('MaklerModulMplus\Helper', 'addProductToBreadcrumb');
-// $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array('MaklerModulMplus\Helper', 'parseOpenImmoFeedbackTemplate');
-
-// $GLOBALS['TL_HOOKS']['addDashboardWidget'][] 	= array('MaklerModulMplus\ListPaginationHook', 'hookAddDashboardWidget');
-
-$GLOBALS['TL_HOOKS']['addPrivacyWidget'][] = array('Pdir\MaklermodulBundle\Util\Helper', 'addPrivacyWidget');
+// $GLOBALS['TL_HOOKS']['getSearchablePages'][]	    = array('MaklerModulMplus\Helper', 'addProductsToSearchIndex');
+$GLOBALS['TL_HOOKS']['parseTemplate'][]             = array('Pdir\MaklermodulBundle\Util\Helper', 'addListPagination');
+// $GLOBALS['TL_HOOKS']['generateBreadcrumb'][]     = array('MaklerModulMplus\Helper', 'addProductToBreadcrumb');
+// $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][]  = array('MaklerModulMplus\Helper', 'parseOpenImmoFeedbackTemplate');
+$GLOBALS['TL_HOOKS']['addPrivacyWidget'][]          = array('Pdir\MaklermodulBundle\Util\Helper', 'addPrivacyWidget');
 
 /**
  * auto items

@@ -3,6 +3,7 @@
  * module website https://www.maklermodul.de
  * for documentation visit https://docs.maklermodul.de
  */
+
 (function(window, document, $, undefined){
     'use strict';
     window.listView = {};
@@ -170,6 +171,7 @@
         // global variables from template
         if(typeof countObj !== 'undefined') listView.objCnt = countObj;
         if(typeof addListPagination !== 'undefined') listView.paginationStatus = addListPagination;
+        listView.paginationUseIsotope = paginationUseIsotope;
 
         listView.rangeFilters = listView.setDefaultRangeFilter();
 
@@ -232,8 +234,6 @@
 
                 $(listView.buttons).each(function(i, obj) {
                     var val = $(obj).val();
-                    //console.log(val);
-                    //console.log($(obj).hasClass('active'));
                     if($(obj).hasClass('active')) {
                         arrCheckboxes.push(val);
                     }
@@ -248,13 +248,16 @@
 
         // use pagination if active and no other filter is set
         listView.noPagination = false;
-        if(listView.paginationStatus &&
+        if(listView.paginationStatus && listView.paginationUseIsotope &&
 			typeof listView.qsRegex == 'undefined' &&
 			typeof listView.checkboxFilter == 'undefined' &&
 			typeof listView.selectFilter == 'undefined' &&
 			typeof listView.paginationFilter == 'undefined' &&
 			typeof listView.rangeFilter == 'undefined'
 		) {
+			console.log('set pagination filter to page1');
+            console.log(listView.paginationStatus);
+
             listView.paginationFilter = 'page1';
             listView.pagination.show();
             listView.hashFilter = '.page1';
@@ -267,20 +270,20 @@
             typeof listView.paginationFilter == 'undefined' &&
             typeof listView.rangeFilter == 'undefined')
         {
+            console.log('nopagination');
             listView.noPagination = true;
 		}
         if(typeof listView.qsRegex != 'undefined' || typeof listView.checkboxFilter != 'undefined' ||
             typeof listView.selectFilter != 'undefined' || typeof listView.rangeFilter != 'undefined')
             delete listView.paginationFilter;
 
-        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined') {
+        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined' ||
+            !listView.paginationUseIsotope && listView.paginationStatus) {
             listView.pagination.show();
         } else {
             listView.pagination.hide();
         }
-
-
-/*
+        /*
          console.log('search: '+listView.qsRegex);
          console.log('searchSel: '+listView.qsSelector);
          console.log('checkbox: ' +listView.checkboxFilter);
@@ -289,8 +292,8 @@
          console.log(listView.rangeFilters);
          console.log('paginationStatus: ' +listView.paginationStatus);
          console.log('paginationFilter: ' +listView.paginationFilter);
-*/
-         /* @todo implement special box
+         */
+/* @todo implement special box
         var specialBox = listView.estateList.find('.special-box');
         specialBox.removeClass('.isotope-hidden')
             .addClass('objektart-bueroflaeche objektart-produktions-und-lagerflaechen' +
@@ -324,7 +327,6 @@
                 //var specialBox = $this.hasClass ('special-box') ? true: false;
 
                 //return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
-
                 return paginationResult;
             },
         });
@@ -433,11 +435,11 @@
         //console.log(jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length);
         //console.log(listView.objCnt);
         listView.objCnt = jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length;
-/*
+
         console.log(listView.hashFilter);
         console.log(listView.rangeFilter);
         console.log(listView.qsString);
-*/
+
         // get all items for pagination
         if(listView.hashFilter && listView.hashFilter.indexOf('.page') > -1 && !listView.qsString && !listView.rangeFilter
             || listView.hashFilter === null && !listView.qsString  && !listView.rangeFilter)
@@ -523,6 +525,7 @@
             listView.selectFilter = filters;
 
         listView.selectFilter = filters;
+        console.log("filters: " + filters);
 
         // call filter
         listView.filter();
@@ -542,6 +545,9 @@
         // combine filters
         var filterValue = listView.concatValues( filters );
 
+        //console.log(filterValue);
+        //console.log(listView.paginationStatus);
+
         if (typeof listView.paginationStatus == 'undefined')
         {
         	delete listView.paginationFilter;
@@ -560,6 +566,7 @@
 		}
 
         listView.hashFilter = filterValue;
+        console.log(e);
 
         //listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
         listView.estateList.isotope({ filter: listView.hashFilter });
@@ -630,6 +637,9 @@
     };
 
     listView.filterByPage = function(e) {
+        if(!listView.paginationUseIsotope) // use normal links
+            return true;
+
         e.preventDefault();
         listView.paginationFilter = '.'+$(this).attr('data-filter').substring(1);
         $(".pagination li").removeClass("active");
@@ -779,6 +789,9 @@
     };
 
     listView.registerScrollTopPagination = function(event) {
+        if(!listView.paginationUseIsotope) // use normal links
+            return true;
+
         event.preventDefault();
 
         var href = '.mod_immoListView';

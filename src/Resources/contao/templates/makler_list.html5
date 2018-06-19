@@ -37,16 +37,17 @@
     <?php endif; ?>
 
     <!-- indexer::stop -->
-    <?php // Ausgabe Filter ?>
+    <?php if($this->paginationUseIsotope != 0): // Ausgabe Filter ?>
     <div id="estate_filter_list" class="estate-filter <?= $this->filterClass ?><?php if($this->staticFilter): ?> mm-only-filter<?php endif; ?>">
         <?= $this->filter ?>
         <?php if($this->staticFilter): ?>
-            <a href="<?= $this->staticListPage ?>" class="btn search-estate">Immobilien suchen</a>
+        <a href="<?= $this->staticListPage ?>" class="btn search-estate">Immobilien suchen</a>
         <?php endif; ?>
     </div>
-    <!-- indexer::continue -->
 
     <a class="btn btn-reset-filter mm-reset" href="#estate_filter_list">Filter zurücksetzen</a>
+    <?php endif; ?>
+    <!-- indexer::continue -->
 
     <?php if(!$this->staticFilter): ?>
         <div id="estate_list">
@@ -155,7 +156,7 @@
     var detailViewPrefix = '<?php echo $this->helper->getDetailViewPrefix(); ?>';
 
     <?php if ($this->staticFilter) : ?>var staticFilter = true;<?php endif; ?>
-    <?php if ($this->paginationUseIsotope) : ?>var paginationUseIsotope = true;<?php endif; ?>
+    var paginationUseIsotope = <?= $this->paginationUseIsotope ?>;
     <?php if ($this->addListPagination) : ?>var addListPagination = true;<?php endif; ?>
 <?= '</script>' ?>
 
