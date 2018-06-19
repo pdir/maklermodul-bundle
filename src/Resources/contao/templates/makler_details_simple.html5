@@ -39,7 +39,7 @@ else:
         </div>
         <div class="small-pics">
             <?php foreach ($this->estate->attachments()->range(1, 6) as $attachment) : ?>
-                <div class="pic"><?php $attachment->withoutLabel()->size(120,75)->render() ?></div>
+                <div class="pic"><?php $attachment->group("BILD,GRUNDRISS")->size(120,75)->render() ?></div>
             <?php endforeach; ?>
         </div>
     </div>
@@ -113,10 +113,16 @@ else:
     </div>
     <div class="any-pics">
         <?php $i = 0; ?>
-        <?php foreach ($this->estate->attachments()->startAt(7) as $attachment) : ?>
+        <?php foreach ($this->estate->attachments()->startAt(7) as $attachment): ?>
             <?php if($i == 0): ?> <h3>Weitere Objektbilder</h3> <?php endif; ?>
-            <div class="more-pic"><?php $attachment->withoutLabel()->size(120,75)->render() ?></div>
+            <div class="more-pic"><?php $attachment->group("BILD,GRUNDRISS")->size(120,75)->render() ?></div>
             <?php $i++; ?>
+        <?php endforeach; ?>
+    </div>
+    <div class="documents">
+        <h3>Dokumente</h3>
+        <?php foreach ($this->estate->attachments()->startAt(0) as $attachment): ?>
+            <?php $attachment->group("DOKUMENTE,FILMLINK")->render() ?>
         <?php endforeach; ?>
     </div>
 

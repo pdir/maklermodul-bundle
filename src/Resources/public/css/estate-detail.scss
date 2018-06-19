@@ -212,6 +212,16 @@
     font-size: 19px;
     margin-top: 20px;
   }
+
+  .documents {
+      li {
+          list-style-type: none;
+      }
+  }
+
+  .ce_player {
+    margin-top: 15px;
+  }
 }
 
 .estate-detail.extended {
