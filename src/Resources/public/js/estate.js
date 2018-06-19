@@ -3,6 +3,7 @@
  * module website https://www.maklermodul.de
  * for documentation visit https://docs.maklermodul.de
  */
+
 (function(window, document, $, undefined){
     'use strict';
     window.listView = {};
@@ -170,6 +171,7 @@
         // global variables from template
         if(typeof countObj !== 'undefined') listView.objCnt = countObj;
         if(typeof addListPagination !== 'undefined') listView.paginationStatus = addListPagination;
+        listView.paginationUseIsotope = paginationUseIsotope;
 
         listView.rangeFilters = listView.setDefaultRangeFilter();
 
@@ -246,7 +248,7 @@
 
         // use pagination if active and no other filter is set
         listView.noPagination = false;
-        if(listView.paginationStatus &&
+        if(listView.paginationStatus && listView.paginationUseIsotope &&
 			typeof listView.qsRegex == 'undefined' &&
 			typeof listView.checkboxFilter == 'undefined' &&
 			typeof listView.selectFilter == 'undefined' &&
@@ -254,6 +256,8 @@
 			typeof listView.rangeFilter == 'undefined'
 		) {
 			console.log('set pagination filter to page1');
+            console.log(listView.paginationStatus);
+
             listView.paginationFilter = 'page1';
             listView.pagination.show();
             listView.hashFilter = '.page1';
@@ -266,13 +270,15 @@
             typeof listView.paginationFilter == 'undefined' &&
             typeof listView.rangeFilter == 'undefined')
         {
+            console.log('nopagination');
             listView.noPagination = true;
 		}
         if(typeof listView.qsRegex != 'undefined' || typeof listView.checkboxFilter != 'undefined' ||
             typeof listView.selectFilter != 'undefined' || typeof listView.rangeFilter != 'undefined')
             delete listView.paginationFilter;
 
-        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined') {
+        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined' ||
+            !listView.paginationUseIsotope && listView.paginationStatus) {
             listView.pagination.show();
         } else {
             listView.pagination.hide();
@@ -304,24 +310,25 @@
             resizable: false,
             sortBy: 'original-order',
             sortAscending: true,
-            /* @todo implement filter
+
             filter: function() {
                 var $this = $(this);
-                var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
-                var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
-                var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
+                //var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
+                //var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
+                //var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
 
-                var area = $this.attr('data-area');
-                var price = $this.attr('data-price');
-                var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
-                var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
+                //var area = $this.attr('data-area');
+                //var price = $this.attr('data-price');
+                //var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
+                //var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
 
                 var paginationResult = listView.paginationFilter ? $this.hasClass( listView.paginationFilter ) : true;
 
-                var specialBox = $this.hasClass ('special-box') ? true: false;
+                //var specialBox = $this.hasClass ('special-box') ? true: false;
 
-                return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
-            }, */
+                //return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
+                return paginationResult;
+            },
         });
 
         // update filtered list if one filter is set
@@ -538,8 +545,8 @@
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        console.log(filterValue);
-        console.log(listView.paginationStatus);
+        //console.log(filterValue);
+        //console.log(listView.paginationStatus);
 
         if (typeof listView.paginationStatus == 'undefined')
         {
@@ -630,6 +637,9 @@
     };
 
     listView.filterByPage = function(e) {
+        if(!listView.paginationUseIsotope) // use normal links
+            return true;
+
         e.preventDefault();
         listView.paginationFilter = '.'+$(this).attr('data-filter').substring(1);
         $(".pagination li").removeClass("active");
@@ -779,6 +789,9 @@
     };
 
     listView.registerScrollTopPagination = function(event) {
+        if(!listView.paginationUseIsotope) // use normal links
+            return true;
+
         event.preventDefault();
 
         var href = '.mod_immoListView';
