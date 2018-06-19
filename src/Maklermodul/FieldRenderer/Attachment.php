@@ -122,6 +122,15 @@ class Attachment extends FieldRenderer {
     		switch ($this->getValueOf('@gruppe'))
     		{
     			case 'DOKUMENTE';
+                    // render doc list
+                    $this->template = $this->getShortTemplateDoc();
+                    return sprintf($this->template,
+                        $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                        substr($this->getValueOf('format'), 1),
+                        $this->getValueOf('anhangtitel'),
+                        $this->getValueOf('anhangtitel')
+                    );
+                    break;
     			case 'FILMLINK';
 					// render doc list
 					$this->template = $this->getShortTemplateDoc();
@@ -134,7 +143,12 @@ class Attachment extends FieldRenderer {
 					break;
     			case 'FILM';
     				$this->template = $this->getShortTemplateMedia();
-    				return 'FILM';
+                    return sprintf($this->template,
+                        substr($this->getValueOf('format'), 1),
+                        $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                        $this->getValueOf('anhangtitel'),
+                        $this->getValueOf('anhangtitel')
+                    );
     				break;
     			default;
                     // fallback for xml data without group definition
@@ -245,6 +259,12 @@ class Attachment extends FieldRenderer {
     }
 
     private function getShortTemplateMedia() {
-    	// @todo implement media template
+        $returnValue =  '<div class="ce_player">';
+        $returnValue .= '<video width="640" height="360" controls>';
+        $returnValue .= '<source type="video/%s" src="%s">';
+        $returnValue .= '</video>';
+        $returnValue .= '</div>';
+
+        return $returnValue;
     }
 }
