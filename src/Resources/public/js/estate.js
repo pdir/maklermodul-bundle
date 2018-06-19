@@ -249,35 +249,31 @@
         // use pagination if active and no other filter is set
         listView.noPagination = false;
         if(listView.paginationStatus && listView.paginationUseIsotope &&
-			typeof listView.qsRegex == 'undefined' &&
-			typeof listView.checkboxFilter == 'undefined' &&
-			typeof listView.selectFilter == 'undefined' &&
-			typeof listView.paginationFilter == 'undefined' &&
-			typeof listView.rangeFilter == 'undefined'
+			typeof listView.qsRegex === 'undefined' &&
+			typeof listView.checkboxFilter === 'undefined' &&
+			typeof listView.selectFilter === 'undefined' &&
+			typeof listView.paginationFilter === 'undefined' &&
+			typeof listView.rangeFilter === 'undefined'
 		) {
-			console.log('set pagination filter to page1');
-            console.log(listView.paginationStatus);
-
             listView.paginationFilter = 'page1';
             listView.pagination.show();
             listView.hashFilter = '.page1';
             listView.setWindowHash();
         }
-        else if(typeof listView.paginationStatus == 'undefined' &&
-            typeof listView.qsRegex == 'undefined' &&
-            typeof listView.checkboxFilter == 'undefined' &&
-            typeof listView.selectFilter == 'undefined' &&
-            typeof listView.paginationFilter == 'undefined' &&
-            typeof listView.rangeFilter == 'undefined')
+        else if(typeof listView.paginationStatus === 'undefined' &&
+            typeof listView.qsRegex === 'undefined' &&
+            typeof listView.checkboxFilter === 'undefined' &&
+            typeof listView.selectFilter === 'undefined' &&
+            typeof listView.paginationFilter === 'undefined' &&
+            typeof listView.rangeFilter === 'undefined')
         {
-            console.log('nopagination');
             listView.noPagination = true;
 		}
-        if(typeof listView.qsRegex != 'undefined' || typeof listView.checkboxFilter != 'undefined' ||
-            typeof listView.selectFilter != 'undefined' || typeof listView.rangeFilter != 'undefined')
+        if(typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
+            typeof listView.selectFilter !== 'undefined' || typeof listView.rangeFilter !== 'undefined')
             delete listView.paginationFilter;
 
-        if(listView.paginationStatus && typeof listView.paginationFilter != 'undefined' ||
+        if(listView.paginationStatus && typeof listView.paginationFilter !== 'undefined' ||
             !listView.paginationUseIsotope && listView.paginationStatus) {
             listView.pagination.show();
         } else {
@@ -312,12 +308,19 @@
                     var sortByClass = '.' + sorting.sortBy.replace(".", "-");
                     sortByClass = sortByClass.replace(".@", "-");
                     var sort = jQuery(itemElem).find(sortByClass).text();
-                    if (sorting.sortType == 'text')
+                    // fix enpty values
+                    if(sort === '' && sorting.sortAscending)
+                        sort = '999999999';
+                    if(sort === '' && !sorting.sortAscending)
+                        sort = '0';
+
+                    if (sorting.sortType === 'text')
                         return sort;
-                    if (sorting.sortType == 'int')
+                    if (sorting.sortType === 'int')
                         return parseInt(sort.replace(/[\(\)]/g, ''));
-                    if (sorting.sortType == 'float')
+                    if (sorting.sortType === 'float') {
                         return parseFloat(sort.replace(/[\(\)]/g, ''));
+                    }
                 }
             },
             sortBy: 'sorting',
@@ -524,10 +527,10 @@
         var filters = listView.selects.children('option:selected', this).map(function(){
 			var id = $(this).parent('select').attr('id');
 
-        	if(id == 'geo-ort')
+        	if(id === 'geo-ort')
             	return $(this).attr('value');
 
-        	if(typeof $(this).attr('value') != 'undefined' && $(this).attr('value') != '-1' && $(this).attr('value') != 'alle' && id != 'sorting' && id != 'zimmer' && id != 'umkreis')
+        	if(typeof $(this).attr('value') !== 'undefined' && $(this).attr('value') !== '-1' && $(this).attr('value') !== 'alle' && id !== 'sorting' && id !== 'zimmer' && id !== 'umkreis')
             	return $(this).attr('value');
 
         }).get().join(',');
@@ -552,34 +555,38 @@
             filters[ 'checkbox' ] = listView.checkboxFilter;
         if(typeof listView.selectFilter !== 'undefined')
             filters[ 'select' ] = listView.selectFilter;
-        if(typeof listView.paginationFilter !== 'undefined')
-            filters[ 'page' ] = listView.paginationFilter;
+        if(typeof listView.paginationFilter !== 'undefined') {
+            filters['page'] = listView.paginationFilter;
+        }
 
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        //console.log(filterValue);
-        //console.log(listView.paginationStatus);
-
-        if (typeof listView.paginationStatus == 'undefined')
+        if (typeof listView.paginationStatus === 'undefined')
         {
         	delete listView.paginationFilter;
             // set filter to * | show all
-            if(filters.length == 0 || filterValue == '' ||filterValue == -1)
+            if(filters.length === 0 || filterValue === '' ||filterValue === -1)
 				filterValue = '*';
+
+
     	}
-    	else(listView.paginationStatus && filters.length == 0 || listView.paginationStatus && filterValue == '')
+    	else(listView.paginationStatus && filters.length === 0 || listView.paginationStatus && filterValue === '')
     	{
     		// if no filter is set, use page1 of pagination
-            if(filters.length == 0 || filterValue == '')
+            if(filters.length === 0 || filterValue === '')
             {
                 listView.paginationFilter = 'page1';
                 filterValue = '.page1';
 			}
 		}
 
+        if(typeof listView.paginationFilter === 'undefined'){
+            listView.noPagination = true;
+            listView.pagination.hide();
+        }
+
         listView.hashFilter = filterValue;
-        console.log(e);
 
         //listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
         listView.estateList.isotope({ filter: listView.hashFilter });
@@ -665,7 +672,7 @@
 
     listView.appendFilter = function() {
         var filterPage = $(".search-estate").attr("href");
-        if(filterPage.indexOf("#") != -1) {
+        if(filterPage.indexOf("#") !== -1) {
             var filterPage = filterPage.substr(0,filterPage.indexOf("#"));
         }
         $(".search-estate").attr("href",filterPage + "#filter=" + listView.selectFilter);
