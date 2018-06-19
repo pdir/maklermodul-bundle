@@ -103,24 +103,6 @@
       <trans-unit id="tl_module.immo_listCondition.1">
         <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=leipzig</strong></source>
       </trans-unit>
-      <trans-unit id="tl_module.immo_listImageWidth.0">
-        <source>Estate List Image Width (deprecated)</source>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageWidth.1">
-        <source>Image width is used to specify the image dimensions in pixel in list view. (default: 293px)</source>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageHeight.0">
-        <source>Estate List Image Height (deprecated)</source>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageHeight.1">
-        <source>Image height is used to specify the image dimensions in pixel in list view. (default: 220px)</source>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageMode.0">
-        <source>Estate List Image Mode (deprecated)</source>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageMode.1">
-        <source>Set image modus used in list view. Example <strong>proportional, box, crop, left_top, center_top, right_top, left_center, center_center, right_center, left_bottom, center_bottom, right_bottom</strong> (default: center_center)</source>
-      </trans-unit>
       <trans-unit id="tl_module.immo_listDebug.0">
           <source>Debug</source>
       </trans-unit>

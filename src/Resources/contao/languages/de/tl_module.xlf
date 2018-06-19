@@ -135,30 +135,6 @@
         <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=leipzig</strong></source>
         <target>Die Bedingung dient zur Reduzierung der Ergebnisse nach bestimmten Kriterien. Beispiel: <strong>objektadresse_freigeben=true, geo.ort!=leipzig, flaechen.anzahl_zimmer=1</strong>Achtung: Bitte eine Zeile je Bedingung verwenden.</target>
       </trans-unit>
-      <trans-unit id="tl_module.immo_listImageWidth.0">
-        <source>Estate List Image Width</source>
-        <target>Bildbreite</target>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageWidth.1">
-        <source>Image width is used to specify the image dimensions in pixel in list view. (default: 293px)</source>
-        <target>Angabe der Bildbreite in Pixeln für die Listenansicht. (Standard: 293px)</target>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageHeight.0">
-        <source>Estate List Image Height</source>
-        <target>Bildhöhe</target>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageHeight.1">
-        <source>Image height is used to specify the image dimensions in pixel in list view. (default: 220px)</source>
-        <target>Angabe der Bildhöhe in Pixeln für die Listenansicht. (Standard: 220px)</target>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageMode.0">
-        <source>Estate List Image Mode</source>
-        <target>Bildmodus</target>
-      </trans-unit>
-      <trans-unit id="tl_module.immo_listImageMode.1">
-        <source>Set image modus used in list view. Example <strong>proportional, box, crop, left_top, center_top, right_top, left_center, center_center, right_center, left_bottom, center_bottom, right_bottom</strong> (default: center_center)</source>
-        <target>Angabe des Bildmodus in der Listenansicht. Beispiel <strong>proportional, box, crop, left_top, center_top, right_top, left_center, center_center, right_center, left_bottom, center_bottom, right_bottom</strong> (Standard: proportional)</target>
-      </trans-unit>
       <trans-unit id="tl_module.immo_listDebug.0">
           <source>Debug</source>
           <target>Debug</target>
