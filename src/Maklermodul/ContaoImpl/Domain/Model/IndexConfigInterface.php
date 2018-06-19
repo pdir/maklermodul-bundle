@@ -13,6 +13,4 @@ interface IndexConfigInterface {
 	
 	public function getStorageFileUri();
 	public function setStorageFileUri($newUri);
-	
-	public function getImageDimensions();
 }

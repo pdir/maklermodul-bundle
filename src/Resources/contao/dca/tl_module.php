@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
 	. '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate;'
 	. '{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
 	. '{makler_cond_legend},immo_listCondition;'
-	. '{image_legend},immo_listImageWidth,immo_listImageHeight,immo_listImageMode,imgSize,makler_listViewPlaceholder;'
+	. '{image_legend},imgSize,makler_listViewPlaceholder;'
 	. '{makler_pagination_legend},makler_addListPagination;'
 	. '{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
 
@@ -177,38 +177,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listCondition'] = array
 		'inputType'               => 'textarea',
 		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 		'sql'                     => "text NULL"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listImageWidth'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listImageWidth'],
-		'exclude'                 => true,
-		'inputType'               => 'text',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'maxlength' => 255),
-		'sql'                     => "varchar(255) NOT NULL default '330'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listImageHeight'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listImageHeight'],
-		'exclude'                 => true,
-		'inputType'               => 'text',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'maxlength' => 255),
-		'sql'                     => "varchar(255) NOT NULL default '270'"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listImageMode'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listImageMode'],
-		'exclude'                 => true,
-		'default'				  => 'center_center',
-		'inputType'               => 'select',
-		'options'				  => array('proportional','box','left_top','center_top','right_top','left_center','center_center','right_center','left_bottom','center_bottom','right_bottom'),
-		// 'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'maxlength' => 255),
-		'sql'                     => "varchar(255) NOT NULL default 'center_center'"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_listViewPlaceholder'] = array
