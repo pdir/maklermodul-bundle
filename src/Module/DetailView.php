@@ -37,6 +37,8 @@ class DetailView extends \Module
 {
     const PARAMETER_KEY = 'expose';
 
+    private $alias;
+
     /**
      * Template
      * @var string
@@ -104,7 +106,6 @@ class DetailView extends \Module
         }
 
         $this->Template->estate = $this->createFieldRendererFactory($this->alias);
-        $this->Template->gmapApiKey = ($this->makler_gmapApiKey != '') ? $this->makler_gmapApiKey : '';
         $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder ."/img/platzhalterbild.jpg";
         $this->Template->showMap = $this->makler_showMap;
     }

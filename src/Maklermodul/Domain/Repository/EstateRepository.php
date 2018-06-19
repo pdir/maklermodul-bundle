@@ -20,6 +20,7 @@
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
+use Pdir\MaklermodulBundle\Util\Helper;
 
 class EstateRepository {
 
@@ -66,15 +67,12 @@ class EstateRepository {
 	}
 
 	public static function getInstance() {
-        $container = \System::getContainer();
-        $strRootDir = $container->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . $container->getParameter('contao.upload_path');
-        $storageDirectoryPath = $strRootDir . DIRECTORY_SEPARATOR . 'maklermodul' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
-		return new EstateRepository($storageDirectoryPath);
+		return new EstateRepository(Helper::imagePath);
 	}
 
-	private function loadJsonFile($fileNamePath) {
-		$jsonContent = file_get_contents($fileNamePath);
-		$decoded = json_decode($jsonContent, true);
+	public static function loadJsonFile($fileNamePath) {
+        $objFile = new \File($fileNamePath);
+		$decoded = json_decode($objFile->getContent(), true);
 
 		if ($decoded == NULL) {
 			return null;

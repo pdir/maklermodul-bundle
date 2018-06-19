@@ -20,6 +20,7 @@
 namespace Pdir\MaklermodulBundle\Util;
 
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
+use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Module\ListPaginationView;
 
@@ -111,7 +112,7 @@ class Helper extends \Frontend
         $newEstatePages = array();
         foreach ($indexObjects as $index) {
             if($index->getStorageFileUri() AND $index->getListInSitemap() == 1) {
-                $allEstates = $this->loadJsonFile($index->getStorageFileUri());
+                $allEstates = EstateRepository::loadJsonFile($index->getStorageFileUri());
 
                 foreach ($allEstates['data'] as $estate) {
                     if($index->getReaderPageId())
@@ -125,8 +126,8 @@ class Helper extends \Frontend
     }
 
     public static function loadJsonFile($fileNamePath) {
-        $jsonContent = file_get_contents(self::imagePath . $fileNamePath);
-        $decoded = json_decode($jsonContent, true);
+        $objFile = new \File(self::imagePath . $fileNamePath);
+        $decoded = json_decode($objFile->getContent(), true);
 
         if ($decoded == NULL) {
             return null;
@@ -172,7 +173,7 @@ class Helper extends \Frontend
         if(count($arrIndexFiles)<1) return '';
 
         foreach($arrIndexFiles as $index) {
-            $allEstates = self::loadJsonFile($index['immo_actIndexFile']);
+            $allEstates = $index->loadJsonFile($index['immo_actIndexFile']);
             foreach ($allEstates['data'] as $estate) {
                 $arrItems[] = array(
                     "title" => $estate['freitexte-objekttitel'],

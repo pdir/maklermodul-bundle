@@ -177,9 +177,8 @@ class ListView extends \Module
         //// get immo objects from xml file
         $pages = array();
 
-        /* @todo replace with contao file class */
-        $data = file_get_contents($this->getListSourceUri(true));
-        $json = json_decode($data, true);
+        $objFile = new \File($this->getListSourceUri(true));
+        $json = json_decode($objFile->getContent(), true);
 
         if(count($json) === 0)
         {
@@ -238,9 +237,8 @@ class ListView extends \Module
 
         if ($this->arrData['immo_listDebug'] == 1)
         {
-            /* @todo replace with contao file class */
-            $keyIndexString = file_get_contents(TL_ROOT . Helper::imagePath . '/key-index.json');
-            $keyIndex = json_decode($keyIndexString, true);
+            $objFile = new \File(Helper::imagePath . '/key-index.json');
+            $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);
             $this->Template->debug = true;
             $this->Template->keyIndex = array_unique($keyIndex);
@@ -288,16 +286,12 @@ class ListView extends \Module
     }
 
 	public function getListSourceUri($full = false) {
-        $container = \System::getContainer();
-        $strRootDir = $container->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . $container->getParameter('contao.upload_path');
-        $storageDirectoryPath = $strRootDir . DIRECTORY_SEPARATOR . 'maklermodul' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
-
         if(!method_exists ($this->Template->config, 'getStorageFileUri')) {
             echo $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'];
             die();
         }
         if($full)
-		    $path = $storageDirectoryPath . $this->Template->config->getStorageFileUri();
+		    $path = Helper::imagePath . $this->Template->config->getStorageFileUri();
         else
             $path = $this->Template->config->getStorageFileUri();
 
