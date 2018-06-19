@@ -232,9 +232,18 @@
       }
     }
 
-    li.active a {
+    li.active a, span {
       background: #3d566e;
       color: #fff;
+    }
+
+    span {
+      background: #3d566e;
+      color: #fff;
+      padding: 8px 12px;
+      display: block;
+      text-decoration: none;
+      font-size: 17px;
     }
   }
 
