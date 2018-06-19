@@ -3,9 +3,6 @@
  * module website https://www.maklermodul.de
  * for documentation visit https://docs.maklermodul.de
  */
-
-console.log('file loaded!');
-
 (function(window, document, $, undefined){
     'use strict';
     window.listView = {};
@@ -235,8 +232,8 @@ console.log('file loaded!');
 
                 $(listView.buttons).each(function(i, obj) {
                     var val = $(obj).val();
-                    console.log(val);
-                    console.log($(obj).hasClass('active'));
+                    //console.log(val);
+                    //console.log($(obj).hasClass('active'));
                     if($(obj).hasClass('active')) {
                         arrCheckboxes.push(val);
                     }
@@ -258,9 +255,10 @@ console.log('file loaded!');
 			typeof listView.paginationFilter == 'undefined' &&
 			typeof listView.rangeFilter == 'undefined'
 		) {
-			console.log('set pagination filter to page1');
             listView.paginationFilter = 'page1';
             listView.pagination.show();
+            listView.hashFilter = '.page1';
+            listView.setWindowHash();
         }
         else if(typeof listView.paginationStatus == 'undefined' &&
             typeof listView.qsRegex == 'undefined' &&
@@ -280,7 +278,9 @@ console.log('file loaded!');
         } else {
             listView.pagination.hide();
         }
-        /*
+
+
+/*
          console.log('search: '+listView.qsRegex);
          console.log('searchSel: '+listView.qsSelector);
          console.log('checkbox: ' +listView.checkboxFilter);
@@ -289,8 +289,8 @@ console.log('file loaded!');
          console.log(listView.rangeFilters);
          console.log('paginationStatus: ' +listView.paginationStatus);
          console.log('paginationFilter: ' +listView.paginationFilter);
-         */
-/* @todo implement special box
+*/
+         /* @todo implement special box
         var specialBox = listView.estateList.find('.special-box');
         specialBox.removeClass('.isotope-hidden')
             .addClass('objektart-bueroflaeche objektart-produktions-und-lagerflaechen' +
@@ -307,24 +307,26 @@ console.log('file loaded!');
             resizable: false,
             sortBy: 'original-order',
             sortAscending: true,
-            /* @todo implement filter
+
             filter: function() {
                 var $this = $(this);
-                var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
-                var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
-                var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
+                //var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
+                //var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
+                //var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
 
-                var area = $this.attr('data-area');
-                var price = $this.attr('data-price');
-                var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
-                var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
+                //var area = $this.attr('data-area');
+                //var price = $this.attr('data-price');
+                //var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
+                //var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
 
                 var paginationResult = listView.paginationFilter ? $this.hasClass( listView.paginationFilter ) : true;
 
-                var specialBox = $this.hasClass ('special-box') ? true: false;
+                //var specialBox = $this.hasClass ('special-box') ? true: false;
 
-                return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
-            }, */
+                //return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
+
+                return paginationResult;
+            },
         });
 
         // update filtered list if one filter is set
@@ -431,11 +433,11 @@ console.log('file loaded!');
         //console.log(jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length);
         //console.log(listView.objCnt);
         listView.objCnt = jQuery('#estate_list .estate').filter(':not(.isotope-hidden)').length;
-
+/*
         console.log(listView.hashFilter);
         console.log(listView.rangeFilter);
         console.log(listView.qsString);
-
+*/
         // get all items for pagination
         if(listView.hashFilter && listView.hashFilter.indexOf('.page') > -1 && !listView.qsString && !listView.rangeFilter
             || listView.hashFilter === null && !listView.qsString  && !listView.rangeFilter)
@@ -521,7 +523,6 @@ console.log('file loaded!');
             listView.selectFilter = filters;
 
         listView.selectFilter = filters;
-        console.log("filters: " + filters);
 
         // call filter
         listView.filter();
@@ -541,9 +542,6 @@ console.log('file loaded!');
         // combine filters
         var filterValue = listView.concatValues( filters );
 
-        console.log(filterValue);
-        console.log(listView.paginationStatus);
-
         if (typeof listView.paginationStatus == 'undefined')
         {
         	delete listView.paginationFilter;
@@ -562,7 +560,6 @@ console.log('file loaded!');
 		}
 
         listView.hashFilter = filterValue;
-        console.log(e);
 
         //listView.estateList.isotope({ filter: listView.hashFilter + ', .special-box' });
         listView.estateList.isotope({ filter: listView.hashFilter });
