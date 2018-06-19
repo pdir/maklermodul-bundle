@@ -72,25 +72,25 @@
                         <?php endif; ?>
                     </div>
                     <div class="content objectDescr">
-                        <h2><?= $obj['freitexte-objekttitel'] ?></h2>
+                        <h2 class="freitexte-objekttitel"><?= $obj['freitexte-objekttitel'] ?></h2>
                         <ul>
-                            <?php if($obj['verwaltung_techn-openimmo_obid']): ?><li class="field obid"><div class="label">ID</div><div class="value"><?= str_replace(" ","",$obj['verwaltung_techn-openimmo_obid']) ?></div></li><?php endif; ?>
-                            <li class="field"><div class="label">Lage</div><div class="value"><?= $obj['geo-plz'] ?> <?= $obj['geo-ort'] ?></div></li>
+                            <?php if($obj['verwaltung_techn-openimmo_obid']): ?><li class="field obid"><div class="label">ID</div><div class="value verwaltung_techn-openimmo_obid"><?= str_replace(" ","",$obj['verwaltung_techn-openimmo_obid']) ?></div></li><?php endif; ?>
+                            <li class="field"><div class="label">Lage</div><div class="value"><span class="geo-plz"><?= $obj['geo-plz'] ?></span> <span class="geo-ort"><?= $obj['geo-ort'] ?></span></div></li>
 
-                            <?php if($obj['preise-kaufpreis']): ?><li class="field"><div class="label">Kaufpreis</div><div class="value"><?= $this->formatValue($obj['preise-kaufpreis']) ?> EUR</div></li><?php endif; ?>
-                            <?php if($obj['preise-nettokaltmiete']): ?><li class="field"><div class="label">Nettokaltmiete</div><div class="value"><?= $this->formatValue($obj['preise-nettokaltmiete']) ?> EUR</div></li><?php endif; ?>
-                            <?php if($obj['preise-warmmiete']): ?><li class="field"><div class="label">Warmmiete</div><div class="value"><?= $this->formatValue($obj['preise-warmmiete']) ?> EUR</div></li><?php endif; ?>
-                            <?php if($obj['preise-kaution']): ?><li class="field"><div class="label">Kaution</div><div class="value"><?= $this->formatValue($obj['preise-kaution']) ?> EUR</div></li><?php endif; ?>
-                            <?php if($obj['preise-nebenkosten']): ?><li class="field"><div class="label">Nebenkosten</div><div class="value"><?= $this->formatValue($obj['preise-nebenkosten']) ?> EUR</div></li><?php endif; ?>
-                            <?php if($obj['preise-mietpreis_pro_qm']): ?><li class="field"><div class="label">Mietpreis</div><div class="value"><?= $this->formatValue($obj['preise-mietpreis_pro_qm']) ?> EUR/m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['preise-kaufpreis']): ?><li class="field"><div class="label">Kaufpreis</div><div class="value preise-kaufpreis"><?= $this->formatValue($obj['preise-kaufpreis']) ?> EUR</div></li><?php endif; ?>
+                            <?php if($obj['preise-nettokaltmiete']): ?><li class="field"><div class="label">Nettokaltmiete</div><div class="value preise-nettokaltmiete"><?= $this->formatValue($obj['preise-nettokaltmiete']) ?> EUR</div></li><?php endif; ?>
+                            <?php if($obj['preise-warmmiete']): ?><li class="field"><div class="label">Warmmiete</div><div class="value preise-warmmiete"><?= $this->formatValue($obj['preise-warmmiete']) ?> EUR</div></li><?php endif; ?>
+                            <?php if($obj['preise-kaution']): ?><li class="field"><div class="label">Kaution</div><div class="value preise-kaution"><?= $this->formatValue($obj['preise-kaution']) ?> EUR</div></li><?php endif; ?>
+                            <?php if($obj['preise-nebenkosten']): ?><li class="field"><div class="label">Nebenkosten</div><div class="value preise-nebenkosten"><?= $this->formatValue($obj['preise-nebenkosten']) ?> EUR</div></li><?php endif; ?>
+                            <?php if($obj['preise-mietpreis_pro_qm']): ?><li class="field"><div class="label">Mietpreis</div><div class="value preise-mietpreis_pro_qm"><?= $this->formatValue($obj['preise-mietpreis_pro_qm']) ?> EUR/m<sup>2</sup></div></li><?php endif; ?>
 
-                            <?php if($obj['flaechen-wohnflaeche']): ?><li class="field"><div class="label">Wohnfläche</div><div class="value"><?= $this->formatValue($obj['flaechen-wohnflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
-                            <?php if($obj['flaechen-ladenflaeche']): ?><li class="field"><div class="label">Ladenfläche</div><div class="value"><?= $this->formatValue($obj['flaechen-ladenflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
-                            <?php if($obj['flaechen-bueroflaeche']): ?><li class="field"><div class="label">Bürofläche</div><div class="value"><?= $this->formatValue($obj['flaechen-bueroflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
-                            <?php if($obj['flaechen-grundstuecksflaeche']): ?><li class="field"><div class="label">Grundstücksfläche</div><div class="value"><?= $this->formatValue($obj['flaechen-grundstuecksflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
-                            <?php if($obj['flaechen-gesamtflaeche']): ?><li class="field"><div class="label">Gesamtfläche</div><div class="value"><?= $this->formatValue($obj['flaechen-gesamtflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
-                            <?php if($obj['flaechen-teilbar_ab']): ?><li class="field"><div class="label">Fläche teilbar ab</div><div class="value"><?= $this->formatValue($obj['flaechen-teilbar_ab']) ?> m<sup>2</sup></div></li><?php endif; ?>
-                            <?php if($obj['flaechen-anzahl_zimmer']): ?><li class="field"><div class="label">Zimmer</div><div class="value"><?= $this->formatValue($obj['flaechen-anzahl_zimmer']) ?></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-wohnflaeche']): ?><li class="field"><div class="label">Wohnfläche</div><div class="value flaechen-wohnflaeche"><?= $this->formatValue($obj['flaechen-wohnflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-ladenflaeche']): ?><li class="field"><div class="label">Ladenfläche</div><div class="value flaechen-ladenflaeche"><?= $this->formatValue($obj['flaechen-ladenflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-bueroflaeche']): ?><li class="field"><div class="label">Bürofläche</div><div class="value flaechen-bueroflaeche"><?= $this->formatValue($obj['flaechen-bueroflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-grundstuecksflaeche']): ?><li class="field"><div class="label">Grundstücksfläche</div><div class="value flaechen-grundstuecksflaeche"><?= $this->formatValue($obj['flaechen-grundstuecksflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-gesamtflaeche']): ?><li class="field"><div class="label">Gesamtfläche</div><div class="value flaechen-gesamtflaeche"><?= $this->formatValue($obj['flaechen-gesamtflaeche']) ?> m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-teilbar_ab']): ?><li class="field"><div class="label">Fläche teilbar ab</div><div class="value flaechen-teilbar_ab"><?= $this->formatValue($obj['flaechen-teilbar_ab']) ?> m<sup>2</sup></div></li><?php endif; ?>
+                            <?php if($obj['flaechen-anzahl_zimmer']): ?><li class="field"><div class="label">Zimmer</div><div class="value flaechen-anzahl_zimmer"><?= $this->formatValue($obj['flaechen-anzahl_zimmer']) ?></div></li><?php endif; ?>
 
                         </ul>
                     </div>
