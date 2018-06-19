@@ -54,7 +54,7 @@ $GLOBALS['TL_CTE']['pdirMaklermodul'] = array
  * Hooks
  */
 // $GLOBALS['TL_HOOKS']['getPageIdFromUrl'][]    	= array('MaklerModulMplus\DetailViewHooks', 'hookGetPageIdFromUrl');
-// $GLOBALS['TL_HOOKS']['getSearchablePages'][]	    = array('MaklerModulMplus\Helper', 'addProductsToSearchIndex');
+$GLOBALS['TL_HOOKS']['getSearchablePages'][]	    = array('Pdir\MaklermodulBundle\Util\Helper', 'addProductsToSearchIndex');
 $GLOBALS['TL_HOOKS']['parseTemplate'][]             = array('Pdir\MaklermodulBundle\Util\Helper', 'addListPagination');
 // $GLOBALS['TL_HOOKS']['generateBreadcrumb'][]     = array('MaklerModulMplus\Helper', 'addProductToBreadcrumb');
 // $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][]  = array('MaklerModulMplus\Helper', 'parseOpenImmoFeedbackTemplate');
