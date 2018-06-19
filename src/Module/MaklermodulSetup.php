@@ -154,6 +154,10 @@ class MaklermodulSetup extends \BackendModule
             }
         }
 
+        // Regenerating Symlinks
+        $this->import('Automator');
+        $this->Automator->generateSymlinks();
+
         return;
     }
 
