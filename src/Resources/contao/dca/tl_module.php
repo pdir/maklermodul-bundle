@@ -411,6 +411,7 @@ class tl_module_makler extends Backend
 		foreach ($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'] as $key=>$value){
 			$fieldKeysArr[$key] = $key;
 		}
+        sort($fieldKeysArr);
 		return $fieldKeysArr;
 	}
 
