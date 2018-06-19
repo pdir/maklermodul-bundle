@@ -300,55 +300,47 @@
             specialBox.addClass(this.value.replace('.', ''));
         });
 */
-        if (typeof sorting != "undefined") {
-            $EstateList = listView.estateList.isotope({
-                itemSelector: '.estate',
-                layoutMode: 'fitRows',
-                getSortData: {
-                    sorting: function ( itemElem ) {
-                        var sortByClass = '.'+ sorting.sortBy.replace(".", "-");
-                        sortByClass = sortByClass.replace(".@", "-");
-                        var sort = jQuery( itemElem ).find(sortByClass).text();
-                        if(sorting.sortType == 'text')
-                            return sort;
-                        if(sorting.sortType == 'int')
-                            return parseInt(sort.replace( /[\(\)]/g, ''));
-                        if(sorting.sortType == 'float')
-                            return parseFloat(sort.replace( /[\(\)]/g, ''));
-                    }
-                },
-                sortBy: 'sorting',
-                sortAscending: sorting.sortAscending
-            });
-        } else {
-            $EstateList = listView.estateList.isotope({
-                itemSelector: '.estate',
-                layoutMode: 'fitRows',
-                resizable: false,
-                sortBy: 'original-order',
-                sortAscending: true,
-
-                filter: function() {
-                    var $this = $(this);
-                    //var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
-                    //var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
-                    //var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
-
-                    //var area = $this.attr('data-area');
-                    //var price = $this.attr('data-price');
-                    //var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
-                    //var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
-
-                    var paginationResult = listView.paginationFilter ? $this.hasClass( listView.paginationFilter ) : true;
-
-                    //var specialBox = $this.hasClass ('special-box') ? true: false;
-
-                    //return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
-
-                    return paginationResult;
+        $EstateList = listView.estateList.isotope({
+            itemSelector: '.estate',
+            layoutMode: 'fitRows',
+            resizable: false,
+            getSortData: {
+                sorting: function (itemElem) {
+                    var sortByClass = '.' + sorting.sortBy.replace(".", "-");
+                    sortByClass = sortByClass.replace(".@", "-");
+                    var sort = jQuery(itemElem).find(sortByClass).text();
+                    if (sorting.sortType == 'text')
+                        return sort;
+                    if (sorting.sortType == 'int')
+                        return parseInt(sort.replace(/[\(\)]/g, ''));
+                    if (sorting.sortType == 'float')
+                        return parseFloat(sort.replace(/[\(\)]/g, ''));
                 }
-            });
-        }
+            },
+            sortBy: 'sorting',
+            sortAscending: sorting.sortAscending,
+
+            filter: function () {
+                var $this = $(this);
+                //var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
+                //var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
+                //var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
+
+                //var area = $this.attr('data-area');
+                //var price = $this.attr('data-price');
+                //var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
+                //var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
+
+                var paginationResult = listView.paginationFilter ? $this.hasClass(listView.paginationFilter) : true;
+
+                //var specialBox = $this.hasClass ('special-box') ? true: false;
+
+                //return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
+
+                return paginationResult;
+            }
+        });
+
 
         // update filtered list if one filter is set
         if(typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
