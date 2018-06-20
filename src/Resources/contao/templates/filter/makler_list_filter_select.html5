@@ -5,7 +5,7 @@
         <option value="-1"><?= $filter['name'] ?> Alle</option>
         <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
         <option value=".<?= $filter['key'] ?>-<?= $values['css'] ?>" <?php if($this->Input->get($filter['key']) == $values['css']) echo " selected"; ?>>
-            <?= ucfirst(strtolower($values['name'])) ?>
+            <?= $values['name'] ?>
         </option>
         <?php endforeach; ?>
     </select>

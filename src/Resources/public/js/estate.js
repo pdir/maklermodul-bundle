@@ -38,7 +38,8 @@
             .on( 'click', '.mm-filter-btn', listView.filterByButton ) // bind buttons
             .on( 'click', '.pagination li a.link', listView.filterByPage ) // bind pagination links
             .on( 'change', '.mm-filter-sel', listView.filterBySelect ) // bind select fields
-            .on( 'change', '.mm-only-filter .mm-filter-sel', listView.appendFilter ) // append filter settings to url (filter only)
+            .on( 'change', '.mm-only-filter .mm-filter-sel', listView.appendFilter ) // append filter settings to url (filter only for selects)
+            .on( 'click', '.mm-only-filter .mm-filter-btn', listView.appendFilter ) // append filter settings to url (filter only for buttons)
             .on( 'slideStop', '.mm-filter-range', listView.filterByRange ) // bind range sliders
             .on( 'click', '.anfrage-btn', listView.showObjectRequest )
             .on( 'keyup', '.mm-quicksearch', listView.quicksearch )
@@ -675,7 +676,7 @@
         if(filterPage.indexOf("#") !== -1) {
             var filterPage = filterPage.substr(0,filterPage.indexOf("#"));
         }
-        $(".search-estate").attr("href",filterPage + "#filter=" + listView.selectFilter);
+        $(".search-estate").attr("href",filterPage + "#filter=" + listView.hashFilter);
     };
 
     listView.renderRangeSliders = function() {

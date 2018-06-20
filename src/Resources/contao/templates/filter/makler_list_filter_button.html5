@@ -6,7 +6,7 @@
             <button class="button mm-filter-btn
                 <?php if($this->Input->get($filter['key']) == $values['css']):?> active<?php endif; ?>"
                 data-filter=".<?= $filter['key'] ?>-<?= $values['css'] ?>">
-                <?= ucfirst(strtolower($values['name'])) ?>
+                <?= $values['name'] ?>
             </button>
         <?php endforeach; ?>
     </span>
