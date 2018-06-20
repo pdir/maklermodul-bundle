@@ -10,9 +10,9 @@ About
 
 real estate bundle for contao cms with open immo import
 
-Screenshot
------------
-
+Demo
+----
+see https://www.maklermodul.de
 
 System requirements
 -------------------

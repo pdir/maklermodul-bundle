@@ -107,12 +107,10 @@ class Helper extends \Frontend
         $indexConfigRepository = new IndexConfigRepository();
         $indexObjects = $indexConfigRepository->findAll();
 
-        echo "<pre style='color: white;'>indexObjects"; print_r($indexObjects); echo "</pre>";
-
         $newEstatePages = array();
         foreach ($indexObjects as $index) {
             if($index->getStorageFileUri() AND $index->getListInSitemap() == 1) {
-                $allEstates = EstateRepository::loadJsonFile($index->getStorageFileUri());
+                $allEstates = $this->loadJsonFile($index->getStorageFileUri());
 
                 foreach ($allEstates['data'] as $estate) {
                     if($index->getReaderPageId())
@@ -173,7 +171,7 @@ class Helper extends \Frontend
         if(count($arrIndexFiles)<1) return '';
 
         foreach($arrIndexFiles as $index) {
-            $allEstates = $index->loadJsonFile($index['immo_actIndexFile']);
+            $allEstates = self::loadJsonFile($index['immo_actIndexFile']);
             foreach ($allEstates['data'] as $estate) {
                 $arrItems[] = array(
                     "title" => $estate['freitexte-objekttitel'],

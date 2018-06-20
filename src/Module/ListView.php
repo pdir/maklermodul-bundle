@@ -220,7 +220,7 @@ class ListView extends \Module
 
         $this->Template->pageCount = $pageCount-1;
         $this->Template->page = !(int)$this->Input->get('page') ? (int)$this->Input->get('page') : 0;
-        $this->Template->listObjects = $pages;
+        $this->Template->listObjects = count($json['data']) > 0 ? $pages : NULL;
 
         //// render filter template
         $strFilterTemplate = 'makler_list_filter_button';
