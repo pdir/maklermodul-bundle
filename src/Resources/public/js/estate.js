@@ -170,9 +170,9 @@
         listView.pagination = $('.mod_immoListView .pagination');
 
         // global variables from template
-        if(typeof countObj !== 'undefined') listView.objCnt = countObj;
-        if(typeof addListPagination !== 'undefined') listView.paginationStatus = addListPagination;
-        listView.paginationUseIsotope = paginationUseIsotope;
+        if(typeof countObj !== 'undefined') listView.objCnt = window.countObj;
+        if(typeof addListPagination !== 'undefined') listView.paginationStatus = window.addListPagination;
+        listView.paginationUseIsotope = window.paginationUseIsotope;
 
         listView.rangeFilters = listView.setDefaultRangeFilter();
 
