@@ -40,10 +40,11 @@
     <?php if($this->paginationUseIsotope != 0): // Ausgabe Filter ?>
     <div id="estate_filter_list" class="estate-filter <?= $this->filterClass ?><?php if($this->staticFilter): ?> mm-only-filter<?php endif; ?>">
         <?= $this->filter ?>
-        <?php if($this->staticFilter): ?>
-        <a href="<?= $this->staticListPage ?>" class="btn search-estate">Immobilien suchen</a>
-        <?php endif; ?>
     </div>
+
+    <?php if($this->staticFilter): ?>
+        <a href="<?= $this->staticListPage ?>" class="btn search-estate">Immobilien suchen</a>
+    <?php endif; ?>
 
     <a class="btn btn-reset-filter mm-reset" href="#estate_filter_list">Filter zurücksetzen</a>
     <?php endif; ?>
@@ -53,7 +54,7 @@
         <div id="estate_list">
             <?php foreach ($pages[$page] as $obj): ?>
             <?php #if($this->makler_addListPagination && $counter < $this->makler_paginationCount+1): ?>
-            <a href="<?= $this->helper->getDetailViewPrefix() ?>/<?= $obj['uriident'] ?>.html" class="<?= $obj['css-filter-class-string'] ?>">
+            <a href="<?= $this->helper->getDetailViewPrefix() ?>/<?= $obj['uriident'] ?><?= $this->urlSuffix ?>" class="<?= $obj['css-filter-class-string'] ?>">
                 <div class="inner">
                     <div class="mix item<?php if($counter&1): ?> odd<?php else: ?> even<?php endif; ?>">
 
@@ -149,7 +150,7 @@
 
 <?= '<script type="text/javascript">' ?>
     // Sortierung
-    <?php if($this->sorting !== ''): ?>var sorting = <?php echo $this->sorting; ?>;<?php endif; ?>
+    var sorting = <?php echo $this->sorting; ?>;
     var maklerTemplate = 'v2';
     var sourceIndexUri = 'files/maklermodul/data/<?php echo $this->helper->getListSourceUri(); ?>';
     var detailViewPrefix = '<?php echo $this->helper->getDetailViewPrefix(); ?>';

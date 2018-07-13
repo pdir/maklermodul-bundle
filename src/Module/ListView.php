@@ -109,7 +109,6 @@ class ListView extends \Module
 
         $this->Template->helper = $this;
 
-
         if($this->makler_useModuleJs)
         {
 
@@ -157,10 +156,14 @@ class ListView extends \Module
         {
             $this->Template->sorting = $this->arrData['immo_listSort'];
         }
+        else if($this->arrData['immo_listSort'] != '-')
+        {
+            $this->Template->sorting = "{sortBy: '".$this->arrData['immo_listSort']."',sortAscending: ".$this->arrData['makler_listSortAsc'].",sortType: '".$this->arrData['makler_listSortType']."'}";
+        }
         else
         {
-            if($this->arrData['immo_listSort'] != '-')
-                $this->Template->sorting = "{sortBy: '".$this->arrData['immo_listSort']."',sortAscending: ".$this->arrData['makler_listSortAsc'].",sortType: '".$this->arrData['makler_listSortType']."'}";
+            // set default listing mode
+            $this->Template->sorting = "{sortBy: 'anbieter.openimmo_anid',sortAscending: false,sortType: 'int'}";
         }
 
         //// params
@@ -220,7 +223,7 @@ class ListView extends \Module
 
         $this->Template->pageCount = $pageCount-1;
         $this->Template->page = !(int)$this->Input->get('page') ? (int)$this->Input->get('page') : 0;
-        $this->Template->listObjects = $pages;
+        $this->Template->listObjects = count($json['data']) > 0 ? $pages : NULL;
 
         //// render filter template
         $strFilterTemplate = 'makler_list_filter_button';
@@ -248,6 +251,15 @@ class ListView extends \Module
 
         $this->Template->storageDirectoryPath = $this->getRootDir();
         $this->Template->staticFilter = $this->immo_staticFilter ? true : false;
+
+        // url suffix
+        $this->Template->urlSuffix = '.html';
+
+        $container = \System::getContainer();
+        if ($container->hasParameter('contao.url_suffix'))
+        {
+            $this->Template->urlSuffix = $container->getParameter('contao.url_suffix');
+        }
     }
 
     private function isJsonString($str) {
@@ -305,7 +317,17 @@ class ListView extends \Module
         }
 
 		$baseUri = $this->generateFrontendUrl($this->detailPage);
-		return str_replace('.html', '/' . DetailView::PARAMETER_KEY, $baseUri);
+
+        // url suffix
+        $urlSuffix = '.html';
+
+        $container = \System::getContainer();
+        if ($container->hasParameter('contao.url_suffix'))
+        {
+            $urlSuffix = $container->getParameter('contao.url_suffix');
+        }
+
+		return str_replace($urlSuffix, '/' . DetailView::PARAMETER_KEY, $baseUri);
 	}
 
 	public function getPageUrl($id, $vars = '') {
