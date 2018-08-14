@@ -70,8 +70,9 @@ class EstateRepository {
 		return new EstateRepository(Helper::imagePath);
 	}
 
-	public static function loadJsonFile($fileNamePath) {
-        $objFile = new \File($fileNamePath);
+	public function loadJsonFile($fileNamePath) {
+
+        $objFile = new \File(str_replace($this->storageDirectoryPath, Helper::imagePath, $fileNamePath));
 		$decoded = json_decode($objFile->getContent(), true);
 
 		if ($decoded == NULL) {

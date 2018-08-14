@@ -32,7 +32,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
 	= '{title_legend},name,headline,type;'
 	. '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
 	. '{image_legend},imgSize;'
-    . '{option_legend},makler_useModuleDetailCss';
+    . '{option_legend},makler_useModuleDetailCss,makler_debug';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
 	= '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder;'
@@ -355,6 +355,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_showMap'] = array
     'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
     'eval'                    => array('tl_class'=>'w50 clr', 'mandatory'=>false, 'isBoolean' => true),
     'sql'                     =>  "int(1) NOT NULL default '1'"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_debug'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_debug'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+    'sql'                     =>  "int(1) NOT NULL default '0'"
 );
 
 class tl_module_makler extends Backend

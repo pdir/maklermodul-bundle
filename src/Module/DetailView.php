@@ -108,6 +108,7 @@ class DetailView extends \Module
         $this->Template->estate = $this->createFieldRendererFactory($this->alias);
         $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder ."/img/platzhalterbild.jpg";
         $this->Template->showMap = $this->makler_showMap;
+        $this->Template->debug = $this->makler_debug;
     }
 
     private function createFieldRendererFactory($objectId) {
