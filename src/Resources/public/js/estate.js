@@ -376,7 +376,7 @@
             $(this).prop( "checked", false );
         });
         // reset buttons
-        listView.checkboxes.filter(':checked').each(function(){
+        listView.buttons.filter('.active').each(function(){
             $(this).removeClass('active');
         });
         // reset search
@@ -385,7 +385,7 @@
         });
 
         // reset selects
-        /*listView.selects.each(function(){
+        listView.selects.each(function(){
             $(this).find('option').each(function() {
                 $(this).show();
             });
@@ -393,7 +393,7 @@
                 $(this).removeAttr('selected');
             });
             $(this).trigger("chosen:updated");
-        });*/
+        });
 
         // reset nearby
         listView.nearbyField.val('');
