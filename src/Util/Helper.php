@@ -1,9 +1,9 @@
 <?php
 
-/**
+/*
  * maklermodul for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (C) 2018 pdir / digital agentur <develop@pdir.de>
  *
  * @package    maklermodul
  * @link       https://www.maklermodul.de
@@ -12,85 +12,93 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Util;
 
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Module\ListPaginationView;
 
 class Helper extends \Frontend
 {
     /**
-     * maklermodul version
+     * maklermodul version.
      */
-    const VERSION = '1.2.0
-    ';
+    const VERSION = '1.2.1';
 
     /**
-     * Extension mode
-     * @var boolean
+     * Extension mode.
+     *
+     * @var bool
      */
     const MODE = 'DEMO';
 
     /**
-     * API Url
-     * @var string
-     */
-    static $apiUrl = 'https://pdir.de/api/maklermodul/';
-
-    /**
-     * Path to Asset Folder
+     * Path to Asset Folder.
+     *
      * @var string
      */
     const assetFolder = 'bundles/pdirmaklermodul';
 
     /**
-     * Path to Image
+     * Path to Image.
+     *
      * @var string
      */
     const imagePath = 'files/maklermodul/data/';
 
+    /**
+     * API Url.
+     *
+     * @var string
+     */
+    public static $apiUrl = 'https://pdir.de/api/maklermodul/';
+
     public function getAds()
     {
         // only used for demo presentation
-        $json = file_get_contents(self::$apiUrl . 'list/all/' . \Environment::get('server'));
-        $arrAds = json_decode( $json, true );
+        $json = file_get_contents(self::$apiUrl.'list/all/'.\Environment::get('server'));
+        $arrAds = json_decode($json, true);
+
         return $arrAds; // load from local cache
     }
 
     public function getAdDetail($alias)
     {
         // only used for demo presentation
-        $json = file_get_contents(self::$apiUrl . 'ad/' . $alias . '/' . \Environment::get('server'));
-        $arrAd = json_decode( $json, true );
+        $json = file_get_contents(self::$apiUrl.'ad/'.$alias.'/'.\Environment::get('server'));
+        $arrAd = json_decode($json, true);
+
         return $arrAd;
     }
 
-    public function addPrivacyWidget($arrWidgets) {
-
-        $arrWidgets[] = array(
+    public function addPrivacyWidget($arrWidgets)
+    {
+        $arrWidgets[] = [
             'title' => 'pdir/maklermodul-bundle',
             'content' => $GLOBALS['TL_LANG']['MOD']['maklermodulPrivacy'],
-            'class' => 'orange icon'
-        );
+            'class' => 'orange icon',
+        ];
 
         return $arrWidgets;
     }
 
     public function addListPagination($objTemplate)
     {
-        if(strpos(get_class($objTemplate), 'FrontendTemplate') !== false) {
-            $objTemplate->hookAddListPagination = function() use ($objTemplate) {
-                if($objTemplate->addListPagination) {
+        if (false !== strpos(get_class($objTemplate), 'FrontendTemplate')) {
+            $objTemplate->hookAddListPagination = function () use ($objTemplate) {
+                if ($objTemplate->addListPagination) {
                     $objListPaginationView = new ListPaginationView($objTemplate);
-                    return($objListPaginationView->generate());
+
+                    return $objListPaginationView->generate();
                 }
+
                 return '';
             };
         }
@@ -98,7 +106,6 @@ class Helper extends \Frontend
 
     /**
      * @param array $arrPages
-     *
      * @param array $intRoot
      *
      * @return array
@@ -108,50 +115,58 @@ class Helper extends \Frontend
         $indexConfigRepository = new IndexConfigRepository();
         $indexObjects = $indexConfigRepository->findAll();
 
-        $newEstatePages = array();
+        $newEstatePages = [];
         foreach ($indexObjects as $index) {
-            if($index->getStorageFileUri() AND $index->getListInSitemap() == 1) {
+            if ($index->getStorageFileUri() and 1 === $index->getListInSitemap()) {
                 $allEstates = $this->loadJsonFile($index->getStorageFileUri());
 
                 foreach ($allEstates['data'] as $estate) {
-                    if($index->getReaderPageId())
-                        $newEstatePages[] = $this->getPageUrl($index->getReaderPageId(), DIRECTORY_SEPARATOR . DetailView::PARAMETER_KEY . DIRECTORY_SEPARATOR . $estate['uriident']);
+                    if ($index->getReaderPageId()) {
+                        $newEstatePages[] = $this->getPageUrl($index->getReaderPageId(), \DIRECTORY_SEPARATOR.DetailView::PARAMETER_KEY.\DIRECTORY_SEPARATOR.$estate['uriident']);
+                    }
                 }
             }
         }
 
         $newEstatePages = array_unique($newEstatePages);
+
         return array_merge($arrPages, $newEstatePages);
     }
 
-    public static function loadJsonFile($fileNamePath) {
-        $objFile = new \File(self::imagePath . $fileNamePath);
+    public static function loadJsonFile($fileNamePath)
+    {
+        $objFile = new \File(self::imagePath.$fileNamePath);
         $decoded = json_decode($objFile->getContent(), true);
 
-        if ($decoded == NULL) {
+        if (null === $decoded) {
             return null;
         }
+
         return $decoded;
     }
 
-    public static function getPageUrl($id, $vars = '') {
-        $websitePath = DIRECTORY_SEPARATOR;
-        if($GLOBALS['TL_CONFIG']['websitePath']) $websitePath = $GLOBALS['TL_CONFIG']['websitePath'] . DIRECTORY_SEPARATOR;
+    public static function getPageUrl($id, $vars = '')
+    {
+        $websitePath = \DIRECTORY_SEPARATOR;
+        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+            $websitePath = $GLOBALS['TL_CONFIG']['websitePath'].\DIRECTORY_SEPARATOR;
+        }
         $pageModel = \PageModel::findPublishedByIdOrAlias($id)->current()->row();
         $strUrl = \Controller::generateFrontendUrl($pageModel, $vars); // example '/additionalquerystring/vars'
         return \Environment::get('url').$websitePath.$strUrl;
     }
 
     /**
-     * Get the subpages for MaklerModulMplus detail page
+     * Get the subpages for MaklerModulMplus detail page.
      *
      * @param array $item
      *
      * @return array|bool
      */
-    public static function getSubPages($item) {
-        $arrIndexFiles = array();
-        $arrItems = array();
+    public static function getSubPages($item)
+    {
+        $arrIndexFiles = [];
+        $arrItems = [];
 
         $database = \Database::getInstance();
         $artResult = $database->query("SELECT `id` FROM `tl_article` WHERE `pid` = '".$item['id']."'");
@@ -164,28 +179,33 @@ class Helper extends \Frontend
                 $modResult = $database->query("SELECT `immo_actIndexFile`,`immo_readerPage` FROM `tl_module` WHERE `id` = '".$row['module']."' AND `type` = 'immoListView' AND `immo_listInSitemap` = 1");
                 while ($modResult->next()) {
                     $row = $modResult->row();
-                    if($row['immo_actIndexFile']) $arrIndexFiles[] = $row;
+                    if ($row['immo_actIndexFile']) {
+                        $arrIndexFiles[] = $row;
+                    }
                 }
             }
         }
 
-        if(count($arrIndexFiles)<1) return '';
+        if (count($arrIndexFiles) < 1) {
+            return '';
+        }
 
-        foreach($arrIndexFiles as $index) {
+        foreach ($arrIndexFiles as $index) {
             $allEstates = self::loadJsonFile($index['immo_actIndexFile']);
             foreach ($allEstates['data'] as $estate) {
-                $arrItems[] = array(
-                    "title" => $estate['freitexte-objekttitel'],
-                    "href"  => self::getPageUrl($index['immo_readerPage'], $GLOBALS['TL_CONFIG']['websitePath']  . DIRECTORY_SEPARATOR . DetailView::PARAMETER_KEY . DIRECTORY_SEPARATOR . $estate['uriident']),
-                    "alias" => $estate['uriident'],
-                    "type" => "regular",
-                    "redirect" => "permanent",
-                    "pageTitle" => $estate['freitexte-objekttitel'],
-                    "link" => $estate['freitexte-objekttitel'],
-                    "class" => "level_2",
-                );
+                $arrItems[] = [
+                    'title' => $estate['freitexte-objekttitel'],
+                    'href' => self::getPageUrl($index['immo_readerPage'], $GLOBALS['TL_CONFIG']['websitePath'].\DIRECTORY_SEPARATOR.DetailView::PARAMETER_KEY.\DIRECTORY_SEPARATOR.$estate['uriident']),
+                    'alias' => $estate['uriident'],
+                    'type' => 'regular',
+                    'redirect' => 'permanent',
+                    'pageTitle' => $estate['freitexte-objekttitel'],
+                    'link' => $estate['freitexte-objekttitel'],
+                    'class' => 'level_2',
+                ];
             }
         }
+
         return $arrItems;
     }
 }
