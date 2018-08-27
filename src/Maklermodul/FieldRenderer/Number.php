@@ -23,10 +23,12 @@ use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Number extends FieldRenderer {
+class Number extends FieldRenderer
+{
     private $decimalCount = 0;
 
-    public function __construct($key, $value, FieldTranslator $translator, $decimalCount) {
+    public function __construct($key, $value, FieldTranslator $translator, $decimalCount)
+    {
         parent::__construct(
             $key,
             $value,
@@ -41,7 +43,8 @@ class Number extends FieldRenderer {
      * @param bool $doNotPrint
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = $this->getSetting('prefix');
         $returnValue .= number_format(floatval($this->getValue()), $this->decimalCount, ',', '.');
         $returnValue .= $this->getSetting('append');
@@ -54,17 +57,20 @@ class Number extends FieldRenderer {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             $template = $this->getShortTemplate();
-            return sprintf($template,
+            return sprintf(
+                $template,
                 Estate::sanizeFileName($this->getKey()),
                 $this->value(true)
             );
         }
 
         $template = $this->getLongTemplate();
-        return sprintf($template,
+        return sprintf(
+            $template,
             Estate::sanizeFileName($this->getKey()),
             $this->key(true),
             $this->value(true)
@@ -73,7 +79,8 @@ class Number extends FieldRenderer {
 
 
 
-    private function getLongTemplate() {
+    private function getLongTemplate()
+    {
         return <<<EOT
 <div class="field %s">
     <div class="label">%s</div>
@@ -82,7 +89,8 @@ class Number extends FieldRenderer {
 EOT;
     }
 
-    private function getShortTemplate() {
+    private function getShortTemplate()
+    {
         return <<<EOT
 <div class="field value-number %s">%s</div>
 EOT;

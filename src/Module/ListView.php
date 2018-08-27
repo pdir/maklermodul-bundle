@@ -37,26 +37,26 @@ class ListView extends \Module
 {
     const DEFAULT_TEMPLATE = 'makler_list';
 
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate  = self::DEFAULT_TEMPLATE;
+    /**
+     * Template
+     * @var string
+     */
+    protected $strTemplate  = self::DEFAULT_TEMPLATE;
 
-	/**
-	 * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository
-	 */
-	private $repository;
+    /**
+     * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository
+     */
+    private $repository;
 
-	/**
-	 * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface
-	 */
-	private $config;
+    /**
+     * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface
+     */
+    private $config;
 
-	/**
-	 * @var \PageModel
-	 */
-	private $detailPage;
+    /**
+     * @var \PageModel
+     */
+    private $detailPage;
 
     /**
      * @var array
@@ -69,10 +69,11 @@ class ListView extends \Module
     public $assetFolder = 'bundles/pdirmaklermodul/';
 
 
-    public function __construct($objModule, $strColumn = 'main') {
-        parent::__construct( $objModule, $strColumn );
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
 
-        if (!empty($this->arrData['immo_listTemplate']) AND TL_MODE != 'BE') {
+        if (!empty($this->arrData['immo_listTemplate']) and TL_MODE != 'BE') {
             $this->strTemplate = $this->arrData['immo_listTemplate'];
         }
     }
@@ -83,8 +84,7 @@ class ListView extends \Module
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
@@ -101,39 +101,35 @@ class ListView extends \Module
     }
 
     /**
-	 * Generate the module
-	 */
-	protected function compile()
-	{
+     * Generate the module
+     */
+    protected function compile()
+    {
         $this->validateSettings();
 
         $this->Template->helper = $this;
 
-        if($this->makler_useModuleJs)
-        {
-
+        if ($this->makler_useModuleJs) {
             $GLOBALS['TL_JAVASCRIPT']['jquery.template'] = $this->assetFolder . 'js/jquery.loadTemplate-1.4.4.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['mixitup'] = $this->assetFolder . 'js/jquery.isotope.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['browser'] = $this->assetFolder . 'js/jquery.browser.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['bbq'] = $this->assetFolder . 'js/jquery.ba-bbq.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['estate'] = $this->assetFolder . 'js/estate.js|static';
         }
-        if($this->makler_useModuleCss)
-        {
+        if ($this->makler_useModuleCss) {
             $GLOBALS['TL_CSS']['estate'] = $this->assetFolder . 'css/estate.scss||static';
         }
 
-        if ($this->arrData['immo_staticFilter'] == 1)
-        {
+        if ($this->arrData['immo_staticFilter'] == 1) {
             $this->Template->staticFilter = true;
             $this->Template->staticListPage = '/' . \PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
 
-		$this->Template->config = new IndexConfig($this->arrData);
+        $this->Template->config = new IndexConfig($this->arrData);
 
         // image params
         $arrImgSize = unserialize($this->imgSize);
-        if(count($arrImgSize) < 1) {
+        if (count($arrImgSize) < 1) {
             $this->Template->listImageWidth = '293';
             $this->Template->listImageHeight = '220';
             $this->Template->listImageMode = 'center_center';
@@ -144,24 +140,18 @@ class ListView extends \Module
         }
 
 
-		if (TL_MODE == 'FE' && $this->arrData['immo_staticFilter'] == 0)
-        {
+        if (TL_MODE == 'FE' && $this->arrData['immo_staticFilter'] == 0) {
             // @ToDo Fehler bei deaktivierter Detailseite beheben (Fatal error: Call to a member function current() on a non-object in /.../system/modules/makler_modul_mplus/modules/ListView.php on line 105
-			$this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current()->row();
-			$this->repository = EstateRepository::getInstance();
-			$this->Template->objectData = $this->repository->findAll();
-		}
+            $this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current()->row();
+            $this->repository = EstateRepository::getInstance();
+            $this->Template->objectData = $this->repository->findAll();
+        }
 
-        if($this->isJsonString($this->arrData['immo_listSort']))
-        {
+        if ($this->isJsonString($this->arrData['immo_listSort'])) {
             $this->Template->sorting = $this->arrData['immo_listSort'];
-        }
-        else if($this->arrData['immo_listSort'] != '-')
-        {
+        } elseif ($this->arrData['immo_listSort'] != '-') {
             $this->Template->sorting = "{sortBy: '".$this->arrData['immo_listSort']."',sortAscending: ".$this->arrData['makler_listSortAsc'].",sortType: '".$this->arrData['makler_listSortType']."'}";
-        }
-        else
-        {
+        } else {
             // set default listing mode
             $this->Template->sorting = "{sortBy: 'anbieter.openimmo_anid',sortAscending: false,sortType: 'int'}";
         }
@@ -183,39 +173,35 @@ class ListView extends \Module
         $objFile = new \File($this->getListSourceUri(true));
         $json = json_decode($objFile->getContent(), true);
 
-        if(count($json) === 0)
-        {
+        if (count($json) === 0) {
             throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
         }
 
         $newEstates = array();
         $pageCount = 1;
-        if($this->makler_addListPagination && $this->Input->get('estate-filter') == 'true') {
-
+        if ($this->makler_addListPagination && $this->Input->get('estate-filter') == 'true') {
             foreach ($json['data'] as $estate):
                 foreach ($_REQUEST as $key => $value) {
-                    if (strpos($estate['css-filter-class-string'], $key.'-'.$value) !== FALSE) { // Yoshi version
+                    if (strpos($estate['css-filter-class-string'], $key.'-'.$value) !== false) { // Yoshi version
                         $newEstates[$estate['uriident']] = $estate;
                     }
-
                 }
             endforeach;
             $pages = array_chunk($newEstates, $this->makler_paginationCount);
-
-        } elseif($this->makler_addListPagination && $this->makler_paginationUseIsotope) {
+        } elseif ($this->makler_addListPagination && $this->makler_paginationUseIsotope) {
             $count = 1;
             foreach ($json['data'] as $estate):
                 $estate['css-filter-class-string'] = $estate['css-filter-class-string']." page".$pageCount;
-                $newEstates[] = $estate;
-                if($this->makler_paginationCount != 0) {
-                    if (($count % $this->makler_paginationCount) == 0)
-                        $pageCount++;
+            $newEstates[] = $estate;
+            if ($this->makler_paginationCount != 0) {
+                if (($count % $this->makler_paginationCount) == 0) {
+                    $pageCount++;
                 }
-                $count++;
+            }
+            $count++;
             endforeach;
             $pages[] = $newEstates;
-
-        } elseif($this->makler_addListPagination) {
+        } elseif ($this->makler_addListPagination) {
             $pages = array_chunk($json['data'], $this->makler_paginationCount);
         } else {
             $pages[] = $json['data'];
@@ -223,11 +209,11 @@ class ListView extends \Module
 
         $this->Template->pageCount = $pageCount-1;
         $this->Template->page = !(int)$this->Input->get('page') ? (int)$this->Input->get('page') : 0;
-        $this->Template->listObjects = count($json['data']) > 0 ? $pages : NULL;
+        $this->Template->listObjects = count($json['data']) > 0 ? $pages : null;
 
         //// render filter template
         $strFilterTemplate = 'makler_list_filter_button';
-        if($this->makler_listFilterTemplate == 'select') {
+        if ($this->makler_listFilterTemplate == 'select') {
             $strFilterTemplate = 'makler_list_filter_select';
             $this->Template->filterClass = "select-filter";
         } else {
@@ -238,8 +224,7 @@ class ListView extends \Module
         $objFilterTemplate->filterConfig = $json['filterConfig'];
         $this->Template->filter = $objFilterTemplate->parse();
 
-        if ($this->arrData['immo_listDebug'] == 1)
-        {
+        if ($this->arrData['immo_listDebug'] == 1) {
             $objFile = new \File(Helper::imagePath . '/key-index.json');
             $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);
@@ -256,92 +241,99 @@ class ListView extends \Module
         $this->Template->urlSuffix = '.html';
 
         $container = \System::getContainer();
-        if ($container->hasParameter('contao.url_suffix'))
-        {
+        if ($container->hasParameter('contao.url_suffix')) {
             $this->Template->urlSuffix = $container->getParameter('contao.url_suffix');
         }
     }
 
-    private function isJsonString($str) {
+    private function isJsonString($str)
+    {
         return json_decode($str) != null;
     }
 
-    private function validateSettings() {
-        if ($this->arrData['immo_staticFilter'] == 0 && $this->arrData['immo_readerPage'] == 0)
-        {
+    private function validateSettings()
+    {
+        if ($this->arrData['immo_staticFilter'] == 0 && $this->arrData['immo_readerPage'] == 0) {
             throw new \Exception("Undefined reader page");
         }
 
-        if ($this->arrData['immo_staticFilter'] == 1 && $this->arrData['immo_filterListPage'] == 0)
-        {
+        if ($this->arrData['immo_staticFilter'] == 1 && $this->arrData['immo_filterListPage'] == 0) {
             throw new \Exception("Undefined filter list page");
         }
     }
 
-	public function toUri($path) {
-		return str_replace('/var/www/', '', $path);
-	}
+    public function toUri($path)
+    {
+        return str_replace('/var/www/', '', $path);
+    }
 
-	public function getDetailViewLink(Estate $estate) {
-		$paramString = sprintf('/%s/%s',
+    public function getDetailViewLink(Estate $estate)
+    {
+        $paramString = sprintf(
+            '/%s/%s',
             DetailView::PARAMETER_KEY,
-				$estate->getUriIdentifier()
-		);
+                $estate->getUriIdentifier()
+        );
 
-		return $this->generateFrontendUrl($this->detailPage, $paramString);
-	}
+        return $this->generateFrontendUrl($this->detailPage, $paramString);
+    }
 
-	public function getRootDir() {
+    public function getRootDir()
+    {
         $container = \System::getContainer();
         $strRootDir = $container->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . $container->getParameter('contao.upload_path');
         return $strRootDir . DIRECTORY_SEPARATOR . 'maklermodul' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
     }
 
-	public function getListSourceUri($full = false) {
-        if(!method_exists ($this->Template->config, 'getStorageFileUri')) {
+    public function getListSourceUri($full = false)
+    {
+        if (!method_exists($this->Template->config, 'getStorageFileUri')) {
             echo $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'];
             die();
         }
-        if($full)
-		    $path = Helper::imagePath . $this->Template->config->getStorageFileUri();
-        else
+        if ($full) {
+            $path = Helper::imagePath . $this->Template->config->getStorageFileUri();
+        } else {
             $path = $this->Template->config->getStorageFileUri();
+        }
 
         return $path;
-	}
+    }
 
-	public function getDetailViewPrefix() {
-        if ($this->Template->staticFilter)
-        {
+    public function getDetailViewPrefix()
+    {
+        if ($this->Template->staticFilter) {
             return '';
         }
 
-		$baseUri = $this->generateFrontendUrl($this->detailPage);
+        $baseUri = $this->generateFrontendUrl($this->detailPage);
 
         // url suffix
         $urlSuffix = '.html';
 
         $container = \System::getContainer();
-        if ($container->hasParameter('contao.url_suffix'))
-        {
+        if ($container->hasParameter('contao.url_suffix')) {
             $urlSuffix = $container->getParameter('contao.url_suffix');
         }
 
-		return str_replace($urlSuffix, '/' . DetailView::PARAMETER_KEY, $baseUri);
-	}
+        return str_replace($urlSuffix, '/' . DetailView::PARAMETER_KEY, $baseUri);
+    }
 
-	public function getPageUrl($id, $vars = '') {
-		$arrPage = \PageModel::findPublishedByIdOrAlias($id)->current()->row();
-		$strUrl = $this->generateFrontendUrl($arrPage, $vars); // example '/additionalquerystring/vars'
-		return $strUrl;
-	}
+    public function getPageUrl($id, $vars = '')
+    {
+        $arrPage = \PageModel::findPublishedByIdOrAlias($id)->current()->row();
+        $strUrl = $this->generateFrontendUrl($arrPage, $vars); // example '/additionalquerystring/vars'
+        return $strUrl;
+    }
 
-    public function getOjects() {
+    public function getOjects()
+    {
         return $this->arrData;
     }
 
-    public function formatValue($sVal) {
-        return number_format ((float)$sVal,2,",",".");
+    public function formatValue($sVal)
+    {
+        return number_format((float)$sVal, 2, ",", ".");
     }
 
     /**

@@ -23,15 +23,15 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 
 class ContaoManagerPlugin implements BundlePluginInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBundles(ParserInterface $parser)
-	{
-		return [
-			BundleConfig::create(PdirMaklermodulBundle::class)
-				->setLoadAfter([ContaoCoreBundle::class])
+    /**
+     * {@inheritdoc}
+     */
+    public function getBundles(ParserInterface $parser)
+    {
+        return [
+            BundleConfig::create(PdirMaklermodulBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class])
                 ->setReplace(['makler_modul_mplus']),
-		];
-	}
+        ];
+    }
 }

@@ -42,8 +42,9 @@ class HeaderImageView extends \Module
      */
     protected $strTemplate  = 'makler_header_image';
 
-    public function __construct($objModule, $strColumn = 'main') {
-        parent::__construct( $objModule, $strColumn );
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
     }
 
     /**
@@ -52,8 +53,7 @@ class HeaderImageView extends \Module
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
@@ -88,35 +88,35 @@ class HeaderImageView extends \Module
 
         $estate = $this->createFieldRendererFactory($this->alias);
 
-        if($this->makler_showHeadline == true)
-        {
+        if ($this->makler_showHeadline == true) {
             $this->Template->headline = $this->headline ? $this->headline : $estate->rawValue('freitexte.objekttitel');
             $this->Template->showHeadline = true;
         }
 
         $this->Template->showBackgroundImage = $this->makler_showBackgroundImage;
 
-        if($estate->rawValue('anhaenge.anhang.#1.daten.pfad') != "") {
+        if ($estate->rawValue('anhaenge.anhang.#1.daten.pfad') != "") {
             $this->Template->headerImage = Helper::imagePath . $estate->rawValue('anhaenge.anhang.#1.daten.pfad');
         } else {
             $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder . "/img/platzhalterbild.jpg";
-            if($placeholder != Helper::assetFolder . "/img/platzhalterbild.jpg") {
+            if ($placeholder != Helper::assetFolder . "/img/platzhalterbild.jpg") {
                 $objFile = \FilesModel::findByUuid($placeholder);
                 $this->Template->headerImage = $objFile->path;
             } else {
                 $this->Template->headerImage = $placeholder;
             }
         }
-
     }
 
-    private function createFieldRendererFactory($objectId) {
+    private function createFieldRendererFactory($objectId)
+    {
         $repository = EstateRepository::getInstance();
         $estate = $repository->findByObjectId($objectId);
         return new FieldRendererFactory($estate, $this->getTranslationMap());
     }
 
-    private function getTranslationMap() {
+    private function getTranslationMap()
+    {
         return StaticDIC::getTranslationMap();
     }
 }

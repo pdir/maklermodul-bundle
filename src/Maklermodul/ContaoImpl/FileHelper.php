@@ -21,10 +21,12 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl;
 
-class FileHelper {
+class FileHelper
+{
     private $fsNode;
 
-    public function __construct($path, $isFolder = false) {
+    public function __construct($path, $isFolder = false)
+    {
         $path = $this->prepareFileNameForContao($path);
         if ($isFolder) {
             $this->fsNode = new \Folder($path);
@@ -33,19 +35,22 @@ class FileHelper {
         }
     }
 
-    public function putContent($filePath, $content) {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' OR strtoupper(substr(PHP_OS, 0, 3)) === 'WINNT') {
+    public function putContent($filePath, $content)
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' or strtoupper(substr(PHP_OS, 0, 3)) === 'WINNT') {
             return file_put_contents($filePath, $content);
         }
         $filePath = $this->prepareFileNameForContao($filePath);
         return $this->fsNode->putContent($filePath, $content);
     }
 
-    public function delete() {
+    public function delete()
+    {
         return $this->fsNode->delete();
     }
 
-    private function prepareFileNameForContao($fileName) {
+    private function prepareFileNameForContao($fileName)
+    {
         if (strpos($fileName, TL_ROOT) === 0) {
             $fileName = str_replace(TL_ROOT, '', $fileName);
         }

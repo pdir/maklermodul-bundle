@@ -19,11 +19,13 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
-class FieldTranslator {
+class FieldTranslator
+{
     const FIELD_KEYS_KEY = 'field_keys';
     private $map;
 
-    public function __construct($translationMap) {
+    public function __construct($translationMap)
+    {
         $this->map = $translationMap;
     }
 
@@ -33,7 +35,8 @@ class FieldTranslator {
      * @param $key
      * @return mixed
      */
-    public function translate($key) {
+    public function translate($key)
+    {
         $returnValue = $key;
 
         if (isset($this->map[self::FIELD_KEYS_KEY][$key])) {

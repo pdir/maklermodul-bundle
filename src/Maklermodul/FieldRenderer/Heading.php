@@ -23,10 +23,12 @@ use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Heading extends FieldRenderer {
+class Heading extends FieldRenderer
+{
     private $crop = false;
 
-    public function __construct($key, $value, FieldTranslator $translator, $tag) {
+    public function __construct($key, $value, FieldTranslator $translator, $tag)
+    {
         parent::__construct($key, $value, $translator);
         $this->setSetting('tag', $tag);
     }
@@ -37,7 +39,8 @@ class Heading extends FieldRenderer {
      * @param integer $length
      * @return $this
      */
-    public function crop($length) {
+    public function crop($length)
+    {
         $this->crop = true;
         $this->setSetting('crop', $length);
 
@@ -50,7 +53,8 @@ class Heading extends FieldRenderer {
      * @param bool $doNotPrint
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = parent::value($doNotPrint);
 
         if ($this->crop) {
@@ -69,7 +73,8 @@ class Heading extends FieldRenderer {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             return $this->getShortString();
         } else {
@@ -77,24 +82,27 @@ class Heading extends FieldRenderer {
         }
     }
 
-    private function getShortString() {
+    private function getShortString()
+    {
         $template = $this->getShortTemplate();
         return sprintf(
             $template,
-        	$this->getSetting('tag'),
+            $this->getSetting('tag'),
             Estate::sanizeFileName($this->getKey()),
             $this->value(true),
-        	$this->getSetting('tag')
+            $this->getSetting('tag')
         );
     }
 
-    private function getShortTemplate() {
+    private function getShortTemplate()
+    {
         return <<<EOT
 <%s class="field %s">%s</%s>
 EOT;
     }
 
-    private function getFullString() {
+    private function getFullString()
+    {
         $template = $this->getFullTemplate();
         return sprintf(
             $template,
@@ -104,7 +112,8 @@ EOT;
         );
     }
 
-    private function getFullTemplate() {
+    private function getFullTemplate()
+    {
         return <<<EOT
 <div class="field %s">
     <div class="label">%s</div>

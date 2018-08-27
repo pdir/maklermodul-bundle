@@ -29,7 +29,7 @@ class Helper extends \Frontend
     /**
      * maklermodul version
      */
-    const VERSION = '1.0.4';
+    const VERSION = '1.0.5';
 
     /**
      * Extension mode
@@ -41,7 +41,7 @@ class Helper extends \Frontend
      * API Url
      * @var string
      */
-    static $apiUrl = 'https://pdir.de/api/maklermodul/';
+    public static $apiUrl = 'https://pdir.de/api/maklermodul/';
 
     /**
      * Path to Asset Folder
@@ -59,7 +59,7 @@ class Helper extends \Frontend
     {
         // only used for demo presentation
         $json = file_get_contents(self::$apiUrl . 'list/all/' . \Environment::get('server'));
-        $arrAds = json_decode( $json, true );
+        $arrAds = json_decode($json, true);
         return $arrAds; // load from local cache
     }
 
@@ -67,12 +67,12 @@ class Helper extends \Frontend
     {
         // only used for demo presentation
         $json = file_get_contents(self::$apiUrl . 'ad/' . $alias . '/' . \Environment::get('server'));
-        $arrAd = json_decode( $json, true );
+        $arrAd = json_decode($json, true);
         return $arrAd;
     }
 
-    public function addPrivacyWidget($arrWidgets) {
-
+    public function addPrivacyWidget($arrWidgets)
+    {
         $arrWidgets[] = array(
             'title' => 'pdir/maklermodul-bundle',
             'content' => $GLOBALS['TL_LANG']['MOD']['maklermodulPrivacy'],
@@ -84,9 +84,9 @@ class Helper extends \Frontend
 
     public function addListPagination($objTemplate)
     {
-        if(strpos(get_class($objTemplate), 'FrontendTemplate') !== false) {
-            $objTemplate->hookAddListPagination = function() use ($objTemplate) {
-                if($objTemplate->addListPagination) {
+        if (strpos(get_class($objTemplate), 'FrontendTemplate') !== false) {
+            $objTemplate->hookAddListPagination = function () use ($objTemplate) {
+                if ($objTemplate->addListPagination) {
                     $objListPaginationView = new ListPaginationView($objTemplate);
                     return($objListPaginationView->generate());
                 }
@@ -109,12 +109,13 @@ class Helper extends \Frontend
 
         $newEstatePages = array();
         foreach ($indexObjects as $index) {
-            if($index->getStorageFileUri() AND $index->getListInSitemap() == 1) {
+            if ($index->getStorageFileUri() and $index->getListInSitemap() == 1) {
                 $allEstates = $this->loadJsonFile($index->getStorageFileUri());
 
                 foreach ($allEstates['data'] as $estate) {
-                    if($index->getReaderPageId())
+                    if ($index->getReaderPageId()) {
                         $newEstatePages[] = $this->getPageUrl($index->getReaderPageId(), DIRECTORY_SEPARATOR . DetailView::PARAMETER_KEY . DIRECTORY_SEPARATOR . $estate['uriident']);
+                    }
                 }
             }
         }
@@ -123,19 +124,23 @@ class Helper extends \Frontend
         return array_merge($arrPages, $newEstatePages);
     }
 
-    public static function loadJsonFile($fileNamePath) {
+    public static function loadJsonFile($fileNamePath)
+    {
         $objFile = new \File(self::imagePath . $fileNamePath);
         $decoded = json_decode($objFile->getContent(), true);
 
-        if ($decoded == NULL) {
+        if ($decoded == null) {
             return null;
         }
         return $decoded;
     }
 
-    public static function getPageUrl($id, $vars = '') {
+    public static function getPageUrl($id, $vars = '')
+    {
         $websitePath = DIRECTORY_SEPARATOR;
-        if($GLOBALS['TL_CONFIG']['websitePath']) $websitePath = $GLOBALS['TL_CONFIG']['websitePath'] . DIRECTORY_SEPARATOR;
+        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+            $websitePath = $GLOBALS['TL_CONFIG']['websitePath'] . DIRECTORY_SEPARATOR;
+        }
         $pageModel = \PageModel::findPublishedByIdOrAlias($id)->current()->row();
         $strUrl = \Controller::generateFrontendUrl($pageModel, $vars); // example '/additionalquerystring/vars'
         return \Environment::get('url').$websitePath.$strUrl;
@@ -148,7 +153,8 @@ class Helper extends \Frontend
      *
      * @return array|bool
      */
-    public static function getSubPages($item) {
+    public static function getSubPages($item)
+    {
         $arrIndexFiles = array();
         $arrItems = array();
 
@@ -163,14 +169,18 @@ class Helper extends \Frontend
                 $modResult = $database->query("SELECT `immo_actIndexFile`,`immo_readerPage` FROM `tl_module` WHERE `id` = '".$row['module']."' AND `type` = 'immoListView' AND `immo_listInSitemap` = 1");
                 while ($modResult->next()) {
                     $row = $modResult->row();
-                    if($row['immo_actIndexFile']) $arrIndexFiles[] = $row;
+                    if ($row['immo_actIndexFile']) {
+                        $arrIndexFiles[] = $row;
+                    }
                 }
             }
         }
 
-        if(count($arrIndexFiles)<1) return '';
+        if (count($arrIndexFiles)<1) {
+            return '';
+        }
 
-        foreach($arrIndexFiles as $index) {
+        foreach ($arrIndexFiles as $index) {
             $allEstates = self::loadJsonFile($index['immo_actIndexFile']);
             foreach ($allEstates['data'] as $estate) {
                 $arrItems[] = array(

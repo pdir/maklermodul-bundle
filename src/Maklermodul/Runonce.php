@@ -35,19 +35,19 @@ class Runonce
      * Data folder
      * @var string
      */
-    static $strDataFolder = self::strFolder . 'data';
+    public static $strDataFolder = self::strFolder . 'data';
 
     /**
      * Import folder
      * @var string
      */
-    static $strImportFolder = self::strFolder . 'upload';
+    public static $strImportFolder = self::strFolder . 'upload';
 
     /**
      * Org folder
      * @var string
      */
-    static $strOrgFolder = self::strFolder . 'org';
+    public static $strOrgFolder = self::strFolder . 'org';
 
     /**
      * Run file migrations
@@ -56,23 +56,23 @@ class Runonce
      */
     public function run()
     {
-        if(!file_exists(self::strFolder)) {
+        if (!file_exists(self::strFolder)) {
             new \Folder(self::strFolder);
         }
 
-        if(!file_exists(self::$strDataFolder)) {
+        if (!file_exists(self::$strDataFolder)) {
             new \Folder(self::$strDataFolder);
         }
 
-        if(!file_exists(self::$strImportFolder)) {
+        if (!file_exists(self::$strImportFolder)) {
             new \Folder(self::$strImportFolder);
         }
 
-        if(!file_exists(self::$strOrgFolder)) {
+        if (!file_exists(self::$strOrgFolder)) {
             new \Folder(self::$strOrgFolder);
         }
 
-        if(!file_exists(self::strFolder . '.public')) {
+        if (!file_exists(self::strFolder . '.public')) {
             \File::putContent(self::strFolder . '.public', '');
         }
     }

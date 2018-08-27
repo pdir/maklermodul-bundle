@@ -23,8 +23,8 @@ use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 use Pdir\MaklermodulBundle\Util\Helper;
 
-class Attachment extends FieldRenderer {
-
+class Attachment extends FieldRenderer
+{
     public $websitePath;
 
     /*
@@ -33,14 +33,17 @@ class Attachment extends FieldRenderer {
      */
     public $template;
 
-    public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD') {
+    public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD')
+    {
         parent::__construct(
             $key,
             $value,
             $translator
         );
 
-        if($GLOBALS['TL_CONFIG']['websitePath']) $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
+        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+            $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
+        }
 
         // set default values for images
         $this->setSetting('group', $group);
@@ -56,7 +59,8 @@ class Attachment extends FieldRenderer {
      * @param integer $maxHeight
      * @return $this
      */
-    public function size($maxWidth, $maxHeight) {
+    public function size($maxWidth, $maxHeight)
+    {
         $this->setSetting('maxWidth', $maxWidth);
         $this->setSetting('maxHeight', $maxHeight);
 
@@ -68,9 +72,10 @@ class Attachment extends FieldRenderer {
      * @param string $attGroup
      * @return $this;
      */
-    public function group($attGroup) {
-    	$this->setSetting('group', $attGroup);
-    	return $this;
+    public function group($attGroup)
+    {
+        $this->setSetting('group', $attGroup);
+        return $this;
     }
 
     /**
@@ -78,9 +83,10 @@ class Attachment extends FieldRenderer {
      * @param string $attLocation
      * @return $this;
      */
-    public function location($attLocation) {
-    	$this->setSetting('location', $attLocation);
-    	return $this;
+    public function location($attLocation)
+    {
+        $this->setSetting('location', $attLocation);
+        return $this;
     }
 
     /**
@@ -89,9 +95,10 @@ class Attachment extends FieldRenderer {
      * @param string $mode
      * @return $this
      */
-    public function mode($mode) {
-    	$this->setSetting('mode', $mode);
-    	return $this;
+    public function mode($mode)
+    {
+        $this->setSetting('mode', $mode);
+        return $this;
     }
 
     /**
@@ -100,9 +107,10 @@ class Attachment extends FieldRenderer {
      * @param string $link
      * @return $this
      */
-    public function withoutLink($link) {
-    	$this->setSetting('link', $link);
-    	return $this;
+    public function withoutLink($link)
+    {
+        $this->setSetting('link', $link);
+        return $this;
     }
 
     /**
@@ -110,75 +118,84 @@ class Attachment extends FieldRenderer {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getShortString();
     }
 
     /** @noinspection PhpInconsistentReturnPointsInspection */
-    private function getShortString() {
-    	// show only given group
-    	if(strpos($this->getSetting('group'), $this->getValueOf('@gruppe')) !== false) {
-
-    		switch ($this->getValueOf('@gruppe'))
-    		{
-    			case 'DOKUMENTE';
+    private function getShortString()
+    {
+        // show only given group
+        if (strpos($this->getSetting('group'), $this->getValueOf('@gruppe')) !== false) {
+            switch ($this->getValueOf('@gruppe')) {
+                case 'DOKUMENTE':
                     // render doc list
                     $this->template = $this->getShortTemplateDoc();
-                    return sprintf($this->template,
+                    return sprintf(
+                        $this->template,
                         $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
                         substr($this->getValueOf('format'), 1),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('anhangtitel')
                     );
                     break;
-    			case 'FILMLINK';
-					// render doc list
-					$this->template = $this->getShortTemplateDoc();
-					return sprintf($this->template,
-							$this->getUrlOfPath($this->getValueOf('daten.pfad')),
-							substr($this->getValueOf('format'), 1),
-							$this->getValueOf('anhangtitel'),
-							$this->getValueOf('anhangtitel')
-					);
-					break;
-    			case 'FILM';
-    				$this->template = $this->getShortTemplateMedia();
-                    return sprintf($this->template,
+                case 'FILMLINK':
+                    // render doc list
+                    $this->template = $this->getShortTemplateDoc();
+                    return sprintf(
+                        $this->template,
+                            $this->getUrlOfPath($this->getValueOf('daten.pfad')),
+                            substr($this->getValueOf('format'), 1),
+                            $this->getValueOf('anhangtitel'),
+                            $this->getValueOf('anhangtitel')
+                    );
+                    break;
+                case 'FILM':
+                    $this->template = $this->getShortTemplateMedia();
+                    return sprintf(
+                        $this->template,
                         substr($this->getValueOf('format'), 1),
                         $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('anhangtitel')
                     );
-    				break;
-    			default;
+                    break;
+                default:
                     // fallback for xml data without group definition
-					// render image
-			        $renderedThumbnail = $this->getThumbnailString(
-			            $this->getValueOf('daten.pfad'),
-			            $this->getValueOf('anhangtitel'),
-						$this->getValueOf('@location')
-			        );
+                    // render image
+                    $renderedThumbnail = $this->getThumbnailString(
+                        $this->getValueOf('daten.pfad'),
+                        $this->getValueOf('anhangtitel'),
+                        $this->getValueOf('@location')
+                    );
 
-			        if($this->getSetting('link')) return $renderedThumbnail;
+                    if ($this->getSetting('link')) {
+                        return $renderedThumbnail;
+                    }
 
-			        $this->template = $this->getShortTemplate();
-			        return sprintf($this->template,
-			            $this->getUrlOfPath(Helper::imagePath . $this->getValueOf('daten.pfad')),
-			            $this->getValueOf('anhangtitel'),
-			            $renderedThumbnail
-			        );
-			}
-    	}
-    	return '';
+                    $this->template = $this->getShortTemplate();
+                    return sprintf(
+                        $this->template,
+                        $this->getUrlOfPath(Helper::imagePath . $this->getValueOf('daten.pfad')),
+                        $this->getValueOf('anhangtitel'),
+                        $renderedThumbnail
+                    );
+            }
+        }
+        return '';
     }
 
-    private function getUrlOfPath($path) {
-        if($this->websitePath)
+    private function getUrlOfPath($path)
+    {
+        if ($this->websitePath) {
             return $this->websitePath . '/' . str_replace(TL_ROOT, '', $path);
+        }
         return str_replace(TL_ROOT, '', $path);
     }
 
-    private function getThumbnailString($path, $alt, $location) {
+    private function getThumbnailString($path, $alt, $location)
+    {
         try {
             $width = $this->getSetting('maxWidth');
             $height = $this->getSetting('maxHeight');
@@ -186,11 +203,12 @@ class Attachment extends FieldRenderer {
 
             $url = $path;
             // @todo make it changeable in the config file
-            if($location == 'REMOTE') $url = str_replace(".jpg", "_small.jpg", $url);
-            if($location == 'EXTERN') {
-
-            	$path = $this->resizeImage($path, $width, $height, $mode);
-            	$url = $this->getUrlOfPath($path);
+            if ($location == 'REMOTE') {
+                $url = str_replace(".jpg", "_small.jpg", $url);
+            }
+            if ($location == 'EXTERN') {
+                $path = $this->resizeImage($path, $width, $height, $mode);
+                $url = $this->getUrlOfPath($path);
             }
             $this->template = $this->getThumbnailTemplate(true);
             $result = sprintf($this->template, $url, $width, $height, $alt);
@@ -200,19 +218,24 @@ class Attachment extends FieldRenderer {
             $this->template = $this->getThumbnailTemplate();
             $url = $path;
             // @todo make it changeable in the config file
-            if($location == 'REMOTE') $url = str_replace(".jpg", "_small.jpg", $url);
-            if($location == 'EXTERN')
-            	$url = $this->getUrlOfPath($path);
+            if ($location == 'REMOTE') {
+                $url = str_replace(".jpg", "_small.jpg", $url);
+            }
+            if ($location == 'EXTERN') {
+                $url = $this->getUrlOfPath($path);
+            }
 
             return sprintf($this->template, $url, $alt);
         }
     }
 
-    private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode) {
+    private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode)
+    {
         return \Image::get(Helper::imagePath . $orgPath, $maxWidth, $maxHeight, $mode) ;
     }
 
-    private function getThumbnailTemplate($resized = false) {
+    private function getThumbnailTemplate($resized = false)
+    {
         $returnValue =  '<img src="%s"' . PHP_EOL;
 
         if ($resized) {
@@ -224,7 +247,8 @@ class Attachment extends FieldRenderer {
         return $returnValue;
     }
 
-    private function getShortTemplate() {
+    private function getShortTemplate()
+    {
         $returnValue =  '<a href="%s"' . PHP_EOL;
         $returnValue .= '   data-lightbox="galerie" title="%s">' . PHP_EOL;
         $returnValue .= '   %s' . PHP_EOL;
@@ -233,7 +257,8 @@ class Attachment extends FieldRenderer {
         return $returnValue;
     }
 
-    private function getValueOf($key) {
+    private function getValueOf($key)
+    {
         $returnValue = '';
         $value = $this->getValue();
         $key = $this->getFullyQualifiedKey($key);
@@ -245,11 +270,13 @@ class Attachment extends FieldRenderer {
         return $returnValue;
     }
 
-    private function getFullyQualifiedKey($key) {
+    private function getFullyQualifiedKey($key)
+    {
         return $this->getKey() . '.' . $key;
     }
 
-    private function getShortTemplateDoc() {
+    private function getShortTemplateDoc()
+    {
         $returnValue =  '<li><a href="%s"' . PHP_EOL;
         $returnValue .= '   class="link-icon %s" title="Download %s" target="_blank">' . PHP_EOL;
         $returnValue .= '   %s' . PHP_EOL;
@@ -258,7 +285,8 @@ class Attachment extends FieldRenderer {
         return $returnValue;
     }
 
-    private function getShortTemplateMedia() {
+    private function getShortTemplateMedia()
+    {
         $returnValue =  '<div class="ce_player">';
         $returnValue .= '<video width="640" height="360" controls>';
         $returnValue .= '<source type="video/%s" src="%s">';

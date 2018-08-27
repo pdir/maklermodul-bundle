@@ -17,36 +17,31 @@
 /**
  * Backend modules
  */
-if (!is_array($GLOBALS['BE_MOD']['pdir']))
-{
-	array_insert($GLOBALS['BE_MOD'], 1, array('pdir' => array()));
+if (!is_array($GLOBALS['BE_MOD']['pdir'])) {
+    array_insert($GLOBALS['BE_MOD'], 1, array('pdir' => array()));
 }
 
 $assetsDir = 'bundles/pdirmaklermodul';
 
-array_insert($GLOBALS['BE_MOD']['pdir'], 0, array
-(
-	'maklermodulSetup' => array
-	(
-		'callback'          => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
-		'icon'              => $assetsDir . '/img/icon.png',
-		//'javascript'        =>  $assetsDir . '/js/backend.min.js',
-		'stylesheet'		=>  $assetsDir . '/css/backend.css'
-	),
+array_insert($GLOBALS['BE_MOD']['pdir'], 0, array(
+    'maklermodulSetup' => array(
+        'callback'          => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
+        'icon'              => $assetsDir . '/img/icon.png',
+        //'javascript'        =>  $assetsDir . '/js/backend.min.js',
+        'stylesheet'		=>  $assetsDir . '/css/backend.css'
+    ),
 ));
 
 /**
  * Frontend modules
  */
-$GLOBALS['FE_MOD']['pdirMaklermodul'] = array
-(
+$GLOBALS['FE_MOD']['pdirMaklermodul'] = array(
     'immoListView' => 'Pdir\MaklermodulBundle\Module\ListView',
     'immoDetailView' => 'Pdir\MaklermodulBundle\Module\DetailView',
     'immoHeaderImageView' => 'Pdir\MaklermodulBundle\Module\HeaderImageView'
 );
 
-$GLOBALS['TL_CTE']['pdirMaklermodul'] = array
-(
+$GLOBALS['TL_CTE']['pdirMaklermodul'] = array(
     'makler_headerImage' => 'Pdir\MaklermodulBundle\Module\HeaderImageView'
 );
 
@@ -68,7 +63,6 @@ $GLOBALS['TL_AUTO_ITEM'][] = 'estate';
 /**
  * Javascript for Backend
  */
-if (TL_MODE == 'BE')
-{
+if (TL_MODE == 'BE') {
     $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
 }

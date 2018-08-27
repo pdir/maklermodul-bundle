@@ -22,7 +22,8 @@ namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
-class Text extends FieldRenderer {
+class Text extends FieldRenderer
+{
     private $crop = false;
 
     /**
@@ -31,7 +32,8 @@ class Text extends FieldRenderer {
      * @param integer $length
      * @return $this
      */
-    public function crop($length) {
+    public function crop($length)
+    {
         $this->crop = true;
         $this->setSetting('crop', $length);
 
@@ -44,7 +46,8 @@ class Text extends FieldRenderer {
      * @param bool $doNotPrint
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = parent::value($doNotPrint);
 
         if ($this->crop) {
@@ -63,7 +66,8 @@ class Text extends FieldRenderer {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             return $this->getShortString();
         } else {
@@ -71,7 +75,8 @@ class Text extends FieldRenderer {
         }
     }
 
-    private function getShortString() {
+    private function getShortString()
+    {
         $template = $this->getShortTemplate();
         return sprintf(
             $template,
@@ -80,14 +85,16 @@ class Text extends FieldRenderer {
         );
     }
 
-    private function getShortTemplate() {
+    private function getShortTemplate()
+    {
         return <<<EOT
 <div class="field %s value-text">%s</div>
 
 EOT;
     }
 
-    private function getFullString() {
+    private function getFullString()
+    {
         $template = $this->getFullTemplate();
         return sprintf(
             $template,
@@ -97,7 +104,8 @@ EOT;
         );
     }
 
-    private function getFullTemplate() {
+    private function getFullTemplate()
+    {
         return <<<EOT
 <div class="field %s">
     <div class="label">%s</div>

@@ -23,12 +23,13 @@ use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Date extends FieldRenderer {
+class Date extends FieldRenderer
+{
     const DEFAULT_INPUT_FORMAT = 'Y-m-d';
     const DEFAULT_OUTPUT_FORMAT = 'd.m.Y';
 
-    public function __construct($key, $value, FieldTranslator $translator) {
-
+    public function __construct($key, $value, FieldTranslator $translator)
+    {
         $value = \DateTime::createFromFormat(self::DEFAULT_INPUT_FORMAT, $value);
 
         parent::__construct(
@@ -46,7 +47,8 @@ class Date extends FieldRenderer {
      * @param bool $doNotPrint
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = $this->getSetting('prefix');
 
         if (is_a($this->getValue(), '\DateTime')) {
@@ -63,24 +65,28 @@ class Date extends FieldRenderer {
      *
      * @return string
      */
-    function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             $template = $this->getShortTemplate();
-            return sprintf($template,
+            return sprintf(
+                $template,
                 Estate::sanizeFileName($this->getKey()),
                 $this->value(true)
             );
         }
 
         $template = $this->getLongTempalte();
-        return sprintf($template,
+        return sprintf(
+            $template,
             Estate::sanizeFileName($this->getKey()),
             $this->key(true),
             $this->value(true)
         );
     }
 
-    private function getLongTempalte() {
+    private function getLongTempalte()
+    {
         return <<<EOT
 <div class="field %s">
     <div class="label">%s</div>
@@ -89,10 +95,10 @@ class Date extends FieldRenderer {
 EOT;
     }
 
-    private function getShortTemplate() {
+    private function getShortTemplate()
+    {
         return <<<EOT
 <div class="field %s value-date">%s</div>
 EOT;
-
     }
 }

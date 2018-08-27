@@ -51,7 +51,8 @@ class StaticDIC
     public static function getCssFilterClassMapping()
     {
         if (null === self::$filterConfig) {
-            $fileName = sprintf('%s/%s/%s',
+            $fileName = sprintf(
+                '%s/%s/%s',
                 __DIR__,
                 self::CONFIG_ROOT,
                 self::FILTER_CSS_MAPPING
@@ -76,7 +77,8 @@ class StaticDIC
      *
      * @return \Contao\File
      */
-    public static function getFileHelper($fileName) {
+    public static function getFileHelper($fileName)
+    {
         return new FileHelper($fileName, false);
     }
 
@@ -85,7 +87,8 @@ class StaticDIC
      *
      * @return \Contao\Folder
      */
-    public static function getFolderHelper($folderName) {
+    public static function getFolderHelper($folderName)
+    {
         return new FileHelper($folderName, true);
     }
 }

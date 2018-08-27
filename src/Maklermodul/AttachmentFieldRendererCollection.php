@@ -21,7 +21,8 @@ namespace Pdir\MaklermodulBundle\Maklermodul;
 
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment;
 
-class AttachmentFieldRendererCollection implements \Iterator {
+class AttachmentFieldRendererCollection implements \Iterator
+{
     const LIST_PREFIX = 'anhaenge.anhang.#';
 
     private $data;
@@ -33,7 +34,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      */
     private $attachments;
 
-    public function __construct($rawData, FieldTranslator $translator) {
+    public function __construct($rawData, FieldTranslator $translator)
+    {
         $this->rawData = $rawData;
         $this->translator = $translator;
 
@@ -42,20 +44,22 @@ class AttachmentFieldRendererCollection implements \Iterator {
         $this->createAttachmentObjects();
     }
 
-    protected function parseRawData() {
+    protected function parseRawData()
+    {
         $this->data = array();
 
-        foreach ($this->rawData as $key => $value)  {
+        foreach ($this->rawData as $key => $value) {
             $parsedKey = str_replace(self::LIST_PREFIX, '', $key);
             list($id, $parsedKey) = explode('.', $parsedKey, 2);
             $this->setData($id, $parsedKey, $value);
         }
     }
 
-    protected function sortData() {
+    protected function sortData()
+    {
         $sorted = array();
         $keys = array_keys($this->data);
-        natcasesort ($keys);
+        natcasesort($keys);
 
         foreach ($keys as $key) {
             $sorted[$key] = $this->data[$key];
@@ -63,7 +67,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
         $this->data = $sorted;
     }
 
-    private function setData($id, $key, $value) {
+    private function setData($id, $key, $value)
+    {
         $id = self::LIST_PREFIX . $id;
 
         if (!isset($this->data[$id])) {
@@ -73,7 +78,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
         $this->data[$id]["$id.$key"] = $value;
     }
 
-    private function createAttachmentObjects() {
+    private function createAttachmentObjects()
+    {
         $this->attachments = array();
 
         foreach ($this->data as $key => $value) {
@@ -86,7 +92,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      *
      * @return mixed
      */
-    public function getRawData() {
+    public function getRawData()
+    {
         return $this->rawData;
     }
 
@@ -95,7 +102,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      *
      * @return Attachment
      */
-    public function first() {
+    public function first()
+    {
         $key = "";
         $value = "";
 
@@ -117,7 +125,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      *
      * @return \Iterator
      */
-    public function startAt($int) {
+    public function startAt($int)
+    {
         $returnValue = new \ArrayIterator($this->attachments);
 
         if ($int > 0) {
@@ -139,7 +148,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      *
      * @return \ArrayIterator
      */
-    public function range($offset, $endOffset) {
+    public function range($offset, $endOffset)
+    {
         return new \ArrayIterator(array_slice($this->attachments, $offset, $endOffset));
     }
 
@@ -150,7 +160,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @link http://php.net/manual/en/iterator.current.php
      * @return mixed Can return any type.
      */
-    public function current() {
+    public function current()
+    {
         // @@todo: Implement current() method.
         return '';
     }
@@ -162,7 +173,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @link http://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
-    public function next() {
+    public function next()
+    {
         // @todo: Implement next() method.
         return '';
     }
@@ -174,7 +186,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @link http://php.net/manual/en/iterator.key.php
      * @return mixed scalar on success, or null on failure.
      */
-    public function key() {
+    public function key()
+    {
         // @todo: Implement key() method.
         return '';
     }
@@ -187,7 +200,8 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid() {
+    public function valid()
+    {
         // @todo: Implement valid() method.
         return '';
     }
@@ -199,9 +213,9 @@ class AttachmentFieldRendererCollection implements \Iterator {
      * @link http://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
      */
-    public function rewind() {
+    public function rewind()
+    {
         // @todo: Implement rewind() method.
         return '';
     }
-
 }

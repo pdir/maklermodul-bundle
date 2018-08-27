@@ -19,24 +19,24 @@
  */
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
-	= '{title_legend},name,headline,type;'
-	. '{template_legend},immo_readerPage,immo_listTemplate;'
-	. '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate;'
-	. '{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
-	. '{makler_cond_legend},immo_listCondition;'
-	. '{image_legend},imgSize,makler_listViewPlaceholder;'
-	. '{makler_pagination_legend},makler_addListPagination;'
-	. '{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
+    = '{title_legend},name,headline,type;'
+    . '{template_legend},immo_readerPage,immo_listTemplate;'
+    . '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate;'
+    . '{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
+    . '{makler_cond_legend},immo_listCondition;'
+    . '{image_legend},imgSize,makler_listViewPlaceholder;'
+    . '{makler_pagination_legend},makler_addListPagination;'
+    . '{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
-	= '{title_legend},name,headline,type;'
-	. '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
-	. '{image_legend},imgSize;'
+    = '{title_legend},name,headline,type;'
+    . '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
+    . '{image_legend},imgSize;'
     . '{option_legend},makler_useModuleDetailCss';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
-	= '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder;'
-	. '{expert_legend:hide},guests,cssID,space;';
+    = '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder;'
+    . '{expert_legend:hide},guests,cssID,space;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'makler_addListPagination';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['makler_addListPagination'] = 'makler_paginationCount,makler_paginationLinkCount,makler_paginationUseIsotope'; // ,makler_paginationShowtitle';
@@ -45,16 +45,14 @@ $GLOBALS['TL_DCA']['tl_module']['subpalettes']['makler_addListPagination'] = 'ma
  * Add fields to tl_module
  */
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_actIndexFile'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_actIndexFile'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_actIndexFile'],
     'exclude'                 => true,
     'inputType'               => 'text',
     'sql'                     => "varchar(255) NOT NULL default '00index-demo-00001.json'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_readerTemplate'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_readerTemplate'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_readerTemplate'],
     'exclude'                 => true,
     'inputType'               => 'select',
@@ -64,18 +62,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_readerTemplate'] = array
     'sql'                     =>  "varchar(32) NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_readerPage'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_readerPage'],
-	'exclude'                 => true,
-	'inputType'               => 'pageTree',
-	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-	'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_readerPage'] = array(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_readerPage'],
+    'exclude'                 => true,
+    'inputType'               => 'pageTree',
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+    'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listTemplate'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listTemplate'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listTemplate'],
     'exclude'                 => true,
     'inputType'               => 'select',
@@ -86,8 +82,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listTemplate'] = array
 );
 
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listContent'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listContent'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listContent'],
     'exclude'                 => true,
     'inputType'               => 'textarea',
@@ -96,18 +91,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listContent'] = array
     'sql'                     => "text NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listPage'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listPage'],
-		'exclude'                 => true,
-		'inputType'               => 'pageTree',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50 autoheight'),
-		'sql'                     => "int(10) unsigned NOT NULL default '0'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listPage'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listPage'],
+        'exclude'                 => true,
+        'inputType'               => 'pageTree',
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50 autoheight'),
+        'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_filterListPage'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_filterListPage'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_filterListPage'],
     'exclude'                 => true,
     'inputType'               => 'pageTree',
@@ -116,71 +109,64 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_filterListPage'] = array
     'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listFilter'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listFilter'],
-		'exclude'                 => true,
-		'inputType'               => 'textarea',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		// 'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
-		'sql'                     => "text NULL"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listFilter'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listFilter'],
+        'exclude'                 => true,
+        'inputType'               => 'textarea',
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        // 'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+        'sql'                     => "text NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listFilterTemplate'] = array
-(
-		'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_listFilterTemplate'],
-		'inputType'               	=> 'select',
-		'default'				  	=> 'button',
-		'options'				  	=> array('select','button'),
-		'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_listFilterTemplateOptions'],
-		'eval'                    	=> array('tl_class'=>'w50'),
-		'sql'                     	=> "varchar(255) NOT NULL default ''"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listFilterTemplate'] = array(
+        'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_listFilterTemplate'],
+        'inputType'               	=> 'select',
+        'default'				  	=> 'button',
+        'options'				  	=> array('select','button'),
+        'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_listFilterTemplateOptions'],
+        'eval'                    	=> array('tl_class'=>'w50'),
+        'sql'                     	=> "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listSort'] = array
-(
-	'label'						=> &$GLOBALS['TL_LANG']['tl_module']['immo_listSort'],
-	'inputType'               	=> 'select',
-	'default'				  	=> '',
-	'options_callback'        => array('tl_module_makler', 'getFieldKeys'),
-	'reference'               	=> &$GLOBALS['TL_LANG']['tl_module'],
-	'eval'                    	=> array('tl_class'=>'w50'),
-	'sql'                     	=> "varchar(255) NOT NULL default ''"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listSort'] = array(
+    'label'						=> &$GLOBALS['TL_LANG']['tl_module']['immo_listSort'],
+    'inputType'               	=> 'select',
+    'default'				  	=> '',
+    'options_callback'        => array('tl_module_makler', 'getFieldKeys'),
+    'reference'               	=> &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    	=> array('tl_class'=>'w50'),
+    'sql'                     	=> "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listSortAsc'] = array
-(
-	'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortAsc'],
-	'inputType'               	=> 'select',
-	'default'				  	=> '',
-	'options'				  	=> array('true','false'),
-	'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortAscOptions'],
-	'eval'                    	=> array('tl_class'=>'w50'),
-	'sql'                     	=> "varchar(255) NOT NULL default ''"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listSortAsc'] = array(
+    'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortAsc'],
+    'inputType'               	=> 'select',
+    'default'				  	=> '',
+    'options'				  	=> array('true','false'),
+    'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortAscOptions'],
+    'eval'                    	=> array('tl_class'=>'w50'),
+    'sql'                     	=> "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listSortType'] = array
-(
-	'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortType'],
-	'inputType'               	=> 'select',
-	'default'				  	=> '',
-	'options'				  	=> array('int','float','text'),
-	'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortTypeOptions'],
-	'eval'                    	=> array('tl_class'=>'w50'),
-	'sql'                     	=> "varchar(255) NOT NULL default ''"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listSortType'] = array(
+    'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortType'],
+    'inputType'               	=> 'select',
+    'default'				  	=> '',
+    'options'				  	=> array('int','float','text'),
+    'reference'               	=> &$GLOBALS['TL_LANG']['tl_module']['makler_listSortTypeOptions'],
+    'eval'                    	=> array('tl_class'=>'w50'),
+    'sql'                     	=> "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listCondition'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listCondition'],
-		'exclude'                 => true,
-		'inputType'               => 'textarea',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'sql'                     => "text NULL"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listCondition'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listCondition'],
+        'exclude'                 => true,
+        'inputType'               => 'textarea',
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'sql'                     => "text NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listViewPlaceholder'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_listViewPlaceholder'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_listViewPlaceholder'],
     'exclude'                 => true,
     'inputType'               => 'fileTree',
@@ -189,8 +175,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_listViewPlaceholder'] = array
     'sql'                     => "binary(16) NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_detailViewPlaceholder'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_detailViewPlaceholder'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_detailViewPlaceholder'],
     'exclude'                 => true,
     'inputType'               => 'fileTree',
@@ -199,8 +184,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_detailViewPlaceholder'] = arra
     'sql'                     => "binary(16) NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImagePlaceholder'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImagePlaceholder'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_headerImagePlaceholder'],
     'exclude'                 => true,
     'inputType'               => 'fileTree',
@@ -209,96 +193,86 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImagePlaceholder'] = arr
     'sql'                     => "binary(16) NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_staticFilter'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_staticFilter'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
-		'sql'                     =>  "int(1) NOT NULL default '0'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_staticFilter'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_staticFilter'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
+        'sql'                     =>  "int(1) NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listDebug'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listDebug'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
-		'sql'                     =>  "int(1) NOT NULL default '0'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listDebug'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listDebug'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+        'sql'                     =>  "int(1) NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listInSitemap'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listInSitemap'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
-		'sql'                     =>  "int(1) NOT NULL default '0'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['immo_listInSitemap'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['immo_listInSitemap'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+        'sql'                     =>  "int(1) NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_addListPagination'] = array
-(
-		'label' 					=> &$GLOBALS['TL_LANG']['tl_module']['makler_addListPagination'],
-		'exclude' 					=> true,
-		'filter' 					=> true,
-		'inputType' 				=> 'checkbox',
-		'eval' 						=> array ('submitOnChange' => true),
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_addListPagination'] = array(
+        'label' 					=> &$GLOBALS['TL_LANG']['tl_module']['makler_addListPagination'],
+        'exclude' 					=> true,
+        'filter' 					=> true,
+        'inputType' 				=> 'checkbox',
+        'eval' 						=> array('submitOnChange' => true),
         'sql'                       =>  "int(1) NOT NULL default '0'"
 );
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationCount'] = array
-(
-		'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_paginationCount'],
-		'exclude'					=> true,
-		'inputType'					=> 'text',
-		'eval'						=> array('mandatory' => true,'rgxp' => 'digit','tl_class' => 'w50'),
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationCount'] = array(
+        'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_paginationCount'],
+        'exclude'					=> true,
+        'inputType'					=> 'text',
+        'eval'						=> array('mandatory' => true,'rgxp' => 'digit','tl_class' => 'w50'),
         'sql'                       =>  "int(2) NOT NULL default '10'"
 );
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationLinkCount'] = array
-(
-		'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_paginationLinkCount'],
-		'exclude'					=> true,
-		'inputType'					=> 'text',
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationLinkCount'] = array(
+        'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_paginationLinkCount'],
+        'exclude'					=> true,
+        'inputType'					=> 'text',
         'eval'						=> array('mandatory' => true,'rgxp' => 'digit','tl_class' => 'w50'),
         'sql'                       =>  "int(2) NOT NULL default '10'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationUseIsotope'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationUseIsotope'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'default'                  => true,
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
-		'sql'                     =>  "int(1) NOT NULL default '1'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationUseIsotope'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationUseIsotope'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'default'                  => true,
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
+        'sql'                     =>  "int(1) NOT NULL default '1'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationShowtitle'] = array
-(
-		'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_paginationShowtitle'],
-		'exclude'					=> true,
-		'filter'					=> true,
-		'inputType'					=> 'checkbox',
-		'eval'						=> array('tl_class' => 'w50'),
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationShowtitle'] = array(
+        'label'						=> &$GLOBALS['TL_LANG']['tl_module']['makler_paginationShowtitle'],
+        'exclude'					=> true,
+        'filter'					=> true,
+        'inputType'					=> 'checkbox',
+        'eval'						=> array('tl_class' => 'w50'),
         'sql'                       =>  "int(1) NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleCss'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_useModuleCss'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'default'                  => true,
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
-		'sql'                     =>  "int(1) NOT NULL default '1'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleCss'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_useModuleCss'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'default'                  => true,
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
+        'sql'                     =>  "int(1) NOT NULL default '1'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleDetailCss'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleDetailCss'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_useModuleDetailCss'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
@@ -308,46 +282,41 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleDetailCss'] = array
     'sql'                     =>  "int(1) NOT NULL default '1'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleJs'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_useModuleJs'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'default'                  => true,
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
-		'sql'                     =>  "int(1) NOT NULL default '1'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleJs'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_useModuleJs'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'default'                  => true,
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
+        'sql'                     =>  "int(1) NOT NULL default '1'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_compatibilityMode'] = array
-(
-		'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_compatibilityMode'],
-		'exclude'                 => true,
-		'inputType'               => 'checkbox',
-		'default'                  => false,
-		'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-		'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
-		'sql'                     =>  "int(1) NOT NULL default '0'"
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_compatibilityMode'] = array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_compatibilityMode'],
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'default'                  => false,
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+        'eval'                    => array('tl_class'=>'w50', 'mandatory'=>false, 'isBoolean' => true),
+        'sql'                     =>  "int(1) NOT NULL default '0'"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_showHeadline'] = array
-(
-	'label'     => &$GLOBALS['TL_LANG']['tl_module']['makler_showHeadline'],
-	'inputType' => 'checkbox',
-	'eval'      => array('tl_class' => 'w50'),
-	'sql'       => "char(1) NOT NULL default ''",
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_showHeadline'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_module']['makler_showHeadline'],
+    'inputType' => 'checkbox',
+    'eval'      => array('tl_class' => 'w50'),
+    'sql'       => "char(1) NOT NULL default ''",
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_showBackgroundImage'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_showBackgroundImage'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['makler_showBackgroundImage'],
     'inputType' => 'checkbox',
     'eval'      => array('tl_class' => 'w50'),
     'sql'       => "char(1) NOT NULL default ''",
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_showMap'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_showMap'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_showMap'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
@@ -373,14 +342,13 @@ class tl_module_makler extends Backend
         }
     }
 
-	public function getFieldKeys($r)
-	{
-		$fieldKeysArr = array('-','-');
-		foreach ($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'] as $key=>$value){
-			$fieldKeysArr[$key] = $key;
-		}
+    public function getFieldKeys($r)
+    {
+        $fieldKeysArr = array('-','-');
+        foreach ($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'] as $key=>$value) {
+            $fieldKeysArr[$key] = $key;
+        }
         sort($fieldKeysArr);
-		return $fieldKeysArr;
-	}
-
+        return $fieldKeysArr;
+    }
 }

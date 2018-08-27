@@ -19,11 +19,13 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
-class FieldRendererFactory {
+class FieldRendererFactory
+{
     private $estateData;
     private $translationMap;
 
-    public function __construct($estateData, $translationMap) {
+    public function __construct($estateData, $translationMap)
+    {
         $this->estateData = $estateData;
         $this->translationMap = new FieldTranslator($translationMap);
     }
@@ -37,7 +39,8 @@ class FieldRendererFactory {
      * @param String $key
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRendererTypeSelector
      */
-    public function renderer($key) {
+    public function renderer($key)
+    {
         return new FieldRendererTypeSelector($key, $this->rawValue($key), $this->translationMap);
     }
 
@@ -49,7 +52,8 @@ class FieldRendererFactory {
      * @param $key
      * @return string
      */
-    public function rawValue($key) {
+    public function rawValue($key)
+    {
         if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
             return $this->estateData->getValueOf($key);
         }
@@ -57,7 +61,8 @@ class FieldRendererFactory {
         return $this->getRawValueOfArray($key);
     }
 
-    private function getRawValueOfArray($key) {
+    private function getRawValueOfArray($key)
+    {
         if (isset($this->estateData[$key])) {
             return $this->estateData[$key];
         }
@@ -73,12 +78,13 @@ class FieldRendererFactory {
      * @param $key
      * @return string
      */
-    public function keyExists($key) {
-    	if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
-    		return $this->estateData->checkIfKeyExists($key);
-    	}
+    public function keyExists($key)
+    {
+        if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
+            return $this->estateData->checkIfKeyExists($key);
+        }
 
-    	return $this->getRawValueOfArray($key);
+        return $this->getRawValueOfArray($key);
     }
 
     /**
@@ -86,18 +92,22 @@ class FieldRendererFactory {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\AttachmentFieldRendererCollection
      */
-    public function attachments() {
+    public function attachments()
+    {
         return new AttachmentFieldRendererCollection($this->getFilteredValuesBy('anhaenge'), $this->translationMap);
     }
 
-    private function getFilteredValuesBy($startOfKey) {
+    private function getFilteredValuesBy($startOfKey)
+    {
         $returnValue = array();
         $estateData = $this->estateData;
 
         if (is_a($estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
             $estateData = $estateData->getFieldsIterator();
         }
-        if(!$estateData) return array();
+        if (!$estateData) {
+            return array();
+        }
         foreach ($estateData as $key => $value) {
             if ($startOfKey === "" || strpos($key, $startOfKey) === 0) {
                 $returnValue[$key] = $value;
@@ -117,7 +127,8 @@ class FieldRendererFactory {
      *
      * @returns \Pdir\MaklermodulBundle\Maklermodul\BackButtonRenderer
      */
-    public function backButton() {
+    public function backButton()
+    {
         $referer = $_SERVER['HTTP_REFERER'];
         $request = $_SERVER['QUERY_STRING'];
 
@@ -129,7 +140,8 @@ class FieldRendererFactory {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\EnergyPassRenderer
      */
-    public function energyPass() {
-        return new EnergyPassRenderer($this->getFilteredValuesBy('zustand_angaben'), $this->translationMap,  $this->getFilteredValuesBy('ausstattung'));
+    public function energyPass()
+    {
+        return new EnergyPassRenderer($this->getFilteredValuesBy('zustand_angaben'), $this->translationMap, $this->getFilteredValuesBy('ausstattung'));
     }
 }

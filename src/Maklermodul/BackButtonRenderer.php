@@ -19,7 +19,8 @@
  */
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
-class BackButtonRenderer {
+class BackButtonRenderer
+{
     private $url;
     private $fallbackBrowserBack = false;
     private $translator;
@@ -29,18 +30,21 @@ class BackButtonRenderer {
      * @param string          $request i.e. $_SERVER['QUERY_STRING']
      * @param FieldTranslator $translator
      */
-    public function __construct($referer, $request, FieldTranslator $translator) {
+    public function __construct($referer, $request, FieldTranslator $translator)
+    {
         $refererParts = explode('?', $referer);
-        $this->fallbackBrowserBack = $this->shouldUseFallback($refererParts,$request);
+        $this->fallbackBrowserBack = $this->shouldUseFallback($refererParts, $request);
         $this->url = $refererParts[0] . '?' . $request;
         $this->translator = $translator;
     }
 
-    private function shouldUseFallback($refererParts, $request) {
-        return (empty($refererParts) OR empty($request));
+    private function shouldUseFallback($refererParts, $request)
+    {
+        return (empty($refererParts) or empty($request));
     }
 
-    public function render($doNotPrint = false) {
+    public function render($doNotPrint = false)
+    {
         $rendererdButton = $this->getRenderedButton();
 
         if ($this->fallbackBrowserBack) {
@@ -54,7 +58,8 @@ class BackButtonRenderer {
         return $rendererdButton;
     }
 
-    private function getRenderedButton() {
+    private function getRenderedButton()
+    {
         return sprintf(
             '<a href="%s">%s</a>',
             $this->url,
@@ -62,7 +67,8 @@ class BackButtonRenderer {
         );
     }
 
-    private function getFallbackButton() {
+    private function getFallbackButton()
+    {
         return sprintf(
             '<a href="javascript:history.back()">%s</a>',
             $this->getDisplayName()
@@ -72,7 +78,8 @@ class BackButtonRenderer {
     /**
      * @todo add translation support
      */
-    private function getDisplayName() {
+    private function getDisplayName()
+    {
         return $this->translator->translate('back');
     }
 }

@@ -26,7 +26,8 @@ use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text;
 
-class FieldRendererTypeSelector {
+class FieldRendererTypeSelector
+{
     private $key;
     private $value;
 
@@ -35,7 +36,8 @@ class FieldRendererTypeSelector {
      */
     private $translator;
 
-    public function __construct($key, $value, FieldTranslator $translator) {
+    public function __construct($key, $value, FieldTranslator $translator)
+    {
         $this->key = $key;
         $this->value = $value;
         $this->translator = $translator;
@@ -46,7 +48,8 @@ class FieldRendererTypeSelector {
      *
      * @return mixed
      */
-    public function getKey() {
+    public function getKey()
+    {
         return $this->key;
     }
 
@@ -55,7 +58,8 @@ class FieldRendererTypeSelector {
      *
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -64,7 +68,8 @@ class FieldRendererTypeSelector {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text
      */
-    public function asText() {
+    public function asText()
+    {
         return new Text($this->getKey(), $this->getValue(), $this->translator);
     }
 
@@ -76,7 +81,8 @@ class FieldRendererTypeSelector {
      * @param int $digestCount
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number
      */
-    public function asNumber($digestCount = 0) {
+    public function asNumber($digestCount = 0)
+    {
         return new Number($this->getKey(), $this->getValue(), $this->translator, $digestCount);
     }
 
@@ -87,7 +93,8 @@ class FieldRendererTypeSelector {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Date
      */
-    public function asDate() {
+    public function asDate()
+    {
         return new Date($this->getKey(), $this->getValue(), $this->translator);
     }
 
@@ -98,7 +105,8 @@ class FieldRendererTypeSelector {
      * @param $noValue
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Flag
      */
-    public function asFlag($yesValue = 'true', $noValue = 'false') {
+    public function asFlag($yesValue = 'true', $noValue = 'false')
+    {
         return new Flag($this->getKey(), $this->getValue(), $this->translator, $yesValue, $noValue);
     }
 
@@ -107,7 +115,8 @@ class FieldRendererTypeSelector {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment
      */
-    public function asAttachment() {
+    public function asAttachment()
+    {
         return new Attachment($this->getKey(), $this->getValue(), $this->translator);
     }
 
@@ -116,7 +125,8 @@ class FieldRendererTypeSelector {
      * @param string $tag html tag
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading
      */
-    public function asHeading($tag = 'div') {
-    	return new Heading($this->getKey(), $this->getValue(), $this->translator, $tag);
+    public function asHeading($tag = 'div')
+    {
+        return new Heading($this->getKey(), $this->getValue(), $this->translator, $tag);
     }
 }

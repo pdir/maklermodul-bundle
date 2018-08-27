@@ -45,10 +45,11 @@ class DetailView extends \Module
      */
     protected $strTemplate = 'makler_details_simple';
 
-    public function __construct($objModule, $strColumn = 'main') {
-        parent::__construct( $objModule, $strColumn );
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
 
-        if (!empty($this->arrData['immo_readerTemplate']) AND TL_MODE != 'BE') {
+        if (!empty($this->arrData['immo_readerTemplate']) and TL_MODE != 'BE') {
             $this->strTemplate = $this->arrData['immo_readerTemplate'];
         }
     }
@@ -59,8 +60,7 @@ class DetailView extends \Module
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
@@ -100,8 +100,7 @@ class DetailView extends \Module
             throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
         }
 
-        if($this->makler_useModuleDetailCss)
-        {
+        if ($this->makler_useModuleDetailCss) {
             $GLOBALS['TL_CSS'][] = Helper::assetFolder . '/css/estate-detail.scss||static';
         }
 
@@ -110,13 +109,15 @@ class DetailView extends \Module
         $this->Template->showMap = $this->makler_showMap;
     }
 
-    private function createFieldRendererFactory($objectId) {
+    private function createFieldRendererFactory($objectId)
+    {
         $repository = EstateRepository::getInstance();
         $estate = $repository->findByObjectId($objectId);
         return new FieldRendererFactory($estate, $this->getTranslationMap());
     }
 
-    private function getTranslationMap() {
+    private function getTranslationMap()
+    {
         return StaticDIC::getTranslationMap();
     }
 }

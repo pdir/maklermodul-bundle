@@ -19,24 +19,21 @@
  */
 namespace Pdir\MaklermodulBundle\Module;
 
+use Pdir\MaklermodulBundle\Util\Helper;
+
 class MaklermodulSetup extends \BackendModule
 {
-    /**
-     * Maklermodul version
-     */
-    const VERSION = '1.1.5';
-
     /**
      * Extension mode
      * @var boolean
      */
     const MODE = 'DEMO';
 
-	/**
-	 * API Url
-	 * @var string
-	 */
-	static $apiUrl = 'https://pdir.de/api/maklermodul/';
+    /**
+     * API Url
+     * @var string
+     */
+    public static $apiUrl = 'https://pdir.de/api/maklermodul/';
 
     /**
      * Template
@@ -70,13 +67,13 @@ class MaklermodulSetup extends \BackendModule
     {
         $this->storageDirectoryPath = \Config::get('uploadPath') . '/maklermodul/';
 
-		// $className = '/vendor/pdir/maklermodul-bundle/src/Resources/contao/Classes/Helper.php';
-		$strDomain = \Environment::get('httpHost');
+        // $className = '/vendor/pdir/maklermodul-bundle/src/Resources/contao/Classes/Helper.php';
+        $strDomain = \Environment::get('httpHost');
 
-		/* @todo empty cache folder from backend */
+        /* @todo empty cache folder from backend */
         $files = \Files::getInstance();
 
-		switch (\Input::get('act')) {
+        switch (\Input::get('act')) {
             case 'emptyDataFolder':
                 $files->rrdir($this->storageDirectoryPath.'data', true);
                 $this->debugMessages[] = array($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info');
@@ -95,41 +92,38 @@ class MaklermodulSetup extends \BackendModule
                 break;
             default:
                 $this->Template->base = $this->Environment->base;
-                $this->Template->version = self::VERSION;
+                $this->Template->version = Helper::VERSION;
                 $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
-		}
+        }
 
-		$this->Template->extMode = static::MODE;
-		$this->Template->extModeTxt = static::MODE=='FULL' ? 'Vollversion' : 'Demo';
-		$this->Template->version = self::VERSION;
-		$this->Template->hostname = gethostname();
-		$this->Template->ip = \Environment::get('server');
-		$this->Template->domain = $strDomain;
+        $this->Template->extMode = static::MODE;
+        $this->Template->extModeTxt = static::MODE=='FULL' ? 'Vollversion' : 'Demo';
+        $this->Template->version = Helper::VERSION;
+        $this->Template->hostname = gethostname();
+        $this->Template->ip = \Environment::get('server');
+        $this->Template->domain = $strDomain;
 
         $this->Template->params = $this->configParameters; // for debug
         $this->Template->debugMessages = $this->getDebugMessages();
 
-		// email body
-		$this->Template->emailBody = $this->getEmailBody();
+        // email body
+        $this->Template->emailBody = $this->getEmailBody();
     }
 
-	protected function getEmailBody()
-	{
-		$arrSearch = array(':IP:', ':HOST:', ':DOMAIN:', '<br>');
-		$arrReplace = array($this->Template->ip, $this->Template->hostname, $this->Template->domain, '%0d%0a');
-		return str_replace( $arrSearch, $arrReplace, $GLOBALS['TL_LANG']['MAKLERMODUL']['emailBody'] );
-	}
+    protected function getEmailBody()
+    {
+        $arrSearch = array(':IP:', ':HOST:', ':DOMAIN:', '<br>');
+        $arrReplace = array($this->Template->ip, $this->Template->hostname, $this->Template->domain, '%0d%0a');
+        return str_replace($arrSearch, $arrReplace, $GLOBALS['TL_LANG']['MAKLERMODUL']['emailBody']);
+    }
 
     protected function downloadDemoData()
     {
         $strFile = $this->storageDirectoryPath . $this->demoDataFilename;
 
-        try
-        {
+        try {
             \File::putContent($strFile, file_get_contents('https://pdir.de/api/data/maklermodul/demo-data.zip'));
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             \Message::addError($e->getMessage());
         }
 
@@ -141,15 +135,11 @@ class MaklermodulSetup extends \BackendModule
         $objArchive = new \ZipReader($this->storageDirectoryPath . $this->demoDataFilename);
 
         // Extract all files
-        while ($objArchive->next())
-        {
+        while ($objArchive->next()) {
             // Extract the files
-            try
-            {
+            try {
                 \File::putContent($this->storageDirectoryPath . 'data/' . $objArchive->file_name, $objArchive->unzip());
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 \Message::addError($e->getMessage());
             }
         }
@@ -163,13 +153,12 @@ class MaklermodulSetup extends \BackendModule
 
     public function debug($message)
     {
-        if(!is_array($message))
-        {
+        if (!is_array($message)) {
             $this->debugMessages[] = array($message, 'info');
             return;
         }
 
-        if (!defined('CRONJOB') OR CRONJOB == false) {
+        if (!defined('CRONJOB') or CRONJOB == false) {
             $this->debugMessages[] = $message;
         }
         return;

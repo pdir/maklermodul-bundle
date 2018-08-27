@@ -23,8 +23,10 @@ use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Flag extends FieldRenderer {
-    public function __construct($key, $value, FieldTranslator $translator, $yesValue, $noValue) {
+class Flag extends FieldRenderer
+{
+    public function __construct($key, $value, FieldTranslator $translator, $yesValue, $noValue)
+    {
         parent::__construct($key, $value, $translator);
 
         $this->setSetting('yesValue', $yesValue);
@@ -39,10 +41,11 @@ class Flag extends FieldRenderer {
      * @param bool $doNotPrint
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = $this->getSetting('prefix');
 
-        if ($this->getValue() === true OR $this->getValue() == 'true' OR $this->getValue() == '1' OR $this->getValue() == 'Ja' OR $this->getValue() == 'JA') {
+        if ($this->getValue() === true or $this->getValue() == 'true' or $this->getValue() == '1' or $this->getValue() == 'Ja' or $this->getValue() == 'JA') {
             $returnValue .= $this->getSetting('yesValue');
         } else {
             $returnValue .= $this->getSetting('noValue');
@@ -57,10 +60,12 @@ class Flag extends FieldRenderer {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             $template = $this->getShortTemplate();
-            return sprintf($template,
+            return sprintf(
+                $template,
                 $this->getValueString(),
                 Estate::sanizeFileName($this->getKey()),
                 $this->value(true)
@@ -68,7 +73,8 @@ class Flag extends FieldRenderer {
         }
 
         $template = $this->getLongTemplate();
-        return sprintf($template,
+        return sprintf(
+            $template,
             Estate::sanizeFileName($this->getKey()),
             $this->key(true),
             $this->getValueString(),
@@ -76,7 +82,8 @@ class Flag extends FieldRenderer {
         );
     }
 
-    private function getLongTemplate() {
+    private function getLongTemplate()
+    {
         return <<<EOT
 <div class="field %s">
     <div class="label">%s</div>
@@ -85,13 +92,15 @@ class Flag extends FieldRenderer {
 EOT;
     }
 
-    private function getShortTemplate() {
+    private function getShortTemplate()
+    {
         return <<<EOT
 <div class="field value-flag %s %s">%s</div>
 EOT;
     }
 
-    private function getValueString() {
-        return ($this->getValue() === true OR $this->getValue() == 'true' OR $this->getValue() == '1') ? 'true' : 'false';
+    private function getValueString()
+    {
+        return ($this->getValue() === true or $this->getValue() == 'true' or $this->getValue() == '1') ? 'true' : 'false';
     }
 }
