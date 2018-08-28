@@ -21,7 +21,7 @@
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
 	= '{title_legend},name,headline,type;'
 	. '{template_legend},immo_readerPage,immo_listTemplate;'
-	. '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate;'
+	. '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate,makler_filter_type;'
 	. '{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
 	. '{makler_cond_legend},immo_listCondition;'
 	. '{image_legend},imgSize,makler_listViewPlaceholder;'
@@ -360,6 +360,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_showMap'] = array
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_debug'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_debug'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+    'sql'                     =>  "int(1) NOT NULL default '0'"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_filter_type'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_filter_type'],
     'exclude'                 => true,
     'inputType'               => 'checkbox',
     'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
