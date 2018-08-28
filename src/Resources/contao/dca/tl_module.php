@@ -19,20 +19,20 @@
  */
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
-    = '{title_legend},name,headline,type;'
-    . '{template_legend},immo_readerPage,immo_listTemplate;'
-    . '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate;'
-    . '{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
-    . '{makler_cond_legend},immo_listCondition;'
-    . '{image_legend},imgSize,makler_listViewPlaceholder;'
-    . '{makler_pagination_legend},makler_addListPagination;'
-    . '{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
+	= '{title_legend},name,headline,type;'
+	. '{template_legend},immo_readerPage,immo_listTemplate;'
+	. '{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate,makler_filter_type;'
+	. '{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
+	. '{makler_cond_legend},immo_listCondition;'
+	. '{image_legend},imgSize,makler_listViewPlaceholder;'
+	. '{makler_pagination_legend},makler_addListPagination;'
+	. '{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
-    = '{title_legend},name,headline,type;'
-    . '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
-    . '{image_legend},imgSize;'
-    . '{option_legend},makler_useModuleDetailCss';
+	= '{title_legend},name,headline,type;'
+	. '{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
+	. '{image_legend},imgSize;'
+    . '{option_legend},makler_useModuleDetailCss,makler_debug';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
     = '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder;'
@@ -324,6 +324,26 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_showMap'] = array(
     'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
     'eval'                    => array('tl_class'=>'w50 clr', 'mandatory'=>false, 'isBoolean' => true),
     'sql'                     =>  "int(1) NOT NULL default '1'"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_debug'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_debug'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+    'sql'                     =>  "int(1) NOT NULL default '0'"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_filter_type'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['makler_filter_type'],
+    'exclude'                 => true,
+    'inputType'               => 'checkbox',
+    'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+    'sql'                     =>  "int(1) NOT NULL default '0'"
 );
 
 class tl_module_makler extends Backend

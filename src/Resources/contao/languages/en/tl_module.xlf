@@ -241,6 +241,20 @@
         <source>Include Google Maps</source>
         <target>Include Google Maps</target>
       </trans-unit>
+      <trans-unit id="tl_module.makler_debug.0">
+          <source>Debug</source>
+          <target>Debug</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_debug.1">
+          <source>Enable to show available object fields, data and translations (var_dump).</source>
+          <target>Enable to show available object fields, data and translations (var_dump).</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_filter_type.0">
+          <source>Filter type AND</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_filter_type.1">
+          <source>Enable to use AND for filtering (geo.ort = "Dresden" AND geo.ort = "Meissen"); Default is "OR" (geo.ort = "Dresden" OR geo.ort = "Meißen").</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

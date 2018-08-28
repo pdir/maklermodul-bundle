@@ -168,6 +168,7 @@
         listView.selects = $('.mm-filter-sel');
         listView.ranges = $('.mm-filter-range');
         listView.pagination = $('.mod_immoListView .pagination');
+        listView.activePage = $('#pagPage');
 
         // global variables from template
         if(typeof countObj !== 'undefined') listView.objCnt = window.countObj;
@@ -280,16 +281,7 @@
         } else {
             listView.pagination.hide();
         }
-        /*
-         console.log('search: '+listView.qsRegex);
-         console.log('searchSel: '+listView.qsSelector);
-         console.log('checkbox: ' +listView.checkboxFilter);
-         console.log('select: ' +listView.selectFilter);
-         console.log('range' +listView.rangeFilters);
-         console.log(listView.rangeFilters);
-         console.log('paginationStatus: ' +listView.paginationStatus);
-         console.log('paginationFilter: ' +listView.paginationFilter);
-         */
+
 /* @todo implement special box
         var specialBox = listView.estateList.find('.special-box');
         specialBox.removeClass('.isotope-hidden')
@@ -376,7 +368,7 @@
             $(this).prop( "checked", false );
         });
         // reset buttons
-        listView.checkboxes.filter(':checked').each(function(){
+        listView.buttons.filter('.active').each(function(){
             $(this).removeClass('active');
         });
         // reset search
@@ -385,7 +377,7 @@
         });
 
         // reset selects
-        /*listView.selects.each(function(){
+        listView.selects.each(function(){
             $(this).find('option').each(function() {
                 $(this).show();
             });
@@ -393,7 +385,7 @@
                 $(this).removeAttr('selected');
             });
             $(this).trigger("chosen:updated");
-        });*/
+        });
 
         // reset nearby
         listView.nearbyField.val('');
@@ -480,8 +472,11 @@
             filters.push( this.value );
         });
 
-        // filters = filters.join(', '); 	//OR
-        filters = filters.join(''); 		//AND
+        if(filterType === 0) {
+            filters = filters.join(', '); 	//OR
+        } else {
+            filters = filters.join('');     //AND
+        }
 
         if(filters === '')
             delete listView.checkboxFilter;
@@ -509,8 +504,11 @@
             filters.push( $(this).attr('data-filter') );
         });
 
-        // filters = filters.join(', '); 	//OR
-        filters = filters.join(''); 		//AND
+        if(filterType === 0) {
+            filters = filters.join(', '); 	//OR
+        } else {
+            filters = filters.join('');     //AND
+        }
 
         if(filters === '')
             delete listView.checkboxFilter;
@@ -534,7 +532,13 @@
         	if(typeof $(this).attr('value') !== 'undefined' && $(this).attr('value') !== '-1' && $(this).attr('value') !== 'alle' && id !== 'sorting' && id !== 'zimmer' && id !== 'umkreis')
             	return $(this).attr('value');
 
-        }).get().join(',');
+        }).get();
+
+        if(filterType === 0) {
+            filters = filters.join(', '); 	//OR
+        } else {
+            filters = filters.join('');     //AND
+        }
 
         if(filters === '')
             delete listView.selectFilter;
@@ -542,7 +546,6 @@
             listView.selectFilter = filters;
 
         listView.selectFilter = filters;
-        console.log("filters: " + filters);
 
         // call filter
         listView.filter();
@@ -569,8 +572,6 @@
             // set filter to * | show all
             if(filters.length === 0 || filterValue === '' ||filterValue === -1)
 				filterValue = '*';
-
-
     	}
     	else(listView.paginationStatus && filters.length === 0 || listView.paginationStatus && filterValue === '')
     	{
@@ -607,6 +608,11 @@
             // move special box
             //listView.moveSpecialBox();
         },600);
+
+        // hide filter values with no result
+        if(filterType === 1) {
+            listView.updateFilterValues();
+        }
     };
 
     // flatten object by concatting values
@@ -668,6 +674,9 @@
         // Scroll to top of the list view
         // @todo deactivate via modul $('html,body').animate({ scrollTop: $("#slider .mod_article.last").offset().top - 85 }, 600);
 
+        // update active pagination page
+        listView.activePage.html($(this).attr('title'));
+
         listView.filter();
     };
 
@@ -699,6 +708,48 @@
             var min = $(this).data('slider').options.min;
             var max = $(this).data('slider').options.max;
             $(this).data('slider').setValue([min,max],true);
+        });
+    };
+
+    listView.updateFilterValues = function() {
+
+        if (listView.hashFilter.indexOf(".page") > -1 || listView.hashFilter == -1 ) {
+
+            // reset selects
+            listView.selects.children('option').each(function() {
+                $(this).prop( "checked", false );
+            });
+            // reset buttons
+            listView.buttons.filter('.active').each(function() {
+                $(this).removeClass('active');
+            });
+
+            return;
+        }
+
+        // buttons
+        listView.buttons.each(function(index, value) {
+            var optionValue = $(value).attr('data-filter');
+            var length = $('#estate_list ' + optionValue).filter(':not(.isotope-hidden)').length;
+
+            if (length < 1) {
+                console.log('hide');
+                $(value).hide();
+            } else {
+                $(value).show();
+            }
+        });
+
+        // selects
+        listView.selects.children('option', this).map(function(index, value) {
+            var optionValue = $(value).val();
+            var length = $('#estate_list ' + optionValue).filter(':not(.isotope-hidden)').length;
+
+            if (length == 0 && optionValue != -1) {
+                $(value).hide();
+            } else {
+                $(value).show();
+            }
         });
     };
 
@@ -771,9 +822,9 @@
     };
 
     listView.updateSession = function(filteredObjects) {
-        $.post("/system/modules/makler_modul_mplus/assets/session.php", {
+        /*$.post("/system/modules/makler_modul_mplus/assets/session.php", {
             filteredList: filteredObjects
-        });
+        });*/
     };
 
     listView.showObjectRequest = function() {

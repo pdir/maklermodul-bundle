@@ -3,8 +3,7 @@
 echo "<h1>Makler Modul M+ - Detailansicht</h1>";
 return;
 }
-?>
-<?php
+
 global $objPage;
 // Meta Angaben
 $objPage->title = $this->estate->renderer('freitexte.objekttitel')->asText()->value(true);
@@ -12,10 +11,13 @@ $objPage->description = $this->estate->renderer('freitexte.objektbeschreibung')-
 $text = $objPage->title.' '.$objPage->description;
 preg_match_all("/[a-z0-9\-]{4,}/i", $text, $matches);
 $GLOBALS['TL_KEYWORDS']=join(',', $matches[0]);
-?>
-<?php
+
 // DUMP LIST OF ALL AVAILABLE FIELDS
-//echo "<pre>"; var_dump($this->estate); echo "</pre>";
+if($this->debug)
+{
+    echo "<pre>"; var_dump($this->estate); echo "</pre>";
+}
+
 if($this->estate->renderer('freitexte.objekttitel')->asText()->value(true) == ''):
 // no objects
 echo $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['noestate'];

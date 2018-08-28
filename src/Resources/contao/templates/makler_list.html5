@@ -154,7 +154,7 @@
     var maklerTemplate = 'v2';
     var sourceIndexUri = 'files/maklermodul/data/<?php echo $this->helper->getListSourceUri(); ?>';
     var detailViewPrefix = '<?php echo $this->helper->getDetailViewPrefix(); ?>';
-
+    var filterType = <?= $this->filterType; ?>;
     <?php if ($this->staticFilter) : ?>var staticFilter = true;<?php endif; ?>
     var paginationUseIsotope = <?= $this->paginationUseIsotope ?>;
     <?php if ($this->addListPagination) : ?>var addListPagination = true;<?php endif; ?>

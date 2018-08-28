@@ -207,7 +207,7 @@ class ListView extends \Module
             $pages[] = $json['data'];
         }
 
-        $this->Template->pageCount = $pageCount-1;
+        $this->Template->pageCount = $pageCount == 1 ? $pageCount : $pageCount-1;
         $this->Template->page = !(int)$this->Input->get('page') ? (int)$this->Input->get('page') : 0;
         $this->Template->listObjects = count($json['data']) > 0 ? $pages : null;
 
@@ -236,6 +236,7 @@ class ListView extends \Module
 
         $this->Template->storageDirectoryPath = $this->getRootDir();
         $this->Template->staticFilter = $this->immo_staticFilter ? true : false;
+        $this->Template->filterType = $this->makler_filter_type;
 
         // url suffix
         $this->Template->urlSuffix = '.html';
