@@ -19,13 +19,10 @@
  */
 namespace Pdir\MaklermodulBundle\Module;
 
+use Pdir\MaklermodulBundle\Util\Helper;
+
 class MaklermodulSetup extends \BackendModule
 {
-    /**
-     * Maklermodul version
-     */
-    const VERSION = '1.1.5';
-
     /**
      * Extension mode
      * @var boolean
@@ -95,13 +92,13 @@ class MaklermodulSetup extends \BackendModule
                 break;
             default:
                 $this->Template->base = $this->Environment->base;
-                $this->Template->version = self::VERSION;
+                $this->Template->version = Helper::VERSION;
                 $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
 		}
 
 		$this->Template->extMode = static::MODE;
 		$this->Template->extModeTxt = static::MODE=='FULL' ? 'Vollversion' : 'Demo';
-		$this->Template->version = self::VERSION;
+		$this->Template->version = Helper::VERSION;
 		$this->Template->hostname = gethostname();
 		$this->Template->ip = \Environment::get('server');
 		$this->Template->domain = $strDomain;
