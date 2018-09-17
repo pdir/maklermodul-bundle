@@ -111,11 +111,9 @@ class ListView extends \Module
 
         if($this->makler_useModuleJs)
         {
-
-            $GLOBALS['TL_JAVASCRIPT']['jquery.template'] = $this->assetFolder . 'js/jquery.loadTemplate-1.4.4.min.js|static';
+            $GLOBALS['TL_JAVASCRIPT']['jquery.template'] = $this->assetFolder . 'js/jquery.loadTemplate.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['mixitup'] = $this->assetFolder . 'js/jquery.isotope.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['browser'] = $this->assetFolder . 'js/jquery.browser.min.js|static';
-            $GLOBALS['TL_JAVASCRIPT']['bbq'] = $this->assetFolder . 'js/jquery.ba-bbq.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['estate'] = $this->assetFolder . 'js/estate.js|static';
         }
         if($this->makler_useModuleCss)
