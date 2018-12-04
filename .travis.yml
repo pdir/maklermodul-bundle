@@ -10,12 +10,6 @@ env:
     - COMPOSER_ALLOW_XDEBUG=0
 matrix:
     include:
-    - php: 7.0
-      env: CONTAO_VERSION='4.4.*'
-    - php: 7.1
-      env: CONTAO_VERSION='4.4.*'
-    - php: 7.2
-      env: CONTAO_VERSION='4.4.*'
     - php: 7.1
       env: CONTAO_VERSION='4.5.*'
     - php: 7.2
@@ -34,7 +28,7 @@ before_install:
 - php -ini | grep memory_limit
 - if [[ "$COVERAGE" != "1" ]]; then phpenv config-rm xdebug.ini || true; fi
 install:
-- composer require contao/core-bundle:${CONTAO_VERSION}
+- composer require contao/managed-edition:${CONTAO_VERSION}
 notifications:
     email:
         recipients:
