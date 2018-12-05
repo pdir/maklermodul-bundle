@@ -53,12 +53,13 @@ You can buy a license at https://www.maklermodul.de<br>
 
 ToDo
 ---------------
-add PHPUnit tests
+
 
 History
 -------
-08.2018 add option for debug mode in detail view settings
-08.2018 fix import service
-07.2018 fix image import
-06.2018 update requirements for composer
-03.2018 first release for Contao 4.4 and 4.5
+* 12.2018 add unit tests, code styling and travis ci
+* 08.2018 add option for debug mode in detail view settings
+* 08.2018 fix import service
+* 07.2018 fix image import
+* 06.2018 update requirements for composer
+* 03.2018 first release for Contao 4.4 and 4.5

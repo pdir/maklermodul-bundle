@@ -1,22 +1,23 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment;
@@ -26,7 +27,8 @@ use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text;
 
-class FieldRendererTypeSelector {
+class FieldRendererTypeSelector
+{
     private $key;
     private $value;
 
@@ -35,7 +37,8 @@ class FieldRendererTypeSelector {
      */
     private $translator;
 
-    public function __construct($key, $value, FieldTranslator $translator) {
+    public function __construct($key, $value, FieldTranslator $translator)
+    {
         $this->key = $key;
         $this->value = $value;
         $this->translator = $translator;
@@ -46,7 +49,8 @@ class FieldRendererTypeSelector {
      *
      * @return mixed
      */
-    public function getKey() {
+    public function getKey()
+    {
         return $this->key;
     }
 
@@ -55,7 +59,8 @@ class FieldRendererTypeSelector {
      *
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -64,7 +69,8 @@ class FieldRendererTypeSelector {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text
      */
-    public function asText() {
+    public function asText()
+    {
         return new Text($this->getKey(), $this->getValue(), $this->translator);
     }
 
@@ -74,9 +80,11 @@ class FieldRendererTypeSelector {
      * In den Klammern wird der Wert eingetragen, wieviele Nachkommastellen angezeigt werden sollen.
      *
      * @param int $digestCount
+     *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number
      */
-    public function asNumber($digestCount = 0) {
+    public function asNumber($digestCount = 0)
+    {
         return new Number($this->getKey(), $this->getValue(), $this->translator, $digestCount);
     }
 
@@ -87,7 +95,8 @@ class FieldRendererTypeSelector {
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Date
      */
-    public function asDate() {
+    public function asDate()
+    {
         return new Date($this->getKey(), $this->getValue(), $this->translator);
     }
 
@@ -96,27 +105,33 @@ class FieldRendererTypeSelector {
      *
      * @param $yesValue
      * @param $noValue
+     *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Flag
      */
-    public function asFlag($yesValue = 'true', $noValue = 'false') {
+    public function asFlag($yesValue = 'true', $noValue = 'false')
+    {
         return new Flag($this->getKey(), $this->getValue(), $this->translator, $yesValue, $noValue);
     }
 
     /**
-     * Methode für die Rückgabe eines Bildes
+     * Methode für die Rückgabe eines Bildes.
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment
      */
-    public function asAttachment() {
+    public function asAttachment()
+    {
         return new Attachment($this->getKey(), $this->getValue(), $this->translator);
     }
 
     /**
      * Methode für die Rückgabe als Überschrift.
+     *
      * @param string $tag html tag
+     *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading
      */
-    public function asHeading($tag = 'div') {
-    	return new Heading($this->getKey(), $this->getValue(), $this->translator, $tag);
+    public function asHeading($tag = 'div')
+    {
+        return new Heading($this->getKey(), $this->getValue(), $this->translator, $tag);
     }
 }

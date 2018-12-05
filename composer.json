@@ -28,8 +28,12 @@
     "php": ">=7.1",
     "contao/core-bundle": "^4.5"
   },
-  "conflict": {
-    "contao/core": "*"
+  "require-dev": {
+    "contao/manager-plugin": "^2.3.1",
+    "contao/test-case": "^1.4.1",
+    "php-http/guzzle6-adapter": "^1.1",
+    "phpunit/phpunit": "^7.0",
+    "symfony/phpunit-bridge": "^3.4.5"
   },
   "autoload": {
     "psr-4": {
@@ -53,5 +57,4 @@
       ]
     }
   }
-
 }

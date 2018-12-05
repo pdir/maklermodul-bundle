@@ -870,7 +870,10 @@
     }, 'slow');
   };
 
-  $(document).on('ready', listView.init);
+  $(function(){
+    listView.init();
+  });
+
   $(window).on('hashchange', listView.onHashchange);
 
   var postcodeArr = [];

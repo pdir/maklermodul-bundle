@@ -1,74 +1,76 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Module;
 
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Patchwork\Utf8;
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
-use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Util\Helper;
 
 /**
- * Class DetailView
+ * Class DetailView.
  *
  * @copyright  pdir / digital agentur
  * @author     Mathias Arzberger
- * @package    maklermodul
  */
 class DetailView extends \Module
 {
     const PARAMETER_KEY = 'expose';
 
-    private $alias;
-
     /**
-     * Template
+     * Template.
+     *
      * @var string
      */
     protected $strTemplate = 'makler_details_simple';
 
-    public function __construct($objModule, $strColumn = 'main') {
-        parent::__construct( $objModule, $strColumn );
+    private $alias;
 
-        if (!empty($this->arrData['immo_readerTemplate']) AND TL_MODE != 'BE') {
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
+
+        if (!empty($this->arrData['immo_readerTemplate']) and TL_MODE !== 'BE') {
             $this->strTemplate = $this->arrData['immo_readerTemplate'];
         }
     }
 
     /**
-     * Display a wildcard in the back end
+     * Display a wildcard in the back end.
+     *
      * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoDetailView'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoDetailView'][0]).' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
@@ -85,39 +87,40 @@ class DetailView extends \Module
     }
 
     /**
-     * Generate module
-     * @return void
+     * Generate module.
      */
     protected function compile()
     {
-        /** @var PageModel $objPage */
+        /* @var PageModel $objPage */
         global $objPage;
 
         //$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
         //$this->Template->referer = 'javascript:history.go(-1)';
 
-        if ($this->alias === "") {
-            throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
+        if ('' === $this->alias) {
+            throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
         }
 
-        if($this->makler_useModuleDetailCss)
-        {
-            $GLOBALS['TL_CSS'][] = Helper::assetFolder . '/css/estate-detail.scss||static';
+        if ($this->makler_useModuleDetailCss) {
+            $GLOBALS['TL_CSS'][] = Helper::assetFolder.'/css/estate-detail.scss||static';
         }
 
         $this->Template->estate = $this->createFieldRendererFactory($this->alias);
-        $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder ."/img/platzhalterbild.jpg";
+        $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
         $this->Template->showMap = $this->makler_showMap;
         $this->Template->debug = $this->makler_debug;
     }
 
-    private function createFieldRendererFactory($objectId) {
+    private function createFieldRendererFactory($objectId)
+    {
         $repository = EstateRepository::getInstance();
         $estate = $repository->findByObjectId($objectId);
+
         return new FieldRendererFactory($estate, $this->getTranslationMap());
     }
 
-    private function getTranslationMap() {
+    private function getTranslationMap()
+    {
         return StaticDIC::getTranslationMap();
     }
 }

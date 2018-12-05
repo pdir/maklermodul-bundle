@@ -1,51 +1,57 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\ColumnConfig;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 
-class IndexConfig implements IndexConfigInterface {
+class IndexConfig implements IndexConfigInterface
+{
+    /**
+     * @var array
+     */
+    private $resultSet;
 
-	/**
-	 * @var array
-	 */
-	private $resultSet;
+    public function __construct($resultSet)
+    {
+        $this->resultSet = $resultSet;
+    }
 
-	public function __construct($resultSet) {
-		$this->resultSet = $resultSet;
-	}
+    public function getUid()
+    {
+        return $this->resultSet['id'];
+    }
 
-	public function getUid() {
-		return $this->resultSet['id'];
-	}
+    public function getDetailViewUri(Estate $estate)
+    {
+        throw new \Exception('deprecated - not yet implemented');
+    }
 
-	public function getDetailViewUri(Estate $estate) {
-		throw new \Exception("deprecated - not yet implemented");
-	}
+    public function getReaderPageId()
+    {
+        return $this->resultSet['immo_readerPage'];
+    }
 
-	public function getReaderPageId() {
-		return $this->resultSet['immo_readerPage'];
-	}
-
-	public function getColumnConfig() {
+    public function getColumnConfig()
+    {
         if (empty($this->resultSet['immo_listContent'])) {
             $configArray = $this->getDefaultConfig();
         } else {
@@ -58,77 +64,8 @@ class IndexConfig implements IndexConfigInterface {
         return $this->convertToColumnConfig($configArray);
     }
 
-    private function getDefaultConfig() {
-		$configArray = array (
-			array('freitexte.objekttitel', false),
-			array('flaechen.anzahl_zimmer', true),
-			array('objektkategorie.nutzungsart.@WAZ', true),
-			array('objektkategorie.nutzungsart.@GEWERBE', true),
-			array('objektkategorie.nutzungsart.@ANLAGE', true),
-			array('objektkategorie.nutzungsart.@WOHNEN', true),
-			array('flaechen.wohnflaeche', true),
-			array('flaechen.grundstuecksflaeche', true),
-			array('anhaenge.anhang.#1.@gruppe', false),
-			array('anhaenge.anhang.#1.daten.pfad', false),
-			array('anhaenge.anhang.#1.format', false),
-			array('anhaenge.anhang.#1.anhangtitel', false),
-			array('geo.plz', false),
-			array('geo.ort', true),
-			array('verwaltung_techn.objektnr_extern', false)
-		);
-
-	    return $configArray;
-	}
-
-    private function getCustomConfig($fieldConfig, $filterConfig) {
-        $returnValue = $this->parseDisplayFields($fieldConfig);
-        $returnValue = $this->configureFilterSettings($returnValue, $filterConfig);
-
-        return $returnValue;
-    }
-
-    private function parseDisplayFields($fieldConfig) {
-        $returnValue = array();
-        $lines = explode("\n", $fieldConfig);
-
-        foreach ($lines as $line) {
-            $line = $this->substitudeEncodedSigns($line);
-            $returnValue[] = array($line, false);
-        }
-
-        return $returnValue;
-    }
-
-    private function substitudeEncodedSigns($str) {
-        return html_entity_decode($str);
-    }
-
-    private function configureFilterSettings($displayFields, $filterConfig) {
-        $lines = explode("\n", $filterConfig);
-
-        foreach ($lines as $line) {
-            $line = $this->substitudeEncodedSigns($line);
-            foreach ($displayFields as &$fieldConfig) {
-                if ($line == $fieldConfig[0]) {
-                    $fieldConfig[1] = true;
-                }
-            }
-        }
-
-        return $displayFields;
-    }
-
-    private function convertToColumnConfig($configArray) {
-        $returnValue = array();
-
-        foreach ($configArray as $ident) {
-            $returnValue[] = new ColumnConfig($ident[0], $ident[1]);
-        }
-
-        return $returnValue;
-    }
-
-    public function getFilterColumnConfig() {
+    public function getFilterColumnConfig()
+    {
         if (empty($this->resultSet['immo_listFilter'])) {
             $configArray = $this->getDefaultFilterColumnsConfig();
         } else {
@@ -141,8 +78,124 @@ class IndexConfig implements IndexConfigInterface {
         return $configArray;
     }
 
-    private function getDefaultFilterColumnsConfig() {
-        $returnValue = array();
+    public function getStorageFileUri()
+    {
+        return $this->resultSet['immo_actIndexFile'];
+    }
+
+    public function setStorageFileUri($newUri)
+    {
+        $this->resultSet['immo_actIndexFile'] = $newUri;
+    }
+
+    public function getConditionsConfig()
+    {
+        $condArr = [];
+        $arr = explode("\n", $this->resultSet['immo_listCondition']);
+
+        foreach ($arr as $cond) {
+            $str = html_entity_decode($cond);
+            if (false !== strpos($str, '!=')) {
+                $result = explode('!=', $str);
+                $condArr['unequal'][$result[0]][] = $result[1];
+            } elseif (false !== strpos($str, '=')) {
+                $result = explode('=', $str);
+                $condArr['equal'][$result[0]][] = $result[1];
+            }
+        }
+
+        return $condArr;
+    }
+
+    public function getCompatibilityMode()
+    {
+        return $this->resultSet['makler_compatibilityMode'];
+    }
+
+    public function getListInSitemap()
+    {
+        return $this->resultSet['immo_listInSitemap'];
+    }
+
+    private function getDefaultConfig()
+    {
+        $configArray = [
+            ['freitexte.objekttitel', false],
+            ['flaechen.anzahl_zimmer', true],
+            ['objektkategorie.nutzungsart.@WAZ', true],
+            ['objektkategorie.nutzungsart.@GEWERBE', true],
+            ['objektkategorie.nutzungsart.@ANLAGE', true],
+            ['objektkategorie.nutzungsart.@WOHNEN', true],
+            ['flaechen.wohnflaeche', true],
+            ['flaechen.grundstuecksflaeche', true],
+            ['anhaenge.anhang.#1.@gruppe', false],
+            ['anhaenge.anhang.#1.daten.pfad', false],
+            ['anhaenge.anhang.#1.format', false],
+            ['anhaenge.anhang.#1.anhangtitel', false],
+            ['geo.plz', false],
+            ['geo.ort', true],
+            ['verwaltung_techn.objektnr_extern', false],
+        ];
+
+        return $configArray;
+    }
+
+    private function getCustomConfig($fieldConfig, $filterConfig)
+    {
+        $returnValue = $this->parseDisplayFields($fieldConfig);
+        $returnValue = $this->configureFilterSettings($returnValue, $filterConfig);
+
+        return $returnValue;
+    }
+
+    private function parseDisplayFields($fieldConfig)
+    {
+        $returnValue = [];
+        $lines = explode("\n", $fieldConfig);
+
+        foreach ($lines as $line) {
+            $line = $this->substitudeEncodedSigns($line);
+            $returnValue[] = [$line, false];
+        }
+
+        return $returnValue;
+    }
+
+    private function substitudeEncodedSigns($str)
+    {
+        return html_entity_decode($str);
+    }
+
+    private function configureFilterSettings($displayFields, $filterConfig)
+    {
+        $lines = explode("\n", $filterConfig);
+
+        foreach ($lines as $line) {
+            $line = $this->substitudeEncodedSigns($line);
+            foreach ($displayFields as &$fieldConfig) {
+                if ($line === $fieldConfig[0]) {
+                    $fieldConfig[1] = true;
+                }
+            }
+        }
+
+        return $displayFields;
+    }
+
+    private function convertToColumnConfig($configArray)
+    {
+        $returnValue = [];
+
+        foreach ($configArray as $ident) {
+            $returnValue[] = new ColumnConfig($ident[0], $ident[1]);
+        }
+
+        return $returnValue;
+    }
+
+    private function getDefaultFilterColumnsConfig()
+    {
+        $returnValue = [];
         $columns = $this->getColumnConfig();
 
         foreach ($columns as $column) {
@@ -154,51 +207,18 @@ class IndexConfig implements IndexConfigInterface {
         return $returnValue;
     }
 
-    private function getCustomColumnsFilterConfig($allColumns, $filterFields) {
-        $returnValue = array();
+    private function getCustomColumnsFilterConfig($allColumns, $filterFields)
+    {
+        $returnValue = [];
 
         foreach ($filterFields as $field) {
             foreach ($allColumns as $column) {
-                if ($column->getSourceIdentifier() == $field) {
+                if ($column->getSourceIdentifier() === $field) {
                     $returnValue[] = $column;
                 }
             }
         }
 
         return $returnValue;
-    }
-
-	public function getStorageFileUri() {
-		return $this->resultSet['immo_actIndexFile'];
-	}
-
-	public function setStorageFileUri($newUri) {
-		$this->resultSet['immo_actIndexFile'] = $newUri;
-	}
-
-	public function getConditionsConfig() {
-		$condArr = array();
-		$arr = explode("\n", $this->resultSet['immo_listCondition']);
-
-		foreach( $arr as $cond) {
-			$str = html_entity_decode($cond);
-			if(strpos($str,"!=")!==false) {
-				$result = explode("!=", $str);
-				$condArr['unequal'][$result[0]][] = $result[1];
-			} elseif(strpos($str,"=")!==false) {
-				$result = explode("=", $str);
-				$condArr['equal'][$result[0]][] = $result[1];
-			}
-		}
-
-		return $condArr;
-	}
-
-    public function getCompatibilityMode() {
-        return $this->resultSet['makler_compatibilityMode'];
-    }
-
-    public function getListInSitemap() {
-        return $this->resultSet['immo_listInSitemap'];
     }
 }

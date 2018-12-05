@@ -1,18 +1,17 @@
 <?php
 
 /*
- * maklermodul for Contao Open Source CMS
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2018 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 /**
@@ -21,10 +20,12 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl;
 
-class FileHelper {
+class FileHelper
+{
     private $fsNode;
 
-    public function __construct($path, $isFolder = false) {
+    public function __construct($path, $isFolder = false)
+    {
         $path = $this->prepareFileNameForContao($path);
         if ($isFolder) {
             $this->fsNode = new \Folder($path);
@@ -33,20 +34,24 @@ class FileHelper {
         }
     }
 
-    public function putContent($filePath, $content) {
-    	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' OR strtoupper(substr(PHP_OS, 0, 3)) === 'WINNT') {
-    		return file_put_contents($filePath, $content);
-    	}
+    public function putContent($filePath, $content)
+    {
+        if ('WIN' === strtoupper(substr(PHP_OS, 0, 3)) or 'WINNT' === strtoupper(substr(PHP_OS, 0, 3))) {
+            return file_put_contents($filePath, $content);
+        }
         $filePath = $this->prepareFileNameForContao($filePath);
+
         return $this->fsNode->putContent($filePath, $content);
     }
 
-    public function delete() {
+    public function delete()
+    {
         return $this->fsNode->delete();
     }
 
-    private function prepareFileNameForContao($fileName) {
-        if (strpos($fileName, TL_ROOT) === 0) {
+    private function prepareFileNameForContao($fileName)
+    {
+        if (0 === strpos($fileName, TL_ROOT)) {
             $fileName = str_replace(TL_ROOT, '', $fileName);
         }
 

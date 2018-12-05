@@ -13,7 +13,9 @@
 
 <div class="tl_listing_container">
   <div id="pdir" class="be_maklermodul_setup clr">
-    <h1 id="tl_welcome">Maklermodul (Version: <?= $this->version ?>)</h1>
+    <h1 id="tl_welcome">Maklermodul (Version: <?= $this->version ?>)
+        <?php if(isset($this->syncVersion)): ?><br>MaklermodulSync (Version: <?= $this->syncVersion ?>)<?php endif; ?>
+    </h1>
     <div class="intro">
       <div class="right">
         <a href="https://www.maklermodul.de" target="_blank"><img

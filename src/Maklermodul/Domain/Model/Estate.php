@@ -1,155 +1,164 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Model;
 
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 
-class Estate {
+class Estate
+{
+    private $rawData;
 
-	private $rawData;
+    public function __construct($rawData = null)
+    {
+        $this->rawData = $rawData;
+    }
 
-	public function __construct($rawData = NULL) {
-		$this->rawData = $rawData;
-	}
+    public function getValueOf($ident)
+    {
+        if (isset($this->rawData[$ident])) {
+            return $this->rawData[$ident];
+        }
 
-	public function getValueOf($ident) {
-		if (isset($this->rawData[$ident])) {
-			return $this->rawData[$ident];
-		}
+        return null;
+    }
 
-		return null;
-	}
+    public function checkIfKeyExists($ident)
+    {
+        if (isset($this->rawData[$ident])) {
+            return true;
+        }
 
-	public function checkIfKeyExists($ident) {
-		if (isset($this->rawData[$ident])) {
-			return true;
-		}
+        return false;
+    }
 
-		return false;
-	}
+    public function getUriIdentifier()
+    {
+        $title = sprintf('%s-%s', $this->getValueOf('freitexte.objekttitel'), $this->getValueOf('verwaltung_techn.objektnr_extern'));
+        // @todo Individuelle Angabe des eindeutigen Bezeichners implementieren
+        return $this->sanizeFileName($title);
+    }
 
-	public function getUriIdentifier() {
-		$title = sprintf('%s-%s', $this->getValueOf('freitexte.objekttitel'), $this->getValueOf('verwaltung_techn.objektnr_extern'));
-		// @todo Individuelle Angabe des eindeutigen Bezeichners implementieren
-		return $this->sanizeFileName($title);
-	}
+    public function getCssFilterString(IndexConfigInterface $config)
+    {
+        $returnValue = $this->getValueOf('css-filter-class-string');
 
-	public function getCssFilterString(IndexConfigInterface $config) {
-		$returnValue = $this->getValueOf('css-filter-class-string');
+        if (null === $returnValue) {
+            $classes = $this->resolveCssClasses($this, $config, ['estate']);
+            $returnValue = implode(' ', $classes);
+        }
 
-		if ($returnValue == NULL) {
-			$classes = $this->resolveCssClasses($this, $config, array('estate'));
-			$returnValue = implode(' ', $classes);
-		}
+        return $returnValue;
+    }
 
-		return $returnValue;
-	}
-
-	public static function sanizeFileName($source) {
-
+    public static function sanizeFileName($source)
+    {
         $target = str_replace(' ', '-', $source);
-		$target = str_replace('!', '-', $target);
-		$target = str_replace('.', '-', $target);
-		$target = str_replace(',', '-', $target);
-		$target = str_replace(':', '-', $target);
-		$target = str_replace('/', '', $target);
-		$target = str_replace('°', '-grad-', $target);
-		$target = str_replace('\'', '', $target);
-		$target = str_replace('"', '', $target);
-		$target = str_replace('&', '-und-', $target);
-		$target = str_replace('?', '', $target);
-		$target = str_replace('(', '-', $target);
-		$target = str_replace(')', '-', $target);
-		$target = str_replace("\n", '-', $target);
-		$target = str_replace("@", '-', $target);
-		$target = str_replace("#", '-', $target);
-		$target = str_replace("´", '-', $target);
+        $target = str_replace('!', '-', $target);
+        $target = str_replace('.', '-', $target);
+        $target = str_replace(',', '-', $target);
+        $target = str_replace(':', '-', $target);
+        $target = str_replace('/', '', $target);
+        $target = str_replace('°', '-grad-', $target);
+        $target = str_replace('\'', '', $target);
+        $target = str_replace('"', '', $target);
+        $target = str_replace('&', '-und-', $target);
+        $target = str_replace('?', '', $target);
+        $target = str_replace('(', '-', $target);
+        $target = str_replace(')', '-', $target);
+        $target = str_replace("\n", '-', $target);
+        $target = str_replace('@', '-', $target);
+        $target = str_replace('#', '-', $target);
+        $target = str_replace('´', '-', $target);
 
-		$target = str_replace('á', 'a', $target);
-		$target = str_replace('é', 'e', $target);
-		$target = str_replace('ä', 'ae', $target);
-		$target = str_replace('ö', 'oe', $target);
-		$target = str_replace('ü', 'ue', $target);
-		$target = str_replace('Ä', 'Ae', $target);
-		$target = str_replace('Ö', 'Oe', $target);
-		$target = str_replace('Ü', 'Ue', $target);
-		$target = str_replace('ß', 'ss', $target);
+        $target = str_replace('á', 'a', $target);
+        $target = str_replace('é', 'e', $target);
+        $target = str_replace('ä', 'ae', $target);
+        $target = str_replace('ö', 'oe', $target);
+        $target = str_replace('ü', 'ue', $target);
+        $target = str_replace('Ä', 'Ae', $target);
+        $target = str_replace('Ö', 'Oe', $target);
+        $target = str_replace('Ü', 'Ue', $target);
+        $target = str_replace('ß', 'ss', $target);
 
-		$target = str_replace('$', '', $target);
-		$target = str_replace('§', '', $target);
-		$target = str_replace('%', '', $target);
-		$target = str_replace('"', '', $target);
-		$target = str_replace('=', '', $target);
-		$target = str_replace('`', '', $target);
-		$target = str_replace('²', '', $target);
-		$target = str_replace('³', '', $target);
-		$target = str_replace('*', '', $target);
-		$target = str_replace('+', '', $target);
-		$target = str_replace('&#x85;', '', $target);
+        $target = str_replace('$', '', $target);
+        $target = str_replace('§', '', $target);
+        $target = str_replace('%', '', $target);
+        $target = str_replace('"', '', $target);
+        $target = str_replace('=', '', $target);
+        $target = str_replace('`', '', $target);
+        $target = str_replace('²', '', $target);
+        $target = str_replace('³', '', $target);
+        $target = str_replace('*', '', $target);
+        $target = str_replace('+', '', $target);
+        $target = str_replace('&#x85;', '', $target);
 
         // cyrillic fix
-        if(preg_match( '/[\p{Cyrillic}]/u', $target))
+        if (preg_match('/[\p{Cyrillic}]/u', $target)) {
             $target = preg_replace('/[\x{0410}-\x{042F}]+.*[\x{0410}-\x{042F}]+/iu', '', $target);
+        }
 
-		$target = str_replace('----', '-', $target);
-		$target = str_replace('---', '-', $target);
-		$target = str_replace('--', '-', $target);
+        $target = str_replace('----', '-', $target);
+        $target = str_replace('---', '-', $target);
+        $target = str_replace('--', '-', $target);
 
-		if (strpos($target, '-') === 0) {
-			$target = substr($target, 1);
-		}
+        if (0 === strpos($target, '-')) {
+            $target = substr($target, 1);
+        }
 
-		$length = count($target);
-		if (strpos($target, '-', $length-1 ) === $length-1) {
-			$target = substr($target, 0, $length-2);
-		}
+        $length = count($target);
+        if (strpos($target, '-', $length - 1) === $length - 1) {
+            $target = substr($target, 0, $length - 2);
+        }
 
-		if (substr($target, -1) == '-') {
-			$target = substr($target, 0, -1);
-		}
+        if ('-' === substr($target, -1)) {
+            $target = substr($target, 0, -1);
+        }
 
-		if (substr($target, 1) == '-') {
-			$target = substr($target, 0, -1);
-		}
+        if ('-' === substr($target, 1)) {
+            $target = substr($target, 0, -1);
+        }
 
-		return strtolower($target);
-	}
+        return strtolower($target);
+    }
 
-	private function resolveCssClasses(Estate $estate, IndexConfigInterface $config, $startClasses = array()) {
-		$returnValue = $startClasses;
-
-		foreach ($config->getColumnConfig() as $columnConfig) {
-			if ($columnConfig->isFilterAble()) {
-				$key = $columnConfig->getSourceIdentifier();
-				$value = $estate->getValueOf($key);
-				$class = $columnConfig->getCssClassOfValue($key, $value);
-				if ($class != NULL) {
-					$returnValue[] = $this->sanizeFileName($class);
-				}
-			}
-		}
-
-		return $returnValue;
-	}
-
-    public function getFieldsIterator() {
+    public function getFieldsIterator()
+    {
         return new \ArrayIterator($this->rawData);
+    }
+
+    private function resolveCssClasses(self $estate, IndexConfigInterface $config, $startClasses = [])
+    {
+        $returnValue = $startClasses;
+
+        foreach ($config->getColumnConfig() as $columnConfig) {
+            if ($columnConfig->isFilterAble()) {
+                $key = $columnConfig->getSourceIdentifier();
+                $value = $estate->getValueOf($key);
+                $class = $columnConfig->getCssClassOfValue($key, $value);
+                if (null !== $class) {
+                    $returnValue[] = $this->sanizeFileName($class);
+                }
+            }
+        }
+
+        return $returnValue;
     }
 }

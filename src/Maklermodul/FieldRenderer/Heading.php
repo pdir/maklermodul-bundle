@@ -1,43 +1,62 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Heading extends FieldRenderer {
+class Heading extends FieldRenderer
+{
     private $crop = false;
 
-    public function __construct($key, $value, FieldTranslator $translator, $tag) {
+    public function __construct($key, $value, FieldTranslator $translator, $tag)
+    {
         parent::__construct($key, $value, $translator);
         $this->setSetting('tag', $tag);
     }
 
     /**
+     * Rückgabe des Wertes als String.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->getSetting('withoutLabel')) {
+            return $this->getShortString();
+        }
+
+        return $this->getFullString();
+    }
+
+    /**
      * Methode für die Ausgabe einer Überschrift in einer bestimmten Länge.
      *
-     * @param integer $length
+     * @param int $length
+     *
      * @return $this
      */
-    public function crop($length) {
+    public function crop($length)
+    {
         $this->crop = true;
         $this->setSetting('crop', $length);
 
@@ -48,15 +67,17 @@ class Heading extends FieldRenderer {
      * Methode für die Rückgabe eines Wertes.
      *
      * @param bool $doNotPrint
+     *
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = parent::value($doNotPrint);
 
         if ($this->crop) {
             $cropedValue = substr($returnValue, 0, $this->getSetting('crop'));
 
-            if ($cropedValue !== false) {
+            if (false !== $cropedValue) {
                 $returnValue = $cropedValue;
             }
         }
@@ -64,38 +85,30 @@ class Heading extends FieldRenderer {
         return $returnValue;
     }
 
-    /**
-     * Rückgabe des Wertes als String.
-     *
-     * @return string
-     */
-    public function __toString() {
-        if ($this->getSetting('withoutLabel')) {
-            return $this->getShortString();
-        } else {
-            return $this->getFullString();
-        }
-    }
-
-    private function getShortString() {
+    private function getShortString()
+    {
         $template = $this->getShortTemplate();
+
         return sprintf(
             $template,
-        	$this->getSetting('tag'),
+            $this->getSetting('tag'),
             Estate::sanizeFileName($this->getKey()),
             $this->value(true),
-        	$this->getSetting('tag')
+            $this->getSetting('tag')
         );
     }
 
-    private function getShortTemplate() {
-        return <<<EOT
+    private function getShortTemplate()
+    {
+        return <<<'EOT'
 <%s class="field %s">%s</%s>
 EOT;
     }
 
-    private function getFullString() {
+    private function getFullString()
+    {
         $template = $this->getFullTemplate();
+
         return sprintf(
             $template,
             Estate::sanizeFileName($this->getKey()),
@@ -104,8 +117,9 @@ EOT;
         );
     }
 
-    private function getFullTemplate() {
-        return <<<EOT
+    private function getFullTemplate()
+    {
+        return <<<'EOT'
 <div class="field %s">
     <div class="label">%s</div>
     <div class="value-text">%s</div>

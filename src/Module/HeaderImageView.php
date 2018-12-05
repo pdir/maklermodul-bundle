@@ -1,67 +1,68 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Module;
 
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Patchwork\Utf8;
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
-use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Util\Helper;
 
 /**
- * Class DetailView
+ * Class DetailView.
  *
  * @copyright  pdir / digital agentur
  * @author     Mathias Arzberger <develop@pdir.de>
- * @package    Devtools
  */
 class HeaderImageView extends \Module
 {
     /**
-     * Template
+     * Template.
+     *
      * @var string
      */
-    protected $strTemplate  = 'makler_header_image';
+    protected $strTemplate = 'makler_header_image';
 
-    public function __construct($objModule, $strColumn = 'main') {
-        parent::__construct( $objModule, $strColumn );
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
     }
 
     /**
-     * Display a wildcard in the back end
+     * Display a wildcard in the back end.
+     *
      * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE')
-        {
+        if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new \BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'][0]).' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
@@ -78,45 +79,46 @@ class HeaderImageView extends \Module
     }
 
     /**
-     * Generate the module
+     * Generate the module.
      */
     protected function compile()
     {
-        if ($this->alias === "") {
-            throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
+        if ('' === $this->alias) {
+            throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
         }
 
         $estate = $this->createFieldRendererFactory($this->alias);
 
-        if($this->makler_showHeadline == true)
-        {
+        if (true === $this->makler_showHeadline) {
             $this->Template->headline = $this->headline ? $this->headline : $estate->rawValue('freitexte.objekttitel');
             $this->Template->showHeadline = true;
         }
 
         $this->Template->showBackgroundImage = $this->makler_showBackgroundImage;
 
-        if($estate->rawValue('anhaenge.anhang.#1.daten.pfad') != "") {
-            $this->Template->headerImage = Helper::imagePath . $estate->rawValue('anhaenge.anhang.#1.daten.pfad');
+        if ('' !== $estate->rawValue('anhaenge.anhang.#1.daten.pfad')) {
+            $this->Template->headerImage = Helper::imagePath.$estate->rawValue('anhaenge.anhang.#1.daten.pfad');
         } else {
-            $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder . "/img/platzhalterbild.jpg";
-            if($placeholder != Helper::assetFolder . "/img/platzhalterbild.jpg") {
+            $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder.'/img/platzhalterbild.jpg';
+            if ($placeholder !== Helper::assetFolder.'/img/platzhalterbild.jpg') {
                 $objFile = \FilesModel::findByUuid($placeholder);
                 $this->Template->headerImage = $objFile->path;
             } else {
                 $this->Template->headerImage = $placeholder;
             }
         }
-
     }
 
-    private function createFieldRendererFactory($objectId) {
+    private function createFieldRendererFactory($objectId)
+    {
         $repository = EstateRepository::getInstance();
         $estate = $repository->findByObjectId($objectId);
+
         return new FieldRendererFactory($estate, $this->getTranslationMap());
     }
 
-    private function getTranslationMap() {
+    private function getTranslationMap()
+    {
         return StaticDIC::getTranslationMap();
     }
 }

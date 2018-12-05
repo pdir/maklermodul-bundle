@@ -1,30 +1,33 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Flag extends FieldRenderer {
-    public function __construct($key, $value, FieldTranslator $translator, $yesValue, $noValue) {
+class Flag extends FieldRenderer
+{
+    public function __construct($key, $value, FieldTranslator $translator, $yesValue, $noValue)
+    {
         parent::__construct($key, $value, $translator);
 
         $this->setSetting('yesValue', $yesValue);
@@ -32,34 +35,15 @@ class Flag extends FieldRenderer {
     }
 
     /**
-     * Rückgabe des Wertes.
-     *
-     * Der Wert wird so dargestellt, wie er in der Objektbeschreibung steht.
-     *
-     * @param bool $doNotPrint
-     * @return string
-     */
-    public function value($doNotPrint = false) {
-        $returnValue = $this->getSetting('prefix');
-
-        if ($this->getValue() === true OR $this->getValue() == 'true' OR $this->getValue() == '1' OR $this->getValue() == 'Ja' OR $this->getValue() == 'JA') {
-            $returnValue .= $this->getSetting('yesValue');
-        } else {
-            $returnValue .= $this->getSetting('noValue');
-        }
-
-        $returnValue .= $this->getSetting('append');
-        return $returnValue;
-    }
-
-    /**
      * Rückgabe des Wertes als Text.
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             $template = $this->getShortTemplate();
+
             return sprintf($template,
                 $this->getValueString(),
                 Estate::sanizeFileName($this->getKey()),
@@ -68,6 +52,7 @@ class Flag extends FieldRenderer {
         }
 
         $template = $this->getLongTemplate();
+
         return sprintf($template,
             Estate::sanizeFileName($this->getKey()),
             $this->key(true),
@@ -76,8 +61,33 @@ class Flag extends FieldRenderer {
         );
     }
 
-    private function getLongTemplate() {
-        return <<<EOT
+    /**
+     * Rückgabe des Wertes.
+     *
+     * Der Wert wird so dargestellt, wie er in der Objektbeschreibung steht.
+     *
+     * @param bool $doNotPrint
+     *
+     * @return string
+     */
+    public function value($doNotPrint = false)
+    {
+        $returnValue = $this->getSetting('prefix');
+
+        if (true === $this->getValue() or 'true' === $this->getValue() or '1' === $this->getValue() or 'Ja' === $this->getValue() or 'JA' === $this->getValue()) {
+            $returnValue .= $this->getSetting('yesValue');
+        } else {
+            $returnValue .= $this->getSetting('noValue');
+        }
+
+        $returnValue .= $this->getSetting('append');
+
+        return $returnValue;
+    }
+
+    private function getLongTemplate()
+    {
+        return <<<'EOT'
 <div class="field %s">
     <div class="label">%s</div>
     <div class="value-flag %s">%s</div>
@@ -85,13 +95,15 @@ class Flag extends FieldRenderer {
 EOT;
     }
 
-    private function getShortTemplate() {
-        return <<<EOT
+    private function getShortTemplate()
+    {
+        return <<<'EOT'
 <div class="field value-flag %s %s">%s</div>
 EOT;
     }
 
-    private function getValueString() {
-        return ($this->getValue() === true OR $this->getValue() == 'true' OR $this->getValue() == '1') ? 'true' : 'false';
+    private function getValueString()
+    {
+        return (true === $this->getValue() or 'true' === $this->getValue() or '1' === $this->getValue()) ? 'true' : 'false';
     }
 }

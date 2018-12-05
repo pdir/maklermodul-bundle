@@ -1,4 +1,19 @@
-<?php 
+<?php
+
+/*
+ * maklermodul bundle for Contao Open Source CMS
+ *
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
+ *
+ * @package    maklermodul-bundle
+ * @link       https://www.maklermodul.de
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['uebertragung.art.@ONLINE'] = 'online';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['uebertragung.art.@OFFLINE'] = 'offline';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['uebertragung.umfang.@TEIL'] = 'part';
@@ -119,7 +134,7 @@ $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_techn.objekt
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_techn.objektnr_intern'] = 'Objektnummer (intern)';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.hochhaus'] = 'Hochhaus';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.branchen'] = 'Branchen';
-$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.gewerbliche_nutzung'] = "gewerbliche Nutzung";
+$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.gewerbliche_nutzung'] = 'gewerbliche Nutzung';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.als_ferien'] = 'als Ferien';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.denkmalgeschuetzt'] = 'denkmalgeschützt';
 //$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['verwaltung_objekt.geschlecht.@geschl_attr'] =

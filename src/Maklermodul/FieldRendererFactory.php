@@ -1,29 +1,32 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
-class FieldRendererFactory {
+class FieldRendererFactory
+{
     private $estateData;
     private $translationMap;
 
-    public function __construct($estateData, $translationMap) {
+    public function __construct($estateData, $translationMap)
+    {
         $this->estateData = $estateData;
         $this->translationMap = new FieldTranslator($translationMap);
     }
@@ -34,10 +37,12 @@ class FieldRendererFactory {
      * Parameter kann zum Beispiel der Wert für die Kaltmiete oder der Preis für
      * das Objekt sein.
      *
-     * @param String $key
+     * @param string $key
+     *
      * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRendererTypeSelector
      */
-    public function renderer($key) {
+    public function renderer($key)
+    {
         return new FieldRendererTypeSelector($key, $this->rawValue($key), $this->translationMap);
     }
 
@@ -47,22 +52,16 @@ class FieldRendererFactory {
      * $key - Index des Wertes im Array
      *
      * @param $key
+     *
      * @return string
      */
-    public function rawValue($key) {
+    public function rawValue($key)
+    {
         if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
             return $this->estateData->getValueOf($key);
         }
 
         return $this->getRawValueOfArray($key);
-    }
-
-    private function getRawValueOfArray($key) {
-        if (isset($this->estateData[$key])) {
-            return $this->estateData[$key];
-        }
-
-        return null;
     }
 
     /**
@@ -71,44 +70,29 @@ class FieldRendererFactory {
      * $key - Index des Wertes im Array
      *
      * @param $key
+     *
      * @return string
      */
-    public function keyExists($key) {
-    	if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
-    		return $this->estateData->checkIfKeyExists($key);
-    	}
+    public function keyExists($key)
+    {
+        if (is_a($this->estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
+            return $this->estateData->checkIfKeyExists($key);
+        }
 
-    	return $this->getRawValueOfArray($key);
+        return $this->getRawValueOfArray($key);
     }
 
     /**
-     * Methode für die Rückgabe eines Arrays mit Bildern
+     * Methode für die Rückgabe eines Arrays mit Bildern.
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\AttachmentFieldRendererCollection
      */
-    public function attachments() {
+    public function attachments()
+    {
         return new AttachmentFieldRendererCollection($this->getFilteredValuesBy('anhaenge'), $this->translationMap);
     }
 
-    private function getFilteredValuesBy($startOfKey) {
-        $returnValue = array();
-        $estateData = $this->estateData;
-
-        if (is_a($estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
-            $estateData = $estateData->getFieldsIterator();
-        }
-        if(!$estateData) return array();
-        foreach ($estateData as $key => $value) {
-            if ($startOfKey === "" || strpos($key, $startOfKey) === 0) {
-                $returnValue[$key] = $value;
-            }
-        }
-
-        return $returnValue;
-    }
-
     /**
-     *
      * Liefert einen Renderer zurück, der einen Zurück Button erzeugen kann.
      *
      * Dieser Button berücksichtigt die Filtereinstellung vor Aufruf der
@@ -117,7 +101,8 @@ class FieldRendererFactory {
      *
      * @returns \Pdir\MaklermodulBundle\Maklermodul\BackButtonRenderer
      */
-    public function backButton() {
+    public function backButton()
+    {
         $referer = $_SERVER['HTTP_REFERER'];
         $request = $_SERVER['QUERY_STRING'];
 
@@ -125,11 +110,41 @@ class FieldRendererFactory {
     }
 
     /**
-     * Methode für die Rückgabe der Energiepassangaben
+     * Methode für die Rückgabe der Energiepassangaben.
      *
      * @return \Pdir\MaklermodulBundle\Maklermodul\EnergyPassRenderer
      */
-    public function energyPass() {
-        return new EnergyPassRenderer($this->getFilteredValuesBy('zustand_angaben'), $this->translationMap,  $this->getFilteredValuesBy('ausstattung'));
+    public function energyPass()
+    {
+        return new EnergyPassRenderer($this->getFilteredValuesBy('zustand_angaben'), $this->translationMap, $this->getFilteredValuesBy('ausstattung'));
+    }
+
+    private function getRawValueOfArray($key)
+    {
+        if (isset($this->estateData[$key])) {
+            return $this->estateData[$key];
+        }
+
+        return null;
+    }
+
+    private function getFilteredValuesBy($startOfKey)
+    {
+        $returnValue = [];
+        $estateData = $this->estateData;
+
+        if (is_a($estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
+            $estateData = $estateData->getFieldsIterator();
+        }
+        if (!$estateData) {
+            return [];
+        }
+        foreach ($estateData as $key => $value) {
+            if ('' === $startOfKey || 0 === strpos($key, $startOfKey)) {
+                $returnValue[$key] = $value;
+            }
+        }
+
+        return $returnValue;
     }
 }

@@ -1,79 +1,90 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository;
 
-use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
+use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 
-class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryInterface {
+class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryInterface
+{
+    const CONTAO_MODULE_TYPE_LIST = 'immoListView';
 
-	const CONTAO_MODULE_TYPE_LIST = 'immoListView';
+    public function __construct()
+    {
+        $this->import('Database');
+    }
 
-	public function __construct() {
-		$this->import('Database');
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::update()
+    /**
+     * (non-PHPdoc).
+     *
+     * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::update()
+     *
      * @param \Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface $config index config
-     * @return void
-	 */
-	public function update(IndexConfigInterface $config) {
-		$objquery = $this->Database->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE id=?');
-		$objquery->execute($config->getStorageFileUri(), $config->getUid());
-	}
+     */
+    public function update(IndexConfigInterface $config)
+    {
+        $objquery = $this->Database->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE id=?');
+        $objquery->execute($config->getStorageFileUri(), $config->getUid());
+    }
 
-	/**
-	 * (non-PHPdoc)
-	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findById()
-	 * @param int $configId contao modul id
+    /**
+     * (non-PHPdoc).
+     *
+     * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findById()
+     *
+     * @param int $configId contao modul id
+     *
      * @return object
-	 */
-	public function findById($configId) {
-		$result = $this->Database->prepare("SELECT * FROM tl_module WHERE id=?")->execute($configId);
+     */
+    public function findById($configId)
+    {
+        $result = $this->Database->prepare('SELECT * FROM tl_module WHERE id=?')->execute($configId);
 
-		if ($result->count() <= 0) {
-			return null;
-		}
+        if ($result->count() <= 0) {
+            return null;
+        }
 
-		$returnValue = $result->first()->row();
-		return new IndexConfig($returnValue);
-	}
+        $returnValue = $result->first()->row();
 
-	/**
-	 * (non-PHPdoc)
-	 * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findAll()
-	 */
-	public function findAll() {
-		$result = $this->Database->prepare("SELECT * FROM tl_module WHERE type=?")->execute(self::CONTAO_MODULE_TYPE_LIST);
+        return new IndexConfig($returnValue);
+    }
 
-		if ($result->count() <= 0) {
-			return null;
-		}
+    /**
+     * (non-PHPdoc).
+     *
+     * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findAll()
+     */
+    public function findAll()
+    {
+        $result = $this->Database->prepare('SELECT * FROM tl_module WHERE type=?')->execute(self::CONTAO_MODULE_TYPE_LIST);
 
-		$returnValue = array();
-		while ($row = $result->next()) {
-			$returnValue[] = new IndexConfig($row->row());
-		}
+        if ($result->count() <= 0) {
+            return null;
+        }
 
-		return $returnValue;
-	}
+        $returnValue = [];
+        while ($row = $result->next()) {
+            $returnValue[] = new IndexConfig($row->row());
+        }
+
+        return $returnValue;
+    }
 }

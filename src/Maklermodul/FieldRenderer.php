@@ -1,56 +1,61 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
-abstract class FieldRenderer {
+abstract class FieldRenderer
+{
+    /**
+     * @var FieldTranslator
+     */
+    protected $translator;
     private $key;
 
     private $value;
 
     private $settings;
 
-    /**
-     * @var FieldTranslator
-     */
-    protected $translator;
-
-    public function __construct($key, $value, FieldTranslator $translator) {
+    public function __construct($key, $value, FieldTranslator $translator)
+    {
         $this->translator = $translator;
         $this->key = $key;
         $this->value = $value;
-        $this->settings = array(
+        $this->settings = [
             'withoutLabel' => false,
             'append' => '',
             'prefix' => '',
-        	//'group'	=> 'BILD',
-        	// 'location' => '',
-        	// 'mode' => 'crop'
-        );
+            //'group'	=> 'BILD',
+            // 'location' => '',
+            // 'mode' => 'crop'
+        ];
     }
+
+    abstract public function __toString();
 
     /**
      * Methode zum holen des Index eines Wertes.
      *
      * @return mixed
      */
-    public function getKey() {
+    public function getKey()
+    {
         return $this->key;
     }
 
@@ -59,7 +64,8 @@ abstract class FieldRenderer {
      *
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -68,7 +74,8 @@ abstract class FieldRenderer {
      *
      * @return mixed
      */
-    public function isWithoutLabel() {
+    public function isWithoutLabel()
+    {
         return $this->getSetting('withoutLabel');
     }
 
@@ -77,8 +84,10 @@ abstract class FieldRenderer {
      *
      * @return $this
      */
-    public function withoutLabel() {
+    public function withoutLabel()
+    {
         $this->setSetting('withoutLabel', true);
+
         return $this;
     }
 
@@ -88,22 +97,27 @@ abstract class FieldRenderer {
      * Zum Beispiel eine Einheit bei der Flächenangabe oder bei Preise die Währung.
      *
      * @param $suffix
+     *
      * @return $this
      */
-    public function append($suffix) {
+    public function append($suffix)
+    {
         $this->setSetting('append', $suffix);
+
         return $this;
     }
-
 
     /**
      * Methode, um vor dem Wert ein Label/Text einzufügen.
      *
      * @param string $prefix
+     *
      * @return string
      */
-    public function prefix($prefix) {
+    public function prefix($prefix)
+    {
         $this->setSetting('prefix', $prefix);
+
         return $this;
     }
 
@@ -111,9 +125,11 @@ abstract class FieldRenderer {
      * Rückgabe des Index eines Wertes.
      *
      * @param bool $doNotPrint
+     *
      * @return mixed
      */
-    public function key($doNotPrint = false) {
+    public function key($doNotPrint = false)
+    {
         $returnValue = $this->translator->translate($this->getKey());
 
         if (!$doNotPrint) {
@@ -127,9 +143,11 @@ abstract class FieldRenderer {
      * Methode für die Rückgabe eines Wertes.
      *
      * @param bool $doNotPrint
+     *
      * @return string
      */
-    public function value($doNotPrint = false) {
+    public function value($doNotPrint = false)
+    {
         $returnValue = $this->getSetting('prefix');
         $returnValue .= $this->getValue();
         $returnValue .= $this->getSetting('append');
@@ -147,9 +165,11 @@ abstract class FieldRenderer {
      * Der Wert mit Beschreibung wird nicht in der Detailansicht angezeigt, wenn keine Daten vorhanden sind.
      *
      * @param bool $doNotPrint
+     *
      * @return string
      */
-    public function render($doNotPrint = false) {
+    public function render($doNotPrint = false)
+    {
         $returnValue = '';
         $value = $this->getValue();
 
@@ -170,9 +190,11 @@ abstract class FieldRenderer {
      * Dieser Objektdetail wird immer angezeigt, egal ob der Wert 0 ist oder keinen Wert besitzt.
      *
      * @param bool $doNotPrint
+     *
      * @return mixed
      */
-    public function renderAlways($doNotPrint = false) {
+    public function renderAlways($doNotPrint = false)
+    {
         $returnValue = $this->__toString();
 
         if (!$doNotPrint) {
@@ -182,13 +204,13 @@ abstract class FieldRenderer {
         return $returnValue;
     }
 
-    public abstract function __toString();
-
-    protected function setSetting($key, $value) {
+    protected function setSetting($key, $value)
+    {
         $this->settings[$key] = $value;
     }
 
-    protected function getSetting($key) {
+    protected function getSetting($key)
+    {
         if (!isset($this->settings[$key])) {
             throw new \InvalidArgumentException("Unknown key: $key");
         }

@@ -1,32 +1,35 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 
-class Number extends FieldRenderer {
+class Number extends FieldRenderer
+{
     private $decimalCount = 0;
 
-    public function __construct($key, $value, FieldTranslator $translator, $decimalCount) {
+    public function __construct($key, $value, FieldTranslator $translator, $decimalCount)
+    {
         parent::__construct(
             $key,
             $value,
@@ -36,27 +39,15 @@ class Number extends FieldRenderer {
     }
 
     /**
-     * Methode für die Rückgabe eines Wertes.
-     *
-     * @param bool $doNotPrint
-     * @return string
-     */
-    public function value($doNotPrint = false) {
-        $returnValue = $this->getSetting('prefix');
-        $returnValue .= number_format(floatval($this->getValue()), $this->decimalCount, ',', '.');
-        $returnValue .= $this->getSetting('append');
-
-        return $returnValue;
-    }
-
-    /**
      * Rückgabe des Wertes als String.
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getSetting('withoutLabel')) {
             $template = $this->getShortTemplate();
+
             return sprintf($template,
                 Estate::sanizeFileName($this->getKey()),
                 $this->value(true)
@@ -64,6 +55,7 @@ class Number extends FieldRenderer {
         }
 
         $template = $this->getLongTemplate();
+
         return sprintf($template,
             Estate::sanizeFileName($this->getKey()),
             $this->key(true),
@@ -71,10 +63,25 @@ class Number extends FieldRenderer {
         );
     }
 
+    /**
+     * Methode für die Rückgabe eines Wertes.
+     *
+     * @param bool $doNotPrint
+     *
+     * @return string
+     */
+    public function value($doNotPrint = false)
+    {
+        $returnValue = $this->getSetting('prefix');
+        $returnValue .= number_format((float) ($this->getValue()), $this->decimalCount, ',', '.');
+        $returnValue .= $this->getSetting('append');
 
+        return $returnValue;
+    }
 
-    private function getLongTemplate() {
-        return <<<EOT
+    private function getLongTemplate()
+    {
+        return <<<'EOT'
 <div class="field %s">
     <div class="label">%s</div>
     <div class="value-number">%s</div>
@@ -82,8 +89,9 @@ class Number extends FieldRenderer {
 EOT;
     }
 
-    private function getShortTemplate() {
-        return <<<EOT
+    private function getShortTemplate()
+    {
+        return <<<'EOT'
 <div class="field value-number %s">%s</div>
 EOT;
     }

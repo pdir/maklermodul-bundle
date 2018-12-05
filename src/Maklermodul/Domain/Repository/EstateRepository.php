@@ -1,84 +1,95 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Util\Helper;
 
-class EstateRepository {
+class EstateRepository
+{
+    private $storageDirectoryPath;
 
-	private $storageDirectoryPath;
-
-	public function __construct($storageDirectoryPath) {
+    public function __construct($storageDirectoryPath)
+    {
         $this->storageDirectoryPath = $storageDirectoryPath;
-		if (!is_dir($this->storageDirectoryPath)) {
-			throw new \Exception("Could not open storage directory: " . $this->storageDirectoryPath);
-		}
-	}
+        if (!is_dir($this->storageDirectoryPath)) {
+            throw new \Exception('Could not open storage directory: '.$this->storageDirectoryPath);
+        }
+    }
 
-	public function findByObjectId($objectId) {
-		$fileNamePath = sprintf('%s/%s.json', $this->storageDirectoryPath, $objectId);
+    public function findByObjectId($objectId)
+    {
+        $fileNamePath = sprintf('%s/%s.json', $this->storageDirectoryPath, $objectId);
 
-		if (!file_exists($fileNamePath)) {
-			return null;
-		}
+        if (!file_exists($fileNamePath)) {
+            return null;
+        }
 
-		return $this->loadJsonFile($fileNamePath);
-	}
+        return $this->loadJsonFile($fileNamePath);
+    }
 
-	public function findAll() {
-		$directoryIterator = new \DirectoryIterator($this->storageDirectoryPath);
-		$returnValue = array();
+    public function findAll()
+    {
+        $directoryIterator = new \DirectoryIterator($this->storageDirectoryPath);
+        $returnValue = [];
 
-		foreach ($directoryIterator as $child) {
-			if($this->isRelevantJson($child->getPathname())) {
-				$estate = $this->loadJsonFile($child->getPathname());
-				$returnValue[] = $estate;
-			}
-		}
-		return $returnValue;
-	}
+        foreach ($directoryIterator as $child) {
+            if ($this->isRelevantJson($child->getPathname())) {
+                $estate = $this->loadJsonFile($child->getPathname());
+                $returnValue[] = $estate;
+            }
+        }
 
-	private function isRelevantJson($filename) {
-		if(strpos($filename,".json")===false)
-			return false;
-		if(substr($filename, -14) == "key-index.json")
-			return false;
-		if(!strpos($filename, "00index") === false)
-			return false;
-		return true;
-	}
+        return $returnValue;
+    }
 
-	public static function getInstance() {
-		return new EstateRepository(Helper::imagePath);
-	}
+    public static function getInstance()
+    {
+        return new self(Helper::imagePath);
+    }
 
-	public function loadJsonFile($fileNamePath) {
-
+    public function loadJsonFile($fileNamePath)
+    {
         $objFile = new \File(str_replace($this->storageDirectoryPath, Helper::imagePath, $fileNamePath));
-		$decoded = json_decode($objFile->getContent(), true);
+        $decoded = json_decode($objFile->getContent(), true);
 
-		if ($decoded == NULL) {
-			return null;
-		}
+        if (null === $decoded) {
+            return null;
+        }
 
-		return new Estate($decoded);
-	}
+        return new Estate($decoded);
+    }
+
+    private function isRelevantJson($filename)
+    {
+        if (false === strpos($filename, '.json')) {
+            return false;
+        }
+        if ('key-index.json' === substr($filename, -14)) {
+            return false;
+        }
+        if (false === !strpos($filename, '00index')) {
+            return false;
+        }
+
+        return true;
+    }
 }

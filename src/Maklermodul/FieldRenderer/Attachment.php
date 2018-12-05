@@ -1,30 +1,31 @@
 <?php
 
-/**
- * maklermodul for Contao Open Source CMS
+/*
+ * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (C) 2017 pdir / digital agentur <develop@pdir.de>
+ * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
  *
- * @package    maklermodul
+ * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
- * @license    pdir license - All-rights-reserved - commercial extension
- * @author     pdir GmbH <develop@pdir.de>
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Namespace
+ * Namespace.
  */
+
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 use Pdir\MaklermodulBundle\Util\Helper;
 
-class Attachment extends FieldRenderer {
-
+class Attachment extends FieldRenderer
+{
     public $websitePath;
 
     /*
@@ -33,14 +34,17 @@ class Attachment extends FieldRenderer {
      */
     public $template;
 
-    public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD') {
+    public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD')
+    {
         parent::__construct(
             $key,
             $value,
             $translator
         );
 
-        if($GLOBALS['TL_CONFIG']['websitePath']) $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
+        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+            $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
+        }
 
         // set default values for images
         $this->setSetting('group', $group);
@@ -50,13 +54,25 @@ class Attachment extends FieldRenderer {
     }
 
     /**
+     * Rückgabe des Wertes als Text.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getShortString();
+    }
+
+    /**
      * Methode zum Setzen der Bildbreite und -höhe.
      *
-     * @param integer $maxWidth
-     * @param integer $maxHeight
+     * @param int $maxWidth
+     * @param int $maxHeight
+     *
      * @return $this
      */
-    public function size($maxWidth, $maxHeight) {
+    public function size($maxWidth, $maxHeight)
+    {
         $this->setSetting('maxWidth', $maxWidth);
         $this->setSetting('maxHeight', $maxHeight);
 
@@ -64,66 +80,71 @@ class Attachment extends FieldRenderer {
     }
 
     /**
-     * Methode zum setzen der Anhang Gruppe
+     * Methode zum setzen der Anhang Gruppe.
+     *
      * @param string $attGroup
+     *
      * @return $this;
      */
-    public function group($attGroup) {
-    	$this->setSetting('group', $attGroup);
-    	return $this;
+    public function group($attGroup)
+    {
+        $this->setSetting('group', $attGroup);
+
+        return $this;
     }
 
     /**
-     * Methode zum setzen der Anhang Location
+     * Methode zum setzen der Anhang Location.
+     *
      * @param string $attLocation
+     *
      * @return $this;
      */
-    public function location($attLocation) {
-    	$this->setSetting('location', $attLocation);
-    	return $this;
+    public function location($attLocation)
+    {
+        $this->setSetting('location', $attLocation);
+
+        return $this;
     }
 
     /**
      * Methode zum Setzen der Resize Mode.
      *
      * @param string $mode
+     *
      * @return $this
      */
-    public function mode($mode) {
-    	$this->setSetting('mode', $mode);
-    	return $this;
+    public function mode($mode)
+    {
+        $this->setSetting('mode', $mode);
+
+        return $this;
     }
 
     /**
      * Methode um Bilder ohne Link anzuzeigen.
      *
      * @param string $link
+     *
      * @return $this
      */
-    public function withoutLink($link) {
-    	$this->setSetting('link', $link);
-    	return $this;
-    }
+    public function withoutLink($link)
+    {
+        $this->setSetting('link', $link);
 
-    /**
-     * Rückgabe des Wertes als Text.
-     *
-     * @return string
-     */
-    public function __toString() {
-        return $this->getShortString();
+        return $this;
     }
 
     /** @noinspection PhpInconsistentReturnPointsInspection */
-    private function getShortString() {
-    	// show only given group
-    	if(strpos($this->getSetting('group'), $this->getValueOf('@gruppe')) !== false) {
-
-    		switch ($this->getValueOf('@gruppe'))
-    		{
-    			case 'DOKUMENTE';
+    private function getShortString()
+    {
+        // show only given group
+        if (false !== strpos($this->getSetting('group'), $this->getValueOf('@gruppe'))) {
+            switch ($this->getValueOf('@gruppe')) {
+                case 'DOKUMENTE':
                     // render doc list
                     $this->template = $this->getShortTemplateDoc();
+
                     return sprintf($this->template,
                         $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
                         substr($this->getValueOf('format'), 1),
@@ -131,54 +152,64 @@ class Attachment extends FieldRenderer {
                         $this->getValueOf('anhangtitel')
                     );
                     break;
-    			case 'FILMLINK';
-					// render doc list
-					$this->template = $this->getShortTemplateDoc();
-					return sprintf($this->template,
-							$this->getUrlOfPath($this->getValueOf('daten.pfad')),
-							substr($this->getValueOf('format'), 1),
-							$this->getValueOf('anhangtitel'),
-							$this->getValueOf('anhangtitel')
-					);
-					break;
-    			case 'FILM';
-    				$this->template = $this->getShortTemplateMedia();
+                case 'FILMLINK':
+                    // render doc list
+                    $this->template = $this->getShortTemplateDoc();
+
+                    return sprintf($this->template,
+                            $this->getUrlOfPath($this->getValueOf('daten.pfad')),
+                            substr($this->getValueOf('format'), 1),
+                            $this->getValueOf('anhangtitel'),
+                            $this->getValueOf('anhangtitel')
+                    );
+                    break;
+                case 'FILM':
+                    $this->template = $this->getShortTemplateMedia();
+
                     return sprintf($this->template,
                         substr($this->getValueOf('format'), 1),
                         $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('anhangtitel')
                     );
-    				break;
-    			default;
+                    break;
+                default:
                     // fallback for xml data without group definition
-					// render image
-			        $renderedThumbnail = $this->getThumbnailString(
-			            $this->getValueOf('daten.pfad'),
-			            $this->getValueOf('anhangtitel'),
-						$this->getValueOf('@location')
-			        );
+                    // render image
+                    $renderedThumbnail = $this->getThumbnailString(
+                        $this->getValueOf('daten.pfad'),
+                        $this->getValueOf('anhangtitel'),
+                        $this->getValueOf('@location')
+                    );
 
-			        if($this->getSetting('link')) return $renderedThumbnail;
+                    if ($this->getSetting('link')) {
+                        return $renderedThumbnail;
+                    }
 
-			        $this->template = $this->getShortTemplate();
-			        return sprintf($this->template,
-			            $this->getUrlOfPath(Helper::imagePath . $this->getValueOf('daten.pfad')),
-			            $this->getValueOf('anhangtitel'),
-			            $renderedThumbnail
-			        );
-			}
-    	}
-    	return '';
+                    $this->template = $this->getShortTemplate();
+
+                    return sprintf($this->template,
+                        $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                        $this->getValueOf('anhangtitel'),
+                        $renderedThumbnail
+                    );
+            }
+        }
+
+        return '';
     }
 
-    private function getUrlOfPath($path) {
-        if($this->websitePath)
-            return $this->websitePath . '/' . str_replace(TL_ROOT, '', $path);
+    private function getUrlOfPath($path)
+    {
+        if ($this->websitePath) {
+            return $this->websitePath.'/'.str_replace(TL_ROOT, '', $path);
+        }
+
         return str_replace(TL_ROOT, '', $path);
     }
 
-    private function getThumbnailString($path, $alt, $location) {
+    private function getThumbnailString($path, $alt, $location)
+    {
         try {
             $width = $this->getSetting('maxWidth');
             $height = $this->getSetting('maxHeight');
@@ -186,11 +217,12 @@ class Attachment extends FieldRenderer {
 
             $url = $path;
             // @todo make it changeable in the config file
-            if($location == 'REMOTE') $url = str_replace(".jpg", "_small.jpg", $url);
-            if($location == 'EXTERN') {
-
-            	$path = $this->resizeImage($path, $width, $height, $mode);
-            	$url = $this->getUrlOfPath($path);
+            if ('REMOTE' === $location) {
+                $url = str_replace('.jpg', '_small.jpg', $url);
+            }
+            if ('EXTERN' === $location) {
+                $path = $this->resizeImage($path, $width, $height, $mode);
+                $url = $this->getUrlOfPath($path);
             }
             $this->template = $this->getThumbnailTemplate(true);
             $result = sprintf($this->template, $url, $width, $height, $alt);
@@ -200,20 +232,25 @@ class Attachment extends FieldRenderer {
             $this->template = $this->getThumbnailTemplate();
             $url = $path;
             // @todo make it changeable in the config file
-            if($location == 'REMOTE') $url = str_replace(".jpg", "_small.jpg", $url);
-            if($location == 'EXTERN')
-            	$url = $this->getUrlOfPath($path);
+            if ('REMOTE' === $location) {
+                $url = str_replace('.jpg', '_small.jpg', $url);
+            }
+            if ('EXTERN' === $location) {
+                $url = $this->getUrlOfPath($path);
+            }
 
             return sprintf($this->template, $url, $alt);
         }
     }
 
-    private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode) {
-        return \Image::get(Helper::imagePath . $orgPath, $maxWidth, $maxHeight, $mode) ;
+    private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode)
+    {
+        return \Image::get(Helper::imagePath.$orgPath, $maxWidth, $maxHeight, $mode);
     }
 
-    private function getThumbnailTemplate($resized = false) {
-        $returnValue =  '<img src="%s"' . PHP_EOL;
+    private function getThumbnailTemplate($resized = false)
+    {
+        $returnValue = '<img src="%s"'.PHP_EOL;
 
         if ($resized) {
             $returnValue .= '        width="%s" height="%s" alt="%s" />';
@@ -224,16 +261,18 @@ class Attachment extends FieldRenderer {
         return $returnValue;
     }
 
-    private function getShortTemplate() {
-        $returnValue =  '<a href="%s"' . PHP_EOL;
-        $returnValue .= '   data-lightbox="galerie" title="%s">' . PHP_EOL;
-        $returnValue .= '   %s' . PHP_EOL;
-        $returnValue .= '</a>' . PHP_EOL;
+    private function getShortTemplate()
+    {
+        $returnValue = '<a href="%s"'.PHP_EOL;
+        $returnValue .= '   data-lightbox="galerie" title="%s">'.PHP_EOL;
+        $returnValue .= '   %s'.PHP_EOL;
+        $returnValue .= '</a>'.PHP_EOL;
 
         return $returnValue;
     }
 
-    private function getValueOf($key) {
+    private function getValueOf($key)
+    {
         $returnValue = '';
         $value = $this->getValue();
         $key = $this->getFullyQualifiedKey($key);
@@ -245,21 +284,24 @@ class Attachment extends FieldRenderer {
         return $returnValue;
     }
 
-    private function getFullyQualifiedKey($key) {
-        return $this->getKey() . '.' . $key;
+    private function getFullyQualifiedKey($key)
+    {
+        return $this->getKey().'.'.$key;
     }
 
-    private function getShortTemplateDoc() {
-        $returnValue =  '<li><a href="%s"' . PHP_EOL;
-        $returnValue .= '   class="link-icon %s" title="Download %s" target="_blank">' . PHP_EOL;
-        $returnValue .= '   %s' . PHP_EOL;
-        $returnValue .= '</a></li>' . PHP_EOL;
+    private function getShortTemplateDoc()
+    {
+        $returnValue = '<li><a href="%s"'.PHP_EOL;
+        $returnValue .= '   class="link-icon %s" title="Download %s" target="_blank">'.PHP_EOL;
+        $returnValue .= '   %s'.PHP_EOL;
+        $returnValue .= '</a></li>'.PHP_EOL;
 
         return $returnValue;
     }
 
-    private function getShortTemplateMedia() {
-        $returnValue =  '<div class="ce_player">';
+    private function getShortTemplateMedia()
+    {
+        $returnValue = '<div class="ce_player">';
         $returnValue .= '<video width="640" height="360" controls>';
         $returnValue .= '<source type="video/%s" src="%s">';
         $returnValue .= '</video>';
