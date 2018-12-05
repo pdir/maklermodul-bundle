@@ -29,7 +29,6 @@ before_install:
 - if [[ "$COVERAGE" != "1" ]]; then phpenv config-rm xdebug.ini || true; fi
 install:
 - composer require contao/managed-edition:${CONTAO_VERSION}
-- composer require pdir/maklermodul-bundle
 notifications:
   slack:
     secure: pG4+OwGxtL+uKfrXb+PqgOpZnnf7Uv64S6OAgH+n76gD8M7oiOOgGiJVvcv+uPqUWVTTFabrwt+3l6/vZUkNRT1EMtrDJj3V/cX+vlIgYnpczgBuYo/m5S9Zc/fFSMw8S3g3e/lXDpaKE8AGVmJd0WWt7ilTLX/WOGgTuZfHFiJxvvkwhsKiApRvEf33uUyEPhfSdD8mWWQ3k1CZeqUpH4Ya48YWDYoQ6i4rjLP7C7azbTWY0TYEOGMyqjsZhFAN8vXCSLuOW94fpwIvMjKu0Pk0ZtM5aLhNa0KXKBfWb8AgoR0C23GyO58uNW+SjbVVZkohd5NpsW+Ry1Diy0Nkg7EwEgul5zQCewq46l+gZe/r25JL3yoisd+amD8glILjKB5OD5j8ayO0DPlXu2grzlzTPhNtXqp2kyqdM/Ta79yySx3TOcGQmqOFaZ96Bab0nfuPc1E/LU53LU59mKU1zee44Sq/Gw5p+sTms784EFQSauRkrtJ3VYcSBn2neVA+cAOJfmMWxJ7bH1lBnm9oy3DvcHL4rvT9oeJgcOPD97hqU84zN/YIFCO3cyfJi+2zi8kdkJrObOyHnEg2Qyjy6y/LRqbBJTLh6CwvYiGzXXXO9fdklWIJR9QWFUXnAeBM68Wif16TTW7gHb9RLTofuO2J0KvkS3+MOtAQlAC0qWM=
