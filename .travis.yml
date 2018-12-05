@@ -1,48 +1,43 @@
 language: php
 git:
-    depth: 1
+  depth: 1
 cache:
-    directories:
-    - "$HOME/.composer/cache"
+  directories:
+  - "$HOME/.composer/cache"
 sudo: false
 env:
-    global:
-    - COMPOSER_ALLOW_XDEBUG=0
+  global:
+  - COMPOSER_ALLOW_XDEBUG=0
 matrix:
-    include:
-    - php: 7.1
-      env: CONTAO_VERSION='4.5.*'
-    - php: 7.2
-      env: CONTAO_VERSION='4.5.*'
-    - php: 7.1
-      env: CONTAO_VERSION='4.6.*'
-    - php: 7.2
-      env: CONTAO_VERSION='4.6.*'
-    - php: 7.2
-      env: COVERAGE=1 CONTAO_VERSION='4.6.*'
-    allow_failures:
-    - env: COVERAGE=1 DEFAULT=0
-    fast_finish: true
+  include:
+  - php: 7.1
+    env: CONTAO_VERSION='4.5.*'
+  - php: 7.2
+    env: CONTAO_VERSION='4.5.*'
+  - php: 7.1
+    env: CONTAO_VERSION='4.6.*'
+  - php: 7.2
+    env: CONTAO_VERSION='4.6.*'
+  - php: 7.2
+    env: COVERAGE=1 CONTAO_VERSION='4.6.*'
+  allow_failures:
+  - env: COVERAGE=1 DEFAULT=0
+  fast_finish: true
 before_install:
 - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 - php -ini | grep memory_limit
 - if [[ "$COVERAGE" != "1" ]]; then phpenv config-rm xdebug.ini || true; fi
 install:
 - composer require contao/managed-edition:${CONTAO_VERSION}
+- composer require pdir/maklermodul-bundle
 notifications:
-    email:
-        recipients:
-        - develop@pdir.de
-        on_success: never
-        on_failure: always
+  slack:
+    secure: pG4+OwGxtL+uKfrXb+PqgOpZnnf7Uv64S6OAgH+n76gD8M7oiOOgGiJVvcv+uPqUWVTTFabrwt+3l6/vZUkNRT1EMtrDJj3V/cX+vlIgYnpczgBuYo/m5S9Zc/fFSMw8S3g3e/lXDpaKE8AGVmJd0WWt7ilTLX/WOGgTuZfHFiJxvvkwhsKiApRvEf33uUyEPhfSdD8mWWQ3k1CZeqUpH4Ya48YWDYoQ6i4rjLP7C7azbTWY0TYEOGMyqjsZhFAN8vXCSLuOW94fpwIvMjKu0Pk0ZtM5aLhNa0KXKBfWb8AgoR0C23GyO58uNW+SjbVVZkohd5NpsW+Ry1Diy0Nkg7EwEgul5zQCewq46l+gZe/r25JL3yoisd+amD8glILjKB5OD5j8ayO0DPlXu2grzlzTPhNtXqp2kyqdM/Ta79yySx3TOcGQmqOFaZ96Bab0nfuPc1E/LU53LU59mKU1zee44Sq/Gw5p+sTms784EFQSauRkrtJ3VYcSBn2neVA+cAOJfmMWxJ7bH1lBnm9oy3DvcHL4rvT9oeJgcOPD97hqU84zN/YIFCO3cyfJi+2zi8kdkJrObOyHnEg2Qyjy6y/LRqbBJTLh6CwvYiGzXXXO9fdklWIJR9QWFUXnAeBM68Wif16TTW7gHb9RLTofuO2J0KvkS3+MOtAQlAC0qWM=
 before_script:
 - travis_wait composer install --no-interaction
 script:
 - if [[ "$COVERAGE" = "1" ]]; then travis_retry mkdir -p build/logs; fi
-- if [[ "$COVERAGE" = "1" ]]; then travis_retry php vendor/bin/phpunit --coverage-clover build/logs/clover.xml || true; fi
+- if [[ "$COVERAGE" = "1" ]]; then travis_retry php vendor/bin/phpunit --coverage-clover
+  build/logs/clover.xml || true; fi
 after_script:
 - if [[ "$COVERAGE" = "1" ]]; then travis_retry php vendor/bin/php-coveralls -v; fi
-
-# add demo data for testing
-#- mysql -e "CREATE database contao_test"
-#- mysql contao_test < tests/Functional/app/Resources/contao_test.sql
