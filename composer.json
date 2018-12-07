@@ -28,6 +28,12 @@
     "php": "^5.6|^7.0",
     "contao/core-bundle": "^4.4"
   },
+  "require-dev": {
+    "contao/manager-plugin": "^2.3.1",
+    "php-http/guzzle6-adapter": "^1.1",
+    "phpunit/phpunit": "^7.0",
+    "symfony/phpunit-bridge": "^3.4.5"
+  },
   "conflict": {
     "contao/core": "*"
   },
@@ -46,7 +52,7 @@
     ]
   },
   "extra": {
-    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManagerPlugin",
+    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManager\\Plugin",
     "contao": {
       "runonce":[
         "src/Maklermodul/Runonce.php"

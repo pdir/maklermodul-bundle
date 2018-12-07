@@ -14,14 +14,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Pdir\MaklermodulBundle;
+namespace Pdir\MaklermodulBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use Pdir\MaklermodulBundle\PdirMaklermodulBundle;
 
-class ContaoManagerPlugin implements BundlePluginInterface
+class Plugin implements BundlePluginInterface
 {
     /**
      * {@inheritdoc}
