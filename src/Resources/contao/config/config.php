@@ -27,8 +27,8 @@ array_insert($GLOBALS['BE_MOD']['pdir'], 0, array(
     'maklermodulSetup' => array(
         'callback'          => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
         'icon'              => $assetsDir . '/img/icon.png',
-        //'javascript'        =>  $assetsDir . '/js/backend.min.js',
-        'stylesheet'		=>  $assetsDir . '/css/backend.css'
+        // 'javascript'        =>  $assetsDir . '/js/backend.min.js',
+        // 'stylesheet'		=>  $assetsDir . '/css/backend.css'
     ),
 ));
 
@@ -61,8 +61,9 @@ $GLOBALS['TL_HOOKS']['addPrivacyWidget'][]          = array('Pdir\MaklermodulBun
 $GLOBALS['TL_AUTO_ITEM'][] = 'estate';
 
 /**
- * Javascript for Backend
+ * Javascript & Stylesheet for Backend
  */
 if (TL_MODE == 'BE') {
     $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
+    $GLOBALS['TL_CSS'][] =  $assetsDir . '/css/maklermodul_backend.css';
 }
