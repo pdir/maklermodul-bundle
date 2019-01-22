@@ -3,7 +3,7 @@
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -27,8 +27,8 @@ array_insert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodulSetup' => [
         'callback' => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
         'icon' => $assetsDir.'/img/icon.png',
-        //'javascript'        =>  $assetsDir . '/js/backend.min.js',
-        'stylesheet' => $assetsDir.'/css/backend.css',
+        // 'javascript'        =>  $assetsDir . '/js/backend.min.js',
+        // 'stylesheet' => $assetsDir.'/css/backend.css',
     ],
 ]);
 
@@ -63,6 +63,7 @@ $GLOBALS['TL_AUTO_ITEM'][] = 'estate';
 /*
  * Javascript for Backend
  */
-if (TL_MODE === 'BE') {
-    $GLOBALS['TL_JAVASCRIPT'][] = $assetsDir.'/js/backend.js';
+if (TL_MODE == 'BE') {
+    $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
+    $GLOBALS['TL_CSS'][] =  $assetsDir . '/css/maklermodul_backend.css';
 }

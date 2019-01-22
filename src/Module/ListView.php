@@ -3,7 +3,7 @@
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -76,6 +76,8 @@ class ListView extends \Module
         if (!empty($this->arrData['immo_listTemplate']) and TL_MODE !== 'BE') {
             $this->strTemplate = $this->arrData['immo_listTemplate'];
         }
+
+        $this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current();
     }
 
     /**
@@ -104,16 +106,6 @@ class ListView extends \Module
     public function toUri($path)
     {
         return str_replace('/var/www/', '', $path);
-    }
-
-    public function getDetailViewLink(Estate $estate)
-    {
-        $paramString = sprintf('/%s/%s',
-            DetailView::PARAMETER_KEY,
-                $estate->getUriIdentifier()
-        );
-
-        return $this->generateFrontendUrl($this->detailPage, $paramString);
     }
 
     public function getRootDir()
@@ -145,9 +137,8 @@ class ListView extends \Module
             return '';
         }
 
-        $baseUri = $this->generateFrontendUrl($this->detailPage);
+        $baseUri = $this->detailPage->getFrontendUrl();
 
-        // url suffix
         $urlSuffix = '.html';
 
         $container = \System::getContainer();
@@ -158,14 +149,7 @@ class ListView extends \Module
         return str_replace($urlSuffix, '/'.DetailView::PARAMETER_KEY, $baseUri);
     }
 
-    public function getPageUrl($id, $vars = '')
-    {
-        $arrPage = \PageModel::findPublishedByIdOrAlias($id)->current()->row();
-        $strUrl = $this->generateFrontendUrl($arrPage, $vars); // example '/additionalquerystring/vars'
-        return $strUrl;
-    }
-
-    public function getOjects()
+    public function getObjects()
     {
         return $this->arrData;
     }
@@ -274,7 +258,6 @@ class ListView extends \Module
 
         if (TL_MODE === 'FE' && 0 === $this->arrData['immo_staticFilter']) {
             // @ToDo Fehler bei deaktivierter Detailseite beheben (Fatal error: Call to a member function current() on a non-object in /.../system/modules/makler_modul_mplus/modules/ListView.php on line 105
-            $this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current()->row();
             $this->repository = EstateRepository::getInstance();
             $this->Template->objectData = $this->repository->findAll();
         }

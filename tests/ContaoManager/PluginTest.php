@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -21,11 +21,11 @@ namespace Pdir\MaklermodulBundle\Tests\ContaoManager;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use Contao\TestCase\ContaoTestCase;
 use Pdir\MaklermodulBundle\ContaoManager\Plugin;
 use Pdir\MaklermodulBundle\PdirMaklermodulBundle;
-use PHPUnit\Framework\TestCase;
 
-class PluginTest extends TestCase
+class PluginTest extends ContaoTestCase
 {
     public function testReturnsTheBundles(): void
     {

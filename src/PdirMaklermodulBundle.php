@@ -3,7 +3,7 @@
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2018 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -19,7 +19,7 @@ namespace Pdir\MaklermodulBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Configures the Amphtml bundle.
+ * Configures the maklermodul bundle.
  *
  * @author Mathias Arzberger <develop@pdir.de>
  */
