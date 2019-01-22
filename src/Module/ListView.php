@@ -146,6 +146,9 @@ class ListView extends \Module
             $urlSuffix = $container->getParameter('contao.url_suffix');
         }
 
+        if($urlSuffix === '')
+            return str_replace($this->detailPage->alias, $this->detailPage->alias . '/' . DetailView::PARAMETER_KEY, $baseUri);
+
         return str_replace($urlSuffix, '/'.DetailView::PARAMETER_KEY, $baseUri);
     }
 
