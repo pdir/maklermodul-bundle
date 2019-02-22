@@ -13,7 +13,9 @@
 
 <div class="tl_listing_container">
   <div id="pdir" class="be_maklermodul_setup clr">
-    <h1 id="tl_welcome">Maklermodul (Version: <?= $this->version ?>)</h1>
+    <h1 id="tl_welcome">Maklermodul (Version: <?= $this->version ?>)
+        <?php if(isset($this->syncVersion)): ?><br>MaklermodulSync (Version: <?= $this->syncVersion ?>)<?php endif; ?>
+    </h1>
     <div class="intro">
       <div class="right">
         <a href="https://www.maklermodul.de" target="_blank"><img
@@ -30,7 +32,7 @@
         <li><a href="https://github.com/pdir/maklermodul-bundle/issues" target="_blank"
                     style="text-decoration: underline;">Probleme melden</a></li>
         <li><a href="https://pdir.de/produkte.html" target="_blank"
-              style="text-decoration: underline;">Andere Erweiterung von pdir</a></li>
+              style="text-decoration: underline;">Andere Erweiterungen von pdir</a></li>
         </ul>
       </div>
       <div class="left">
@@ -42,8 +44,8 @@
                                           target="_blank">Maklermodul Website</a> für aktuelle News und
           Konfigurationsanleitungen.</p>
         <p><strong>Preis</strong><br>
-          Domainlizenz, einmalig 350€ zzgl. MwSt.<br>
-          Update/Support Abonnement 150€/Jahr zzgl. MwSt.*&sup2;
+          Domainlizenz, einmalig 399€ zzgl. MwSt.<br>
+          Update/Support Abonnement 199€/Jahr zzgl. MwSt.*&sup2;
         </p>
           <p><strong>Ihr Team der pdir / digital agentur</strong></p>
       </div>

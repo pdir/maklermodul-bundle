@@ -1,0 +1,195 @@
+
+.be_maklermodul_setup {
+  line-height: 1.2em;
+
+  a {
+    color: #7abfbc;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .right {
+    float: right;
+    width: 40%;
+    margin: 15px 0;
+  }
+
+  .left {
+    float: left;
+    width: 50%;
+    margin: 15px 0;
+  }
+
+  .logo {
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 0.9em;
+  }
+
+  hr {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  .devlog {
+    margin: 10px 0;
+  }
+
+  .link-list li {
+    padding: 5px 0 5px 0;
+  }
+
+  .feed .item {
+    margin-bottom: 5px;
+  }
+
+  .feed .item span {
+    padding-right: 10px;
+    color: #7abfbc;
+  }
+
+  .button {
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+    width: 170px;
+  }
+
+  .clearall {
+    margin-top: 15px;
+    clear: both;
+  }
+
+  .license {
+    margin-top: 30px;
+  }
+
+  .kreis {
+    width: 60px;
+    padding: 13px;
+    box-sizing: border-box;
+    margin: auto;
+  }
+
+  small {
+    color: #cccccc;
+  }
+
+  .api-status .blink {
+    width: 15px;
+    height: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #ACDA3D;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    margin-left: 5px;
+  }
+
+  .api-status .blink.red {
+    background: #cc3d09;
+  }
+
+  .debug-info {
+    background: #ccc;
+    color: #fff;
+    padding: 10px;
+    margin-top: 15px;
+  }
+
+  .button.inactive img {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: url(desaturate.svg#greyscale);
+    filter: gray;
+    -webkit-filter: grayscale(1);
+  }
+
+  .button.inactive a {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+  }
+
+  .buttoninactive, .be_maklermodul_setup .button {
+    width: 33.33%;
+    float: left;
+    text-align: center;
+    margin: 0;
+  }
+
+  .kreis {
+    width: 100%;
+  }
+}
+
+#tl_navigation {
+
+  .group-pdir {
+    background: url(/bundles/pdirmaklermodul/img/pdir_icon_pdir.svg) 0 0 no-repeat;
+    background-size: 18px 18px;
+  }
+
+
+  .mobileDeSetup,
+  .mobileDeAds {
+    background: url(/bundles/pdirmaklermodul/img/pdir_icon_mobilemodul.svg) 14px 4px no-repeat;
+    background-size: 15px 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  #main .modal-dialog {
+    width: 80%;
+    height: 95%;
+  }
+
+  #main .modal-content {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-header {
+    height: 8%;
+    box-sizing: border-box;
+  }
+
+  .modal-header .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: none;
+    font-size: 30px;
+    border: none;
+  }
+
+  .modal-title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+  }
+
+  .modal-body {
+    height: 92%;
+    box-sizing: border-box;
+  }
+
+  #main iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
