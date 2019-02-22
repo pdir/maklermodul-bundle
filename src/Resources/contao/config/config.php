@@ -63,7 +63,14 @@ $GLOBALS['TL_AUTO_ITEM'][] = 'estate';
 /*
  * Javascript for Backend
  */
-if (TL_MODE == 'BE') {
+if (TL_MODE == 'BE')
+{
+    if (!is_array($GLOBALS['TL_JAVASCRIPT']))
+    {
+        $GLOBALS['TL_JAVASCRIPT'] = [];
+    }
+
+    $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/js/jquery.min.js';
     $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
-    $GLOBALS['TL_CSS'][] =  $assetsDir . '/css/maklermodul_backend.css';
+    $GLOBALS['TL_CSS'][] =  $assetsDir . '/css/maklermodul_backend.scss||static';
 }

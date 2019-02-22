@@ -1,6 +1,5 @@
-<?php $GLOBALS['TL_CSS'][''] = 'bundles/pdirmaklermodul/css/bootstrap.css'; ?>
+<?php $GLOBALS['TL_CSS'][''] = 'bundles/pdirmaklermodul/css/bootstrap.scss||static'; ?>
 <?php $GLOBALS['TL_JAVASCRIPT'][''] = 'bundles/pdirmaklermodul/js/bootstrap.min.js'; ?>
-<?php #$GLOBALS['TL_BODY'][''] = ''; ?>
 
 <script>
     jQuery(function($) {
@@ -44,8 +43,8 @@
                                           target="_blank">Maklermodul Website</a> für aktuelle News und
           Konfigurationsanleitungen.</p>
         <p><strong>Preis</strong><br>
-          Domainlizenz, einmalig 350€ zzgl. MwSt.<br>
-          Update/Support Abonnement 150€/Jahr zzgl. MwSt.*&sup2;
+          Domainlizenz, einmalig 399€ zzgl. MwSt.<br>
+          Update/Support Abonnement 199€/Jahr zzgl. MwSt.*&sup2;
         </p>
           <p><strong>Ihr Team der pdir / digital agentur</strong></p>
       </div>
