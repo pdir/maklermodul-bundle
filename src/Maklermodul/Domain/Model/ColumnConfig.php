@@ -100,7 +100,7 @@ class ColumnConfig
     private function cssMapBoolean($value)
     {
         $value = strtolower($value);
-        if (true === $value or 'true' === $value or 1 === $value) {
+        if (true === $value or 'true' === $value or 1 === $value or 1 === intval($value)) {
             return true;
         }
 
