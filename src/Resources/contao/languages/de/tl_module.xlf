@@ -326,6 +326,90 @@
           <source>Enable to use AND for filtering (geo.ort = "Dresden" AND geo.ort = "Meissen"); Default is "OR" (geo.ort = "Dresden" OR geo.ort = "Meißen").</source>
           <target>Aktivieren um die Filter mit "UND" zu verknüpfen (geo.ort = "Dresden" UND geo.ort = "Meißen"); Standardeinstellung ist "ODER" (geo.ort = "Dresden" ODER geo.ort = "Meißen").</target>
       </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource.0">
+        <source>Select image source</source>
+        <target>Bildquelle auswählen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource.1">
+        <source>Please select the attachment number to use for header image.</source>
+        <target>Bitte wählen Sie die Nummer des Anhangs für das Kopfbild.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.1">
+        <source>Attachment 1</source>
+        <target>Anhang 1</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.2">
+        <source>Attachment 2</source>
+        <target>Anhang 2</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.3">
+        <source>Attachment 3</source>
+        <target>Anhang 3</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.4">
+        <source>Attachment 4</source>
+        <target>Anhang 4</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.5">
+        <source>Attachment 5</source>
+        <target>Anhang 5</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.6">
+        <source>Attachment 6</source>
+        <target>Anhang 6</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.7">
+        <source>Attachment 7</source>
+        <target>Anhang 7</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.8">
+        <source>Attachment 8</source>
+        <target>Anhang 8</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.9">
+        <source>Attachment 9</source>
+        <target>Anhang 9</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.10">
+        <source>Attachment 10</source>
+        <target>Anhang 10</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.11">
+        <source>Attachment 11</source>
+        <target>Anhang 11</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.12">
+        <source>Attachment 12</source>
+        <target>Anhang 12</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.13">
+        <source>Attachment 13</source>
+        <target>Anhang 13</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.14">
+        <source>Attachment 14</source>
+        <target>Anhang 15</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.16">
+        <source>Attachment 16</source>
+        <target>Anhang 16</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.17">
+        <source>Attachment 17</source>
+        <target>Anhang 17</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.18">
+        <source>Attachment 18</source>
+        <target>Anhang 18</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.19">
+        <source>Attachment 19</source>
+        <target>Anhang 19</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.20">
+        <source>Attachment 20</source>
+        <target>Anhang 20</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

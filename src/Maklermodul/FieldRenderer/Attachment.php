@@ -175,7 +175,20 @@ class Attachment extends FieldRenderer
                     break;
                 default:
                     // fallback for xml data without group definition
-                    // render image
+
+                    // render as doc/link
+                    if($this->getValueOf('format') === 'pdf' || $this->getValueOf('format') === 'doc') {
+                        $this->template = $this->getShortTemplateDoc();
+
+                        return sprintf($this->template,
+                            $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                            substr($this->getValueOf('format'), 1),
+                            $this->getValueOf('anhangtitel'),
+                            $this->getValueOf('anhangtitel')
+                        );
+                    }
+
+                    // render as image
                     $renderedThumbnail = $this->getThumbnailString(
                         $this->getValueOf('daten.pfad'),
                         $this->getValueOf('anhangtitel'),

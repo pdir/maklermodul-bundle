@@ -240,7 +240,7 @@ class ListView extends \Module
             $GLOBALS['TL_CSS']['estate'] = $this->assetFolder.'css/estate.scss||static';
         }
 
-        if (1 === $this->arrData['immo_staticFilter']) {
+        if ('1' === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
             $this->Template->staticListPage = '/'.\PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
@@ -259,7 +259,7 @@ class ListView extends \Module
             $this->Template->listImageMode = $arrImgSize[2];
         }
 
-        if (TL_MODE === 'FE' && 0 === $this->arrData['immo_staticFilter']) {
+        if (TL_MODE === 'FE' && '0' === $this->arrData['immo_staticFilter']) {
             // @ToDo Fehler bei deaktivierter Detailseite beheben (Fatal error: Call to a member function current() on a non-object in /.../system/modules/makler_modul_mplus/modules/ListView.php on line 105
             $this->repository = EstateRepository::getInstance();
             $this->Template->objectData = $this->repository->findAll();

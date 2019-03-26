@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
     .'{option_legend},makler_useModuleDetailCss,makler_debug';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
-    = '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder;'
+    = '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImageSource,makler_headerImagePlaceholder;'
     .'{expert_legend:hide},guests,cssID,space;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'makler_addListPagination';
@@ -340,6 +340,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_filter_type'] = [
     'reference' => &$GLOBALS['TL_LANG']['tl_module'],
     'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50'],
     'sql' => "int(1) NOT NULL default '0'",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImageSource'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_headerImageSource'],
+    'inputType' => 'select',
+    'default' => 1,
+    'options' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['makler_headerImageSource_select'],
+    'eval' => ['tl_class' => 'w50'],
+    'sql' => "varchar(255) NOT NULL default ''",
 ];
 
 class tl_module_makler extends Backend
