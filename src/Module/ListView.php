@@ -342,7 +342,7 @@ class ListView extends \Module
         $objFilterTemplate->filterConfig = $json['filterConfig'];
         $this->Template->filter = $objFilterTemplate->parse();
 
-        if (1 === $this->arrData['immo_listDebug']) {
+        if ('1' === $this->arrData['immo_listDebug']) {
             $objFile = new \File(Helper::imagePath.'/key-index.json');
             $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);
@@ -372,11 +372,11 @@ class ListView extends \Module
 
     private function validateSettings()
     {
-        if (0 === $this->arrData['immo_staticFilter'] && 0 === $this->arrData['immo_readerPage']) {
+        if ('0' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_readerPage']) {
             throw new \Exception('Undefined reader page');
         }
 
-        if (1 === $this->arrData['immo_staticFilter'] && 0 === $this->arrData['immo_filterListPage']) {
+        if ('1' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_filterListPage']) {
             throw new \Exception('Undefined filter list page');
         }
     }
