@@ -1,4 +1,4 @@
-<?php $GLOBALS['TL_CSS'][''] = 'bundles/pdirmaklermodul/css/bootstrap.css'; ?>
+<?php $GLOBALS['TL_CSS'][''] = 'bundles/pdirmaklermodul/css/bootstrap.scss|static'; ?>
 <?php $GLOBALS['TL_JAVASCRIPT'][''] = 'bundles/pdirmaklermodul/js/bootstrap.min.js'; ?>
 <?php #$GLOBALS['TL_BODY'][''] = ''; ?>
 
