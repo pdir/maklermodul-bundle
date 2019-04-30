@@ -77,7 +77,9 @@ class ListView extends \Module
             $this->strTemplate = $this->arrData['immo_listTemplate'];
         }
 
-        $this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current();
+        if($this->arrData['immo_readerPage']) {
+            $this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current();
+        }
     }
 
     /**

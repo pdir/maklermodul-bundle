@@ -144,12 +144,11 @@
     background-size: 18px 18px;
   }
 
-
-  .mobileDeSetup,
-  .mobileDeAds {
-    background: url(/bundles/pdirmaklermodul/img/pdir_icon_mobilemodul.svg) 14px 4px no-repeat;
+  .maklermodulSetup {
+    background: url(/bundles/pdirmaklermodul/img/pdir_icon_maklermodul.svg) 14px 4px no-repeat;
     background-size: 15px 15px;
   }
+  
 }
 
 @media (min-width: 768px) {

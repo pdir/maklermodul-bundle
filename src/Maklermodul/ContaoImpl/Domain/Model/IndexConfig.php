@@ -35,6 +35,11 @@ class IndexConfig implements IndexConfigInterface
         $this->resultSet = $resultSet;
     }
 
+    public function get($key)
+    {
+        return $this->resultSet[$key];
+    }
+
     public function getUid()
     {
         return $this->resultSet['id'];

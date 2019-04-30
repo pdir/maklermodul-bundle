@@ -37,7 +37,7 @@ class EstateRepository
 
     public function findByObjectId($objectId)
     {
-        $fileNamePath = sprintf('%s/%s.json', $this->storageDirectoryPath, $objectId);
+        $fileNamePath = sprintf('%s%s.json', $this->storageDirectoryPath, $objectId);
 
         if (!file_exists($fileNamePath)) {
             return null;

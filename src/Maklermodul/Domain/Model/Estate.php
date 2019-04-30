@@ -123,7 +123,7 @@ class Estate
             $target = substr($target, 1);
         }
 
-        $length = count($target);
+        $length = strlen($target);
         if (strpos($target, '-', $length - 1) === $length - 1) {
             $target = substr($target, 0, $length - 2);
         }

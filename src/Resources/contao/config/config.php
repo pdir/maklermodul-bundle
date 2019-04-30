@@ -70,7 +70,10 @@ if (TL_MODE == 'BE')
         $GLOBALS['TL_JAVASCRIPT'] = [];
     }
 
-    $GLOBALS['TL_JAVASCRIPT'][] = 'assets/jquery/js/jquery.min.js';
+    if(!isset($GLOBALS['TL_JAVASCRIPT']['jquery'])) {
+        $GLOBALS['TL_JAVASCRIPT']['jquery'] = 'assets/jquery/js/jquery.min.js';
+        $GLOBALS['TL_JAVASCRIPT']['noconflict'] = $assetsDir . '/js/jquery.noconflict.js';
+    }
     $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
     $GLOBALS['TL_CSS'][] =  $assetsDir . '/css/maklermodul_backend.scss||static';
 }
