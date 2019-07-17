@@ -218,6 +218,10 @@ else:
 
         <script>
             $(document).ready( function() {
+
+                if(typeof google === 'undefined')
+                    return;
+
                 $("#confirm-googlemaps").click( function() {
                     setMap();
                 });
