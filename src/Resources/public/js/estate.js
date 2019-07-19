@@ -192,20 +192,15 @@
       $.each(arrFilter, function (index, value) {
         // selects or
         $('#estate_filter_list option[value="' + value + '"]').each(function (i, obj) {
-          var id = $(this).parent('select').attr('id');
-          if (id === 'geo-ort') {
             $(obj).attr('selected', 'selected');
             arrSelects.push(value);
-          }
         });
 
         // selects and
         $('#estate_filter_list option').each(function (i, obj) {
-          var id = $(this).parent('select').attr('id');
           var val = $(obj).val();
-          if (value.indexOf(val) !== -1 && val !== '.rampe-ja' && id === 'geo-ort') {
+          if (value.indexOf(val) !== -1) {
             $(obj).attr('selected', 'selected');
-            $(obj).parent().trigger("chosen:updated");
             arrSelects.push(val);
           }
 
@@ -244,7 +239,8 @@
       typeof listView.checkboxFilter === 'undefined' &&
       typeof listView.selectFilter === 'undefined' &&
       typeof listView.paginationFilter === 'undefined' &&
-      typeof listView.rangeFilter === 'undefined'
+      typeof listView.rangeFilter === 'undefined' &&
+      listView.hashFilter === null
     ) {
       listView.paginationFilter = 'page1';
       listView.pagination.show();
@@ -327,6 +323,9 @@
       }
     });
 
+    if (listView.hashFilter !== null) {
+      listView.filterBySelect();
+    }
 
     // update filtered list if one filter is set
     if (typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
@@ -372,9 +371,8 @@
         $(this).show();
       });
       $(this).find('option:selected').each(function () {
-        $(this).removeAttr('selected');
+        $(this).prop("selected", false);
       });
-      $(this).trigger("chosen:updated");
     });
 
     // reset nearby
@@ -712,38 +710,40 @@
       return;
     }
 
-    var itemElems = $EstateList.isotope('getFilteredItemElements');
-    var $itemElems = $(itemElems);
+    //if (typeof $EstateList.length !== 'undefined') {
+      var itemElems = $EstateList.isotope('getFilteredItemElements');
+      var $itemElems = $(itemElems);
 
-    // buttons
-    listView.buttons.each(function (index, value) {
-      var optionValue = $(value).attr('data-filter');
-      if (!optionValue) {
-        // do not update 'any' buttons
-        return;
-      }
-      var length = $itemElems.filter(optionValue).length;
+      // buttons
+      listView.buttons.each(function (index, value) {
+        var optionValue = $(value).attr('data-filter');
+        if (!optionValue) {
+          // do not update 'any' buttons
+          return;
+        }
+        var length = $itemElems.filter(optionValue).length;
 
-      if (length < 1) {
-        $(value).hide();
-      } else {
-        $(value).show();
-      }
-      // @todo add button count # $(value).text( '(' + length +')' );
-    });
+        if (length < 1) {
+          $(value).hide();
+        } else {
+          $(value).show();
+        }
+        // @todo add button count # $(value).text( '(' + length +')' );
+      });
 
-    // selects
-    listView.selects.children('option', this).map(function (index, value) {
-      var optionValue = $(value).val();
-      var length = $itemElems.filter(optionValue).length;
+      // selects
+      listView.selects.children('option', this).map(function (index, value) {
+        var optionValue = $(value).val();
+        var length = $itemElems.filter(optionValue).length;
 
-      if (length == 0 && optionValue != -1) {
-        $(value).hide();
-      } else {
-        $(value).show();
-      }
-      // @todo add button count # $(value).text( '(' + length +')' );
-    });
+        if (length == 0 && optionValue != -1) {
+          $(value).hide();
+        } else {
+          $(value).show();
+        }
+        // @todo add button count # $(value).text( '(' + length +')' );
+      });
+    //}
   };
 
   // debounce so filtering doesn't happen every millisecond
