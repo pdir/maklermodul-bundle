@@ -29,7 +29,6 @@
     "contao/core-bundle": "~4.4"
   },
   "require-dev": {
-    "contao/manager-plugin": "<2.0 || >=3.0",
     "contao/test-case": "^1.4.1",
     "php-http/guzzle6-adapter": "^1.1",
     "phpunit/phpunit": "^7.0",
