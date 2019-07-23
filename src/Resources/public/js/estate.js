@@ -28,19 +28,19 @@
 
     // register events
     listView.body
-      .on('click', '.mm-reset', listView.reset) // bind reset buttons
-      .on('click', '.mm-shuffle', listView.shuffle) // bind shuffle buttons
-      .on('click', '.mm-filter-ckb', listView.filterByCheckbox) // bind checkboxes
-      .on('click', '.mm-filter-btn', listView.filterByButton) // bind buttons
-      .on('click', '.pagination li a.link', listView.filterByPage) // bind pagination links
-      .on('change', '.mm-filter-sel', listView.filterBySelect) // bind select fields
-      .on('change', '.mm-only-filter .mm-filter-sel', listView.appendFilter) // append filter settings to url (filter only for selects)
-      .on('click', '.mm-only-filter .mm-filter-btn', listView.appendFilter) // append filter settings to url (filter only for buttons)
-      .on('slideStop', '.mm-filter-range', listView.filterByRange) // bind range sliders
-      .on('click', '.anfrage-btn', listView.showObjectRequest)
-      .on('keyup', '.mm-quicksearch', listView.quicksearch)
-      .on('input', '.mm-nearby', listView.nearby) // bind nearby input
-      .on('click', '.mod_immoListView .pagination a', listView.registerScrollTopPagination)
+        .on('click', '.mm-reset', listView.reset) // bind reset buttons
+        .on('click', '.mm-shuffle', listView.shuffle) // bind shuffle buttons
+        .on('click', '.mm-filter-ckb', listView.filterByCheckbox) // bind checkboxes
+        .on('click', '.mm-filter-btn', listView.filterByButton) // bind buttons
+        .on('click', '.pagination li a.link', listView.filterByPage) // bind pagination links
+        .on('change', '.mm-filter-sel', listView.filterBySelect) // bind select fields
+        .on('change', '.mm-only-filter .mm-filter-sel', listView.appendFilter) // append filter settings to url (filter only for selects)
+        .on('click', '.mm-only-filter .mm-filter-btn', listView.appendFilter) // append filter settings to url (filter only for buttons)
+        .on('slideStop', '.mm-filter-range', listView.filterByRange) // bind range sliders
+        .on('click', '.anfrage-btn', listView.showObjectRequest)
+        .on('keyup', '.mm-quicksearch', listView.quicksearch)
+        .on('input', '.mm-nearby', listView.nearby) // bind nearby input
+        .on('click', '.mod_immoListView .pagination a', listView.registerScrollTopPagination)
     ;
 
     // for dev listView.body.on( 'click', '.mm-user-position', listView.setUserPosition ) // bind user position buttons
@@ -192,8 +192,8 @@
       $.each(arrFilter, function (index, value) {
         // selects or
         $('#estate_filter_list option[value="' + value + '"]').each(function (i, obj) {
-            $(obj).attr('selected', 'selected');
-            arrSelects.push(value);
+          $(obj).attr('selected', 'selected');
+          arrSelects.push(value);
         });
 
         // selects and
@@ -207,7 +207,8 @@
         });
 
         if (arrSelects.length > 0) {
-          listView.selectFilter = arrSelects.join(",");
+          if( listView.hashFilter.indexOf(",") > -1 ) listView.selectFilter = arrSelects.join(","); // or
+          else listView.selectFilter = arrSelects.join(""); // and
         }
 
         // checkboxes & buttons
@@ -220,14 +221,17 @@
         });
 
         $(listView.buttons).each(function (i, obj) {
-          var val = $(obj).val();
-          if ($(obj).hasClass('active')) {
+          var val = $(obj).attr("data-filter");
+
+          if ($(obj).hasClass('active') || value.indexOf(val) != -1) {
+            $(obj).addClass('active');
             arrCheckboxes.push(val);
           }
         });
 
         if (arrCheckboxes.length > 0) {
-          listView.checkboxFilter = arrCheckboxes.join(",");
+          if( listView.hashFilter.indexOf(",") > -1 ) listView.checkboxFilter = arrCheckboxes.join(","); // or
+          else listView.checkboxFilter = arrCheckboxes.join(""); // and
         }
       });
     }
@@ -235,12 +239,12 @@
     // use pagination if active and no other filter is set
     listView.noPagination = false;
     if (listView.paginationStatus && listView.paginationUseIsotope &&
-      typeof listView.qsRegex === 'undefined' &&
-      typeof listView.checkboxFilter === 'undefined' &&
-      typeof listView.selectFilter === 'undefined' &&
-      typeof listView.paginationFilter === 'undefined' &&
-      typeof listView.rangeFilter === 'undefined' &&
-      listView.hashFilter === null
+        typeof listView.qsRegex === 'undefined' &&
+        typeof listView.checkboxFilter === 'undefined' &&
+        typeof listView.selectFilter === 'undefined' &&
+        typeof listView.paginationFilter === 'undefined' &&
+        typeof listView.rangeFilter === 'undefined' &&
+        listView.hashFilter === null
     ) {
       listView.paginationFilter = 'page1';
       listView.pagination.show();
@@ -248,19 +252,19 @@
       listView.setWindowHash();
     }
     else if (typeof listView.paginationStatus === 'undefined' &&
-      typeof listView.qsRegex === 'undefined' &&
-      typeof listView.checkboxFilter === 'undefined' &&
-      typeof listView.selectFilter === 'undefined' &&
-      typeof listView.paginationFilter === 'undefined' &&
-      typeof listView.rangeFilter === 'undefined') {
+        typeof listView.qsRegex === 'undefined' &&
+        typeof listView.checkboxFilter === 'undefined' &&
+        typeof listView.selectFilter === 'undefined' &&
+        typeof listView.paginationFilter === 'undefined' &&
+        typeof listView.rangeFilter === 'undefined') {
       listView.noPagination = true;
     }
     if (typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
-      typeof listView.selectFilter !== 'undefined' || typeof listView.rangeFilter !== 'undefined')
+        typeof listView.selectFilter !== 'undefined' || typeof listView.rangeFilter !== 'undefined')
       delete listView.paginationFilter;
 
     if (listView.paginationStatus && typeof listView.paginationFilter !== 'undefined' ||
-      !listView.paginationUseIsotope && listView.paginationStatus) {
+        !listView.paginationUseIsotope && listView.paginationStatus) {
       listView.pagination.show();
     } else {
       listView.pagination.hide();
@@ -276,6 +280,7 @@
                 specialBox.addClass(this.value.replace('.', ''));
             });
     */
+
     $EstateList = listView.estateList.isotope({
       itemSelector: '.estate',
       layoutMode: 'fitRows',
@@ -306,31 +311,32 @@
       filter: function () {
         var $this = $(this);
         //var searchResult = listView.qsRegex ? $this.find( '.'+listView.qsSelector ).text().match( listView.qsRegex ) : true;
-        //var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
-        //var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
+        var checkboxResult = listView.checkboxFilter ? $this.is( listView.checkboxFilter ) : true;
+        var selectResult = listView.selectFilter ? $this.is( listView.selectFilter ) : true;
 
         //var area = $this.attr('data-area');
         //var price = $this.attr('data-price');
         //var isInAreaRange = (listView.rangeFilters['area'].min <= area && listView.rangeFilters['area'].max >= area);
         //var isInPriceRange = (listView.rangeFilters['price'].min <= price && listView.rangeFilters['price'].max >= price);
 
-        var paginationResult = listView.paginationFilter ? $this.hasClass(listView.paginationFilter) : true;
+        if(typeof listView.paginationFilter != 'undefined') {
+          return listView.paginationFilter ? $this.hasClass(listView.paginationFilter) : true;
+        } else {
+          return checkboxResult && selectResult;
+        }
 
         //var specialBox = $this.hasClass ('special-box') ? true: false;
-
-        //return searchResult && checkboxResult && selectResult && isInAreaRange && isInPriceRange && paginationResult || specialBox;
-        return paginationResult;
+        //return result;
       }
     });
 
-    if (listView.hashFilter !== null) {
-      listView.filterBySelect();
-    }
-
     // update filtered list if one filter is set
     if (typeof listView.qsRegex !== 'undefined' || typeof listView.checkboxFilter !== 'undefined' ||
-      typeof listView.selectFilter !== 'undefined')
-      listView.updateFilteredList();
+        typeof listView.selectFilter !== 'undefined') {
+      //if(listView.hashFilter != null) {
+      listView.updateFilteredList(); listView.updateFilterValues();
+      //}
+    }
 
     setTimeout(function () {
       // filter map
@@ -431,7 +437,7 @@
 
     // get all items for pagination
     if (listView.hashFilter && listView.hashFilter.indexOf('.page') > -1 && !listView.qsString && !listView.rangeFilter
-      || listView.hashFilter === null && !listView.qsString && !listView.rangeFilter) {
+        || listView.hashFilter === null && !listView.qsString && !listView.rangeFilter) {
       listView.objCnt = $('#estate_list .estate').length;
     }
 
@@ -575,6 +581,7 @@
     listView.estateList.isotope({filter: listView.hashFilter});
 
     listView.setWindowHash();
+
     setTimeout(function () {
       // filter map
       if (typeof listView.map !== 'undefined') {
@@ -625,9 +632,9 @@
 
   listView.filterByRange = function (slideEvt) {
     var sldmin = +slideEvt.value[0],
-      sldmax = +slideEvt.value[1],
-      filterGroup = $(this).attr('data-filter-group'),
-      currentSelection = sldmin + ' - ' + sldmax;
+        sldmax = +slideEvt.value[1],
+        filterGroup = $(this).attr('data-filter-group'),
+        currentSelection = sldmin + ' - ' + sldmax;
 
     $(this).siblings('.filter-label').find('.filter-selection').text(currentSelection);
 
@@ -694,34 +701,67 @@
   };
 
   listView.updateFilterValues = function () {
-    listView.buttons.filter(':hidden').show();
-    listView.selects.filter(':hidden').show();
+    if(filterType != 0) {
+      listView.buttons.filter(':hidden').show();
+      listView.selects.filter(':hidden').show();
 
-    if (listView.hashFilter.indexOf(".page") > -1 || listView.hashFilter == -1) {
-      // reset selects
-      listView.selects.children('option').each(function () {
-        $(this).prop("checked", false);
-      });
-      // reset buttons
-      listView.buttons.filter('.active').each(function () {
-        $(this).removeClass('active');
-      });
+      if (listView.hashFilter.indexOf(".page") > -1 || listView.hashFilter == -1 || listView.hashFilter == "*") {
+        // reset selects
+        listView.selects.children('option').each(function () {
+          $(this).prop("checked", false);
+        });
+        // reset buttons
+        listView.buttons.filter('.active').each(function () {
+          $(this).removeClass('active');
+        });
 
-      return;
-    }
+        return;
+      }
 
-    //if (typeof $EstateList.length !== 'undefined') {
       var itemElems = $EstateList.isotope('getFilteredItemElements');
-      var $itemElems = $(itemElems);
+      if (itemElems.length > 0) {
+        var $itemElems = $(itemElems);
+      } else {
+        var $itemElems = $(listView.objEstates)[0]['data'];
+      }
 
       // buttons
       listView.buttons.each(function (index, value) {
-        var optionValue = $(value).attr('data-filter');
+        if (itemElems.length > 0) {
+          var optionValue = $(value).attr('data-filter');
+        } else {
+          var optionValue = $(value).attr('data-filter').replace(".", "");
+        }
+
         if (!optionValue) {
           // do not update 'any' buttons
           return;
         }
-        var length = $itemElems.filter(optionValue).length;
+
+        if (itemElems.length > 0) {
+          var length = $itemElems.filter(optionValue).length;
+        } else {
+          var length = 0;
+
+          var arrFilter = listView.hashFilter.split('.');
+          var foundOption = false;
+          $($itemElems).each(function () {
+            var cssFilterString = $(this)[0]['css-filter-class-string'];
+
+            var found = true;
+            var i = 0;
+            $(arrFilter).each(function () {
+              var filterClass = $(arrFilter)[i];
+              if (cssFilterString.indexOf(filterClass) == -1 && filterClass != "") found = false;
+              ++i;
+            });
+            if (found == true) {
+              if (cssFilterString.indexOf(optionValue) > -1) foundOption = true;
+            }
+          });
+
+          if (foundOption == true) length = 1;
+        }
 
         if (length < 1) {
           $(value).hide();
@@ -733,8 +773,33 @@
 
       // selects
       listView.selects.children('option', this).map(function (index, value) {
-        var optionValue = $(value).val();
-        var length = $itemElems.filter(optionValue).length;
+        if (itemElems.length > 0) {
+          var optionValue = $(value).val();
+          var length = $itemElems.filter(optionValue).length;
+        } else {
+          var optionValue = $(value).val().replace(".", "");
+          var length = 0;
+
+          var foundOption = false;
+          var arrFilter = listView.hashFilter.split('.');
+          $($itemElems).each(function () {
+            var cssFilterString = $(this)[0]['css-filter-class-string'];
+
+            var found = true;
+            var i = 0;
+            $(arrFilter).each(function () {
+              var filterClass = $(arrFilter)[i];
+              if (cssFilterString.indexOf(filterClass) == -1 && filterClass != "") found = false;
+              ++i;
+            });
+            if (found == true) {
+              if (cssFilterString.indexOf(optionValue) > -1) foundOption = true;
+            }
+          });
+
+          if (foundOption == true) length = 1;
+        }
+
 
         if (length == 0 && optionValue != -1) {
           $(value).hide();
@@ -743,7 +808,7 @@
         }
         // @todo add button count # $(value).text( '(' + length +')' );
       });
-    //}
+    }
   };
 
   // debounce so filtering doesn't happen every millisecond
@@ -836,8 +901,8 @@
     var actElem = listView.estateList.find('.special-box');
     $(actElem).removeClass('isotope-hidden');
     listView.estateList.prepend(actElem.remove())
-      .isotope('reloadItems')
-      .isotope({sortBy: 'original-order'});
+        .isotope('reloadItems')
+        .isotope({sortBy: 'original-order'});
 
     // move x items before special box
     var elems = listView.estateList.children(':not(.isotope-hidden)');
