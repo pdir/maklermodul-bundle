@@ -36,6 +36,7 @@ before_install:
 - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 - php -ini | grep memory_limit
 - if [[ "$COVERAGE" != "1" ]]; then phpenv config-rm xdebug.ini || true; fi
+- composer config minimum-stability dev
 install:
 - composer require contao/managed-edition:${CONTAO_VERSION} --no-interaction --no-suggest
 notifications:
