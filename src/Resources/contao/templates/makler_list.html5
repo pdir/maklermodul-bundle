@@ -46,7 +46,10 @@
         <a href="<?= $this->staticListPage ?>" class="btn search-estate">Immobilien suchen</a>
     <?php endif; ?>
 
-    <a class="btn btn-reset-filter mm-reset" href="#estate_filter_list">Filter zurücksetzen</a>
+    <?php if($this->immo_listFilter != ""): ?>
+        <a class="btn btn-reset-filter mm-reset" href="#estate_filter_list">Filter zurücksetzen</a>
+    <?php endif; ?>
+
     <?php endif; ?>
     <!-- indexer::continue -->
 

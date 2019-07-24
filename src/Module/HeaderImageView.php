@@ -98,8 +98,6 @@ class HeaderImageView extends \Module
 
         $imageIndex = $this->makler_headerImageSource ? : 2;
 
-        // echo "Index: " . $imageIndex;
-
         if ('' !== $estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad')) {
             if( strpos($estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad'),"http") !== false ) {
                 $this->Template->headerImage = $estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad');
