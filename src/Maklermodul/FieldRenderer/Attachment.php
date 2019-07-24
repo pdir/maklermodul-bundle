@@ -201,11 +201,19 @@ class Attachment extends FieldRenderer
 
                     $this->template = $this->getShortTemplate();
 
-                    return sprintf($this->template,
-                        $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
-                        $this->getValueOf('anhangtitel'),
-                        $renderedThumbnail
-                    );
+                    if( strpos($this->getValueOf('daten.pfad'),"http") !== false ) {
+                        return sprintf($this->template,
+                            $this->getUrlOfPath($this->getValueOf('daten.pfad')),
+                            $this->getValueOf('anhangtitel'),
+                            $renderedThumbnail
+                        );
+                    } else {
+                        return sprintf($this->template,
+                            $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                            $this->getValueOf('anhangtitel'),
+                            $renderedThumbnail
+                        );
+                    }
             }
         }
 

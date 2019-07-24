@@ -479,8 +479,9 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
 
 .estate-header-image {
   height: 400px;
-  background-size: 100%;
-  background: no-repeat center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   font-family: 'Cairo', Arial, sans-serif;
   position: relative;
   overflow: hidden;

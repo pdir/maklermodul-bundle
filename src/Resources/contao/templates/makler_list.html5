@@ -54,7 +54,7 @@
         <div id="estate_list">
             <?php foreach ($pages[$page] as $obj): ?>
             <?php #if($this->makler_addListPagination && $counter < $this->makler_paginationCount+1): ?>
-            <a href="<?= $this->helper->getDetailViewPrefix() ?>/<?= $obj['uriident'] ?><?= $this->urlSuffix ?>" class="<?= $obj['css-filter-class-string'] ?>">
+            <a href="<?= $this->helper->getDetailViewPrefix() ?>/<?= $obj['uriident'] ?><?= $this->urlSuffix ?>" class="<?= $obj['css-filter-class-string'] ?>" title="Objekt '<?= $obj['freitexte-objekttitel'] ?>' ansehen">
                 <div class="inner">
                     <div class="mix item<?php if($counter&1): ?> odd<?php else: ?> even<?php endif; ?>">
 
@@ -68,7 +68,11 @@
                         <?php if(!isset($obj['anhaenge-anhang-#1-daten-pfad']) OR $obj['anhaenge-anhang-#1-daten-pfad'] == ''): ?>
                             <img src="/<?= $this->placeholderImg; ?>" alt="Platzhalter <?= $obj['freitexte-objekttitel'] ?>" width="300" height="200">
                         <?php else: ?>
-                            {{image::files/maklermodul/data/<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>?mode=<?= $this->listImageMode; ?>&width=<?= $this->listImageWidth; ?>&height=<?= $this->listImageHeight; ?>&alt=<?= $obj['freitexte-objekttitel'] ?>}}
+                            <?php if( strpos($obj['anhaenge-anhang-#1-daten-pfad'],"http") !== false ): ?>
+                                <img src="<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>" alt="<?= $obj['freitexte-objekttitel'] ?>">
+                            <?php else: ?>
+                                {{image::files/maklermodul/data/<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>?mode=<?= $this->listImageMode; ?>&width=<?= $this->listImageWidth; ?>&height=<?= $this->listImageHeight; ?>&alt=<?= $obj['freitexte-objekttitel'] ?>}}
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                     <div class="content objectDescr">

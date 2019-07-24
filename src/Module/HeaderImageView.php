@@ -101,7 +101,11 @@ class HeaderImageView extends \Module
         // echo "Index: " . $imageIndex;
 
         if ('' !== $estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad')) {
-            $this->Template->headerImage = Helper::imagePath.$estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad');
+            if( strpos($estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad'),"http") !== false ) {
+                $this->Template->headerImage = $estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad');
+            } else {
+                $this->Template->headerImage = Helper::imagePath.$estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad');
+            }
         } else {
             $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder.'/img/platzhalterbild.jpg';
             if ($placeholder !== Helper::assetFolder.'/img/platzhalterbild.jpg') {

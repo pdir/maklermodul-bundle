@@ -35,14 +35,18 @@ else:
     <div class="content">
         <div class="big-img">
             <?php if($this->estate->renderer('anhaenge.anhang.#1.daten.pfad')->asText()->withoutLabel()->value(true)): ?>
-                <img src="<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="600" height="350">
+                <?php if( strpos($this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'),"http") !== false ): ?>
+                    <img src="<?= $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="600" height="350">
+                <?php else: ?>
+                    <img src="<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="600" height="350">
+                <?php endif; ?>
             <?php else: ?>
                 <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="600" height="350">
             <?php endif; ?>
         </div>
         <div class="small-pics">
             <?php foreach ($this->estate->attachments()->range(1, 6) as $attachment) : ?>
-                <div class="pic"><?php $attachment->group("BILD,GRUNDRISS")->size(120,75)->render() ?></div>
+                <div class="pic"><?php $attachment->group("BILD,GRUNDRISS,KARTEN_LAGEPLAN,AUSSENANSICHTEN,INNENANSICHTEN,PANORAMA")->size(120,75)->render() ?></div>
             <?php endforeach; ?>
         </div>
     </div>
