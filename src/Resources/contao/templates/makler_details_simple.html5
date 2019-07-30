@@ -41,7 +41,7 @@ else:
                     <img src="<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="600" height="350">
                 <?php endif; ?>
             <?php else: ?>
-                <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="600" height="350">
+                <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="600" height="350">
             <?php endif; ?>
         </div>
         <div class="small-pics">
