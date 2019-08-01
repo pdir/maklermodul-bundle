@@ -89,6 +89,7 @@
       </div>
       <div class="license clearall">
         <div class="left">
+          <?php if(!isset($this->syncVersion)): ?>
           <h3>Lizenz</h3>
           <!--<div class="button">
             <a href="/contao/main.php?do=maklermodulSetup&act=download">
@@ -100,6 +101,7 @@
               <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_buy.png" alt="Lizenz bestellen" width="60" height="60"/></div>
               <br/>Lizenz bestellen</a>
           </div>
+          <?php endif; ?>
         </div>
         <div class="right">
           <h3>Dbug Infos</h3>
