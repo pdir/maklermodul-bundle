@@ -506,6 +506,10 @@
 
   listView.filterBySelect = function () {
     // unset pagination filter
+    if($(this).val() == '-1') {
+      $(this).find('option').show();
+    }
+
     delete listView.paginationFilter;
 
     var filters = listView.selects.children('option:selected', this).map(function () {
