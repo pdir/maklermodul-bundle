@@ -75,5 +75,8 @@ if (TL_MODE == 'BE')
         $GLOBALS['TL_JAVASCRIPT']['noconflict'] = $assetsDir . '/js/jquery.noconflict.js';
     }
     $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
-    $GLOBALS['TL_CSS'][] =  $assetsDir . '/css/maklermodul_backend.scss||static';
+
+    $combiner = new \Combiner();
+    $combiner->add($assetsDir . '/css/maklermodul_backend.scss');
+    $GLOBALS['TL_CSS'][] = str_replace("TL_ASSETS_URL","",$combiner->getCombinedFile());
 }
