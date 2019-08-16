@@ -100,7 +100,11 @@ class IndexConfig implements IndexConfigInterface
 
         foreach ($arr as $cond) {
             $str = html_entity_decode($cond);
-            if (false !== strpos($str, '!=')) {
+            $lastChar = substr($str,strlen($str) - 1,1);
+            if(false !== strpos($str, '=%') && '%' == $lastChar) {
+                $result = explode('=', $str);
+                $condArr['part'][$result[0]][] = str_replace("%","",$result[1]);
+            } elseif (false !== strpos($str, '!=')) {
                 $result = explode('!=', $str);
                 $condArr['unequal'][$result[0]][] = $result[1];
             } elseif (false !== strpos($str, '=')) {
