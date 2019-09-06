@@ -238,18 +238,22 @@
 
     // use pagination if active and no other filter is set
     listView.noPagination = false;
+    console.log(listView.qsRegex);
+    console.log(listView.checkboxFilter);
+    console.log(listView.selectFilter);
+    console.log(listView.paginationFilter);
+    console.log(listView.rangeFilter);
     if (listView.paginationStatus && listView.paginationUseIsotope &&
         typeof listView.qsRegex === 'undefined' &&
         typeof listView.checkboxFilter === 'undefined' &&
         typeof listView.selectFilter === 'undefined' &&
         typeof listView.paginationFilter === 'undefined' &&
-        typeof listView.rangeFilter === 'undefined' &&
-        listView.hashFilter === null
+        typeof listView.rangeFilter === 'undefined'
     ) {
-      listView.paginationFilter = 'page1';
-      listView.pagination.show();
-      listView.hashFilter = '.page1';
-      listView.setWindowHash();
+        listView.paginationFilter = 'page1';
+        listView.pagination.show();
+        listView.hashFilter = '.page1';
+        listView.setWindowHash();
     }
     else if (typeof listView.paginationStatus === 'undefined' &&
         typeof listView.qsRegex === 'undefined' &&
