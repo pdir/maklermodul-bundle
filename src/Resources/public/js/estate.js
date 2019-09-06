@@ -238,11 +238,6 @@
 
     // use pagination if active and no other filter is set
     listView.noPagination = false;
-    console.log(listView.qsRegex);
-    console.log(listView.checkboxFilter);
-    console.log(listView.selectFilter);
-    console.log(listView.paginationFilter);
-    console.log(listView.rangeFilter);
     if (listView.paginationStatus && listView.paginationUseIsotope &&
         typeof listView.qsRegex === 'undefined' &&
         typeof listView.checkboxFilter === 'undefined' &&
