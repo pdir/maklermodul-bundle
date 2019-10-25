@@ -524,8 +524,9 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
 
 /* google maps */
 .estate-detail .dlh_googlemap {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
 }
 
 #confirm-googlemaps {
@@ -539,15 +540,16 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
     cursor: pointer;
 
     h3 {
-        width: calc(100% + 30px);
-        padding: 15px;
-        background: #f2f2f2;
-        color: #b91e1e;
-        font-weight: 700;
-        letter-spacing: 1px;
-        margin: -15px 0 0 -15px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+      width: 100%;
+      padding: 15px;
+      background: #f2f2f2;
+      color: #b91e1e;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: -15px 0 0 -15px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border: none;
     }
 
     p {
