@@ -22,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
     .'{template_legend},immo_readerPage,immo_listTemplate;'
     .'{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate,makler_filter_type;'
     .'{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
-    .'{makler_cond_legend},immo_listCondition;'
+    .'{makler_cond_legend},immo_listCondition,makler_conditionFilterType;'
     .'{image_legend},imgSize,makler_listViewPlaceholder;'
     .'{makler_pagination_legend},makler_addListPagination;'
     .'{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
@@ -157,11 +157,22 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_listSortType'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listCondition'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_module']['immo_listCondition'],
-        'exclude' => true,
-        'inputType' => 'textarea',
-        'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-        'sql' => 'text NULL',
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['immo_listCondition'],
+    'exclude' => true,
+    'inputType' => 'textarea',
+    'reference' => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval' => ['tl_class' => 'w50'],
+    'sql' => 'text NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_conditionFilterType'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_conditionFilterType'],
+    'inputType' => 'select',
+    'default' => 'button',
+    'options' => ['and', 'or'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['makler_conditionFilterType'],
+    'eval' => ['tl_class' => 'w50'],
+    'sql' => "varchar(255) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_listViewPlaceholder'] = [

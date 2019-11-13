@@ -75,6 +75,22 @@
         <source>Buttons</source>
         <target>Buttons</target>
       </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.0">
+        <source>Type</source>
+        <target>Verknüpfung</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.1">
+        <source>Select the type for the conditions here.</source>
+        <target>Wählen Sie hier die Verknüpfung für die Bedingungen aus.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.and">
+        <source>AND</source>
+        <target>UND</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.or">
+        <source>OR</source>
+        <target>ODER</target>
+      </trans-unit>
       <trans-unit id="tl_module.makler_sort_legend">
           <source>Sortierung</source>
           <target>Sortierung</target>
