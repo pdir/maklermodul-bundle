@@ -318,6 +318,18 @@
       <trans-unit id="tl_module.makler_headerImageSource_select.20">
         <source>Attachment 20</source>
       </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.0">
+        <source>Type</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.1">
+        <source>Select the type for the conditions here.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.and">
+        <source>AND</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.or">
+        <source>OR</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
