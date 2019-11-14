@@ -89,7 +89,7 @@ class HeaderImageView extends \Module
 
         $estate = $this->createFieldRendererFactory($this->alias);
 
-        if (true === $this->makler_showHeadline) {
+        if ('1' === $this->makler_showHeadline) {
             $this->Template->headline = $this->headline ? $this->headline : $estate->rawValue('freitexte.objekttitel');
             $this->Template->showHeadline = true;
         }

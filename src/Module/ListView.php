@@ -151,7 +151,7 @@ class ListView extends \Module
         if($urlSuffix === '')
             return str_replace($this->detailPage->alias, $this->detailPage->alias . '/' . DetailView::PARAMETER_KEY, $baseUri);
 
-        return str_replace($urlSuffix, '/'.DetailView::PARAMETER_KEY, $baseUri);
+        return preg_replace('%'.preg_quote($urlSuffix).'$%', '/' . DetailView::PARAMETER_KEY, $baseUri);
     }
 
     public function getObjects()

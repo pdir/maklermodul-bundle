@@ -354,17 +354,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImageSource'] = [
 
 class tl_module_makler extends Backend
 {
-    /*public function __construct() {
-        parent::__construct();
-        $this->import('BackendUser', 'User');
-    }*/
-
     public function getModuleTemplates(DataContainer $dc)
     {
-        if (version_compare(VERSION.BUILD, '2.9.0', '>=')) {
-            return $this->getTemplateGroup('makler', $dc->activeRecord->pid);
-        }
-
         return $this->getTemplateGroup('makler');
     }
 

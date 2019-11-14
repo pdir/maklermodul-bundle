@@ -133,7 +133,7 @@
       </trans-unit>
       <trans-unit id="tl_module.immo_listCondition.1">
         <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=leipzig</strong></source>
-        <target>Die Bedingung dient zur Reduzierung der Ergebnisse nach bestimmten Kriterien. Beispiel: <strong>objektadresse_freigeben=true, geo.ort!=Leipzig, flaechen.anzahl_zimmer=1</strong>Achtung: Bitte eine Zeile je Bedingung verwenden, auf Groß- und Kleinschreibung achten und keine Kommas nach einer Zeile angeben.</target>
+        <target>Die Bedingung dient zur Reduzierung der Ergebnisse nach bestimmten Kriterien. Beispiel: <strong>objektadresse_freigeben=true, geo.ort!=Leipzig, flaechen.anzahl_zimmer=1, freitexte.objekttitel=%ruhig%</strong> Achtung: Bitte eine Zeile je Bedingung verwenden, auf Groß- und Kleinschreibung achten und keine Kommas nach einer Zeile angeben.</target>
       </trans-unit>
       <trans-unit id="tl_module.immo_listDebug.0">
           <source>Debug</source>

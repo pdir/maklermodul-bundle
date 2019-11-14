@@ -101,7 +101,7 @@
         <source>Estate List Condition</source>
       </trans-unit>
       <trans-unit id="tl_module.immo_listCondition.1">
-        <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=Leipzig</strong>Attention: Please use one line per condition, pay attention to upper and lower case and do not add commas after one line.</source>
+        <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=Leipzig, freitexte.objekttitel=%ruhig%</strong> Attention: Please use one line per condition, pay attention to upper and lower case and do not add commas after one line.</source>
       </trans-unit>
       <trans-unit id="tl_module.immo_listDebug.0">
           <source>Debug</source>

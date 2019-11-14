@@ -243,13 +243,12 @@
         typeof listView.checkboxFilter === 'undefined' &&
         typeof listView.selectFilter === 'undefined' &&
         typeof listView.paginationFilter === 'undefined' &&
-        typeof listView.rangeFilter === 'undefined' &&
-        listView.hashFilter === null
+        typeof listView.rangeFilter === 'undefined'
     ) {
-      listView.paginationFilter = 'page1';
-      listView.pagination.show();
-      listView.hashFilter = '.page1';
-      listView.setWindowHash();
+        listView.paginationFilter = 'page1';
+        listView.pagination.show();
+        listView.hashFilter = '.page1';
+        listView.setWindowHash();
     }
     else if (typeof listView.paginationStatus === 'undefined' &&
         typeof listView.qsRegex === 'undefined' &&

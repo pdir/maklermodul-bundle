@@ -58,8 +58,9 @@ class StaticDIC
 
             self::$filterConfig = parse_ini_file($fileName);
             // load user filter css mapping
-            if (file_exists(\Environment::get('documentRoot').self::USER_FILTER_CSS_MAPPING)) {
-                $userFilterConf = parse_ini_file(\Environment::get('documentRoot').self::USER_FILTER_CSS_MAPPING);
+            $userFileName = TL_ROOT.self::USER_FILTER_CSS_MAPPING;
+            if (file_exists($userFileName)) {
+                $userFilterConf = parse_ini_file($userFileName);
                 self::$filterConfig = array_merge(self::$filterConfig, $userFilterConf);
             }
             if (false === self::$filterConfig) {

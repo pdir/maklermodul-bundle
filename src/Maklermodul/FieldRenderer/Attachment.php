@@ -177,7 +177,7 @@ class Attachment extends FieldRenderer
                     // fallback for xml data without group definition
 
                     // render as doc/link
-                    if($this->getValueOf('format') === 'pdf' || $this->getValueOf('format') === 'doc') {
+                    if($this->getValueOf('format') === 'pdf' || $this->getValueOf('format') === 'application/pdf' || $this->getValueOf('format') === 'doc') {
                         $this->template = $this->getShortTemplateDoc();
 
                         return sprintf($this->template,
