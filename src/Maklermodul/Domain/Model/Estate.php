@@ -109,6 +109,7 @@ class Estate
         $target = str_replace('*', '', $target);
         $target = str_replace('+', '', $target);
         $target = str_replace('&#x85;', '', $target);
+        $target = str_replace('|', '', $target);
 
         // cyrillic fix
         if (preg_match('/[\p{Cyrillic}]/u', $target)) {

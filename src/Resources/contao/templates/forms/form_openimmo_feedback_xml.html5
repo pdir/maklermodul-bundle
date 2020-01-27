@@ -1,0 +1,38 @@
+<?= '<?' ?>xml version="1.0" encoding="<?= $this->charset ?>" standalone="yes" encoding="ISO-8859-1"?>
+<openimmo_feedback>
+    <version>1.2.5</version>
+    <sender>
+        <?php if($this->name) :?><name><?= $this->name ?></name><?php endif; ?>
+        <?php if($this->openimmo_anid) :?><openimmo_anid><?= $this->openimmo_anid ?></openimmo_anid><?php endif; ?>
+        <?php if($this->datum) :?><datum><?= $this->datum ?></datum><?php endif; ?>
+        <?php if($this->makler_id) :?><makler_id><?= $this->makler_id ?></makler_id><?php endif; ?>
+        <?php if($this->regi_id) :?><regi_id><?= $this->regi_id ?></regi_id><?php endif; ?>
+    </sender>
+    <objekt>
+        <?php if($this->portal_unique_id) :?><portal_unique_id><?= $this->portal_unique_id ?></portal_unique_id><?php endif; ?>
+        <?php if($this->portal_obj_id) :?><portal_obj_id><?= $this->portal_obj_id ?></portal_obj_id><?php endif; ?>
+        <?php if($this->anbieter_id) :?><anbieter_id><?= $this->anbieter_id ?></anbieter_id><?php endif; ?>
+        <oobj_id><?= $this->oobj_id ?></oobj_id>
+        <?php if($this->zusatz_refnr) :?><zusatz_refnr><?= $this->zusatz_refnr ?></zusatz_refnr><?php endif; ?>
+        <?php if($this->expose_url) :?><expose_url><?= $this->expose_url ?></expose_url><?php endif; ?>
+        <?php if($this->vermarktungsart) :?><vermarktungsart><?= $this->vermarktungsart ?></vermarktungsart><?php endif; ?>
+        <?php if($this->bezeichnung) :?><bezeichnung><?= $this->bezeichnung ?></bezeichnung><?php endif; ?>
+        <?php if($this->etage) :?><etage><?= $this->etage ?></etage><?php endif; ?>
+        <?php if($this->whg_nr) :?><whg_nr><?= $this->whg_nr ?></whg_nr><?php endif; ?>
+        <?php if($this->strasse) :?><strasse><?= $this->strasse ?></strasse><?php endif; ?>
+        <?php if($this->ort) :?><ort><?= $this->ort ?></ort><?php endif; ?>
+        <?php if($this->preis) :?><preis><?= $this->preis ?></preis><?php endif; ?>
+        <?php if($this->gebot) :?><gebot><?= $this->gebot ?></gebot><?php endif; ?>
+        <?php if($this->wae) :?><wae><?= $this->wae ?></wae><?php endif; ?>
+        <interessent>
+            <?php foreach ($this->fields as $key=>$value): ?>
+            <?php if($key == 'wunsch'): ?>
+            <?php foreach ($value as $val): ?>
+            <<?= $key ?>><?= $val ?></<?= $key ?>>
+        <?php endforeach; ?>
+        <?php continue; endif; ?>
+        <<?= $key ?>><?= $value ?></<?= $key ?>>
+    <?php endforeach; ?>
+    </interessent>
+    </objekt>
+</openimmo_feedback>

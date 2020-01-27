@@ -207,4 +207,66 @@ class Helper extends \Frontend
 
         return $arrItems;
     }
+
+    /**
+     * Change form template for open immo feedback xml
+     *
+     * @param $strBuffer
+     * @param $strTemplate
+     *
+     * @return string
+     */
+
+    function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate)
+    {
+        if ($strTemplate == 'form_xml')
+        {
+            if(\Input::get('objectId')) {
+
+                $repository = Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository::getInstance();
+                $objEstate = $repository->findByObjectId(\Input::get('objectId'));
+
+                /** @var \FrontendTemplate|object $objTemplate */
+                $objTemplate = new \FrontendTemplate('form_openimmo_feedback_xml');
+
+                $objTemplate->name = "makler modul für Contao v".self::VERSION;
+                $objTemplate->openimmo_anid = \Input::findPost("openimmo_anid")? \Input::findPost("openimmo_anid") : $objEstate->getValueOf('anbieter.openimmo_anid');
+                $objTemplate->datum = $this->parseDate("d.m.Y", $this->timestamp);
+                $objTemplate->makler_id = \Input::findPost("anbieternr")? \Input::findPost("anbieternr") : $objEstate->getValueOf('anbieter.anbieternr');
+
+                $objTemplate->oobj_id = \Input::findPost("openimmo_anid")? \Input::findPost("openimmo_anid") : $objEstate->getValueOf('verwaltung_techn.openimmo_obid');
+                $objTemplate->expose_url = $this->Environment->url . $this->Environment->requestUri;
+                $objTemplate->zusatz_refnr = $objEstate->getValueOf('verwaltung_techn.objektnr_extern');
+                $objTemplate->bezeichnung = $objEstate->getValueOf('freitexte.objekttitel');
+                $objTemplate->strasse = $objEstate->getValueOf('geo.strasse');
+                $objTemplate->ort = $objEstate->getValueOf('geo.ort');
+
+                // customer fields
+                $arrFields = array();
+                if (\Input::findPost("int_id")) $arrFields['int_id'] = \Input::findPost("int_id");
+                if (\Input::findPost("anrede")) $arrFields['anrede'] = \Input::findPost("anrede");
+                if (\Input::findPost("vorname")) $arrFields['vorname'] = \Input::findPost("vorname");
+                if (\Input::findPost("nachname")) $arrFields['nachname'] = \Input::findPost("nachname");
+                if (\Input::findPost("firma")) $arrFields['firma'] = \Input::findPost("firma");
+                if (\Input::findPost("strasse")) $arrFields['strasse'] = \Input::findPost("strasse");
+                if (\Input::findPost("postfach")) $arrFields['postfach'] = \Input::findPost("postfach");
+                if (\Input::findPost("plz")) $arrFields['plz'] = \Input::findPost("plz");
+                if (\Input::findPost("ort")) $arrFields['ort'] = \Input::findPost("ort");
+                if (\Input::findPost("tel")) $arrFields['tel'] = \Input::findPost("tel");
+                if (\Input::findPost("fax")) $arrFields['fax'] = \Input::findPost("fax");
+                if (\Input::findPost("mobil")) $arrFields['mobil'] = \Input::findPost("mobil");
+                if (\Input::findPost("email")) $arrFields['email'] = \Input::findPost("email");
+                if (\Input::findPost("bevorzugt")) $arrFields['bevorzugt'] = \Input::findPost("bevorzugt");
+                if (\Input::findPost("wunsch")) $arrFields['wunsch'] = \Input::findPost("wunsch");
+                if (\Input::findPost("anfrage")) $arrFields['anfrage'] = \Input::findPost("anfrage");
+
+                $objTemplate->fields = $arrFields;
+                $objTemplate->charset = \Config::get('characterSet');
+
+                return $objTemplate->parse();
+            }
+        }
+
+        return $strBuffer;
+    }
 }
