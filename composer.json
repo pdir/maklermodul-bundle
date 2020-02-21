@@ -55,5 +55,10 @@
         "src/Maklermodul/Runonce.php"
       ]
     }
+  },
+  "suggest": {
+    "contao-themes-net/mate-theme-bundle": "MATE Theme includes all styles for maklermodul bundle. MATE Theme enthält Stylesheets für das Maklermodul Bundle.",
+    "contao-themes-net/odd-theme-bundle": "ODD Theme includes all styles for maklermodul bundle. ODD Theme enthält Stylesheets für das Maklermodul Bundle.",
+    "contao-themes-net/nature-theme-bundle": "NATURE Theme includes all styles for maklermodul bundle. NATURE Theme enthält Stylesheets für das Maklermodul Bundle."
   }
 }
