@@ -312,13 +312,13 @@ class ListView extends \Module
             $count = 1;
             foreach ($json['data'] as $estate):
                 $estate['css-filter-class-string'] = $estate['css-filter-class-string'].' page'.$pageCount;
-            $newEstates[] = $estate;
-            if (0 !== $this->makler_paginationCount) {
-                if (0 === ($count % $this->makler_paginationCount)) {
-                    ++$pageCount;
+                $newEstates[] = $estate;
+                if (0 !== $this->makler_paginationCount) {
+                    if (0 === ($count % $this->makler_paginationCount)) {
+                        ++$pageCount;
+                    }
                 }
-            }
-            ++$count;
+                ++$count;
             endforeach;
             $pages[] = $newEstates;
         } elseif ($this->makler_addListPagination) {
@@ -327,7 +327,7 @@ class ListView extends \Module
             $pages[] = $json['data'];
         }
 
-        $this->Template->pageCount = 1 === $pageCount ? $pageCount : $pageCount - 1;
+        $this->Template->pageCount = $pageCount;
         $this->Template->page = !(int) $this->Input->get('page') ? (int) $this->Input->get('page') : 0;
         $this->Template->listObjects = count($json['data']) > 0 ? $pages : null;
 
