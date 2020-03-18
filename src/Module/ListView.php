@@ -293,6 +293,11 @@ class ListView extends \Module
         $objFile = new \File($this->getListSourceUri(true));
         $json = json_decode($objFile->getContent(), true);
 
+        if($this->arrData['immo_listSort'])
+        {
+            $json['data'] = $this->sortByKeyValue($json['data'], $this->arrData['immo_listSort'], $this->arrData['makler_listSortAsc'] === 'true' ? SORT_ASC : SORT_DESC);
+        }
+
         if (0 === count($json)) {
             throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
         }
@@ -312,13 +317,13 @@ class ListView extends \Module
             $count = 1;
             foreach ($json['data'] as $estate):
                 $estate['css-filter-class-string'] = $estate['css-filter-class-string'].' page'.$pageCount;
-            $newEstates[] = $estate;
-            if (0 !== $this->makler_paginationCount) {
-                if (0 === ($count % $this->makler_paginationCount)) {
-                    ++$pageCount;
+                $newEstates[] = $estate;
+                if (0 !== $this->makler_paginationCount) {
+                    if (0 === ($count % $this->makler_paginationCount)) {
+                        ++$pageCount;
+                    }
                 }
-            }
-            ++$count;
+                ++$count;
             endforeach;
             $pages[] = $newEstates;
         } elseif ($this->makler_addListPagination) {
@@ -381,5 +386,16 @@ class ListView extends \Module
         if ('1' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_filterListPage']) {
             throw new \Exception('Undefined filter list page');
         }
+    }
+
+    private function sortByKeyValue($data, $sortKey, $dir = SORT_ASC) {
+        $sort_col = [];
+        foreach ($data as $key => $row) {
+            $sort_col[$key] = $row[$sortKey];
+        }
+
+        array_multisort($sort_col, $dir, $data);
+
+        return $data;
     }
 }

@@ -1,4 +1,4 @@
-<?= '<?' ?>xml version="1.0" encoding="<?= $this->charset ?>" standalone="yes" encoding="ISO-8859-1"?>
+<?= '<?' ?>xml version="1.0" encoding="UTF-8"?>
 <openimmo_feedback>
     <version>1.2.5</version>
     <sender>

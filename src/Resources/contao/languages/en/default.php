@@ -24,6 +24,7 @@ $GLOBALS['TL_LANG']['CTE']['makler_headerImage'] = ['MaklerModul header image', 
 $GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'] = ['MaklerModul header image', 'MaklerModul header image'];
 
 $strErrorDefault = 'Makler Modul Error: ';
-$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = $strErrorDefault.'Please select the detail page in your list view.';
+// $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = $strErrorDefault.'Please select the detail page in your list view.';
+$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = 'Please select the detail page in your list view.';
 
 include_once 'makler_modul_mplus.php';

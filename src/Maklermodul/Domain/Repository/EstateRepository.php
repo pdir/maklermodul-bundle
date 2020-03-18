@@ -20,6 +20,7 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
+use Contao\StringUtil;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Util\Helper;
 
@@ -44,6 +45,23 @@ class EstateRepository
         }
 
         return $this->loadJsonFile($fileNamePath);
+    }
+
+    public function findByExternalObjectNumber($id)
+    {
+        $alias = Estate::sanizeFileName($id);
+        $fileNamePath = sprintf('%s*-%s.json', $this->storageDirectoryPath, $alias);
+
+        $files = [];
+        foreach (glob($fileNamePath) as $file) {
+            $files[] = $file;
+        }
+
+        if (!$files[0] || !file_exists($files[0])) {
+            return null;
+        }
+
+        return $this->loadJsonFile($files[0]);
     }
 
     public function findAll()
