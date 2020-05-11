@@ -374,6 +374,8 @@
     listView.selects.each(function () {
       $(this).find('option').each(function () {
         $(this).show();
+        // for materialize css themes
+        listView.selects.filter(':hidden').material_select(); // .prop('selectedIndex', 0);
       });
       $(this).find('option:selected').each(function () {
         $(this).prop("selected", false);
@@ -706,7 +708,7 @@
   listView.updateFilterValues = function () {
     if(filterType != 0) {
       listView.buttons.filter(':hidden').show();
-      listView.selects.filter(':hidden').show();
+      listView.selects.filter('option:hidden').show();
 
       if (listView.hashFilter.indexOf(".page") > -1 || listView.hashFilter == -1 || listView.hashFilter == "*") {
         // reset selects
@@ -944,9 +946,10 @@
 
   $(window).on('hashchange', listView.onHashchange);
 
-  var postcodeArr = [];
-  $.getJSON("bundles/pdirmaklermodul/js/plz.json", function (json) {
-    postcodeArr = json;
-  });
+  // @todo activate for nearby or map
+  // var postcodeArr = [];
+  // $.getJSON("bundles/pdirmaklermodul/js/plz.json", function (json) {
+  //  postcodeArr = json;
+  // });
 
 })(window, document, jQuery);

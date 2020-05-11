@@ -21,6 +21,7 @@
 namespace Pdir\MaklermodulBundle\Util;
 
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
+use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Module\ListPaginationView;
 
@@ -29,7 +30,7 @@ class Helper extends \Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.4.0';
+    const VERSION = '2.5.0';
 
     /**
      * Extension mode.
@@ -221,10 +222,15 @@ class Helper extends \Frontend
     {
         if ($strTemplate == 'form_xml')
         {
-            if(\Input::get('objectId')) {
+            if(\Input::post('oobj_id')) {
 
-                $repository = Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository::getInstance();
-                $objEstate = $repository->findByObjectId(\Input::get('objectId'));
+                $repository = EstateRepository::getInstance();
+                $objEstate = $repository->findByExternalObjectNumber(\Input::post('oobj_id'));
+
+                if(null == $objEstate)
+                {
+                    return $strBuffer;
+                }
 
                 /** @var \FrontendTemplate|object $objTemplate */
                 $objTemplate = new \FrontendTemplate('form_openimmo_feedback_xml');
@@ -264,6 +270,8 @@ class Helper extends \Frontend
                 $objTemplate->charset = \Config::get('characterSet');
 
                 return $objTemplate->parse();
+
+                // openimmo_feedback.xml
             }
         }
 
