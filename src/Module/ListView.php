@@ -332,7 +332,7 @@ class ListView extends \Module
             $pages[] = $json['data'];
         }
 
-        $this->Template->pageCount = 1 === $pageCount ? $pageCount : $pageCount - 1;
+        $this->Template->pageCount = $pageCount;
         $this->Template->page = !(int) $this->Input->get('page') ? (int) $this->Input->get('page') : 0;
         $this->Template->listObjects = count($json['data']) > 0 ? $pages : null;
 

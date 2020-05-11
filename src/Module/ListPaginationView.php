@@ -43,6 +43,16 @@ class ListPaginationView extends ListView
         $this->showtitle = $objListView->makler_paginationShowtitle;
         $this->detailPagePrefix = $objListView->helper->getDetailViewPrefix();
         $this->data = $objListView->objectData;
+
+        /*
+        @ToDo Pagination funktioniert noch nicht, wenn 'Verwende Isotope' nicht aktiviert ist. Es werden zu viele Seiten angezeigt und Objekte teilweise doppelt. In $this->data sind alle Objekte enthalten, auch wenn eine Bedingung beim Modul angegeben ist. Im Kommentar in $json sind die richtigen Objekte enthalten, aber die Struktur ist irgendwie anders als bei $this->data.
+
+        $objFile = new \File($objListView->helper->getListSourceUri(true));
+        $json = json_decode($objFile->getContent(), true);
+
+        echo "<pre style='height:500px;overflow:scroll;'>"; print_r($this->data); echo "</pre>";
+        echo "<pre style='height:500px;overflow:scroll;'>"; print_r($json['data']); echo "</pre>";
+        */
     }
 
     /**
@@ -79,7 +89,7 @@ class ListPaginationView extends ListView
             'isActive' => 0 === $this->page ? true : false,
             'href' => ampersand($this->generateFrontendUrl($objPage->row())),
             'title' => specialchars(1),
-               'link' => !$this->showtitle ? 1 : $objPage->title,
+            'link' => !$this->showtitle ? 1 : $objPage->title,
         ];
         $arrAllArticles[0] = $arrArticle;
 
@@ -87,15 +97,16 @@ class ListPaginationView extends ListView
             $arrArticle = [
                     'isActive' => $this->page === $i ? true : false,
                     'href' => ampersand($this->generateFrontendUrl($objPage->row(), '/page/'.$i)),
-                    'title' => specialchars($i + 1),
-                    'link' => !$this->showtitle ? $i + 1 : $objPage->title,
+                    'title' => specialchars($i),
+                    'link' => !$this->showtitle ? $i : $objPage->title,
             ];
             ++$intCounter;
             $arrAllArticles[$i] = $arrArticle;
         }
 
         // assign total
-        $this->Template->total = sprintf($GLOBALS['TL_LANG']['MSC']['totalPages'], $this->page + 1, $intCounter + 1);
+        if($this->page == 0) $this->page = 1;
+        $this->Template->total = sprintf($GLOBALS['TL_LANG']['MSC']['totalPages'], $this->page, $intCounter);
         // assign array first
         if ($this->page > 2) {
             $arrFirst = reset($arrAllArticles);
