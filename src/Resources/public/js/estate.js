@@ -375,7 +375,7 @@
       $(this).find('option').each(function () {
         $(this).show();
         // for materialize css themes
-        listView.selects.filter(':hidden').material_select(); // .prop('selectedIndex', 0);
+        if( listView.selects.filter(':hidden').length > 0 ) listView.selects.filter(':hidden').formSelect();
       });
       $(this).find('option:selected').each(function () {
         $(this).prop("selected", false);
