@@ -1,8 +1,8 @@
 Real estate extension for Contao 4 (Maklermodul)
 ================================================
 
-[![Latest Stable Version](https://poser.pugx.org/pdir/maklermodul-bundle/v/stable)](https://packagist.org/packages/pdir/maklermodul-bundle)
-[![Total Downloads](https://poser.pugx.org/pdir/maklermodul-bundle/downloads)](https://packagist.org/packages/pdir/maklermodul-bundle)
+[![Latest Stable Version](https://poser.pugx.org/pdir/maklermodul-bundle/version)](https://packagist.org/packages/pdir/maklermodul-bundle)
+[![Total Downloads](https://poser.pugx.orgpdir/maklermodul-bundle/downloads)](https://packagist.org/packages/pdir/maklermodul-bundle)
 [![License](https://poser.pugx.org/pdir/maklermodul-bundle/license)](https://packagist.org/packages/pdir/maklermodul-bundle)
 
 About
