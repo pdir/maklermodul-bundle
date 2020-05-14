@@ -30,7 +30,7 @@ class Helper extends \Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.5.0';
+    const VERSION = '2.5.1';
 
     /**
      * Extension mode.
