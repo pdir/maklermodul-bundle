@@ -24,6 +24,8 @@ $GLOBALS['TL_LANG']['CTE']['makler_headerImage'] = ['MaklerModul Kopfbild', 'Mak
 $GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];
 
 $strErrorDefault = 'Makler Modul Fehler: ';
+$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus'] = [];
+$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error'] = [];
 $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = $strErrorDefault.'Bitte w&auml;hlen Sie eine Detailansicht in Ihrer Listenansicht aus.';
 
 include_once 'makler_modul_mplus.php';
