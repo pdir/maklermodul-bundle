@@ -769,9 +769,9 @@
         }
 
         if (length < 1) {
-          $(value).hide();
+          $(value).hide().prop('disabled', true);
         } else {
-          $(value).show();
+          $(value).show().prop('disabled', false);
         }
         // @todo add button count # $(value).text( '(' + length +')' );
       });
@@ -807,9 +807,9 @@
 
 
         if (length == 0 && optionValue != -1) {
-          $(value).hide();
+          $(value).hide().prop('disabled', true);
         } else {
-          $(value).show();
+          $(value).show().prop('disabled', false);
         }
         // @todo add button count # $(value).text( '(' + length +')' );
       });
