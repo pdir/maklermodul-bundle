@@ -24,7 +24,7 @@
           / digital agentur</a></p>
         <h2>Interessante Links</h2>
         <ul class="link-list">
-        <li><a href="https://docs.maklermodul.de/" target="_blank"
+        <li><a href="https://pdir.de/docs/de/contao/extensions/maklermodul/" target="_blank"
                     style="text-decoration: underline;">Dokumentation</a></li>
         <li><a href="https://www.maklermodul.de/demo.html" target="_blank"
                     style="text-decoration: underline;">Demo</a></li>
@@ -44,7 +44,7 @@
           Konfigurationsanleitungen.</p>
         <p><strong>Preis</strong><br>
           Domainlizenz, einmalig 399€ zzgl. MwSt.<br>
-          Update/Support Abonnement 199€/Jahr zzgl. MwSt.*&sup2;
+          Update/Support Abonnement 199€ zzgl. MwSt. (einmalig)*&sup2;
         </p>
           <p><strong>Ihr Team der pdir / digital agentur</strong></p>
       </div>
@@ -65,37 +65,32 @@
         <div class="left">
               <h3>Import & Index</h3>
               <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
-                  <a href="contao/main.php?do=maklermodulSetup&act=import">
+                  <a href="contao/main.php?do=maklermodulSetup&act=import&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="60" height="60" /></div>
                       <br />Import ausführen</a>
               </div>
               <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
-                  <a href="contao/main.php?do=maklermodulSetup&act=index">
+                  <a href="contao/main.php?do=maklermodulSetup&act=index&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="60" height="60" /></div>
                       <br />Index aufbauen</a>
               </div>
               <div class="button">
-                  <a href="contao/main.php?do=maklermodulSetup&act=downloadDemoData">
+                  <a href="contao/main.php?do=maklermodulSetup&act=downloadDemoData&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
                       <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_demodata.png" alt="Demodaten herunterladen" width="60" height="60" /></div>
                       <br />Demodaten herunterladen</a>
               </div>
         </div>
         <div class="right">
           <h3>Ordner leeren</h3>
-          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyDataFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>data wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?></a></div>
-          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyTmpFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>org wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?></a></div>
-          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyUploadFolder" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>upload wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?></a></div>
+          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyDataFolder&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>data wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] ?></a></div>
+          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyTmpFolder&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>org wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] ?></a></div>
+          <div class="button" style="width:92px;"><a href="contao/main.php?do=maklermodulSetup&act=emptyUploadFolder&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>" onclick="if(!confirm('Soll der Ordner <?= $this->storageDirectoryPath ?>upload wirklich geleert werden?'))return false;Backend.getScrollOffset()"><div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_delete.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?>" width="40" height="40" /></div><br /><?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] ?></a></div>
         </div>
       </div>
       <div class="license clearall">
         <div class="left">
           <?php if(!isset($this->syncVersion)): ?>
           <h3>Lizenz</h3>
-          <!--<div class="button">
-            <a href="/contao/main.php?do=maklermodulSetup&act=download">
-              <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_download.png" alt="Download Vollversion" width="60" height="60"/></div>
-              <br/>Download Vollversion</a>
-          </div>-->
           <div class="button">
             <a href="#" class="mm-license" data-toggle="modal" data-target="#mmLicenseModal">
               <div class="kreis"><img src="bundles/pdirmaklermodul/img/icon_buy.png" alt="Lizenz bestellen" width="60" height="60"/></div>
@@ -125,7 +120,7 @@
     <div class="tools">
         <p><small>pdir ist registrierter OpenImmo Nutzer (PDIR15) und unterstützt den Schnittstellenstandard <a href="http://www.openimmo.de/">OpenImmo</a> XML.<br><br>
         &sup2; Updates sind solange kostenlos, bis die Version einen kompletten Versionssprung (Upgrade) macht.
-        Hast du beispielsweise Version 1.1 sind alle Updates in der Version 1.x für dich kostenlos, erst mit Upgrade auf Version 2.0 oder höher ist ein vergünstigter Upgrade Preis (wir nennen das Abonnement bzw. Subscription) zu zahlen.
+        Hast du beispielsweise Version 2.5 sind alle Updates in der Version 2.x für dich kostenlos, erst mit Upgrade auf Version 3.0 oder höher ist ein vergünstigter Upgrade Preis (wir nennen das Abonnement bzw. Subscription) zu zahlen.
         <a href="https://www.maklermodul.de">Mehr Infos</a>.
       </small></p>
     </div>

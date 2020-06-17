@@ -39,6 +39,11 @@ class Estate
             return $this->rawData[$ident];
         }
 
+        $pointIdent = str_replace('/', '.', $ident);
+        if (isset($this->rawData[$pointIdent])) {
+            return $this->rawData[$pointIdent];
+        }
+
         return null;
     }
 
