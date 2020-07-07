@@ -92,15 +92,18 @@ class Estate
         return $returnValue;
     }
 
-    public static function sanizeFileName($source)
+    public static function sanizeFileName($strSource)
     {
+        $validAliasCharacters = System::getContainer()->getParameter('pdir_maklermodul.validAliasCharacters');
+
         // remove the prefix if "id-" is set
-        $strString = StringUtil::generateAlias($source);
-        if (strpos($strString,"id-")!==false && !is_numeric($strSubstr = substr($strString, 3)))
+        $strValue = System::getContainer()->get('contao.slug')->generate($strSource, ['validChars' => $validAliasCharacters]);
+
+        if (strpos($strValue,"id-")!==false && !is_numeric($strSubstr = substr($strValue, 3)))
         {
-            $strString = substr($strString, 3);
+            $strValue = substr($strValue, 3);
         }
-        return $strString;
+        return $strValue;
     }
 
     public function getFieldsIterator()
