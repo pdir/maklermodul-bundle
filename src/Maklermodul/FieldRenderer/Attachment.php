@@ -20,6 +20,7 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
+use Contao\StringUtil;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 use Pdir\MaklermodulBundle\Util\Helper;
@@ -139,7 +140,8 @@ class Attachment extends FieldRenderer
     private function getShortString()
     {
         // show only given group
-        if (false !== strpos($this->getSetting('group'), $this->getValueOf('@gruppe'))) {
+        $givenGroups = StringUtil::trimsplit(',', $this->getSetting('group'));
+        if (empty($givenGroups) || \in_array($this->getValueOf('@gruppe'), $givenGroups)) {
             switch ($this->getValueOf('@gruppe')) {
                 case 'DOKUMENTE':
                     // render doc list
