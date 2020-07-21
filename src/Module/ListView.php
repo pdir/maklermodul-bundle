@@ -390,6 +390,7 @@ class ListView extends \Module
 
     private function sortByKeyValue($data, $sortKey, $dir = SORT_ASC) {
         $sort_col = [];
+        $sortKey = str_replace('.', '-', $sortKey);
         foreach ($data as $key => $row) {
             $sort_col[$key] = $row[$sortKey];
         }
