@@ -85,7 +85,7 @@ class ColumnConfig
         }
 
         if (true === $returnValue) {
-            $value = $key;
+            $value = str_replace('.@','',substr($key, strpos($key, '.@')));
             $key = substr($key, 0, strpos($key, '.@'));
             $returnValue = [$key, $value];
         } elseif (!empty($returnValue) and false !== $returnValue and 'false' !== strtolower($returnValue)) {
