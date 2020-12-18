@@ -79,3 +79,5 @@ Bildnachweise für Demodaten
 * Treppenhaus / real-estate-1689977_1920.jpg: [palmettophoto1](https://pixabay.com/de/users/palmettophoto1-3368203/)@[Pixabay](https://pixabay.com/de/photos/immobilien-luxus-home-trimmen-wohn-1689977/)
 * Haus mit Garage / architecture-1867187_1920.jpg: [Pexels](https://pixabay.com/de/users/pexels-2286921/)@[Pixabay](https://pixabay.com/de/photos/architektur-geb%C3%A4ude-auffahrt-garage-1867187/)
 * Große Wohnung mit Wohnzimmer und Küche / homes-for-sale-hoboken-nj-1316365_1920.jpg: [HobokenHome7](https://pixabay.com/de/users/hobokenhome7-2359191/)@[Pixabay](https://pixabay.com/de/photos/immobilien-zum-verkauf-hoboken-nj-1316365/)
+
+Alle Demo-Inhalte dieses Moduls, insbesondere Texte, Fotografien und Grafiken, sind urheberrechtlich geschützt. Das Urheberrecht liegt bei der pdir Gmbh bzw. den jeweiligen Urhebern der Werke. Bitte fragen Sie uns, falls Sie die Demo-Inhalte dieses Themes verwenden möchten. Ohne schriftliche Genehmigung seitens der Urheber dürfen diese in keiner Form verwendet, vervielfältigt oder verbreitet werden.
