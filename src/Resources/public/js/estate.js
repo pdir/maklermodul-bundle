@@ -374,6 +374,7 @@
     listView.selects.each(function () {
       $(this).find('option').each(function () {
         $(this).show();
+        $(this).prop('disabled', false);
         // for materialize css themes
         if( listView.selects.filter(':hidden').length > 0 ) listView.selects.filter(':hidden').formSelect();
       });
@@ -559,6 +560,11 @@
 
     // combine filters
     var filterValue = listView.concatValues(filters);
+
+    if(filterValue == '') {
+      listView.selects.find('option').prop('disabled', false);
+      if( listView.selects.filter(':hidden').length > 0 ) listView.selects.filter(':hidden').formSelect();
+    }
 
     if (typeof listView.paginationStatus === 'undefined') {
       delete listView.paginationFilter;
@@ -811,6 +817,7 @@
         } else {
           $(value).show().prop('disabled', false);
         }
+        if( listView.selects.filter(':hidden').length > 0 ) listView.selects.filter(':hidden').formSelect();
         // @todo add button count # $(value).text( '(' + length +')' );
       });
     }
