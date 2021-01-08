@@ -70,11 +70,10 @@ if (TL_MODE == 'BE')
         $GLOBALS['TL_JAVASCRIPT'] = [];
     }
 
-    if(!isset($GLOBALS['TL_JAVASCRIPT']['jquery'])) {
-        $GLOBALS['TL_JAVASCRIPT']['jquery'] = 'assets/jquery/js/jquery.min.js';
-        $GLOBALS['TL_JAVASCRIPT']['noconflict'] = $assetsDir . '/js/jquery.noconflict.js';
-    }
-    $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js';
+    if(!isset($GLOBALS['TL_JAVASCRIPT']['jquery'])) $GLOBALS['TL_JAVASCRIPT']['jquery'] = 'assets/jquery/js/jquery.min.js|static';
+    if(!isset($GLOBALS['TL_JAVASCRIPT']['jquery-noconflict'])) $GLOBALS['TL_JAVASCRIPT']['jquery-noconflict'] = $assetsDir . '/js/jquery.noconflict.js|static';
+
+    $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js|static';
 
     $combiner = new \Combiner();
     $combiner->add($assetsDir . '/css/maklermodul_backend.scss');
