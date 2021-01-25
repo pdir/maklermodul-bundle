@@ -1,7 +1,20 @@
 
+window.addEvent("domready", function() {
+
+  // move makler info to bottom
+  var fragment = document.createDocumentFragment();
+  fragment.appendChild(document.getElementById('pdirMaklerInfo'));
+  var cont = document.getElementById('tl_listing') !== null ? document.getElementById('tl_listing') : document.getElementsByClassName('tl_empty')[0];
+
+  if (typeof cont !== 'null') {
+    cont.appendChild(fragment);
+  }
+
+});
+
 var apiUrl = "https://pdir.de/api/maklermodul/";
 
-window.addEvent("domready", function() {
+  window.addEvent("domready", function() {
 
 	// dev log
     var devlogUrl = "https://www.maklermodul.de/share/devlog.xml";

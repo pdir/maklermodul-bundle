@@ -1,3 +1,304 @@
+$pdir-color: #7AC0BC;
+
+#tl_navigation {
+  .group-pdir {
+    background: url(/bundles/pdirmaklermodul/img/pdir_icon_pdir.svg) 0 0 no-repeat;
+    background-size: 18px 18px;
+  }
+
+  .maklermodul {
+    background: url(/bundles/pdirmaklermodul/img/pdir_icon_maklermodul.svg) 14px 4px no-repeat;
+    background-size: 15px 15px;
+  }
+
+  .maklermodulSetup {
+    display: none!important;
+  }
+}
+
+.be_makler_toolbar {
+  position: relative;
+  height: 30px;
+
+  .container {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+
+    .logo {
+      flex: 1 0 160px;
+      margin-right: 50px;
+      text-align: left;
+    }
+
+    .button {
+      margin-right: 15px;
+    }
+  }
+}
+
+.be_makler_info {
+  margin-top: 50px;
+  position: relative;
+
+  p, h1, h2 {
+    line-height: 150%;
+    padding: 0;
+    margin: 0;
+  }
+  h2 {
+    font-size: 0.88rem;
+    padding: 1rem 0;
+  }
+  .underline {
+    border-bottom: 2px solid $pdir-color;
+    padding: 1.1rem 0;
+  }
+  .br_icon {
+    padding: 1rem 0 1rem 41px;
+    background: transparent url(../img/pdir_icon_maklermodul.svg) 0 50% no-repeat padding-box;
+    background-size: 30px;
+    opacity: 1;
+  }
+  .flex {
+    display: flex;
+    display : -ms-flexbox;
+
+    align-items: center;
+    -ms-flex-align : center;
+
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .link-list {
+    margin-bottom: 2rem;
+
+    ul {
+      color: $pdir-color;
+    }
+
+    li {
+      padding: 5px 0 5px 0;
+
+      a {
+        color: $pdir-color;
+        text-decoration: underline;
+      }
+
+      &:first-child {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .bundle_description {
+    display: flex;
+    align-items: stretch;
+
+    flex-wrap : nowrap;
+    justify-content: space-between;
+
+    > div {
+      flex: 0 0 48%;
+    }
+    .flex {
+      flex-wrap: wrap;
+      img {
+        width:100%;
+        height:auto;
+        margin:auto;
+      }
+      .button {
+        display: block;
+        width: 32%;
+        flex-grow: 1;
+        img {
+          width: 40px;
+        }
+      }
+    }
+    a[href*="//"]:before {
+      content: " ";
+      background: url(../img/icon_external_link.svg) 0 3px no-repeat;
+      background-size: 13px 13px;
+      padding-left: 1rem;
+    }
+
+    .button {
+      padding: 1rem 0;
+      margin-right: 5px;
+    }
+  }
+
+  .bundle_editions {
+    display: flex;
+    flex-wrap: wrap;
+
+    h2.underline {
+      @extend .be_makler_info .underline;
+      margin-bottom: 41px;
+    }
+
+    .editions_list {
+      display: flex;
+      flex-wrap : wrap;
+      flex: 1 1 25%;
+      justify-content: flex-start;
+
+      .button_container {
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 200px;
+        flex-wrap: wrap;
+
+        .button {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          height: 354px;
+          width: 90%;
+          border-radius: 5px;
+          background-color: #ECECED;
+
+          > div:nth-child(1) {
+            padding: 0 1rem;
+
+            .price {
+              font-size: 1.5rem;
+              font-weight: bold;
+              color: $pdir-color;
+              padding: 1rem 0;
+            }
+
+            .payment {
+            }
+
+            .product {
+              font-size: 1.5rem;
+              font-weight: bold;
+              margin-bottom: 1.5rem;
+            }
+
+            .teaser {
+              line-height: 1.3rem;
+            }
+
+            .tl_select {
+              background-color: #ECECED;
+              height: 25px;
+              margin: 0;
+              padding: 0 20px 0 4px;
+            }
+          }
+
+          > div:nth-child(2) {
+            padding: 0 1rem 1.5rem 1rem;
+
+            a {
+              display: block;
+              width: 100%;
+              border-radius: 5px;
+              color: #fff;
+              overflow: hidden;
+              background-color: $pdir-color;
+              padding: 1rem 0.1rem;
+              text-align: center;
+
+              &:hover {
+                color: #fff;
+              }
+            }
+          }
+        }
+
+        hr {
+          width: 25%;
+          text-align: left;
+          border-top: 1px solid #A7A7A7;
+        }
+
+        h2 {
+          width: 90%;
+        }
+        .feature_list {
+          width: 90%;
+          padding-bottom: 1rem;
+
+          li {
+            line-height: 1.3rem;
+          }
+
+          .free {
+            display: block;
+            background: url(../img/icon_plus.svg) left 0.4rem no-repeat;
+            background-size: 10px 10px;
+            padding-left: 1rem;
+          }
+
+          .chargeable {
+            display: block;
+            background: url(../img/icon_check.svg) left 0.4rem no-repeat;
+            background-size: 10px 10px;
+            padding-left: 1rem;
+          }
+        }
+      }
+    }
+    .template_box {
+      display: flex;
+      flex-direction: column;
+      flex: 0 1 299px;
+      overflow: hidden;
+
+      .template_offer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+        border: 1px solid $pdir-color;
+
+        > img {
+          padding: 1rem;
+        }
+        h2 {
+          line-height: 100%;
+          padding: 1rem 1rem 0 1rem;
+        }
+        p {
+          color: #333A46;
+          font-size: 60%;
+          padding: 0 1rem 1rem 0;
+        }
+        .img_container {
+          display: flex;
+          margin: 1rem;
+          flex-flow: row nowrap;
+          align-items: center;
+
+          > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 .be_maklermodul_setup {
   line-height: 1.2em;
 

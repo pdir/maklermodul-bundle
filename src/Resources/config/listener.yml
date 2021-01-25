@@ -1,6 +1,12 @@
-#services:
-#    contao_faq.listener.insert_tags:
-#        class: Contao\FaqBundle\EventListener\InsertTagsListener
-#        arguments:
-#            - "@contao.framework"
-#        public: true
+services:
+    _defaults:
+        autoconfigure: true
+
+    _instanceof:
+        Contao\CoreBundle\Framework\FrameworkAwareInterface:
+            calls:
+                - [setFramework, ['@contao.framework']]
+
+    pdir_maklermodul.listener.data_container:
+        class: Pdir\MaklermodulBundle\EventListener\DataContainerListener
+        public: true

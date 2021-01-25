@@ -20,6 +20,11 @@
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\Environment;
+use Contao\Config;
+use Contao\Controller;
+
+use Contao\Message;
 use Pdir\MaklermodulBundle\Util\Helper;
 
 class MaklermodulSetup extends \BackendModule
@@ -57,7 +62,7 @@ class MaklermodulSetup extends \BackendModule
      *
      * @var string
      */
-    protected $storageDirectoryPath;
+    public $storageDirectoryPath;
 
     /**
      * Demo data filename.
@@ -65,6 +70,11 @@ class MaklermodulSetup extends \BackendModule
      * @var string
      */
     protected $demoDataFilename = 'data/demo-data.zip';
+
+    private function __construct()
+    {
+        $this->storageDirectoryPath = Config::get('uploadPath').'/maklermodul/';
+    }
 
     public function debug($message)
     {
@@ -91,8 +101,6 @@ class MaklermodulSetup extends \BackendModule
      */
     protected function compile()
     {
-        $this->storageDirectoryPath = \Config::get('uploadPath').'/maklermodul/';
-
         // $className = '/vendor/pdir/maklermodul-bundle/src/Resources/contao/Classes/Helper.php';
         $strDomain = \Environment::get('httpHost');
 
@@ -102,25 +110,34 @@ class MaklermodulSetup extends \BackendModule
         switch (\Input::get('act')) {
             case 'emptyDataFolder':
                 $files->rrdir($this->storageDirectoryPath.'data', true);
-                $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+                // $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
             case 'emptyUploadFolder':
                 $files->rrdir($this->storageDirectoryPath.'upload', true);
-                $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+                // $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
             case 'emptyTmpFolder':
                 $files->rrdir($this->storageDirectoryPath.'org', true);
-                $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+                // $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
             case 'downloadDemoData':
                 $this->downloadDemoData();
-                $this->debugMessages[] = ['Demo Daten wurden heruntergeladen.', 'info'];
+                // $this->debugMessages[] = ['Demo Daten wurden heruntergeladen.', 'info'];
+                Message::addInfo('Demo Daten wurden heruntergeladen.');
                 break;
             default:
                 $this->Template->base = $this->Environment->base;
                 $this->Template->version = Helper::VERSION;
                 $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
         }
+
+        Controller::redirect(Controller::getReferer());
+        return;
+
+        // Controller::redirect(preg_replace('/(&amp;)?act=[^&]*/i', '', Environment::get('request')));
 
         $this->Template->extMode = static::MODE;
         $this->Template->extModeTxt = 'FULL' === static::MODE ? 'Vollversion' : 'Demo';

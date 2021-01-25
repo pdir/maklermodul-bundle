@@ -14,6 +14,13 @@
  * file that was distributed with this source code.
  */
 
+use Pdir\MaklermodulBundle\EventListener\ParseBackendTemplateListener;
+use Pdir\MaklermodulBundle\EventListener\ParseTemplateListener;
+use Pdir\MaklermodulBundle\Model\MaklerModel;
+use Pdir\MaklermodulBundle\Module\MaklermodulSetup;
+
+$assetsDir = 'bundles/pdirmaklermodul';
+
 /**
  * Backend modules.
  */
@@ -21,14 +28,15 @@ if (!is_array($GLOBALS['BE_MOD']['pdir'])) {
     array_insert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
 }
 
-$assetsDir = 'bundles/pdirmaklermodul';
-
 array_insert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodulSetup' => [
         'callback' => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
-        'icon' => $assetsDir.'/img/icon.png',
-        // 'javascript'        =>  $assetsDir . '/js/backend.min.js',
-        // 'stylesheet' => $assetsDir.'/css/backend.css',
+    ],
+]);
+
+array_insert($GLOBALS['BE_MOD']['pdir'], 0, [
+    'maklermodul' => [
+        'tables' => ['tl_makler'],
     ],
 ]);
 
@@ -44,6 +52,9 @@ $GLOBALS['FE_MOD']['pdirMaklermodul'] = [
 $GLOBALS['TL_CTE']['pdirMaklermodul'] = [
     'makler_headerImage' => 'Pdir\MaklermodulBundle\Module\HeaderImageView',
 ];
+
+#-- register Models
+$GLOBALS['TL_MODELS']['tl_makler']   = MaklerModel::class;
 
 /*
  * Hooks

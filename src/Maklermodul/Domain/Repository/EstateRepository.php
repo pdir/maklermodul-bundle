@@ -40,7 +40,7 @@ class EstateRepository
     {
         $fileNamePath = sprintf('%s%s.json', $this->storageDirectoryPath, $objectId);
 
-        if (!file_exists($fileNamePath)) {
+        if (null === \File($fileNamePath)) {
             return null;
         }
 
