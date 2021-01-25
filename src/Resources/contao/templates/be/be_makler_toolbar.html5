@@ -1,0 +1,109 @@
+<div id="pdirMaklerToolbar" class="be_makler_toolbar">
+  <div class="container">
+    <div class="logo"><a href="https://www.maklermodul.de" target="_blank"><img
+      src="bundles/pdirmaklermodul/img/logo.svg"
+      alt="Maklermodul für Contao" width="155" height="32" class="logo"></a>
+    </div>
+    <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
+      <a href="contao/main.php?do=maklermodulSetup&act=import&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
+        <img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="30" height="30" /> Import ausführen
+      </a>
+    </div>
+    <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
+      <a href="contao/main.php?do=maklermodulSetup&act=index&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
+        <img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="30" height="30" /> Index aufbauen
+      </a>
+    </div>
+  </div>
+</div>
+<div id="pdirMaklerInfo" class="be_makler_info">
+  <div class="bundle_description">
+    <div>
+      <h1 class="underline br_icon">
+          <?= $this->strBundleName; ?> (Version:&nbsp;<?= $this->version ?>)
+          <?php if(isset($this->syncVersion)): ?> - MaklermodulSync (Version: <?= $this->syncVersion ?>)<?php endif; ?>
+      </h1>
+      <h2><?= $this->strBundleGreeting ?></h2>
+      <p><?= $this->arrLANG['text'] ?></p>
+    </div>
+    <div>
+      <h2 class="underline"><?= $this->arrLANG['tools'] ?></h2>
+
+      <div class="flex">
+        <?php foreach($this->arrButtons as $button): ?>
+          <div class="button">
+            <a href="<?= $button['href'] ?>" onclick="<?= $button['onclick'] ?>">
+              <img src="<?= $button['image'] ?>" alt="<?= $button['alt'] ?>" width="40" height="40" />
+                <?= $button['alt'] ?>
+            </a>
+          </div>
+        <?php endforeach; ?>
+      </div>
+
+      <h2 class="underline"><?= $this->arrLANG['help_h2'] ?></h2>
+
+      <ul class="link-list">
+        <?php foreach($this->arrLinks as $link): ?>
+          <li><a href="<?= $link['href'] ?>" target="<?= $link['target'] ?>"><?= $link['html'] ?></a></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  </div>
+
+  <?php /* <div>
+    <h2><?= $this->arrLANG['optionalBundles'] ?></h2>
+
+    <div class="bundle_editions">
+
+      <div class="editions_list">
+
+      <?php
+        foreach($this->arrEditions as $edition => $data):
+        $ref = $this->arrLANG['editions'][$edition]; ?>
+
+          <div class="button_container">
+
+            <div class="button">
+              <div>
+                <div class="price"><?= $data['price']; ?>&euro;</div>
+                <div class="payment"><?= $ref['payment']; ?></div>
+                <hr align="left">
+                <div class="product"><?= $ref['product']; ?></div>
+                <div class="teaser"><?= $ref['teaser']; ?></div>
+              </div>
+
+              <?php if($data['product_link'] && $ref['button_text']): ?>
+                <div>
+                  <a href="<?= $data['product_link'] ?>"><?= $ref['button_text'] ?></a>
+                </div>
+              <?php endif; ?>
+            </div>
+
+            <h2><?= $this->arrLANG['editions'][$edition]['product']; ?> - Features</h2>
+
+            <ul class="feature_list">
+            <?php
+              foreach($this->arrLANG['editions'][$edition]['features'] as $feature):
+                switch($feature[0]):
+                  case '+':
+                    echo('<li><span class="free">' . substr($feature,1) . "</span></li>");
+                    break;
+                  case '-':
+                    ?>
+                    <hr align="left">
+                    <?php
+                    break;
+                  case '*':
+                    echo('<li><span class="chargeable">' . substr($feature,1) . "</span></li>");
+                endswitch;
+              endforeach
+            ?>
+            </ul>
+
+          </div>
+        <?php endforeach; ?>
+        </div>
+
+      </div>
+  </div> */ ?>
+</div>

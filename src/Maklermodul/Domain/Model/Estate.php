@@ -95,10 +95,19 @@ class Estate
     public static function sanizeFileName($strSource)
     {
         $validAliasCharacters = System::getContainer()->getParameter('pdir_maklermodul.validAliasCharacters');
+        $delimiter = System::getContainer()->getParameter('pdir_maklermodul.aliasDelimiter');
+        $locale = System::getContainer()->getParameter('pdir_maklermodul.aliasLocale');
+
+        $options = [
+            'delimiter' => $delimiter ? : '-',
+            'validChars' => $validAliasCharacters,
+            'locale' => $locale ? : '',
+        ];
+
+        // generate slug
+        $strValue = System::getContainer()->get('contao.slug')->generate($strSource, $options);
 
         // remove the prefix if "id-" is set
-        $strValue = System::getContainer()->get('contao.slug')->generate($strSource, ['validChars' => $validAliasCharacters]);
-
         if (strpos($strValue,"id-")!==false && !is_numeric($strSubstr = substr($strValue, 3)))
         {
             $strValue = substr($strValue, 3);
