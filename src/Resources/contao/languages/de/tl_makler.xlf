@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="src/Resources/contao/languages/en/tl_makler.php" source-language="en" target-language="de">
+        <body>
+            <trans-unit id="tl_makler.makler_legend">
+                <source>Estates</source>
+                <target>Immobilien</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.name.0">
+                <source>Estate name</source>
+                <target>Objektname</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.name.1">
+                <source>Please add estate name here.</source>
+                <target>Gib hier bitte den Objektnamen an.</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.alias.0">
+                <source>Alias</source>
+                <target>Alias</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.alias.1">
+                <source>Please add alias here.</source>
+                <target>Gib hier bitte den Alias an.</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.intern.0">
+                <source>Internal number</source>
+                <target>Interne Objektnummer</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.intern.1">
+                <source>Please add internal number here.</source>
+                <target>Gib hier bitte die interne Ojektnummer an.</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.extern.0">
+                <source>External number</source>
+                <target>Externe Objektnummer</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.extern.1">
+                <source>Please add external number here.</source>
+                <target>Gib hier bitte die externe Ojektnummer an.</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.anid.0">
+                <source>ANID</source>
+                <target>ANID</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.anid.1">
+                <source>Please add Open Immo Anbieternummer (ANID) here.</source>
+                <target>Gib hier bitte die Open Immo Anbieternummer an.</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.obid.0">
+                <source>OBID</source>
+                <target>OBID</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.obid.1">
+                <source>Please add Open Immo Objektnummer (OBID) here.</source>
+                <target>Gib hier bitte die Open Immo Objektnummer an.</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.tstamp.0">
+                <source>Added at</source>
+                <target>Hinzugefügt am</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.tstamp.1">
+                <source>When was the object added?</source>
+                <target>Wann wurde das Objekt hinzugefügt?</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.lastUpdate.0">
+                <source>Last update</source>
+                <target>Zuletzt geändert am</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.lastUpdate.1">
+                <source>When was the object last changed?</source>
+                <target>Wann wurde das Objekt hinzugefügt?</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.visible.0">
+                <source>Visible</source>
+                <target>Sichtbar</target>
+            </trans-unit>
+            <trans-unit id="tl_makler.visible.1">
+                <source>Is the object already archived?</source>
+                <target>Ist das Objekt bereits archiviert?</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

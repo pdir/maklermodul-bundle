@@ -25,6 +25,7 @@ use Contao\Config;
 use Contao\Controller;
 
 use Contao\Message;
+use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Util\Helper;
 
 class MaklermodulSetup extends \BackendModule
@@ -135,22 +136,6 @@ class MaklermodulSetup extends \BackendModule
         }
 
         Controller::redirect(Controller::getReferer());
-        return;
-
-        // Controller::redirect(preg_replace('/(&amp;)?act=[^&]*/i', '', Environment::get('request')));
-
-        $this->Template->extMode = static::MODE;
-        $this->Template->extModeTxt = 'FULL' === static::MODE ? 'Vollversion' : 'Demo';
-        $this->Template->version = Helper::VERSION;
-        $this->Template->hostname = gethostname();
-        $this->Template->ip = \Environment::get('server');
-        $this->Template->domain = $strDomain;
-
-        $this->Template->params = $this->configParameters; // for debug
-        $this->Template->debugMessages = $this->getDebugMessages();
-
-        // email body
-        $this->Template->emailBody = $this->getEmailBody();
     }
 
     protected function getEmailBody()
@@ -186,10 +171,32 @@ class MaklermodulSetup extends \BackendModule
             } catch (\Exception $e) {
                 \Message::addError($e->getMessage());
             }
+
+            // add to makler table
+            if (strpos($objArchive->file_name, '.json') &&
+                strpos($objArchive->file_name, '00index') === false &&
+                strpos($objArchive->file_name, 'key-index') === false) {
+              $this->addObjectToMaklerTable(str_replace('.json', '', $objArchive->file_name));
+            }
         }
 
         // Regenerating Symlinks
         $this->import('Automator');
         $this->Automator->generateSymlinks();
+    }
+
+    protected function addObjectToMaklerTable($slug)
+    {
+        /* use MaklerModel */
+        $maklerModel = new MaklerModel();
+
+        $maklerModel->name = $slug;
+        $maklerModel->alias = $slug;
+        $maklerModel->obid = $maklerModel->intern = $maklerModel->extern = 'demo';
+        $maklerModel->visible = 1;
+        $maklerModel->tstamp = time();
+
+        // save model
+        $maklerModel->save();
     }
 }

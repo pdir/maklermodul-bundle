@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="src/Resources/contao/languages/en/tl_makler.php" source-language="en">
+        <body>
+            <trans-unit id="tl_makler.makler_legend">
+                <source>Estates</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.name.0">
+                <source>Estate name</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.name.1">
+                <source>Please add estate name here.</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.alias.0">
+                <source>Alias</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.alias.1">
+                <source>Please add alias here.</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.intern.0">
+                <source>Internal number</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.intern.1">
+                <source>Please add internal number here.</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.extern.0">
+                <source>External number</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.extern.1">
+                <source>Please add external number here.</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.anid.0">
+                <source>ANID</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.anid.1">
+                <source>Please add Open Immo Anbieternummer (ANID) here.</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.obid.0">
+                <source>OBID</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.obid.1">
+                <source>Please add Open Immo Objektnummer (OBID) here.</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.tstamp.0">
+                <source>Added at</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.tstamp.1">
+                <source>When was the object added?</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.lastUpdate.0">
+                <source>Last update</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.lastUpdate.1">
+                <source>When was the object last changed?</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.visible.0">
+                <source>Visible</source>
+            </trans-unit>
+            <trans-unit id="tl_makler.visible.1">
+                <source>Is the object already archived?</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -22,16 +22,16 @@ $GLOBALS['TL_DCA'][$tableName] = [
     // List
     'list' => [
         'sorting' => [
-            'mode'              => 1,
+            'mode'              => 2,
             'fields'            => ['extern', 'name', 'tstamp', 'lastUpdate'],
-            'panelLayout'       => 'filter;search,limit',
-            'headerFields'      => ['name'],
+            'panelLayout'       => 'sort,filter;search,limit',
+            'headerFields'      => ['extern', 'name', 'tstamp', 'lastUpdate'],
             'paste_button_callback' => [DataContainerListener::class, 'renderToolbar']
         ],
         'label' => [
             'fields'            => ['extern', 'name', 'tstamp', 'lastUpdate'],
             'showColumns'      => true,
-            'format'            => '%s, %s, %s, %s',
+            'format'            => '<span style="color:#999;padding-right:3px">[%s]</span> %s, %s, %s',
         ],
         'global_operations' => [
             'all' => [
@@ -100,7 +100,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
-            'eval'                    => ['rgxp'=>'folderalias', 'doNotCopy'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'],
+            'eval'                    => ['rgxp'=>'folderalias', 'doNotCopy'=>true, 'maxlength'=>255, 'tl_class'=>'w50'],
             'sql'                     => "varchar(255) BINARY NOT NULL default ''"
         ],
         'anid' => [
@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'sorting'   => true,
             'filter'    => true,
             'search'    => true,
-            'eval'      => ['tl_class'=>'w50'],
+            'eval'      => ['tl_class'=>'w50 clr'],
             'sql'       => "text() NOT NULL"
         ],
         'obid' => [
@@ -148,11 +148,11 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'exclude'   => true,
             'inputType' => 'checkbox',
             'default'   => 1,
-            'eval'      => ['tl_class'=>'w50'],
+            'eval'      => ['tl_class'=>'w50 clr'],
             'sql'       => "char(1) NOT NULL default ''"
         ],
         'lastUpdate' => [
-            'label'     => &$GLOBALS['TL_LANG'][$tableName]['visible'],
+            'label'     => &$GLOBALS['TL_LANG'][$tableName]['lastUpdate'],
             'exclude'   => true,
             'inputType' => 'datetime',
             'sorting'   => true,

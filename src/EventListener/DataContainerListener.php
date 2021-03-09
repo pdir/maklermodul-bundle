@@ -5,6 +5,7 @@ namespace Pdir\MaklermodulBundle\EventListener;
 use Contao\Config;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\BackendTemplate;
+use Contao\Date;
 use Contao\DataContainer;
 use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
@@ -13,6 +14,21 @@ use Pdir\MaklermodulBundle\Util\Helper;
 
 class DataContainerListener
 {
+    /**
+     * @Callback(table="tl_makler", target="list.label.label")
+     */
+    public function onLabelCallback(array $row): string
+    {
+        return sprintf(
+            '<span style="color: #999;">[%s]</span> %s<span style="color: #999; margin-left: .5em;">⭳ %s</span>' .
+            '<span style="color: #589b0e; margin-left: .5em;">↦ %s</span>',
+            $row['extern'],
+            $row['name'],
+            Date::parse(Config::get('datimFormat'), $row['tstamp']),
+            Date::parse(Config::get('datimFormat'), $row['lastUpdate'])
+        );
+    }
+
     /**
      * @Callback(table="tl_makler", target="list.global_operations.toolbar.button", priority=1)
      */
