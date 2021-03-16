@@ -17,6 +17,9 @@ $GLOBALS['TL_DCA'][$tableName] = [
         'ondelete_callback' => [
             [DataContainerListener::class, 'deleteObject']
         ],
+        'onsubmit_callback' => [
+            [DataContainerListener::class, 'saveObject']
+        ]
     ],
 
     // List
@@ -70,7 +73,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
     // Palettes
     'palettes' => [
         '__selector__'  => [],
-        'default'       => '{makler_legend},name,alias,anid,obid,intern,extern,visible,lastUpdate;'
+        'default'       => '{makler_legend},name,alias,anid,obid,intern,extern,tstamp,lastUpdate,visible;'
     ],
 
     // Subpalettes
@@ -111,7 +114,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter'    => true,
             'search'    => true,
             'eval'      => ['tl_class'=>'w50 clr'],
-            'sql'       => "text() NOT NULL"
+            'sql'       => "text() NOT NULL default ''"
         ],
         'obid' => [
             'label'     => &$GLOBALS['TL_LANG'][$tableName]['obid'],
@@ -121,7 +124,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter'    => true,
             'search'    => true,
             'eval'      => ['tl_class'=>'w50'],
-            'sql'       => "text() NOT NULL"
+            'sql'       => "text() NOT NULL default ''"
         ],
         'intern' => [
             'label'     => &$GLOBALS['TL_LANG'][$tableName]['intern'],
@@ -131,7 +134,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter'    => true,
             'search'    => true,
             'eval'      => ['tl_class'=>'w50'],
-            'sql'       => "text() NOT NULL"
+            'sql'       => "text() NOT NULL default ''"
         ],
         'extern' => [
             'label'     => &$GLOBALS['TL_LANG'][$tableName]['extern'],
@@ -141,24 +144,22 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter'    => true,
             'search'    => true,
             'eval'      => ['tl_class'=>'w50'],
-            'sql'       => "text() NOT NULL"
+            'sql'       => "text() NOT NULL default ''"
         ],
         'visible' => [
             'label'     => &$GLOBALS['TL_LANG'][$tableName]['visible'],
             'exclude'   => true,
             'inputType' => 'checkbox',
-            'default'   => 1,
             'eval'      => ['tl_class'=>'w50 clr'],
-            'sql'       => "char(1) NOT NULL default ''"
+            'sql'       => "char(1) NOT NULL default '1'"
         ],
         'lastUpdate' => [
             'label'     => &$GLOBALS['TL_LANG'][$tableName]['lastUpdate'],
             'exclude'   => true,
             'inputType' => 'datetime',
             'sorting'   => true,
-            'default'   => 1,
             'eval'      => ['rgxp'=>'datim', 'tl_class'=>'w50'],
-            'sql'       => "varchar(10) NOT NULL default ''"
+            'sql'       => "varchar(10) NOT NULL default ''",
         ],
     ]
 ];

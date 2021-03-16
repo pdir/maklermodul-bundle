@@ -9,6 +9,7 @@ use Contao\Date;
 use Contao\DataContainer;
 use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
+use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Module\MaklermodulSetup;
 use Pdir\MaklermodulBundle\Util\Helper;
 
@@ -24,7 +25,7 @@ class DataContainerListener
             '<span style="color: #589b0e; margin-left: .5em;">↦ %s</span>',
             $row['extern'],
             $row['name'],
-            Date::parse(Config::get('datimFormat'), $row['tstamp']),
+            Date::parse(Config::get('datimFormat'), $row['tstamp'] ? : '-'),
             Date::parse(Config::get('datimFormat'), $row['lastUpdate'])
         );
     }
@@ -74,6 +75,22 @@ class DataContainerListener
         }
 
         $this->deleteObjectFiles($dc->activeRecord->alias);
+    }
+
+    /**
+     * @Callback(table="tl_makler", target="config.onsubmit", priority=1)
+     */
+    public function saveObject(DataContainer $dc): void
+    {
+        if (!$dc->activeRecord) {
+            return;
+        }
+
+        // update item
+        /** @var MaklerModel $maklerModel */
+        $maklerModel = MaklerModel::findByPk($dc->activeRecord->id);
+        $maklerModel->lastUpdate = time();
+        $maklerModel->save();
     }
 
     private function deleteObjectFiles($identifier) {
