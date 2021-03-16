@@ -20,15 +20,16 @@
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\BackendModule;
+use Contao\Database;
 use Contao\Environment;
 use Contao\Config;
 use Contao\Controller;
-
 use Contao\Message;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Util\Helper;
 
-class MaklermodulSetup extends \BackendModule
+class MaklermodulSetup extends BackendModule
 {
     /**
      * Extension mode.
@@ -72,11 +73,6 @@ class MaklermodulSetup extends \BackendModule
      */
     protected $demoDataFilename = 'data/demo-data.zip';
 
-    private function __construct()
-    {
-        $this->storageDirectoryPath = Config::get('uploadPath').'/maklermodul/';
-    }
-
     public function debug($message)
     {
         if (!is_array($message)) {
@@ -102,16 +98,27 @@ class MaklermodulSetup extends \BackendModule
      */
     protected function compile()
     {
+        // set upload folder
+        $this->storageDirectoryPath = Config::get('uploadPath').'/maklermodul/';
+
         // $className = '/vendor/pdir/maklermodul-bundle/src/Resources/contao/Classes/Helper.php';
-        $strDomain = \Environment::get('httpHost');
+        $strDomain = Environment::get('httpHost');
 
         /* @todo empty cache folder from backend */
         $files = \Files::getInstance();
 
         switch (\Input::get('act')) {
+            case 'index':
+                $this->setActIndexFile();
+                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['index']);
+                break;
             case 'emptyDataFolder':
                 $files->rrdir($this->storageDirectoryPath.'data', true);
-                // $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
+
+                // truncate makler table
+                $objDatabase = Database::getInstance();
+                $objDatabase->execute("TRUNCATE TABLE tl_makler");
+
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
             case 'emptyUploadFolder':
@@ -198,5 +205,11 @@ class MaklermodulSetup extends \BackendModule
 
         // save model
         $maklerModel->save();
+    }
+
+    protected function setActIndexFile()
+    {
+        $objDatabase = Database::getInstance();
+        $objDatabase->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE type=?')->execute('00index-demo-00001.json', 'immoListView');
     }
 }
