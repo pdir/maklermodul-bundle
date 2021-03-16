@@ -24,15 +24,18 @@ namespace Pdir\MaklermodulBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
-class PdirMaklermodulExtension extends Extension
+class PdirMaklermodulExtension extends ConfigurableExtension
 {
     /**
-     * {@inheritdoc}
+     * Configures the passed container according to the merged configuration.
+     *
+     * @param array            $mergedConfig
+     * @param ContainerBuilder $container
      */
-    public function load(array $mergedConfig, ContainerBuilder $container): void
+    public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(
             $container,
@@ -41,5 +44,12 @@ class PdirMaklermodulExtension extends Extension
 
         $loader->load('listener.yml');
         $loader->load('services.yml');
+
+        $container->setParameter('pdir_maklermodul.aliasPrefix', $mergedConfig['aliasPrefix']);
+        $container->setParameter('pdir_maklermodul.alias', $mergedConfig['alias']);
+        $container->setParameter('pdir_maklermodul.aliasSuffix', $mergedConfig['aliasSuffix']);
+        $container->setParameter('pdir_maklermodul.validAliasCharacters', $mergedConfig['validAliasCharacters']);
+        $container->setParameter('pdir_maklermodul.aliasDelimiter', $mergedConfig['aliasDelimiter']);
+        $container->setParameter('pdir_maklermodul.aliasLocale', $mergedConfig['aliasLocale']);
     }
 }
