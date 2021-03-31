@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-    <file datatype="php" original="system/modules/news/languages/en/modules.php" source-language="en">
+    <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en" target-language="de">
         <body>
             <trans-unit id="MOD.makler_modul_mplus">
                 <source>estate modul</source>
@@ -46,34 +46,44 @@
             <trans-unit id="MOD.maklerSetup.message.import">
                 <source>Import wurde ausgeführt.</source>
             </trans-unit>
-
             <trans-unit id="MOD.maklerSetup.message.index">
                 <source>Index wurde aufgebaut.</source>
             </trans-unit>
-
             <trans-unit id="MOD.maklerSetup.message.emptyFolder">
                 <source>Folder was emptied</source>
                 <target>Ordner wurde geleert</target>
             </trans-unit>
+            <trans-unit id="MOD.maklerSetup.message.downloadDemoData">
+                <source>Demo data has downloaded.</source>
+                <target>Demo-Daten wurden heruntergeladen.</target>
+            </trans-unit>
 
+            <trans-unit id="MOD.maklerSetup.label.runImport">
+                <source>Run import</source>
+                <target>Import ausführen</target>
+            </trans-unit>
+            <trans-unit id="MOD.maklerSetup.label.rebuildIndex">
+                <source>Rebuild index</source>
+                <target>Index aufbauen</target>
+            </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.emptyDataFolder">
-                <source>empty data folder</source>
+                <source>Empty data folder</source>
                 <target>Data Ordner leeren</target>
             </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.emptyTmpFolder">
-                <source>empty temp folder</source>
+                <source>Empty temp folder</source>
                 <target>Temp Ordner leeren</target>
             </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.emptyUploadFolder">
-                <source>empty upload folder</source>
+                <source>Empty upload folder</source>
                 <target>Upload Ordner leeren</target>
             </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.downloadDemoData">
-                <source>download demo data</source>
+                <source>Download demo data</source>
                 <target>Demodaten herunterladen</target>
             </trans-unit>
             <trans-unit id="MOD.makler_modul_mplus">
-                <source>estate modul</source>
+                <source>Estate modul</source>
                 <target>makler modul</target>
             </trans-unit>
 

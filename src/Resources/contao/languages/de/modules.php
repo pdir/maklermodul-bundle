@@ -21,7 +21,7 @@ use Contao\System;
  * Module translation.
  */
 $GLOBALS['TL_LANG']['MOD']['pdir'][0] = 'pdir Apps';
-$GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][0] = 'Maklermodul Setup';
+$GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][0] = 'Maklermodul';
 $GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][1] = 'Verwalten Sie hier Ihr Maklermodul';
 
 
@@ -54,7 +54,7 @@ $GLOBALS['TL_LANG']['MOD']['maklermodul']['setupLinks'] = [
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['editions']['free'] = [
     'payment' => 'free',
     'product' => 'Free',
-    'teaser' => 'Start with the basics. Show your reviews.',
+    'teaser' => 'Start with the basics. Show your estates.',
     //'button_text' => 'jetzt herunterladen',
     'features' => ['+Maintain ratings', '+1 standard template', '-'],
 ];
@@ -87,6 +87,3 @@ $GLOBALS['TL_LANG']['MOD']['maklermodul']['editions']['immoscoutSync'] = [
         '*Fully automatic sync of your ratings from <strong>one platform<sup>*</sup></strong>',
     ],
 ];
-
-/* kann weg */
-$GLOBALS['TL_LANG']['MAKLERMODUL']['emailBody'] = '<br>Hallo pdir Team,<br><br>wir haben die Maklermodul Schnittstelle für Contao 4 installiert, getestet und würden diese gerne erwerben und für unseren Kunden einsetzten.<br><br>Die Domain lautet: [HIER DOMAIN ANGEBEN] <br><br>Die Rechnung soll auf folgende Adresse ausgestellt werden:<br><br>[HIER RECHNUNGSANSCHRIFT ANGEBEN]<br><br>Die Serverdaten aus dem Backend lauten wie folgt:<br>IP: :IP:<br>Hostname: :HOST: <br>Domain: :DOMAIN: <br><br>Mit freundlichen Grüßen<br>';

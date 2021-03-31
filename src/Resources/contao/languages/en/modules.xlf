@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-    <file datatype="php" original="system/modules/news/languages/en/modules.php" source-language="en">
+    <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en">
         <body>
             <trans-unit id="MOD.makler_modul_mplus">
                 <source>estate modul</source>
@@ -36,26 +36,36 @@
             <trans-unit id="MOD.maklerSetup.message.import">
                 <source>Import wurde ausgeführt.</source>
             </trans-unit>
-
             <trans-unit id="MOD.maklerSetup.message.index">
                 <source>Index wurde aufgebaut.</source>
             </trans-unit>
-
             <trans-unit id="MOD.maklerSetup.message.emptyFolder">
-                <source>Folder was emptied</source>
+                <source>Folder was emptied.</source>
+            </trans-unit>
+            <trans-unit id="MOD.maklerSetup.message.downloadDemoData">
+                <source>Demo data has downloaded.</source>
             </trans-unit>
 
+            <trans-unit id="MOD.maklerSetup.label.runImport">
+                <source>Run import</source>
+            </trans-unit>
+            <trans-unit id="MOD.maklerSetup.label.rebuildIndex">
+                <source>Rebuild index</source>
+            </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.emptyDataFolder">
-                <source>empty data folder</source>
+                <source>Empty data folder</source>
             </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.emptyTmpFolder">
-                <source>empty temp folder</source>
+                <source>Empty temp folder</source>
             </trans-unit>
             <trans-unit id="MOD.maklerSetup.label.emptyUploadFolder">
-                <source>empty upload folder</source>
+                <source>Empty upload folder</source>
+            </trans-unit>
+            <trans-unit id="MOD.maklerSetup.label.downloadDemoData">
+                <source>Download demo data</source>
             </trans-unit>
             <trans-unit id="MOD.makler_modul_mplus">
-                <source>estate modul</source>
+                <source>Estate modul</source>
             </trans-unit>
 
             <trans-unit id="MOD.maklermodulPrivacy">

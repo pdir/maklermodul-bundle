@@ -6,12 +6,14 @@
     </div>
     <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
       <a href="contao/main.php?do=maklermodulSetup&act=import&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
-        <img src="bundles/pdirmaklermodul/img/icon_import.png" alt="Import ausführen" width="30" height="30" /> Import ausführen
+        <img src="bundles/pdirmaklermodul/img/icon_import.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['runImport'] ?>" width="30" height="30" />
+        <?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['runImport'] ?>
       </a>
     </div>
     <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
       <a href="contao/main.php?do=maklermodulSetup&act=index&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
-        <img src="bundles/pdirmaklermodul/img/icon_index.png" alt="Index aufbauen" width="30" height="30" /> Index aufbauen
+        <img src="bundles/pdirmaklermodul/img/icon_index.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['rebuildIndex'] ?>" width="30" height="30" />
+        <?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['rebuildIndex'] ?>
       </a>
     </div>
   </div>

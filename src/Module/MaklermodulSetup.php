@@ -123,18 +123,15 @@ class MaklermodulSetup extends BackendModule
                 break;
             case 'emptyUploadFolder':
                 $files->rrdir($this->storageDirectoryPath.'upload', true);
-                // $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
             case 'emptyTmpFolder':
                 $files->rrdir($this->storageDirectoryPath.'org', true);
-                // $this->debugMessages[] = [$GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder'], 'info'];
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
             case 'downloadDemoData':
                 $this->downloadDemoData();
-                // $this->debugMessages[] = ['Demo Daten wurden heruntergeladen.', 'info'];
-                Message::addInfo('Demo Daten wurden heruntergeladen.');
+                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['downloadDemoData']);
                 break;
             default:
                 $this->Template->base = $this->Environment->base;
@@ -143,14 +140,6 @@ class MaklermodulSetup extends BackendModule
         }
 
         Controller::redirect(Controller::getReferer());
-    }
-
-    protected function getEmailBody()
-    {
-        $arrSearch = [':IP:', ':HOST:', ':DOMAIN:', '<br>'];
-        $arrReplace = [$this->Template->ip, $this->Template->hostname, $this->Template->domain, '%0d%0a'];
-
-        return str_replace($arrSearch, $arrReplace, $GLOBALS['TL_LANG']['MAKLERMODUL']['emailBody']);
     }
 
     protected function downloadDemoData()
