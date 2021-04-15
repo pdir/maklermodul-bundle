@@ -29,7 +29,7 @@
     "contao/core-bundle": "^4.9"
   },
   "require-dev": {
-    "contao/test-case": "^1.4.1",
+    "contao/test-case": "^4.0",
     "php-http/guzzle6-adapter": "^1.1",
     "phpunit/phpunit": "^7.0",
     "symfony/phpunit-bridge": "^4.1.12"
