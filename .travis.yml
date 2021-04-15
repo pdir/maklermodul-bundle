@@ -12,18 +12,28 @@ env:
 matrix:
   include:
   - php: 7.2
-    env: CONTAO_VERSION='4.4.*'
+    env: CONTAO_VERSION='4.10.*'
   - php: 7.3
-    env: CONTAO_VERSION='4.4.*'
-  - php: 7.1
-    env: CONTAO_VERSION='4.7.*'
+    env: CONTAO_VERSION='4.10.*'
+  - php: 7.4
+    env: CONTAO_VERSION='4.10.*'
+  - php: 8.0
+    env: CONTAO_VERSION='4.10.*'
   - php: 7.2
-    env: CONTAO_VERSION='4.7.*'
+    env: CONTAO_VERSION='4.11.*'
   - php: 7.3
-    env: CONTAO_VERSION='4.7.*'
+    env: CONTAO_VERSION='4.11.*'
+  - php: 7.4
+    env: CONTAO_VERSION='4.11.*'
+  - php: 8.0
+    env: CONTAO_VERSION='4.11.*'
   - php: 7.2
     env: CONTAO_VERSION='4.9.*'
   - php: 7.3
+    env: CONTAO_VERSION='4.9.*'
+  - php: 8.0
+    env: CONTAO_VERSION='4.9.*'
+  - php: 7.4
     env: COVERAGE=1 CONTAO_VERSION='4.9.*'
   allow_failures:
   - env: COVERAGE=1 DEFAULT=0
