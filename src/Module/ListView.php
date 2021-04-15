@@ -77,8 +77,15 @@ class ListView extends \Module
             $this->strTemplate = $this->arrData['immo_listTemplate'];
         }
 
-        if($this->arrData['immo_readerPage']) {
-            $this->detailPage = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage'])->current();
+        /** @var PageModel $pageModel */
+        $pageModel = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage']);
+
+        if($pageModel === null) {
+            throw new \InvalidArgumentException(sprintf('%s [ID %s]', $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'], $objModule->id));
+        }
+
+        if($pageModel !== null) {
+            $this->detailPage = $pageModel->current();
         }
     }
 
@@ -291,6 +298,8 @@ class ListView extends \Module
         $pages = [];
 
         $objFile = new \File($this->getListSourceUri(true));
+
+        // get data from json
         $json = json_decode($objFile->getContent(), true);
 
         if($this->arrData['immo_listSort'])
