@@ -19,8 +19,6 @@ matrix:
     env: CONTAO_VERSION='4.10.*'
   - php: 8.0
     env: CONTAO_VERSION='4.10.*'
-  - php: 7.2
-    env: CONTAO_VERSION='4.11.*'
   - php: 7.3
     env: CONTAO_VERSION='4.11.*'
   - php: 7.4
