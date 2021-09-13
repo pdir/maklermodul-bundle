@@ -1,6 +1,10 @@
 # Changelog
 
-## [2.7.7](https://github.com/pdir/maklermodul-bundle/tree/2.7.7) – 2021-05-17
+## [2.7.8](https://github.com/pdir/maklermodul-bundle/tree/2.7.7) – 2021-09-13
+
+- [fix] fix import with database strict mode
+
+## [2.7.7](https://github.com/pdir/maklermodul-bundle/tree/2.7.7) – 2021-05-20
 
 - [fix] fix scss error in maklermodul_backend.scss
 

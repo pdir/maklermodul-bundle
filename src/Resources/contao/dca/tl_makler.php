@@ -114,7 +114,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter'    => true,
             'search'    => true,
             'eval'      => ['tl_class'=>'w50 clr'],
-            'sql'       => "text() NOT NULL default ''"
+            'sql'       => "text() NULL default"
         ],
         'obid' => [
             'label'     => &$GLOBALS['TL_LANG'][$tableName]['obid'],
