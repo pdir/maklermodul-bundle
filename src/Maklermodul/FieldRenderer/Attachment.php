@@ -243,7 +243,7 @@ class Attachment extends FieldRenderer
             if ('REMOTE' === $location) {
                 $url = str_replace('.jpg', '_small.jpg', $url);
             }
-            if ('EXTERN' === $location) {
+            if ('EXTERN' === $location || 'INTERN' === $location) {
                 $path = $this->resizeImage($path, $width, $height, $mode);
                 $url = $this->getUrlOfPath($path);
             }
@@ -258,7 +258,7 @@ class Attachment extends FieldRenderer
             if ('REMOTE' === $location) {
                 $url = str_replace('.jpg', '_small.jpg', $url);
             }
-            if ('EXTERN' === $location) {
+            if ('EXTERN' === $location || 'INTERN' === $location) {
                 $url = $this->getUrlOfPath($path);
             }
 
