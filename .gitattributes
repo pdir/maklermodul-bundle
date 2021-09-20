@@ -12,3 +12,11 @@
 *.ttf binary
 *.woff binary
 *.woff2 binary
+
+/.ecs
+/.github export-ignore
+/tests export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/phpunit.xml.dist export-ignore
+/.travis.yml export-ignore
