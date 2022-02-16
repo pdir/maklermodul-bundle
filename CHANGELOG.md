@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-02-16
+
+- [feature] add php 8 support
+
 ## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.8) – 2021-09-15
 
 - [fix] fix import for internal attachments
