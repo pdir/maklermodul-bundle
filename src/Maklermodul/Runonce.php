@@ -54,7 +54,7 @@ class Runonce
     /**
      * Run file migrations.
      */
-    public function run()
+    public static function run()
     {
         if (!file_exists(self::strFolder)) {
             new \Folder(self::strFolder);
