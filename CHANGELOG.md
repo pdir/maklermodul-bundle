@@ -3,6 +3,7 @@
 ## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-03-18
 
 - [feature] add php 8 support
+- [info] remove patchwork/utf8
 
 ## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.8) – 2021-09-15
 
