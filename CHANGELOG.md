@@ -1,15 +1,9 @@
 # Changelog
 
-## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-02-16
+## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-03-18
 
 - [feature] add php 8 support
-
-## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.8) – 2021-09-15
-
 - [fix] fix import for internal attachments
-
-## [2.7.8](https://github.com/pdir/maklermodul-bundle/tree/2.7.8) – 2021-09-13
-
 - [fix] fix import with database strict mode
 
 ## [2.7.7](https://github.com/pdir/maklermodul-bundle/tree/2.7.7) – 2021-05-20
