@@ -30,7 +30,7 @@ $assetsDir = 'bundles/pdirmaklermodul';
 /**
  * Backend modules.
  */
-if (empty($GLOBALS['BE_MOD']['pdir'])) {
+if (!isset($GLOBALS['BE_MOD']['pdir'])) {
     ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
 }
 
