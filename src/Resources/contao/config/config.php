@@ -14,27 +14,33 @@
  * file that was distributed with this source code.
  */
 
+use Contao\ArrayUtil;
+use Contao\Combiner;
 use Pdir\MaklermodulBundle\EventListener\ParseBackendTemplateListener;
 use Pdir\MaklermodulBundle\EventListener\ParseTemplateListener;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
+use Pdir\MaklermodulBundle\Module\DetailView;
+use Pdir\MaklermodulBundle\Module\HeaderImageView;
+use Pdir\MaklermodulBundle\Module\ListView;
 use Pdir\MaklermodulBundle\Module\MaklermodulSetup;
+use Pdir\MaklermodulBundle\Util\Helper;
 
 $assetsDir = 'bundles/pdirmaklermodul';
 
 /**
  * Backend modules.
  */
-if (!is_array($GLOBALS['BE_MOD']['pdir'])) {
-    array_insert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
+if (empty($GLOBALS['BE_MOD']['pdir'])) {
+    ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
 }
 
-array_insert($GLOBALS['BE_MOD']['pdir'], 0, [
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodulSetup' => [
-        'callback' => 'Pdir\MaklermodulBundle\Module\MaklermodulSetup',
+        'callback' => MaklermodulSetup::class,
     ],
 ]);
 
-array_insert($GLOBALS['BE_MOD']['pdir'], 0, [
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodul' => [
         'tables' => ['tl_makler'],
     ],
@@ -44,13 +50,13 @@ array_insert($GLOBALS['BE_MOD']['pdir'], 0, [
  * Frontend modules
  */
 $GLOBALS['FE_MOD']['pdirMaklermodul'] = [
-    'immoListView' => 'Pdir\MaklermodulBundle\Module\ListView',
-    'immoDetailView' => 'Pdir\MaklermodulBundle\Module\DetailView',
-    'immoHeaderImageView' => 'Pdir\MaklermodulBundle\Module\HeaderImageView',
+    'immoListView' => ListView::class,
+    'immoDetailView' => DetailView::class,
+    'immoHeaderImageView' => HeaderImageView::class
 ];
 
 $GLOBALS['TL_CTE']['pdirMaklermodul'] = [
-    'makler_headerImage' => 'Pdir\MaklermodulBundle\Module\HeaderImageView',
+    'makler_headerImage' => HeaderImageView::class,
 ];
 
 #-- register Models
@@ -59,12 +65,10 @@ $GLOBALS['TL_MODELS']['tl_makler']   = MaklerModel::class;
 /*
  * Hooks
  */
-$GLOBALS['TL_HOOKS']['getSearchablePages'][] = ['Pdir\MaklermodulBundle\Util\Helper', 'addProductsToSearchIndex'];
-$GLOBALS['TL_HOOKS']['parseTemplate'][] = ['Pdir\MaklermodulBundle\Util\Helper', 'addListPagination'];
-$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][]  = ['Pdir\MaklermodulBundle\Util\Helper', 'parseOpenImmoFeedbackTemplate'];
-$GLOBALS['TL_HOOKS']['addPrivacyWidget'][] = ['Pdir\MaklermodulBundle\Util\Helper', 'addPrivacyWidget'];
-// $GLOBALS['TL_HOOKS']['getPageIdFromUrl'][]    	= array('MaklerModulMplus\DetailViewHooks', 'hookGetPageIdFromUrl');
-// $GLOBALS['TL_HOOKS']['generateBreadcrumb'][]     = array('MaklerModulMplus\Helper', 'addProductToBreadcrumb');
+$GLOBALS['TL_HOOKS']['getSearchablePages'][] = [Helper::class, 'addProductsToSearchIndex'];
+$GLOBALS['TL_HOOKS']['parseTemplate'][] = [Helper::class, 'addListPagination'];
+$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][]  = [Helper::class, 'parseOpenImmoFeedbackTemplate'];
+$GLOBALS['TL_HOOKS']['addPrivacyWidget'][] = [Helper::class, 'addPrivacyWidget'];
 
 /*
  * auto items
@@ -76,14 +80,14 @@ $GLOBALS['TL_AUTO_ITEM'][] = 'estate';
  */
 if (TL_MODE == 'BE')
 {
-    if (!is_array($GLOBALS['TL_JAVASCRIPT']))
+    if (empty($GLOBALS['TL_JAVASCRIPT']))
     {
         $GLOBALS['TL_JAVASCRIPT'] = [];
     }
 
     $GLOBALS['TL_JAVASCRIPT'][] =  $assetsDir . '/js/backend.js|static';
 
-    $combiner = new \Combiner();
+    $combiner = new Combiner();
     $combiner->add($assetsDir . '/css/maklermodul_backend.scss');
     $GLOBALS['TL_CSS'][] = str_replace("TL_ASSETS_URL","",$combiner->getCombinedFile());
 }

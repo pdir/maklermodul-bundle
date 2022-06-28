@@ -20,10 +20,17 @@
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\BackendTemplate;
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Patchwork\Utf8;
+use Contao\Environment;
+use Contao\File;
+use Contao\FilesModel;
+use Contao\Module;
+use Contao\PageModel;
+use Contao\System;
+use http\Exception\InvalidArgumentException;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
-use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
+use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Util\Helper;
 
@@ -33,7 +40,7 @@ use Pdir\MaklermodulBundle\Util\Helper;
  * @copyright  pdir / digital agentur
  * @author     Mathias Arzberger
  */
-class ListView extends \Module
+class ListView extends Module
 {
     const DEFAULT_TEMPLATE = 'makler_list';
 
@@ -55,17 +62,17 @@ class ListView extends \Module
     protected $strTemplate = self::DEFAULT_TEMPLATE;
 
     /**
-     * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository
+     * @var EstateRepository
      */
     private $repository;
 
     /**
-     * @var \Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface
+     * @var IndexConfigInterface
      */
     private $config;
 
     /**
-     * @var \PageModel
+     * @var PageModel
      */
     private $detailPage;
 
@@ -78,15 +85,13 @@ class ListView extends \Module
         }
 
         /** @var PageModel $pageModel */
-        $pageModel = \PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage']);
+        $pageModel = PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage']);
 
-        if($pageModel === null) {
-            throw new \InvalidArgumentException(sprintf('%s [ID %s]', $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'], $objModule->id));
+        if(null === $pageModel) {
+            throw new InvalidArgumentException(sprintf('%s [ID %s]', $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'], $objModule->id));
         }
 
-        if($pageModel !== null) {
-            $this->detailPage = $pageModel->current();
-        }
+        $this->detailPage = $pageModel->current();
     }
 
     /**
@@ -98,7 +103,7 @@ class ListView extends \Module
     {
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### '.$GLOBALS['TL_LANG']['FMD']['immoListView'][0].' ###';
             $objTemplate->title = $this->headline;
@@ -119,7 +124,7 @@ class ListView extends \Module
 
     public function getRootDir()
     {
-        $container = \System::getContainer();
+        $container = System::getContainer();
         $strRootDir = $container->getParameter('kernel.project_dir').\DIRECTORY_SEPARATOR.$container->getParameter('contao.upload_path');
 
         return $strRootDir.\DIRECTORY_SEPARATOR.'maklermodul'.\DIRECTORY_SEPARATOR.'data'.\DIRECTORY_SEPARATOR;
@@ -128,8 +133,7 @@ class ListView extends \Module
     public function getListSourceUri($full = false)
     {
         if (!method_exists($this->Template->config, 'getStorageFileUri')) {
-            echo $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'];
-            die();
+            throw new Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page']);
         }
         if ($full) {
             $path = Helper::imagePath.$this->Template->config->getStorageFileUri();
@@ -150,7 +154,7 @@ class ListView extends \Module
 
         $urlSuffix = '.html';
 
-        $container = \System::getContainer();
+        $container = System::getContainer();
         if ($container->hasParameter('contao.url_suffix')) {
             $urlSuffix = $container->getParameter('contao.url_suffix');
         }
@@ -232,6 +236,7 @@ class ListView extends \Module
 
     /**
      * Generate the module.
+     * @throws \Exception
      */
     protected function compile()
     {
@@ -251,14 +256,15 @@ class ListView extends \Module
 
         if ('1' === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
-            $this->Template->staticListPage = '/'.\PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
+            $this->Template->staticListPage = '/'.PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
 
         $this->Template->config = new IndexConfig($this->arrData);
 
         // image params
         $arrImgSize = unserialize($this->imgSize);
-        if (count($arrImgSize) < 1) {
+
+        if (!$arrImgSize) {
             $this->Template->listImageWidth = '293';
             $this->Template->listImageHeight = '220';
             $this->Template->listImageMode = 'center_center';
@@ -292,23 +298,27 @@ class ListView extends \Module
             return $this->formatValue($strVal);
         };
 
-        $this->Template->placeholderImg = $this->makler_listViewPlaceholder ? \FilesModel::findByUuid($this->makler_listViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
+        $this->Template->placeholderImg = $this->makler_listViewPlaceholder ? FilesModel::findByUuid($this->makler_listViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
 
         //// get immo objects from xml file
         $pages = [];
 
-        $objFile = new \File($this->getListSourceUri(true));
+        $objFile = new File($this->getListSourceUri(true));
+
+        if (null === $objFile) {
+            return $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'];
+        }
 
         // get data from json
         $json = json_decode($objFile->getContent(), true);
 
-        if($this->arrData['immo_listSort'])
-        {
-            $json['data'] = $this->sortByKeyValue($json['data'], $this->arrData['immo_listSort'], $this->arrData['makler_listSortAsc'] === 'true' ? SORT_ASC : SORT_DESC);
+        if ($json && 0 === count($json['data'])) {
+            return $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'];
         }
 
-        if (0 === count($json)) {
-            throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
+        if($this->arrData['immo_listSort'] && '-' !== $this->arrData['immo_listSort'])
+        {
+            $json['data'] = $this->sortByKeyValue($json['data'], $this->arrData['immo_listSort'], $this->arrData['makler_listSortAsc'] === 'true' ? SORT_ASC : SORT_DESC);
         }
 
         $newEstates = [];
@@ -343,7 +353,7 @@ class ListView extends \Module
 
         $this->Template->pageCount = $pageCount;
         $this->Template->page = !(int) $this->Input->get('page') ? (int) $this->Input->get('page') : 0;
-        $this->Template->listObjects = count($json['data']) > 0 ? $pages : null;
+        $this->Template->listObjects = $json['data'] ? $pages : null;
 
         //// render filter template
         $strFilterTemplate = 'makler_list_filter_button';
@@ -375,7 +385,7 @@ class ListView extends \Module
         // url suffix
         $this->Template->urlSuffix = '.html';
 
-        $container = \System::getContainer();
+        $container = System::getContainer();
         if ($container->hasParameter('contao.url_suffix')) {
             $this->Template->urlSuffix = $container->getParameter('contao.url_suffix');
         }
@@ -389,22 +399,25 @@ class ListView extends \Module
     private function validateSettings()
     {
         if ('0' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_readerPage']) {
-            throw new \Exception('Undefined reader page');
+            throw new Exception('Undefined reader page');
         }
 
         if ('1' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_filterListPage']) {
-            throw new \Exception('Undefined filter list page');
+            throw new Exception('Undefined filter list page');
         }
     }
 
     private function sortByKeyValue($data, $sortKey, $dir = SORT_ASC) {
         $sort_col = [];
+
         $sortKey = str_replace('.', '-', $sortKey);
         foreach ($data as $key => $row) {
             $sort_col[$key] = $row[$sortKey];
         }
 
-        array_multisort($sort_col, $dir, $data);
+        if (null !== $data) {
+            array_multisort($sort_col, $dir, $data);
+        }
 
         return $data;
     }

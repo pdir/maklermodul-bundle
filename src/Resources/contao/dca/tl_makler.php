@@ -43,6 +43,8 @@ $GLOBALS['TL_DCA'][$tableName] = [
                 'attributes'    => 'onclick="Backend.getScrollOffset()" accesskey="e"'
             ],
             'toolbar' => [
+                'href'                => 'act=renderToolbar',
+                'class'               => 'renderToolbar',
                 'button_callback'     => [DataContainerListener::class, 'renderToolbar']
             ]
         ],

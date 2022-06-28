@@ -116,11 +116,6 @@ class IndexConfig implements IndexConfigInterface
         return $condArr;
     }
 
-    public function getCompatibilityMode()
-    {
-        return $this->resultSet['makler_compatibilityMode'];
-    }
-
     public function getListInSitemap()
     {
         return $this->resultSet['immo_listInSitemap'];

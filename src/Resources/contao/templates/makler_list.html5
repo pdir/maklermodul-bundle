@@ -110,7 +110,7 @@
     <?php endif; ?>
 
     <?php if(count($pages) < 1): ?>
-        <span class="has-no-objects">Im Moment sind keine Objekte verfügbar</span>
+        <span class="has-no-objects"><?= $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'] ?></span>
     <?php endif; ?>
 
     <?php if($this->addListPagination): ?>

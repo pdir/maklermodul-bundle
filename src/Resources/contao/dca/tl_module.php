@@ -25,7 +25,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
     .'{makler_cond_legend},immo_listCondition,makler_conditionFilterType;'
     .'{image_legend},imgSize,makler_listViewPlaceholder;'
     .'{makler_pagination_legend},makler_addListPagination;'
-    .'{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
+    .'{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
     = '{title_legend},name,headline,type;'
@@ -299,16 +299,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleJs'] = [
         'reference' => &$GLOBALS['TL_LANG']['tl_module'],
         'eval' => ['tl_class' => 'w50', 'mandatory' => false, 'isBoolean' => true],
         'sql' => "int(1) NOT NULL default '1'",
-];
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_compatibilityMode'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_compatibilityMode'],
-        'exclude' => true,
-        'inputType' => 'checkbox',
-        'default' => false,
-        'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-        'eval' => ['tl_class' => 'w50', 'mandatory' => false, 'isBoolean' => true],
-        'sql' => "int(1) NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_showHeadline'] = [

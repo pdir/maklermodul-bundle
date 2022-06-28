@@ -260,16 +260,6 @@
         <source>Use module js in list view.</source>
         <target>Bindet das moduleigene Javascript in das Template ein.</target>
       </trans-unit>
-
-      <trans-unit id="tl_module.makler_compatibilityMode.0">
-        <source>activate backwards compatibility</source>
-        <target>Abwärtskompatibilität aktivieren</target>
-      </trans-unit>
-      <trans-unit id="tl_module.makler_compatibilityMode.1">
-        <source>Activate to use old template functions in list view (earlyer versions &lt;1.4.0). Please rebuild index after change.</source>
-        <target>Nach Aktivierung werden die alten Template-Funktionen in der Listenansicht verwendet (frühere Versionen &lt;1.4.0). Index muss nach einer Änderung neu aufgebaut werden.</target>
-      </trans-unit>
-
       <trans-unit id="tl_module.makler_showHeadline.0">
       	<source>Show headline</source>
         <target>Überschrift anzeigen</target>
