@@ -457,9 +457,9 @@ $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.objekta
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.objektart.freizeitimmobilie_gewerblich.freizeit_typ'] = 'Objekttyp';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.objektart.zinshaus_renditeobjekt.zins_typ'] = 'Zinstyp';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart'] = 'Vermarktungsart';
-//$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart.@MIETE_PACHT'] = 'Miete/Pacht';
+$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart.@MIETE_PACHT'] = 'Miete/Pacht';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart.@LEASING'] = 'Leasing';
-//$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart.@KAUF'] = 'Kauf';
+$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart.@KAUF'] = 'Kauf';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.vermarktungsart.@ERBPACHT'] = 'Erbpacht';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.nutzungsart'] = 'Nutzungsart';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['objektkategorie.nutzungsart.@WAZ'] = 'WAZ';
