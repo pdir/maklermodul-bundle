@@ -355,6 +355,17 @@ class ListView extends \Module
         }
 
         $objFilterTemplate = new \FrontendTemplate($strFilterTemplate);
+
+        // filter translation
+        foreach($json['filterConfig']['values'] as $key => $filter) {
+            foreach($filter as $filterValueKey => $filterValue) {
+                $filterKey = str_replace('-', '.', $key);
+                $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']]
+                    ? $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']] : $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
+                if($name != '') $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
+            }
+        }
+
         $objFilterTemplate->filterConfig = $json['filterConfig'];
         $this->Template->filter = $objFilterTemplate->parse();
 

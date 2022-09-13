@@ -1,6 +1,10 @@
 # Changelog
 
-## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.8) – 2021-09-15
+## [2.7.10](https://github.com/pdir/maklermodul-bundle/tree/2.7.10) – 2022-09-13
+
+- [fix] fix filter values
+
+## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.9) – 2021-09-15
 
 - [fix] fix import for internal attachments
 
