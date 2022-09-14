@@ -124,13 +124,19 @@ class Estate
     {
         $returnValue = $startClasses;
 
+        $options = [
+            'delimiter' => '-',
+            'validChars' => '0-9a-z_',
+            'locale' => ''
+        ];
+
         foreach ($config->getColumnConfig() as $columnConfig) {
             if ($columnConfig->isFilterAble()) {
                 $key = $columnConfig->getSourceIdentifier();
                 $value = $estate->getValueOf($key);
                 $class = $columnConfig->getCssClassOfValue($key, $value);
                 if (null !== $class) {
-                    $returnValue[] = $this->sanizeFileName($class);
+                    $returnValue[] = System::getContainer()->get('contao.slug')->generate($class, $options);
                 }
             }
         }

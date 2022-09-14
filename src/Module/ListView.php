@@ -172,65 +172,6 @@ class ListView extends \Module
     }
 
     /**
-     * manipulate filter names.
-     *
-     * @param string $str
-     *
-     * @return string
-     */
-    public function setFilterName($str)
-    {
-        // $str = ucwords(strtolower($str));
-        $str = str_replace('Miete/Pacht', 'Miete & Pacht', $str);
-
-        $str = str_replace('grundstueck', 'Grundstück', $str);
-        $str = str_replace('buero_praxen', 'Büros & Praxen', $str);
-        $str = str_replace('hallen_lager_prod', 'Hallen, Lager & Produktion', $str);
-        $str = str_replace('land_und_forstwirtschaft', 'Land- & Forstwirtschaft', $str);
-        $str = str_replace('freizeitimmobilie_gewerblich', 'Freizeitimmobilie, gewerblich', $str);
-        $str = str_replace('zinshaus_renditeobjekt', 'Grundstück', $str);
-
-        $str = str_replace('LOFT-STUDIO-ATELIER', 'Loft, Studio & Atelier', $str);
-        $str = str_replace('KEINE_ANGABE', 'Keine Angabe', $str);
-        $str = str_replace('DOPPELHAUSHAELFTE', 'Doppelhaushälfte', $str);
-        $str = str_replace('BERGHUETTE', 'Berghütte', $str);
-        $str = str_replace('LAND_FORSTWIRSCHAFT', 'Land- & Forstwirtschaft', $str);
-        $str = str_replace('BUEROFLAECHE', 'Bürofläche', $str);
-        $str = str_replace('BUEROHAUS', 'Bürohaus', $str);
-        $str = str_replace('BUEROZENTRUM', 'Bürozentrum', $str);
-        $str = str_replace('LOFT_ATELIER', 'Loft & Atelier', $str);
-        $str = str_replace('PRAXISFLAECHE', 'Praxisfläche', $str);
-        $str = str_replace('AUSSTELLUNGSFLAECHE', 'Ausstellungsflächge', $str);
-        $str = str_replace('SHARED_OFFICE', 'Shared Office', $str);
-        $str = str_replace('FACTORY_OUTLET', 'Factory Outlet', $str);
-        $str = str_replace('VERKAUFSFLAECHE', 'Verkauffläche', $str);
-        $str = str_replace('GASTRONOMIE_UND_WOHNUNG', 'Gastronomie & Wohnung', $str);
-        $str = str_replace('WEITERE_BEHERBERGUNGSBETRIEBE', 'Weitere Beherbergungsbetriebe', $str);
-        $str = str_replace('LAGERFLAECHEN', 'Lagerflächen', $str);
-        $str = str_replace('LAGER_MIT_FREIFLAECHE', 'Lager mit Freifläche', $str);
-        $str = str_replace('FREIFLAECHEN', 'Freiflächen', $str);
-        $str = str_replace('KUEHLHAUS', 'Kühlhaus', $str);
-        $str = str_replace('LANDWIRTSCHAFTLICHE_BETRIEBE', 'Landwirtschaftliche Betriebe', $str);
-        $str = str_replace('JAGD_UND_FORSTWIRTSCHAFT', 'Jagd- & Forstwirtschaft', $str);
-        $str = str_replace('TEICH_UND_FISCHWIRTSCHAFT', 'Teich- & Fischwitschaft', $str);
-        $str = str_replace('REITERHOEFE', 'Reiterhöfe', $str);
-        $str = str_replace('SONSTIGE_LANDWIRTSCHAFTSIMMOBILIEN', 'Sonstige Landwitschaftsimmobilien', $str);
-        $str = str_replace('PARKPLATZ_STROM', 'Parkplatz Strom', $str);
-        $str = str_replace('VERGNUEGUNGSPARKS_UND_CENTER', 'Vergnügungsparks & -center', $str);
-        $str = str_replace('WOHN_UND_GESCHAEFTSHAUS', 'Wohn- & Geschäftshaus', $str);
-        $str = str_replace('GESCHAEFTSHAUS', 'Geschäftshaus', $str);
-        $str = str_replace('BUEROGEBAEUDE', 'Bürogebäude', $str);
-        $str = str_replace('SB_MAERKTE', 'SB Märkte', $str);
-        $str = str_replace('VERBRAUCHERMAERKTE', 'Verbrauchermärkte', $str);
-        $str = str_replace('BETREUTES-WOHNEN', 'Betreutes Wohnen', $str);
-        if (ctype_upper($str)) {
-            $str = ucfirst(strtolower($str));
-        }
-
-        return $str;
-    }
-
-    /**
      * Generate the module.
      */
     protected function compile()
@@ -355,6 +296,21 @@ class ListView extends \Module
         }
 
         $objFilterTemplate = new \FrontendTemplate($strFilterTemplate);
+
+        // filter translation
+        foreach($json['filterConfig']['values'] as $key => $filter) {
+            foreach($filter as $filterValueKey => $filterValue) {
+                $filterKey = str_replace('-', '.', $key);
+                $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']]
+                    ? $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']] : $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
+                if($name != '') $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
+                if (ctype_upper($filterValue['name'])) {
+                    $str = ucfirst(strtolower($filterValue['name']));
+                    $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $str;
+                }
+            }
+        }
+
         $objFilterTemplate->filterConfig = $json['filterConfig'];
         $this->Template->filter = $objFilterTemplate->parse();
 
