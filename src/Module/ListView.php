@@ -312,7 +312,7 @@ class ListView extends Module
             foreach($filter as $filterValueKey => $filterValue) {
                 $filterKey = str_replace('-', '.', $key);
                 $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']]
-                    ? $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']] : $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
+                    ?: $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
                 if($name != '') $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
                 if (ctype_upper($filterValue['name'])) {
                     $str = ucfirst(strtolower($filterValue['name']));
