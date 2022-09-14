@@ -136,7 +136,7 @@ class Estate
                 $value = $estate->getValueOf($key);
                 $class = $columnConfig->getCssClassOfValue($key, $value);
                 if (null !== $class) {
-                    $returnValue[] = \System::getContainer()->get('contao.slug')->generate($class, $options);
+                    $returnValue[] = System::getContainer()->get('contao.slug')->generate($class, $options);
                 }
             }
         }
