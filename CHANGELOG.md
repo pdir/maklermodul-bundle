@@ -14,6 +14,7 @@ Types of changes
 
 - [Added] add php 8 support
 - [Changed] remove patchwork/utf8
+- [Fixed] remove the disabled attribute from buttons if reset filter
 
 ## [2.7.10](https://github.com/pdir/maklermodul-bundle/tree/2.7.10) – 2022-09-14
 

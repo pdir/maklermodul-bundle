@@ -364,6 +364,7 @@
     // reset buttons
     listView.buttons.each(function () {
       $(this).removeClass('active').show();
+      $(this).prop('disabled', false);
     });
     // reset search
     listView.searchFields.each(function () {
