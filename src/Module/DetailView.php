@@ -112,6 +112,7 @@ class DetailView extends \Module
 
         // image params
         $arrImgSize = unserialize($this->imgSize);
+        $this->Template->attachmentSize = unserialize($this->makler_attachmentSize);
         $this->Template->detailImageType = 'image';
         $this->Template->detailImageWidth = '700';
         $this->Template->detailImageHeight = '500';

@@ -18,6 +18,7 @@ Types of changes
 - [Fixed] fix filter values
 - [Fixed] fix image sizes for list and detail view
 - [Added] add image size for header image
+- [Added] add image size for attachment images
 
 ## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.9) – 2021-09-15
 

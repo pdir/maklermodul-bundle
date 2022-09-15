@@ -48,7 +48,7 @@ else:
         </div>
         <div class="small-pics">
             <?php foreach ($this->estate->attachments()->range(1, 6) as $attachment) : ?>
-                <div class="pic"><?php $attachment->group("BILD,GRUNDRISS,KARTEN_LAGEPLAN,AUSSENANSICHTEN,INNENANSICHTEN,PANORAMA")->size(120,75)->render() ?></div>
+                <div class="pic"><?php $attachment->group("BILD,GRUNDRISS,KARTEN_LAGEPLAN,AUSSENANSICHTEN,INNENANSICHTEN,PANORAMA")->size(120,75,$this->attachmentSize)->render() ?></div>
             <?php endforeach; ?>
         </div>
     </div>

@@ -29,8 +29,8 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
     = '{title_legend},name,headline,type;'
-    .'{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
-    .'{image_legend},imgSize;'
+    .'{template_legend},immo_listPage,immo_readerTemplate,makler_showMap;'
+    .'{image_legend},imgSize,makler_attachmentSize,makler_detailViewPlaceholder;'
     .'{option_legend},makler_useModuleDetailCss,makler_debug';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
@@ -352,6 +352,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImageSource'] = [
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['makler_headerImageSource_select'],
     'eval' => ['tl_class' => 'w50'],
     'sql' => "varchar(255) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_attachmentSize'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_attachmentSize'],
+    'inputType' => 'imageSize',
+    'options_callback'      => function () {
+        return \Contao\System::getImageSizes();
+    },
+    'eval' => ['includeBlankOption'=>true, 'rgxp'=>'digit', 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'],
+    'sql' => "varchar(64) NOT NULL default ''",
 ];
 
 class tl_module_makler extends Backend

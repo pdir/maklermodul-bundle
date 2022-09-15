@@ -325,6 +325,12 @@
       <trans-unit id="tl_module.makler_conditionFilterType.or">
         <source>OR</source>
       </trans-unit>
+      <trans-unit id="tl_module.makler_attachmentSize.0">
+        <source>Image size for more images</source>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_attachmentSize.1">
+        <source>Here you can set the image dimensions and the resize mode.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
