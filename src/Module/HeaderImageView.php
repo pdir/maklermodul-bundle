@@ -113,6 +113,26 @@ class HeaderImageView extends \Module
                 $this->Template->headerImage = $placeholder;
             }
         }
+
+        // image params
+        $arrImgSize = $this->imgSize ? unserialize($this->imgSize) : unserialize($this->size);
+        $this->Template->imageType = 'image';
+        $this->Template->imageWidth = '1920';
+        $this->Template->imageHeight = '800';
+        $this->Template->imageMode = 'crop';
+
+        if ($arrImgSize[2] !== '') {
+            $this->Template->imageWidth = $arrImgSize[0];
+            $this->Template->imageHeight = $arrImgSize[1];
+            $this->Template->imageSize = $arrImgSize[2];
+            $this->Template->imageType = 'picture';
+
+            if(!is_numeric($arrImgSize[2])) {
+                // image mode: proportional, crop or box
+                $this->Template->imageMode = $arrImgSize[2];
+                $this->Template->imageType = 'image';
+            }
+        }
     }
 
     private function createFieldRendererFactory($objectId)

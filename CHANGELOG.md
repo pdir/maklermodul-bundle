@@ -17,6 +17,7 @@ Types of changes
 - [Fixed] remove the disabled attribute from buttons if reset filter
 - [Fixed] fix filter values
 - [Fixed] fix image sizes for list and detail view
+- [Added] add image size for header image
 
 ## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.9) – 2021-09-15
 

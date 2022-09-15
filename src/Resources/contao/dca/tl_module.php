@@ -34,8 +34,9 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
     .'{option_legend},makler_useModuleDetailCss,makler_debug';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
-    = '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImageSource,makler_headerImagePlaceholder;'
-    .'{expert_legend:hide},guests,cssID,space;';
+    = '{title_legend},name,headline,type,makler_showHeadline;{image_legend},imgSize,makler_headerImageSource,makler_showBackgroundImage,makler_headerImagePlaceholder'
+    .';{expert_legend:hide},guests,cssID'
+    .';{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'makler_addListPagination';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['makler_addListPagination'] = 'makler_paginationCount,makler_paginationLinkCount,makler_paginationUseIsotope'; // ,makler_paginationShowtitle';
@@ -198,7 +199,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImagePlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
     'sql' => 'binary(16) NULL',
 ];
 
