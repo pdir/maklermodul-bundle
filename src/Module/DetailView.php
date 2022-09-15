@@ -112,20 +112,19 @@ class DetailView extends \Module
 
         // image params
         $arrImgSize = unserialize($this->imgSize);
+        $this->Template->detailImageType = 'image';
+        $this->Template->detailImageWidth = '700';
+        $this->Template->detailImageHeight = '500';
+        $this->Template->detailImageMode = 'crop';
 
-        if (!$arrImgSize || ($arrImgSize[0] === '' && $arrImgSize[1] === '' && $arrImgSize[2] === '')) {
-            $this->Template->detailImageType = 'image';
-            $this->Template->detailImageWidth = '700';
-            $this->Template->detailImageHeight = '500';
-            $this->Template->detailImageMode = 'crop';
-        } else {
+        if ($arrImgSize[2] !== '') {
             $this->Template->detailImageWidth = $arrImgSize[0];
             $this->Template->detailImageHeight = $arrImgSize[1];
+            $this->Template->detailImageSize = $arrImgSize[2];
+            $this->Template->detailImageType = 'picture';
 
-            if(is_numeric($arrImgSize[2])) {
-                $this->Template->detailImageSize = $arrImgSize[2];
-                $this->Template->detailImageType = 'picture';
-            } else {
+            if(!is_numeric($arrImgSize[2])) {
+                // image mode: proportional, crop or box
                 $this->Template->detailImageMode = $arrImgSize[2];
                 $this->Template->detailImageType = 'image';
             }

@@ -204,20 +204,19 @@ class ListView extends Module
 
         // image params
         $arrImgSize = unserialize($this->imgSize);
+        $this->Template->listImageType = 'image';
+        $this->Template->listImageWidth = '300';
+        $this->Template->listImageHeight = '200';
+        $this->Template->listImageMode = 'crop';
 
-        if (!$arrImgSize || ($arrImgSize[0] === '' && $arrImgSize[1] === '' && $arrImgSize[2] === '')) {
-            $this->Template->listImageType = 'image';
-            $this->Template->listImageWidth = '300';
-            $this->Template->listImageHeight = '200';
-            $this->Template->listImageMode = 'crop';
-        } else {
+        if ($arrImgSize[2] !== '') {
             $this->Template->listImageWidth = $arrImgSize[0];
             $this->Template->listImageHeight = $arrImgSize[1];
+            $this->Template->listImageSize = $arrImgSize[2];
+            $this->Template->listImageType = 'picture';
 
-            if(is_numeric($arrImgSize[2])) {
-                $this->Template->listImageSize = $arrImgSize[2];
-                $this->Template->listImageType = 'picture';
-            } else {
+            if(!is_numeric($arrImgSize[2])) {
+                // image mode: proportional, crop or box
                 $this->Template->listImageMode = $arrImgSize[2];
                 $this->Template->listImageType = 'image';
             }
