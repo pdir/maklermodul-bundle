@@ -74,7 +74,7 @@
                             <?php if( strpos($obj['anhaenge-anhang-#1-daten-pfad'],"http") !== false ): ?>
                                 <img src="<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>" alt="<?= $obj['freitexte-objekttitel'] ?>">
                             <?php else: ?>
-                                {{image::files/maklermodul/data/<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>?mode=<?= $this->listImageMode; ?>&width=<?= $this->listImageWidth; ?>&height=<?= $this->listImageHeight; ?>&alt=<?= $obj['freitexte-objekttitel'] ?>}}
+                                {{<?= $this->listImageType ?>::files/maklermodul/data/<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>?<?php if($this->listImageSize): ?>size=<?= $this->listImageSize ?>&<?php endif; ?>width=<?= $this->listImageWidth ?>&height=<?= $this->listImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->listImageMode): ?>&mode=<?= $this->listImageMode ?><?php endif; ?>}}
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>

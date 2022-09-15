@@ -205,14 +205,22 @@ class ListView extends Module
         // image params
         $arrImgSize = unserialize($this->imgSize);
 
-        if (!$arrImgSize) {
-            $this->Template->listImageWidth = '293';
-            $this->Template->listImageHeight = '220';
-            $this->Template->listImageMode = 'center_center';
+        if (!$arrImgSize || ($arrImgSize[0] === '' && $arrImgSize[1] === '' && $arrImgSize[2] === '')) {
+            $this->Template->listImageType = 'image';
+            $this->Template->listImageWidth = '300';
+            $this->Template->listImageHeight = '200';
+            $this->Template->listImageMode = 'crop';
         } else {
             $this->Template->listImageWidth = $arrImgSize[0];
             $this->Template->listImageHeight = $arrImgSize[1];
-            $this->Template->listImageMode = $arrImgSize[2];
+
+            if(is_numeric($arrImgSize[2])) {
+                $this->Template->listImageSize = $arrImgSize[2];
+                $this->Template->listImageType = 'picture';
+            } else {
+                $this->Template->listImageMode = $arrImgSize[2];
+                $this->Template->listImageType = 'image';
+            }
         }
 
         if (TL_MODE === 'FE' && '0' === $this->arrData['immo_staticFilter']) {

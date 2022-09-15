@@ -109,6 +109,27 @@ class DetailView extends \Module
         $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
         $this->Template->showMap = $this->makler_showMap;
         $this->Template->debug = $this->makler_debug;
+
+        // image params
+        $arrImgSize = unserialize($this->imgSize);
+
+        if (!$arrImgSize || ($arrImgSize[0] === '' && $arrImgSize[1] === '' && $arrImgSize[2] === '')) {
+            $this->Template->detailImageType = 'image';
+            $this->Template->detailImageWidth = '700';
+            $this->Template->detailImageHeight = '500';
+            $this->Template->detailImageMode = 'crop';
+        } else {
+            $this->Template->detailImageWidth = $arrImgSize[0];
+            $this->Template->detailImageHeight = $arrImgSize[1];
+
+            if(is_numeric($arrImgSize[2])) {
+                $this->Template->detailImageSize = $arrImgSize[2];
+                $this->Template->detailImageType = 'picture';
+            } else {
+                $this->Template->detailImageMode = $arrImgSize[2];
+                $this->Template->detailImageType = 'image';
+            }
+        }
     }
 
     private function createFieldRendererFactory($objectId)
