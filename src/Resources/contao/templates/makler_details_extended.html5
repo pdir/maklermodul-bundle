@@ -39,7 +39,11 @@ else:
                     {{<?= $this->detailImageType ?>::<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
                 <?php endif; ?>
             <?php else: ?>
-                <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="700" height="500">
+                <?php if(strpos($this->placeholderImg, 'files/') !== false): ?>
+                    {{<?= $this->detailImageType ?>::<?= $this->placeholderImg ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
+                <?php else: ?>
+                    <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="700" height="500">
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="small-pics">

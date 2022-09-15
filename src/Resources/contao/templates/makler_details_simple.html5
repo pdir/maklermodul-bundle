@@ -36,12 +36,16 @@ else:
         <div class="big-img">
             <?php if($this->estate->renderer('anhaenge.anhang.#1.daten.pfad')->asText()->withoutLabel()->value(true)): ?>
                 <?php if( strpos($this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'),"http") !== false ): ?>
-                    <img src="<?= $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="600" height="350">
+                    <img src="<?= $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="700" height="500">
                 <?php else: ?>
-                    <img src="<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="600" height="350">
+                    {{<?= $this->detailImageType ?>::<?= Pdir\MaklermodulBundle\Util\Helper::imagePath . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
                 <?php endif; ?>
             <?php else: ?>
-                <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="600" height="350">
+                <?php if(strpos($this->placeholderImg, 'files/') !== false): ?>
+                    {{<?= $this->detailImageType ?>::<?= $this->placeholderImg ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
+                <?php else: ?>
+                    <img src="<?= $this->placeholderImg ?>" alt="Platzhalter-Bild <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="700" height="500">
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="small-pics">
