@@ -10,7 +10,7 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
-## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-09-14
+## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-09-16
 
 - [Added] add php 8 support
 - [Changed] remove patchwork/utf8
