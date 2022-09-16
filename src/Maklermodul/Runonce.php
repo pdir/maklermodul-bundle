@@ -16,6 +16,9 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul;
 
+use Contao\File;
+use Contao\Folder;
+
 /**
  * maklermodul Runonce.
  *
@@ -57,23 +60,23 @@ class Runonce
     public static function run()
     {
         if (!file_exists(self::strFolder)) {
-            new \Folder(self::strFolder);
+            new Folder(self::strFolder);
         }
 
         if (!file_exists(self::$strDataFolder)) {
-            new \Folder(self::$strDataFolder);
+            new Folder(self::$strDataFolder);
         }
 
         if (!file_exists(self::$strImportFolder)) {
-            new \Folder(self::$strImportFolder);
+            new Folder(self::$strImportFolder);
         }
 
         if (!file_exists(self::$strOrgFolder)) {
-            new \Folder(self::$strOrgFolder);
+            new Folder(self::$strOrgFolder);
         }
 
         if (!file_exists(self::strFolder.'.public')) {
-            \File::putContent(self::strFolder.'.public', '');
+            File::putContent(self::strFolder.'.public', '');
         }
     }
 }
