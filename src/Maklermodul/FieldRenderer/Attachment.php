@@ -46,7 +46,7 @@ class Attachment extends FieldRenderer
             $translator
         );
 
-        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+        if (isset($GLOBALS['TL_CONFIG']['websitePath'])) {
             $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
         }
 
@@ -75,7 +75,7 @@ class Attachment extends FieldRenderer
      *
      * @return $this
      */
-    public function size($maxWidth, $maxHeight, $size)
+    public function size($maxWidth, $maxHeight, $size = ['', '', ''])
     {
         $this->setSetting('maxWidth', $maxWidth);
         $this->setSetting('maxHeight', $maxHeight);
@@ -228,7 +228,7 @@ class Attachment extends FieldRenderer
 
     private function getUrlOfPath($path)
     {
-        if ($this->websitePath) {
+        if (isset($this->websitePath)) {
             return $this->websitePath.'/'.str_replace(TL_ROOT, '', $path);
         }
 
