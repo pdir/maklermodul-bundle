@@ -14,6 +14,8 @@
  * file that was distributed with this source code.
  */
 
+use Contao\System;
+
 /**
  * Add palettes to tl_module.
  */
@@ -25,17 +27,18 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
     .'{makler_cond_legend},immo_listCondition,makler_conditionFilterType;'
     .'{image_legend},imgSize,makler_listViewPlaceholder;'
     .'{makler_pagination_legend},makler_addListPagination;'
-    .'{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs,makler_compatibilityMode';
+    .'{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs;';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoDetailView']
     = '{title_legend},name,headline,type;'
-    .'{template_legend},immo_listPage,immo_readerTemplate,makler_showMap,makler_detailViewPlaceholder;'
-    .'{image_legend},imgSize;'
+    .'{template_legend},immo_listPage,immo_readerTemplate,makler_showMap;'
+    .'{image_legend},imgSize,makler_attachmentSize,makler_detailViewPlaceholder;'
     .'{option_legend},makler_useModuleDetailCss,makler_debug';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
-    = '{title_legend},name,headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImageSource,makler_headerImagePlaceholder;'
-    .'{expert_legend:hide},guests,cssID,space;';
+    = '{title_legend},name,headline,type,makler_showHeadline;{image_legend},imgSize,makler_headerImageSource,makler_showBackgroundImage,makler_headerImagePlaceholder'
+    .';{expert_legend:hide},guests,cssID'
+    .';{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'makler_addListPagination';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['makler_addListPagination'] = 'makler_paginationCount,makler_paginationLinkCount,makler_paginationUseIsotope'; // ,makler_paginationShowtitle';
@@ -198,7 +201,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImagePlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
     'sql' => 'binary(16) NULL',
 ];
 
@@ -301,16 +304,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleJs'] = [
         'sql' => "int(1) NOT NULL default '1'",
 ];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_compatibilityMode'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_compatibilityMode'],
-        'exclude' => true,
-        'inputType' => 'checkbox',
-        'default' => false,
-        'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-        'eval' => ['tl_class' => 'w50', 'mandatory' => false, 'isBoolean' => true],
-        'sql' => "int(1) NOT NULL default '0'",
-];
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_showHeadline'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_showHeadline'],
     'inputType' => 'checkbox',
@@ -361,6 +354,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImageSource'] = [
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['makler_headerImageSource_select'],
     'eval' => ['tl_class' => 'w50'],
     'sql' => "varchar(255) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['makler_attachmentSize'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_attachmentSize'],
+    'inputType' => 'imageSize',
+    'options_callback'      => function () {
+        return System::getImageSizes();
+    },
+    'eval' => ['includeBlankOption'=>true, 'rgxp'=>'digit', 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'],
+    'sql' => "varchar(64) NOT NULL default ''",
 ];
 
 class tl_module_makler extends Backend

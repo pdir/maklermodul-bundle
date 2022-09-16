@@ -20,7 +20,10 @@ use Contao\System;
 /**
  * Module translation.
  */
-$GLOBALS['TL_LANG']['MOD']['pdir'][0] = 'pdir Apps';
+if (!isset($GLOBALS['TL_LANG']['MOD']['pdir'])) {
+    $GLOBALS['TL_LANG']['MOD']['pdir']= [];
+}
+$GLOBALS['TL_LANG']['MOD']['pdir'] = ['pdir Apps', 'Enthält alle Apps aus dem Hause pdir.'];
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['type'] = 'Maklermodul';
 $GLOBALS['TL_LANG']['MOD']['maklermodul'][0] = 'Maklermodul';
 $GLOBALS['TL_LANG']['MOD']['maklermodul'][1] = 'Organize your Maklermodul here';

@@ -18,8 +18,8 @@
  * Add palettes to tl_content.
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['makler_headerImage']
-    = '{header_legend},headline,type,makler_showHeadline,makler_showBackgroundImage,makler_headerImagePlaceholder'
-    .';{expert_legend:hide},guests,cssID,space'
+    = '{header_legend},headline,type,makler_showHeadline;{image_legend},size,makler_headerImageSource,makler_showBackgroundImage,makler_headerImagePlaceholder'
+    .';{expert_legend:hide},guests,cssID'
     .';{invisible_legend:hide},invisible,start,stop';
 
 /*
@@ -45,6 +45,16 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['makler_headerImagePlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_content'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
     'sql' => 'binary(16) NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['makler_headerImageSource'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_content']['makler_headerImageSource'],
+    'inputType' => 'select',
+    'default' => 1,
+    'options' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20],
+    'reference' => &$GLOBALS['TL_LANG']['tl_content']['makler_headerImageSource_select'],
+    'eval' => ['tl_class' => 'w50'],
+    'sql' => "varchar(255) NOT NULL default ''",
 ];

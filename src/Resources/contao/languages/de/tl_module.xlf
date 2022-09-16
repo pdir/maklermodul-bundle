@@ -260,16 +260,6 @@
         <source>Use module js in list view.</source>
         <target>Bindet das moduleigene Javascript in das Template ein.</target>
       </trans-unit>
-
-      <trans-unit id="tl_module.makler_compatibilityMode.0">
-        <source>activate backwards compatibility</source>
-        <target>Abwärtskompatibilität aktivieren</target>
-      </trans-unit>
-      <trans-unit id="tl_module.makler_compatibilityMode.1">
-        <source>Activate to use old template functions in list view (earlyer versions &lt;1.4.0). Please rebuild index after change.</source>
-        <target>Nach Aktivierung werden die alten Template-Funktionen in der Listenansicht verwendet (frühere Versionen &lt;1.4.0). Index muss nach einer Änderung neu aufgebaut werden.</target>
-      </trans-unit>
-
       <trans-unit id="tl_module.makler_showHeadline.0">
       	<source>Show headline</source>
         <target>Überschrift anzeigen</target>
@@ -404,6 +394,10 @@
       </trans-unit>
       <trans-unit id="tl_module.makler_headerImageSource_select.14">
         <source>Attachment 14</source>
+        <target>Anhang 14</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.15">
+        <source>Attachment 15</source>
         <target>Anhang 15</target>
       </trans-unit>
       <trans-unit id="tl_module.makler_headerImageSource_select.16">
@@ -425,6 +419,14 @@
       <trans-unit id="tl_module.makler_headerImageSource_select.20">
         <source>Attachment 20</source>
         <target>Anhang 20</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_attachmentSize.0">
+        <source>Image size for more images</source>
+        <target>Bildgröße für weitere Bilder</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_attachmentSize.1">
+        <source>Here you can set the image dimensions and the resize mode.</source>
+        <target>Hier können Sie die Abmessungen des Bildes und den Skalierungsmodus festlegen.</target>
       </trans-unit>
     </body>
   </file>

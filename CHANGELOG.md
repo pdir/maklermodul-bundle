@@ -10,9 +10,15 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
-## [2.7.10](https://github.com/pdir/maklermodul-bundle/tree/2.7.10) – 2022-09-14
+## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-09-14
 
+- [Added] add php 8 support
+- [Changed] remove patchwork/utf8
+- [Fixed] remove the disabled attribute from buttons if reset filter
 - [Fixed] fix filter values
+- [Fixed] fix image sizes for list and detail view
+- [Added] add image size for header image
+- [Added] add image size for attachment images
 
 ## [2.7.9](https://github.com/pdir/maklermodul-bundle/tree/2.7.9) – 2021-09-15
 

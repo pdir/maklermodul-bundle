@@ -43,6 +43,8 @@ $GLOBALS['TL_DCA'][$tableName] = [
                 'attributes'    => 'onclick="Backend.getScrollOffset()" accesskey="e"'
             ],
             'toolbar' => [
+                'href'                => 'act=renderToolbar',
+                'class'               => 'renderToolbar',
                 'button_callback'     => [DataContainerListener::class, 'renderToolbar']
             ]
         ],
@@ -54,7 +56,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'delete' => [
                 'href'          => 'act=delete',
                 'icon'          => 'delete.svg',
-                'attributes'    => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+                'attributes'    => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"',
                 // 'button_callback'     => [DataContainerListener::class, 'deleteObject']
             ],
             /*

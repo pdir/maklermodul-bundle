@@ -32,8 +32,15 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root('pdir_maklermodul');
+        $treeBuilder = new TreeBuilder('pdir_maklermodul');
+
+        if (method_exists($treeBuilder, 'getRootNode'))
+        {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('pdir_maklermodul');
+        }
 
         $rootNode
             ->children()

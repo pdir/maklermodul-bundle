@@ -20,7 +20,13 @@
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\BackendTemplate;
+use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\Environment;
+use Contao\FilesModel;
+use Contao\Input;
+use Contao\Module;
 use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
@@ -33,7 +39,7 @@ use Pdir\MaklermodulBundle\Util\Helper;
  * @copyright  pdir / digital agentur
  * @author     Mathias Arzberger <develop@pdir.de>
  */
-class HeaderImageView extends \Module
+class HeaderImageView extends Module
 {
     /**
      * Template.
@@ -56,9 +62,9 @@ class HeaderImageView extends \Module
     {
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'][0]).' ###';
+            $objTemplate->wildcard = '### '.$GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'][0].' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -68,12 +74,12 @@ class HeaderImageView extends \Module
         }
 
         // Set auto item
-        if (!isset($_GET['estate']) && \Config::get('useAutoItem') && isset($_GET['expose'])) {
-            \Input::setGet('estate', \Input::get('expose'));
+        if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
+            Input::setGet('estate', Input::get('expose'));
         }
 
         // get alias from auto item
-        $this->alias = \Input::get('estate');
+        $this->alias = Input::get('estate');
 
         return parent::generate();
     }
@@ -84,7 +90,7 @@ class HeaderImageView extends \Module
     protected function compile()
     {
         if ('' === $this->alias) {
-            throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
+            throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
         }
 
         $estate = $this->createFieldRendererFactory($this->alias);
@@ -107,10 +113,30 @@ class HeaderImageView extends \Module
         } else {
             $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder.'/img/platzhalterbild.jpg';
             if ($placeholder !== Helper::assetFolder.'/img/platzhalterbild.jpg') {
-                $objFile = \FilesModel::findByUuid($placeholder);
+                $objFile = FilesModel::findByUuid($placeholder);
                 $this->Template->headerImage = $objFile->path;
             } else {
                 $this->Template->headerImage = $placeholder;
+            }
+        }
+
+        // image params
+        $arrImgSize = $this->imgSize ? unserialize($this->imgSize) : unserialize($this->size);
+        $this->Template->imageType = 'image';
+        $this->Template->imageWidth = '1920';
+        $this->Template->imageHeight = '800';
+        $this->Template->imageMode = 'crop';
+
+        if ($arrImgSize[2] !== '') {
+            $this->Template->imageWidth = $arrImgSize[0];
+            $this->Template->imageHeight = $arrImgSize[1];
+            $this->Template->imageSize = $arrImgSize[2];
+            $this->Template->imageType = 'picture';
+
+            if(!is_numeric($arrImgSize[2])) {
+                // image mode: proportional, crop or box
+                $this->Template->imageMode = $arrImgSize[2];
+                $this->Template->imageType = 'image';
             }
         }
     }

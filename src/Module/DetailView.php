@@ -20,7 +20,12 @@
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\BackendTemplate;
+use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\Environment;
+use Contao\Input;
+use Contao\Module;
 use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
@@ -33,7 +38,7 @@ use Pdir\MaklermodulBundle\Util\Helper;
  * @copyright  pdir / digital agentur
  * @author     Mathias Arzberger
  */
-class DetailView extends \Module
+class DetailView extends Module
 {
     const PARAMETER_KEY = 'expose';
 
@@ -64,9 +69,9 @@ class DetailView extends \Module
     {
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['immoDetailView'][0]).' ###';
+            $objTemplate->wildcard = '### '.$GLOBALS['TL_LANG']['FMD']['immoDetailView'][0].' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -76,12 +81,12 @@ class DetailView extends \Module
         }
 
         // Set auto item
-        if (!isset($_GET['estate']) && \Config::get('useAutoItem') && isset($_GET['expose'])) {
-            \Input::setGet('estate', \Input::get('expose'));
+        if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
+            Input::setGet('estate', Input::get('expose'));
         }
 
         // get alias from auto item
-        $this->alias = \Input::get('estate');
+        $this->alias = Input::get('estate');
 
         return parent::generate();
     }
@@ -98,7 +103,7 @@ class DetailView extends \Module
         //$this->Template->referer = 'javascript:history.go(-1)';
 
         if ('' === $this->alias) {
-            throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
+            throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
         }
 
         if ($this->makler_useModuleDetailCss) {
@@ -109,6 +114,27 @@ class DetailView extends \Module
         $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
         $this->Template->showMap = $this->makler_showMap;
         $this->Template->debug = $this->makler_debug;
+
+        // image params
+        $arrImgSize = unserialize($this->imgSize);
+        $this->Template->attachmentSize = unserialize($this->makler_attachmentSize);
+        $this->Template->detailImageType = 'image';
+        $this->Template->detailImageWidth = '700';
+        $this->Template->detailImageHeight = '500';
+        $this->Template->detailImageMode = 'crop';
+
+        if ($arrImgSize[2] !== '') {
+            $this->Template->detailImageWidth = $arrImgSize[0];
+            $this->Template->detailImageHeight = $arrImgSize[1];
+            $this->Template->detailImageSize = $arrImgSize[2];
+            $this->Template->detailImageType = 'picture';
+
+            if(!is_numeric($arrImgSize[2])) {
+                // image mode: proportional, crop or box
+                $this->Template->detailImageMode = $arrImgSize[2];
+                $this->Template->detailImageType = 'image';
+            }
+        }
     }
 
     private function createFieldRendererFactory($objectId)

@@ -7,7 +7,11 @@
 
   <?php if(!$this->showBackgroundImage): ?>
     <div class="ce_image last block">
-        <img src="<?= $this->headerImage ?>" alt="<?= $this->headline ?>">
+        <?php if(strpos($this->headerImage, 'files/') !== false): ?>
+            {{<?= $this->imageType ?>::<?= $this->headerImage ?>?<?php if($this->imageSize): ?>size=<?= $this->imageSize ?>&<?php endif; ?>width=<?= $this->imageWidth ?>&height=<?= $this->imageHeight ?>&alt=<?= $this->headline ?><?php if($this->imageMode): ?>&mode=<?= $this->imageMode ?><?php endif; ?>}}
+        <?php else: ?>
+            <img src="<?= $this->headerImage ?>" alt="<?= $this->headline ?>">
+        <?php endif; ?>
     </div>
   <?php endif; ?>
 </div>

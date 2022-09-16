@@ -117,9 +117,8 @@ class ColumnConfig
         $LocaleInfo = localeconv();
         $value = str_replace($LocaleInfo['mon_thousands_sep'], '', $value);
         $value = str_replace($LocaleInfo['mon_decimal_point'], '.', $value);
-        $value = round($value, 0);
 
-        return $value;
+        return round((int)$value, 0);
     }
 
     private function cssMapRange1($value)

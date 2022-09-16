@@ -25,7 +25,7 @@
     "source" : "https://github.com/pdir/maklermodul-bundle"
   },
   "require": {
-    "php": ">=7.2",
+    "php": "^7.2 || ^8.0",
     "contao/core-bundle": "^4.9"
   },
   "require-dev": {
@@ -62,5 +62,12 @@
     "contao-themes-net/mate-theme-bundle": "MATE Theme includes all styles for maklermodul bundle. MATE Theme enthält Stylesheets für das Maklermodul Bundle.",
     "contao-themes-net/odd-theme-bundle": "ODD Theme includes all styles for maklermodul bundle. ODD Theme enthält Stylesheets für das Maklermodul Bundle.",
     "contao-themes-net/nature-theme-bundle": "NATURE Theme includes all styles for maklermodul bundle. NATURE Theme enthält Stylesheets für das Maklermodul Bundle."
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "contao-components/installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

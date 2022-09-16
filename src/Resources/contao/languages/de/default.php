@@ -23,9 +23,9 @@ $GLOBALS['TL_LANG']['MSC']['points'] = '...';
 $GLOBALS['TL_LANG']['CTE']['makler_headerImage'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];
 $GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];
 
-$strErrorDefault = 'Makler Modul Fehler: ';
 $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus'] = [];
 $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error'] = [];
-$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = $strErrorDefault.'Bitte w&auml;hlen Sie eine Detailansicht in Ihrer Listenansicht aus.';
+$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'] = 'Bitte wähle eine Detailseite im Modul Immobilienliste aus.';
+$GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'] = '<p>Im Moment sind keine Objekte verfügbar.</p>';
 
 include_once 'makler_modul_mplus.php';

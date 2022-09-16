@@ -20,7 +20,10 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
+use Contao\FrontendTemplate;
+use Contao\Image;
 use Contao\StringUtil;
+use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 use Pdir\MaklermodulBundle\Maklermodul\FieldTranslator;
 use Pdir\MaklermodulBundle\Util\Helper;
@@ -43,7 +46,7 @@ class Attachment extends FieldRenderer
             $translator
         );
 
-        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+        if (isset($GLOBALS['TL_CONFIG']['websitePath'])) {
             $this->websitePath = $GLOBALS['TL_CONFIG']['websitePath'];
         }
 
@@ -72,10 +75,11 @@ class Attachment extends FieldRenderer
      *
      * @return $this
      */
-    public function size($maxWidth, $maxHeight)
+    public function size($maxWidth, $maxHeight, $size = ['', '', ''])
     {
         $this->setSetting('maxWidth', $maxWidth);
         $this->setSetting('maxHeight', $maxHeight);
+        $this->setSetting('size', $size);
 
         return $this;
     }
@@ -224,7 +228,7 @@ class Attachment extends FieldRenderer
 
     private function getUrlOfPath($path)
     {
-        if ($this->websitePath) {
+        if (isset($this->websitePath)) {
             return $this->websitePath.'/'.str_replace(TL_ROOT, '', $path);
         }
 
@@ -236,21 +240,35 @@ class Attachment extends FieldRenderer
         try {
             $width = $this->getSetting('maxWidth');
             $height = $this->getSetting('maxHeight');
-            $mode = $this->getSetting('mode');
+            $size = $this->getSetting('size');
+
+            if($size[0] === '') $size[0] = $width;
+            if($size[1] === '') $size[1] = $height;
 
             $url = $path;
             // @todo make it changeable in the config file
             if ('REMOTE' === $location) {
                 $url = str_replace('.jpg', '_small.jpg', $url);
-            }
-            if ('EXTERN' === $location || 'INTERN' === $location) {
-                $path = $this->resizeImage($path, $width, $height, $mode);
-                $url = $this->getUrlOfPath($path);
-            }
-            $this->template = $this->getThumbnailTemplate(true);
-            $result = sprintf($this->template, $url, $width, $height, $alt);
 
-            return $result;
+                $this->template = $this->getThumbnailTemplate(true);
+                $result = sprintf($this->template, $url, $size[0], $size[1], $alt);
+
+                return $result;
+            }
+
+            // use image factory if mode is set
+            if (!\is_numeric($size[2])) {
+                $path = $this->resizeImage($path, $size);
+                $url = $this->getUrlOfPath($path);
+
+                $this->template = $this->getThumbnailTemplate(true);
+                $result = sprintf($this->template, $url, $size[0], $size[1], $alt);
+
+                return $result;
+            }
+
+            return $this->resizePicture($path, $size, $alt);
+
         } catch (\InvalidArgumentException $e) {
             $this->template = $this->getThumbnailTemplate();
             $url = $path;
@@ -266,9 +284,34 @@ class Attachment extends FieldRenderer
         }
     }
 
-    private function resizeImage($orgPath, $maxWidth, $maxHeight, $mode)
+    private function resizeImage($orgPath, $size)
     {
-        return \Image::get(Helper::imagePath.$orgPath, $maxWidth, $maxHeight, $mode);
+        return Image::get(Helper::imagePath.$orgPath, $size[0], $size[1], $size[2]);
+    }
+
+    private function resizePicture($orgPath, $size, $alt)
+    {
+        $container = System::getContainer();
+        $rootDir = $container->getParameter('kernel.project_dir');
+        $imagePath = Helper::imagePath.$orgPath;
+
+        $picture = $container
+            ->get('contao.image.picture_factory')
+            ->create($rootDir.'/'.$imagePath, $size[2]);
+
+        $staticUrl = $container->get('contao.assets.files_context')->getStaticUrl();
+        $picture = array
+        (
+            'img' => $picture->getImg($container->getParameter('kernel.project_dir'), $staticUrl),
+            'sources' => $picture->getSources($container->getParameter('kernel.project_dir'), $staticUrl)
+        );
+
+        $picture['alt'] = $alt;
+
+        $pictureTemplate = new FrontendTemplate('picture_default');
+        $pictureTemplate->setData($picture);
+
+        return $pictureTemplate->parse();
     }
 
     private function getThumbnailTemplate($resized = false)
