@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $date = date('Y');
 
-$header = <<<EOF
+$GLOBALS['ecsHeader'] = <<<EOF
 maklermodul bundle for Contao Open Source CMS
 
 Copyright (c) $date pdir / digital agentur // pdir GmbH
