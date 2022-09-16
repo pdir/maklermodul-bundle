@@ -14,6 +14,8 @@
  * file that was distributed with this source code.
  */
 
+use Contao\System;
+
 /**
  * Add palettes to tl_module.
  */
@@ -358,7 +360,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_attachmentSize'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_attachmentSize'],
     'inputType' => 'imageSize',
     'options_callback'      => function () {
-        return \Contao\System::getImageSizes();
+        return System::getImageSizes();
     },
     'eval' => ['includeBlankOption'=>true, 'rgxp'=>'digit', 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
