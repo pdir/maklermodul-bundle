@@ -20,7 +20,13 @@
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\BackendTemplate;
+use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\Environment;
+use Contao\FilesModel;
+use Contao\Input;
+use Contao\Module;
 use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
@@ -33,7 +39,7 @@ use Pdir\MaklermodulBundle\Util\Helper;
  * @copyright  pdir / digital agentur
  * @author     Mathias Arzberger <develop@pdir.de>
  */
-class HeaderImageView extends \Module
+class HeaderImageView extends Module
 {
     /**
      * Template.
@@ -56,7 +62,7 @@ class HeaderImageView extends \Module
     {
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### '.$GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'][0].' ###';
             $objTemplate->title = $this->headline;
@@ -68,12 +74,12 @@ class HeaderImageView extends \Module
         }
 
         // Set auto item
-        if (!isset($_GET['estate']) && \Config::get('useAutoItem') && isset($_GET['expose'])) {
-            \Input::setGet('estate', \Input::get('expose'));
+        if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
+            Input::setGet('estate', Input::get('expose'));
         }
 
         // get alias from auto item
-        $this->alias = \Input::get('estate');
+        $this->alias = Input::get('estate');
 
         return parent::generate();
     }
@@ -84,7 +90,7 @@ class HeaderImageView extends \Module
     protected function compile()
     {
         if ('' === $this->alias) {
-            throw new PageNotFoundException('Page not found: '.\Environment::get('uri'));
+            throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
         }
 
         $estate = $this->createFieldRendererFactory($this->alias);
@@ -107,7 +113,7 @@ class HeaderImageView extends \Module
         } else {
             $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder.'/img/platzhalterbild.jpg';
             if ($placeholder !== Helper::assetFolder.'/img/platzhalterbild.jpg') {
-                $objFile = \FilesModel::findByUuid($placeholder);
+                $objFile = FilesModel::findByUuid($placeholder);
                 $this->Template->headerImage = $objFile->path;
             } else {
                 $this->Template->headerImage = $placeholder;
