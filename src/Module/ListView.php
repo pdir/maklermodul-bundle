@@ -76,6 +76,11 @@ class ListView extends Module
      */
     private $detailPage;
 
+    /**
+     * @var mixed
+     */
+    private $makler_paginationCount;
+
     public function __construct($objModule, $strColumn = 'main')
     {
         parent::__construct($objModule, $strColumn);
@@ -99,7 +104,7 @@ class ListView extends Module
      *
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
@@ -119,7 +124,7 @@ class ListView extends Module
 
     public function toUri($path)
     {
-        return str_replace('/var/www/', '', $path);
+        return \str_replace('/var/www/', '', $path);
     }
 
     public function getRootDir()
@@ -127,13 +132,16 @@ class ListView extends Module
         $container = System::getContainer();
         $strRootDir = $container->getParameter('kernel.project_dir').\DIRECTORY_SEPARATOR.$container->getParameter('contao.upload_path');
 
-        return $strRootDir.\DIRECTORY_SEPARATOR.'maklermodul'.\DIRECTORY_SEPARATOR.'data'.\DIRECTORY_SEPARATOR;
+        return $strRootDir . \DIRECTORY_SEPARATOR.'maklermodul' . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR;
     }
 
-    public function getListSourceUri($full = false)
+    /**
+     * @throws \Exception
+     */
+    public function getListSourceUri($full = false): string
     {
-        if (!method_exists($this->Template->config, 'getStorageFileUri')) {
-            throw new Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page']);
+        if (!\method_exists($this->Template->config, 'getStorageFileUri')) {
+            throw new \Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page']);
         }
         if ($full) {
             $path = Helper::imagePath.$this->Template->config->getStorageFileUri();
@@ -144,6 +152,9 @@ class ListView extends Module
         return $path;
     }
 
+    /**
+     * @throws \Symfony\Component\Routing\Exception\ExceptionInterface
+     */
     public function getDetailViewPrefix()
     {
         if ($this->Template->staticFilter) {
@@ -160,19 +171,19 @@ class ListView extends Module
         }
 
         if($urlSuffix === '')
-            return str_replace($this->detailPage->alias, $this->detailPage->alias . '/' . DetailView::PARAMETER_KEY, $baseUri);
+            return \str_replace($this->detailPage->alias, $this->detailPage->alias . '/' . DetailView::PARAMETER_KEY, $baseUri);
 
-        return preg_replace('%'.preg_quote($urlSuffix).'$%', '/' . DetailView::PARAMETER_KEY, $baseUri);
+        return \preg_replace('%'.\preg_quote($urlSuffix).'$%', '/' . DetailView::PARAMETER_KEY, $baseUri);
     }
 
-    public function getObjects()
+    public function getObjects(): array
     {
         return $this->arrData;
     }
 
-    public function formatValue($sVal)
+    public function formatValue($sVal): string
     {
-        return number_format((float) $sVal, 2, ',', '.');
+        return \number_format((float) $sVal, 2, ',', '.');
     }
 
     /**
@@ -197,13 +208,13 @@ class ListView extends Module
 
         if ('1' === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
-            $this->Template->staticListPage = '/'.PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
+            $this->Template->staticListPage = '/' . PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
 
         $this->Template->config = new IndexConfig($this->arrData);
 
         // image params
-        $arrImgSize = unserialize($this->imgSize);
+        $arrImgSize = \unserialize($this->imgSize);
         $this->Template->listImageType = 'image';
         $this->Template->listImageWidth = '300';
         $this->Template->listImageHeight = '200';
@@ -215,7 +226,7 @@ class ListView extends Module
             $this->Template->listImageSize = $arrImgSize[2];
             $this->Template->listImageType = 'picture';
 
-            if(!is_numeric($arrImgSize[2])) {
+            if(!\is_numeric($arrImgSize[2])) {
                 // image mode: proportional, crop or box
                 $this->Template->listImageMode = $arrImgSize[2];
                 $this->Template->listImageType = 'image';
@@ -258,7 +269,7 @@ class ListView extends Module
         }
 
         // get data from json
-        $json = json_decode($objFile->getContent(), true);
+        $json = \json_decode($objFile->getContent(), true);
 
         if ($json && 0 === count($json['data'])) {
             return $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'];
@@ -332,7 +343,7 @@ class ListView extends Module
         $this->Template->filter = $objFilterTemplate->parse();
 
         if ('1' === $this->arrData['immo_listDebug']) {
-            $objFile = new \File(Helper::imagePath.'/key-index.json');
+            $objFile = new File(Helper::imagePath.'/key-index.json');
             $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);
             $this->Template->debug = true;

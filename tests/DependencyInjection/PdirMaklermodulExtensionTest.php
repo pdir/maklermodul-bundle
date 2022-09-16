@@ -25,19 +25,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class PdirMaklermodulExtensionTest extends ContaoTestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
-
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->container = new ContainerBuilder(new ParameterBag(['kernel.debug' => false]));
+        $container = new ContainerBuilder(new ParameterBag(['kernel.debug' => false]));
 
         $extension = new PdirMaklermodulExtension();
-        $extension->load([], $this->container);
+        $extension->load([], $container);
     }
 
     /**
