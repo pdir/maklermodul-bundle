@@ -13,8 +13,8 @@ Types of changes
 ## [2.8.1](https://github.com/pdir/maklermodul-bundle/tree/2.8.1) – 2022-09-20
 
 - [Fixed] fix pagination error
-- [Fixed] optimize image loading in list view
-- [Fixed] fix button filter
+- [Fixed] optimize image loading in list view [#25](https://github.com/pdir/maklermodul-bundle/issues/25)
+- [Fixed] fix button filter [#15](https://github.com/pdir/maklermodul-bundle/issues/15)
 
 ## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-09-16
 
