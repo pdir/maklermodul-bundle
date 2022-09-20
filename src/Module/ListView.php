@@ -76,11 +76,6 @@ class ListView extends Module
      */
     private $detailPage;
 
-    /**
-     * @var mixed
-     */
-    private $makler_paginationCount;
-
     public function __construct($objModule, $strColumn = 'main')
     {
         parent::__construct($objModule, $strColumn);
