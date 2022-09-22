@@ -281,7 +281,7 @@ class Helper extends \Frontend
     /*
      * Workaround for \Contao\ArrayUtil in Contao 4.9
      */
-    public function arrayInsert(&$arrCurrent, $intIndex, $arrNew): void
+    public static function arrayInsert(&$arrCurrent, $intIndex, $arrNew): void
     {
         if (!\is_array($arrCurrent))
         {
