@@ -12,6 +12,9 @@ Types of changes
 
 ## [2.8.1](https://github.com/pdir/maklermodul-bundle/tree/2.8.1) – 2022-09-22
 
+- [Fixed] fix pagination error
+- [Fixed] optimize image loading in list view [#25](https://github.com/pdir/maklermodul-bundle/issues/25)
+- [Fixed] fix button filter [#15](https://github.com/pdir/maklermodul-bundle/issues/15)
 - [Fixes] Class 'Contao\ArrayUtil' not found in Contao 4.9
 
 ## [2.8.0](https://github.com/pdir/maklermodul-bundle/tree/2.8.0) – 2022-09-16
