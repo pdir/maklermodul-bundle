@@ -335,7 +335,7 @@ class ListView extends Module
                 $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']]
                     ?: $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
 
-                if ('' !== $name) {
+                if (null !== $name) {
                     $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
                 }
 
