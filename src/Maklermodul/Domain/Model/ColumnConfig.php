@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -49,7 +51,7 @@ class ColumnConfig
     {
         $returnValue = $this->findCssClassDataOfValue($key, $value);
 
-        if (is_array($returnValue)) {
+        if (\is_array($returnValue)) {
             $returnValue = sprintf('%s-%s', $returnValue[0], $returnValue[1]);
         }
 
@@ -61,7 +63,7 @@ class ColumnConfig
         $key = $this->getSourceIdentifier();
         $cssClassData = $this->findCssClassDataOfValue($key, $value);
 
-        if (is_array($cssClassData)) {
+        if (\is_array($cssClassData)) {
             return [
                 'group' => $cssClassData[0],
                 'value' => $cssClassData[1],
@@ -70,9 +72,9 @@ class ColumnConfig
         }
 
         return [
-                'name' => $value,
-                'value' => $key,
-            ];
+            'name' => $value,
+            'value' => $key,
+        ];
     }
 
     private function findCssClassDataOfValue($key, $value)
@@ -81,14 +83,14 @@ class ColumnConfig
 
         if (isset($this->cssClassMapping[$key])) {
             $function = $this->cssClassMapping[$key];
-            $returnValue = call_user_func_array([$this, $function], [$returnValue]);
+            $returnValue = \call_user_func_array([$this, $function], [$returnValue]);
         }
 
         if (true === $returnValue) {
-            $value = str_replace('.@','',substr($key, strpos($key, '.@')));
+            $value = str_replace('.@', '', substr($key, strpos($key, '.@')));
             $key = substr($key, 0, strpos($key, '.@'));
             $returnValue = [$key, $value];
-        } elseif (!empty($returnValue) and false !== $returnValue and 'false' !== strtolower($returnValue)) {
+        } elseif (!empty($returnValue) && false !== $returnValue && 'false' !== strtolower($returnValue)) {
             $returnValue = [$key, $returnValue];
         } else {
             $returnValue = null;
@@ -100,7 +102,8 @@ class ColumnConfig
     private function cssMapBoolean($value)
     {
         $value = strtolower($value);
-        if (true === $value or 'true' === $value or 1 === $value or 1 === intval($value)) {
+
+        if (true === $value || 'true' === $value || 1 === $value || 1 === (int) $value) {
             return true;
         }
 
@@ -118,7 +121,7 @@ class ColumnConfig
         $value = str_replace($LocaleInfo['mon_thousands_sep'], '', $value);
         $value = str_replace($LocaleInfo['mon_decimal_point'], '.', $value);
 
-        return round((int)$value, 0);
+        return round((int) $value, 0);
     }
 
     private function cssMapRange1($value)
@@ -178,16 +181,14 @@ class ColumnConfig
         $low = (int) $multi;
         $high = $low + 1;
 
-        $low = $low * $steps;
-        $high = $high * $steps;
+        $low *= $steps;
+        $high *= $steps;
 
         if (0 === $low) {
             $low = 1;
         }
 
-        $returnValue = sprintf('%s-%s', $low, $high);
-
-        return $returnValue;
+        return sprintf('%s-%s', $low, $high);
     }
 
     private function cssMapFloor1($value)
@@ -247,16 +248,14 @@ class ColumnConfig
         $low = floor($multi);
         $high = $low + 1;
 
-        $low = $low * $steps;
-        $high = $high * $steps;
+        $low *= $steps;
+        $high *= $steps;
 
         if (0 === $low) {
             $low = 1;
         }
 
-        $returnValue = sprintf('%s-%s', $low, $high);
-
-        return $returnValue;
+        return sprintf('%s-%s', $low, $high);
     }
 
     private function cssMapFloorNumber($value)
@@ -264,8 +263,7 @@ class ColumnConfig
         $LocaleInfo = localeconv();
         $value = str_replace($LocaleInfo['mon_thousands_sep'], '', $value);
         $value = str_replace($LocaleInfo['mon_decimal_point'], '.', $value);
-        $value = floor($value);
 
-        return $value;
+        return floor($value);
     }
 }

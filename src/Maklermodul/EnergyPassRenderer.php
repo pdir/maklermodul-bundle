@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -29,6 +31,9 @@ namespace Pdir\MaklermodulBundle\Maklermodul;
  * @property string $mitwarmwasser
  * @property string $gueltigBis
  */
+
+use Contao\FrontendTemplate;
+
 class EnergyPassRenderer
 {
     const LIST_PREFIX = 'epass.';
@@ -78,7 +83,7 @@ class EnergyPassRenderer
     }
 
     // render energy pass
-    public function render()
+    public function render(): void
     {
         //epart
         if ('VERBRAUCH' === $this->rawData['zustand_angaben.energiepass.epart']) {
@@ -93,15 +98,19 @@ class EnergyPassRenderer
         if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@OFEN'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@OFEN']) {
             $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@OFEN'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@ETAGE'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@ETAGE']) {
             $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@ETAGE'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@ZENTRAL'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@ZENTRAL']) {
             $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@ZENTRAL'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@FERN'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@FERN']) {
             $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@FERN'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@FUSSBODEN'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@FUSSBODEN']) {
             $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@FUSSBODEN'];
         }
@@ -109,42 +118,55 @@ class EnergyPassRenderer
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@OEL'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@OEL']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@OEL'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@GAS'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@GAS']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@GAS'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@ELEKTRO'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@ELEKTRO']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@ELEKTRO'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@ALTERNATIV'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@ALTERNATIV']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@ALTERNATIV'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@SOLAR'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@SOLAR']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@SOLAR'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@ERDWAERME'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@ERDWAERME']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@ERDWAERME'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@LUFTWP'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@LUFTWP']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@LUFTWP'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@FERN'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@FERN']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@FERN'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@BLOCK'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@BLOCK']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@BLOCK'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@WASSER-ELEKTRO'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@WASSER-ELEKTRO']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@WASSER-ELEKTRO'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@PELLET'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@PELLET']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@PELLET'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@KOHLE'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@KOHLE']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@KOHLE'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@HOLZ'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@HOLZ']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@HOLZ'];
         }
+
         if ('true' === $this->ausstattungRawData['ausstattung.befeuerung.@FLUESSIGGAS'] || '1' === $this->ausstattungRawData['ausstattung.befeuerung.@FLUESSIGGAS']) {
             $energietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung.@FLUESSIGGAS'];
         }
@@ -164,31 +186,39 @@ class EnergyPassRenderer
         }
         $energie = str_replace(',', '.', $energie);
 
-        if ('' == $wertklasse) {
-            if ($energie >= 0 and $energie < 30) {
+        if ('' === $wertklasse) {
+            if ($energie >= 0 && $energie < 30) {
                 $eClass = 'A+';
             }
-            if ($energie >= 30 and $energie < 50) {
+
+            if ($energie >= 30 && $energie < 50) {
                 $eClass = 'A';
             }
-            if ($energie >= 50 and $energie < 75) {
+
+            if ($energie >= 50 && $energie < 75) {
                 $eClass = 'B';
             }
-            if ($energie >= 75 and $energie < 100) {
+
+            if ($energie >= 75 && $energie < 100) {
                 $eClass = 'C';
             }
-            if ($energie >= 100 and $energie < 130) {
+
+            if ($energie >= 100 && $energie < 130) {
                 $eClass = 'D';
             }
-            if ($energie >= 130 and $energie < 160) {
+
+            if ($energie >= 130 && $energie < 160) {
                 $eClass = 'E';
             }
-            if ($energie >= 160 and $energie < 200) {
+
+            if ($energie >= 160 && $energie < 200) {
                 $eClass = 'F';
             }
-            if ($energie >= 200 and $energie < 250) {
+
+            if ($energie >= 200 && $energie < 250) {
                 $eClass = 'G';
             }
+
             if ($energie >= 250) {
                 $eClass = 'H';
             }
@@ -196,20 +226,21 @@ class EnergyPassRenderer
             $eClass = $wertklasse;
         }
 
-        $objFilterTemplate = new \FrontendTemplate(self::DEFAULT_TEMPLATE);
+        $objFilterTemplate = new FrontendTemplate(self::DEFAULT_TEMPLATE);
 
         $objFilterTemplate->epart = $epart;
         $objFilterTemplate->baujahr = $this->rawData['zustand_angaben.baujahr'];
         $objFilterTemplate->stromwert = $this->rawData['zustand_angaben.energiepass.stromwert'];
         $objFilterTemplate->waermewert = $this->rawData['zustand_angaben.energiepass.waermewert'];
-        $objFilterTemplate->mitwarmwasser = ('true' === $this->rawData['zustand_angaben.energiepass.mitwarmwasser'] || '1' === $this->rawData['zustand_angaben.energiepass.mitwarmwasser']) ? 'Ja' : '';
+        $objFilterTemplate->mitwarmwasser = 'true' === $this->rawData['zustand_angaben.energiepass.mitwarmwasser'] || '1' === $this->rawData['zustand_angaben.energiepass.mitwarmwasser'] ? 'Ja' : '';
         $objFilterTemplate->gueltigBis = $this->rawData['zustand_angaben.energiepass.gueltig_bis'];
         $objFilterTemplate->energy = $energie;
         $objFilterTemplate->heizungsart = $heizung;
         $objFilterTemplate->energietraeger = $energietraeger;
         $objFilterTemplate->energyClass = $eClass;
+
         if ($this->rawData['zustand_angaben.energiepass.primaerenergietraeger']) {
-            $objFilterTemplate->primaererEnergietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$this->rawData['zustand_angaben.energiepass.primaerenergietraeger']] ? $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$this->rawData['zustand_angaben.energiepass.primaerenergietraeger']] : $this->rawData['zustand_angaben.energiepass.primaerenergietraeger'];
+            $objFilterTemplate->primaererEnergietraeger = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$this->rawData['zustand_angaben.energiepass.primaerenergietraeger']] ?: $this->rawData['zustand_angaben.energiepass.primaerenergietraeger'];
         } else {
             $objFilterTemplate->primaererEnergietraeger = $energietraeger;
         }
@@ -232,18 +263,18 @@ class EnergyPassRenderer
         echo $objFilterTemplate->parse();
     }
 
-    protected function parseRawData()
+    protected function parseRawData(): void
     {
         $this->data = [];
 
         foreach ($this->rawData as $key => $value) {
             $parsedKey = str_replace(self::LIST_PREFIX, '', $key);
-            list($id, $parsedKey) = explode('.', $parsedKey, 2);
+            [$id, $parsedKey] = explode('.', $parsedKey, 2);
             $this->setData($id, $parsedKey, $value);
         }
     }
 
-    private function setData($id, $key, $value)
+    private function setData($id, $key, $value): void
     {
         $id = self::LIST_PREFIX.$id;
 

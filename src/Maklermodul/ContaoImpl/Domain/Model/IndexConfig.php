@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -45,7 +47,7 @@ class IndexConfig implements IndexConfigInterface
         return $this->resultSet['id'];
     }
 
-    public function getDetailViewUri(Estate $estate)
+    public function getDetailViewUri(Estate $estate): void
     {
         throw new \Exception('deprecated - not yet implemented');
     }
@@ -88,7 +90,7 @@ class IndexConfig implements IndexConfigInterface
         return $this->resultSet['immo_actIndexFile'];
     }
 
-    public function setStorageFileUri($newUri)
+    public function setStorageFileUri($newUri): void
     {
         $this->resultSet['immo_actIndexFile'] = $newUri;
     }
@@ -100,10 +102,11 @@ class IndexConfig implements IndexConfigInterface
 
         foreach ($arr as $cond) {
             $str = html_entity_decode($cond);
-            $lastChar = substr($str,strlen($str) - 1,1);
-            if(false !== strpos($str, '=%') && '%' == $lastChar) {
+            $lastChar = substr($str, \strlen($str) - 1, 1);
+
+            if (false !== strpos($str, '=%') && '%' === $lastChar) {
                 $result = explode('=', $str);
-                $condArr['part'][$result[0]][] = str_replace("%","",$result[1]);
+                $condArr['part'][$result[0]][] = str_replace('%', '', $result[1]);
             } elseif (false !== strpos($str, '!=')) {
                 $result = explode('!=', $str);
                 $condArr['unequal'][$result[0]][] = $result[1];
@@ -123,7 +126,7 @@ class IndexConfig implements IndexConfigInterface
 
     private function getDefaultConfig()
     {
-        $configArray = [
+        return [
             ['freitexte.objekttitel', false],
             ['flaechen.anzahl_zimmer', true],
             ['objektkategorie.nutzungsart.@WAZ', true],
@@ -140,16 +143,13 @@ class IndexConfig implements IndexConfigInterface
             ['geo.ort', true],
             ['verwaltung_techn.objektnr_extern', false],
         ];
-
-        return $configArray;
     }
 
     private function getCustomConfig($fieldConfig, $filterConfig)
     {
         $returnValue = $this->parseDisplayFields($fieldConfig);
-        $returnValue = $this->configureFilterSettings($returnValue, $filterConfig);
 
-        return $returnValue;
+        return $this->configureFilterSettings($returnValue, $filterConfig);
     }
 
     private function parseDisplayFields($fieldConfig)
@@ -176,6 +176,7 @@ class IndexConfig implements IndexConfigInterface
 
         foreach ($lines as $line) {
             $line = $this->substitudeEncodedSigns($line);
+
             foreach ($displayFields as &$fieldConfig) {
                 if ($line === $fieldConfig[0]) {
                     $fieldConfig[1] = true;

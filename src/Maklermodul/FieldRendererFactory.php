@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -39,7 +41,7 @@ class FieldRendererFactory
      *
      * @param string $key
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRendererTypeSelector
+     * @return FieldRendererTypeSelector
      */
     public function renderer($key)
     {
@@ -85,7 +87,7 @@ class FieldRendererFactory
     /**
      * Methode für die Rückgabe eines Arrays mit Bildern.
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\AttachmentFieldRendererCollection
+     * @return AttachmentFieldRendererCollection
      */
     public function attachments()
     {
@@ -112,7 +114,7 @@ class FieldRendererFactory
     /**
      * Methode für die Rückgabe der Energiepassangaben.
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\EnergyPassRenderer
+     * @return EnergyPassRenderer
      */
     public function energyPass()
     {
@@ -136,9 +138,11 @@ class FieldRendererFactory
         if (is_a($estateData, '\Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate')) {
             $estateData = $estateData->getFieldsIterator();
         }
+
         if (!$estateData) {
             return [];
         }
+
         foreach ($estateData as $key => $value) {
             if ('' === $startOfKey || 0 === strpos($key, $startOfKey)) {
                 $returnValue[$key] = $value;

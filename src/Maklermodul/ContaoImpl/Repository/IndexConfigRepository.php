@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -37,9 +39,9 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
      *
      * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::update()
      *
-     * @param \Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface $config index config
+     * @param IndexConfigInterface $config index config
      */
-    public function update(IndexConfigInterface $config)
+    public function update(IndexConfigInterface $config): void
     {
         $objquery = $this->Database->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE id=?');
         $objquery->execute($config->getStorageFileUri(), $config->getUid());
@@ -81,6 +83,7 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
         }
 
         $returnValue = [];
+
         while ($row = $result->next()) {
             $returnValue[] = new IndexConfig($row->row());
         }

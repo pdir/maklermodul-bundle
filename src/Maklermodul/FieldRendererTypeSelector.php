@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -67,7 +69,7 @@ class FieldRendererTypeSelector
     /**
      * Methode für die Rückgabe als Text.
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Text
+     * @return Text
      */
     public function asText()
     {
@@ -81,7 +83,7 @@ class FieldRendererTypeSelector
      *
      * @param int $digestCount
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Number
+     * @return Number
      */
     public function asNumber($digestCount = 0)
     {
@@ -93,7 +95,7 @@ class FieldRendererTypeSelector
      *
      * Ausgbeformat dd.mm.yyyy
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Date
+     * @return Date
      */
     public function asDate()
     {
@@ -106,7 +108,7 @@ class FieldRendererTypeSelector
      * @param $yesValue
      * @param $noValue
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Flag
+     * @return Flag
      */
     public function asFlag($yesValue = 'true', $noValue = 'false')
     {
@@ -116,7 +118,7 @@ class FieldRendererTypeSelector
     /**
      * Methode für die Rückgabe eines Bildes.
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Attachment
+     * @return Attachment
      */
     public function asAttachment()
     {
@@ -128,7 +130,7 @@ class FieldRendererTypeSelector
      *
      * @param string $tag html tag
      *
-     * @return \Pdir\MaklermodulBundle\Maklermodul\FieldRenderer\Heading
+     * @return Heading
      */
     public function asHeading($tag = 'div')
     {

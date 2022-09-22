@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -20,19 +22,23 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl;
 
+use Contao\File;
+use Contao\Folder;
+use Contao\System;
+
 class StaticDIC
 {
     const CONFIG_ROOT = '../../Resources/contao/config';
     const FILTER_CSS_MAPPING = 'filter.ini';
     const USER_FILTER_CSS_MAPPING = '/files/maklermodul/data.filter.ini';
 
-    private static $filterConfig = null;
+    private static $filterConfig;
 
     public static function getTranslationMap($useCore = true)
     {
         if (!isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['language_loaded'])) {
             if ($useCore) {
-                \System::loadLanguageFile('makler_modul_mplus');
+                System::loadLanguageFile('makler_modul_mplus');
             } else {
                 // could not detect language in index processing so we could not use
                 // contao's build in feature: System::loadLanguageFile('makler_modul_mplus');
@@ -59,10 +65,12 @@ class StaticDIC
             self::$filterConfig = parse_ini_file($fileName);
             // load user filter css mapping
             $userFileName = TL_ROOT.self::USER_FILTER_CSS_MAPPING;
+
             if (file_exists($userFileName)) {
                 $userFilterConf = parse_ini_file($userFileName);
                 self::$filterConfig = array_merge(self::$filterConfig, $userFilterConf);
             }
+
             if (false === self::$filterConfig) {
                 throw new \Exception("Could not load filter mapping from $fileName");
             }
@@ -74,7 +82,7 @@ class StaticDIC
     /**
      * @param $fileName
      *
-     * @return \Contao\File
+     * @return File
      */
     public static function getFileHelper($fileName)
     {
@@ -84,7 +92,7 @@ class StaticDIC
     /**
      * @param $folderName
      *
-     * @return \Contao\Folder
+     * @return Folder
      */
     public static function getFolderHelper($folderName)
     {

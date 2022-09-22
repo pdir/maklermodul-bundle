@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -22,13 +24,13 @@ use Pdir\MaklermodulBundle\PdirMaklermodulBundle;
 
 class PdirMaklermodulBundleTest extends ContaoTestCase
 {
-    public function testCanBeInstantiated()
+    public function testCanBeInstantiated(): void
     {
         $bundle = new PdirMaklermodulBundle();
         $this->assertInstanceOf(PdirMaklermodulBundle::class, $bundle);
     }
 
-    public function testGetContainerExtension()
+    public function testGetContainerExtension(): void
     {
         $bundle = new PdirMaklermodulBundle();
         $this->assertInstanceOf(PdirMaklermodulExtension::class, $bundle->getContainerExtension());

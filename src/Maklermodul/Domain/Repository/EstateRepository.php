@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -20,7 +22,7 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
-use Contao\StringUtil;
+use Contao\File;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Util\Helper;
 
@@ -31,6 +33,7 @@ class EstateRepository
     public function __construct($storageDirectoryPath)
     {
         $this->storageDirectoryPath = $storageDirectoryPath;
+
         if (!is_dir($this->storageDirectoryPath)) {
             throw new \Exception('Could not open storage directory: '.$this->storageDirectoryPath);
         }
@@ -40,7 +43,7 @@ class EstateRepository
     {
         $fileNamePath = sprintf('%s%s.json', $this->storageDirectoryPath, $objectId);
 
-        if (null === \File($fileNamePath)) {
+        if (null === file($fileNamePath)) {
             return null;
         }
 
@@ -53,6 +56,7 @@ class EstateRepository
         $fileNamePath = sprintf('%s*-%s.json', $this->storageDirectoryPath, $alias);
 
         $files = [];
+
         foreach (glob($fileNamePath) as $file) {
             $files[] = $file;
         }
@@ -86,7 +90,7 @@ class EstateRepository
 
     public function loadJsonFile($fileNamePath)
     {
-        $objFile = new \File(str_replace($this->storageDirectoryPath, Helper::imagePath, $fileNamePath));
+        $objFile = new File(str_replace($this->storageDirectoryPath, Helper::imagePath, $fileNamePath));
         $decoded = json_decode($objFile->getContent(), true);
 
         if (null === $decoded) {
@@ -101,9 +105,11 @@ class EstateRepository
         if (false === strpos($filename, '.json')) {
             return false;
         }
+
         if ('key-index.json' === substr($filename, -14)) {
             return false;
         }
+
         if (false === !strpos($filename, '00index')) {
             return false;
         }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -140,12 +142,15 @@ class Attachment extends FieldRenderer
         return $this;
     }
 
-    /** @noinspection PhpInconsistentReturnPointsInspection */
+    /**
+     * @noinspection PhpInconsistentReturnPointsInspection
+     */
     private function getShortString()
     {
         // show only given group
         $givenGroups = StringUtil::trimsplit(',', $this->getSetting('group'));
-        if (empty($givenGroups) || \in_array($this->getValueOf('@gruppe'), $givenGroups)) {
+
+        if (empty($givenGroups) || \in_array($this->getValueOf('@gruppe'), $givenGroups, true)) {
             switch ($this->getValueOf('@gruppe')) {
                 case 'DOKUMENTE':
                     // render doc list
@@ -158,6 +163,7 @@ class Attachment extends FieldRenderer
                         $this->getValueOf('anhangtitel')
                     );
                     break;
+
                 case 'FILMLINK':
                     // render doc list
                     $this->template = $this->getShortTemplateDoc();
@@ -169,6 +175,7 @@ class Attachment extends FieldRenderer
                             $this->getValueOf('anhangtitel')
                     );
                     break;
+
                 case 'FILM':
                     $this->template = $this->getShortTemplateMedia();
 
@@ -179,11 +186,12 @@ class Attachment extends FieldRenderer
                         $this->getValueOf('anhangtitel')
                     );
                     break;
+
                 default:
                     // fallback for xml data without group definition
 
                     // render as doc/link
-                    if($this->getValueOf('format') === 'pdf' || $this->getValueOf('format') === 'application/pdf' || $this->getValueOf('format') === 'doc') {
+                    if ('pdf' === $this->getValueOf('format') || 'application/pdf' === $this->getValueOf('format') || 'doc' === $this->getValueOf('format')) {
                         $this->template = $this->getShortTemplateDoc();
 
                         return sprintf($this->template,
@@ -207,19 +215,19 @@ class Attachment extends FieldRenderer
 
                     $this->template = $this->getShortTemplate();
 
-                    if( strpos($this->getValueOf('daten.pfad'),"http") !== false ) {
+                    if (false !== strpos($this->getValueOf('daten.pfad'), 'http')) {
                         return sprintf($this->template,
                             $this->getUrlOfPath($this->getValueOf('daten.pfad')),
                             $this->getValueOf('anhangtitel'),
                             $renderedThumbnail
                         );
-                    } else {
+                    }
+
                         return sprintf($this->template,
                             $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
                             $this->getValueOf('anhangtitel'),
                             $renderedThumbnail
                         );
-                    }
             }
         }
 
@@ -242,8 +250,13 @@ class Attachment extends FieldRenderer
             $height = $this->getSetting('maxHeight');
             $size = $this->getSetting('size');
 
-            if($size[0] === '') $size[0] = $width;
-            if($size[1] === '') $size[1] = $height;
+            if ('' === $size[0]) {
+                $size[0] = $width;
+            }
+
+            if ('' === $size[1]) {
+                $size[1] = $height;
+            }
 
             $url = $path;
             // @todo make it changeable in the config file
@@ -251,24 +264,21 @@ class Attachment extends FieldRenderer
                 $url = str_replace('.jpg', '_small.jpg', $url);
 
                 $this->template = $this->getThumbnailTemplate(true);
-                $result = sprintf($this->template, $url, $size[0], $size[1], $alt);
 
-                return $result;
+                return sprintf($this->template, $url, $size[0], $size[1], $alt);
             }
 
             // use image factory if mode is set
-            if (!\is_numeric($size[2])) {
+            if (!is_numeric($size[2])) {
                 $path = $this->resizeImage($path, $size);
                 $url = $this->getUrlOfPath($path);
 
                 $this->template = $this->getThumbnailTemplate(true);
-                $result = sprintf($this->template, $url, $size[0], $size[1], $alt);
 
-                return $result;
+                return sprintf($this->template, $url, $size[0], $size[1], $alt);
             }
 
             return $this->resizePicture($path, $size, $alt);
-
         } catch (\InvalidArgumentException $e) {
             $this->template = $this->getThumbnailTemplate();
             $url = $path;
@@ -276,6 +286,7 @@ class Attachment extends FieldRenderer
             if ('REMOTE' === $location) {
                 $url = str_replace('.jpg', '_small.jpg', $url);
             }
+
             if ('EXTERN' === $location || 'INTERN' === $location) {
                 $url = $this->getUrlOfPath($path);
             }
@@ -297,14 +308,14 @@ class Attachment extends FieldRenderer
 
         $picture = $container
             ->get('contao.image.picture_factory')
-            ->create($rootDir.'/'.$imagePath, $size[2]);
+            ->create($rootDir.'/'.$imagePath, $size[2])
+        ;
 
         $staticUrl = $container->get('contao.assets.files_context')->getStaticUrl();
-        $picture = array
-        (
+        $picture = [
             'img' => $picture->getImg($container->getParameter('kernel.project_dir'), $staticUrl),
-            'sources' => $picture->getSources($container->getParameter('kernel.project_dir'), $staticUrl)
-        );
+            'sources' => $picture->getSources($container->getParameter('kernel.project_dir'), $staticUrl),
+        ];
 
         $picture['alt'] = $alt;
 

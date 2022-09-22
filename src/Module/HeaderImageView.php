@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -27,7 +29,6 @@ use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Input;
 use Contao\Module;
-use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
@@ -87,7 +88,7 @@ class HeaderImageView extends Module
     /**
      * Generate the module.
      */
-    protected function compile()
+    protected function compile(): void
     {
         if ('' === $this->alias) {
             throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
@@ -96,22 +97,23 @@ class HeaderImageView extends Module
         $estate = $this->createFieldRendererFactory($this->alias);
 
         if ('1' === $this->makler_showHeadline) {
-            $this->Template->headline = $this->headline ? $this->headline : $estate->rawValue('freitexte.objekttitel');
+            $this->Template->headline = $this->headline ?: $estate->rawValue('freitexte.objekttitel');
             $this->Template->showHeadline = true;
         }
 
         $this->Template->showBackgroundImage = $this->makler_showBackgroundImage;
 
-        $imageIndex = $this->makler_headerImageSource ? : 2;
+        $imageIndex = $this->makler_headerImageSource ?: 2;
 
-        if ($estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad')) {
-            if( strpos($estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad'),"http") !== false ) {
-                $this->Template->headerImage = $estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad');
+        if ($estate->rawValue('anhaenge.anhang.#'.$imageIndex.'.daten.pfad')) {
+            if (false !== strpos($estate->rawValue('anhaenge.anhang.#'.$imageIndex.'.daten.pfad'), 'http')) {
+                $this->Template->headerImage = $estate->rawValue('anhaenge.anhang.#'.$imageIndex.'.daten.pfad');
             } else {
-                $this->Template->headerImage = Helper::imagePath.$estate->rawValue('anhaenge.anhang.#' . $imageIndex . '.daten.pfad');
+                $this->Template->headerImage = Helper::imagePath.$estate->rawValue('anhaenge.anhang.#'.$imageIndex.'.daten.pfad');
             }
         } else {
-            $placeholder = $this->makler_headerImagePlaceholder ? $this->makler_headerImagePlaceholder : Helper::assetFolder.'/img/platzhalterbild.jpg';
+            $placeholder = $this->makler_headerImagePlaceholder ?: Helper::assetFolder.'/img/platzhalterbild.jpg';
+
             if ($placeholder !== Helper::assetFolder.'/img/platzhalterbild.jpg') {
                 $objFile = FilesModel::findByUuid($placeholder);
                 $this->Template->headerImage = $objFile->path;
@@ -127,13 +129,13 @@ class HeaderImageView extends Module
         $this->Template->imageHeight = '800';
         $this->Template->imageMode = 'crop';
 
-        if ($arrImgSize[2] !== '') {
+        if ('' !== $arrImgSize[2]) {
             $this->Template->imageWidth = $arrImgSize[0];
             $this->Template->imageHeight = $arrImgSize[1];
             $this->Template->imageSize = $arrImgSize[2];
             $this->Template->imageType = 'picture';
 
-            if(!is_numeric($arrImgSize[2])) {
+            if (!is_numeric($arrImgSize[2])) {
                 // image mode: proportional, crop or box
                 $this->Template->imageMode = $arrImgSize[2];
                 $this->Template->imageType = 'image';

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -27,9 +29,8 @@ class BackButtonRenderer
     private $translator;
 
     /**
-     * @param string          $referer
-     * @param string          $request    i.e. $_SERVER['QUERY_STRING']
-     * @param FieldTranslator $translator
+     * @param string $referer
+     * @param string $request i.e. $_SERVER['QUERY_STRING']
      */
     public function __construct($referer, $request, FieldTranslator $translator)
     {
@@ -56,7 +57,7 @@ class BackButtonRenderer
 
     private function shouldUseFallback($refererParts, $request)
     {
-        return empty($refererParts) or empty($request);
+        return empty($refererParts) || empty($request);
     }
 
     private function getRenderedButton()

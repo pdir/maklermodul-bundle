@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -74,7 +76,7 @@ class Flag extends FieldRenderer
     {
         $returnValue = $this->getSetting('prefix');
 
-        if (true === $this->getValue() or 'true' === $this->getValue() or '1' === $this->getValue() or 'Ja' === $this->getValue() or 'JA' === $this->getValue()) {
+        if (true === $this->getValue() || 'true' === $this->getValue() || '1' === $this->getValue() || 'Ja' === $this->getValue() || 'JA' === $this->getValue()) {
             $returnValue .= $this->getSetting('yesValue');
         } else {
             $returnValue .= $this->getSetting('noValue');
@@ -104,6 +106,6 @@ EOT;
 
     private function getValueString()
     {
-        return (true === $this->getValue() or 'true' === $this->getValue() or '1' === $this->getValue()) ? 'true' : 'false';
+        return true === $this->getValue() || 'true' === $this->getValue() || '1' === $this->getValue() ? 'true' : 'false';
     }
 }
