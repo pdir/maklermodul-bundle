@@ -30,7 +30,7 @@ class Helper extends \Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.8.0';
+    const VERSION = '2.8.1';
 
     /**
      * Extension mode.
@@ -276,5 +276,28 @@ class Helper extends \Frontend
         }
 
         return $strBuffer;
+    }
+
+    /*
+     * Workaround for \Contao\ArrayUtil in Contao 4.9
+     */
+    public function arrayInsert(&$arrCurrent, $intIndex, $arrNew): void
+    {
+        if (!\is_array($arrCurrent))
+        {
+            $arrCurrent = $arrNew;
+
+            return;
+        }
+
+        if (\is_array($arrNew))
+        {
+            $arrBuffer = array_splice($arrCurrent, 0, $intIndex);
+            $arrCurrent = array_merge_recursive($arrBuffer, $arrNew, $arrCurrent);
+
+            return;
+        }
+
+        array_splice($arrCurrent, $intIndex, 0, $arrNew);
     }
 }

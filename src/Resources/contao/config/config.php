@@ -14,7 +14,7 @@
  * file that was distributed with this source code.
  */
 
-use Contao\ArrayUtil;
+# use Contao\ArrayUtil;
 use Contao\Combiner;
 use Pdir\MaklermodulBundle\EventListener\ParseBackendTemplateListener;
 use Pdir\MaklermodulBundle\EventListener\ParseTemplateListener;
@@ -31,16 +31,19 @@ $assetsDir = 'bundles/pdirmaklermodul';
  * Backend modules.
  */
 if (!isset($GLOBALS['BE_MOD']['pdir'])) {
-    ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
+    # ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
+    Helper::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
 }
 
-ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
+#ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
+Helper::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodulSetup' => [
         'callback' => MaklermodulSetup::class,
     ],
 ]);
 
-ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
+#ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
+Helper::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodul' => [
         'tables' => ['tl_makler'],
     ],
