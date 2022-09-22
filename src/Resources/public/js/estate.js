@@ -550,6 +550,9 @@
   listView.filter = function (e) {
     var filters = {};
 
+    // remove disabled from buttons
+    $('.mm-filter-btn').prop('disabled', false);
+
     // set filter for group
     if (typeof listView.checkboxFilter !== 'undefined')
       filters['checkbox'] = listView.checkboxFilter;
