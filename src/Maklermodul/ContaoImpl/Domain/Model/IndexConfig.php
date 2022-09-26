@@ -95,8 +95,12 @@ class IndexConfig implements IndexConfigInterface
         $this->resultSet['immo_actIndexFile'] = $newUri;
     }
 
-    public function getConditionsConfig()
+    public function getConditionsConfig(): array
     {
+        if (null === $this->resultSet['immo_listCondition']) {
+            return [];
+        }
+
         $condArr = [];
         $arr = explode("\n", $this->resultSet['immo_listCondition']);
 
