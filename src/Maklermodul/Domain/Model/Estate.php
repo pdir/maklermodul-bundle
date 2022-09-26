@@ -109,6 +109,14 @@ class Estate
             'locale' => $locale ?: '',
         ];
 
+        if (is_object($strSource)) {
+            $strSource = (string)$strSource;
+        }
+
+        if (null === $strSource) {
+            $strSource = 'no-title-exists';
+        }
+
         // generate slug
         $strValue = System::getContainer()->get('contao.slug')->generate($strSource, $options);
 

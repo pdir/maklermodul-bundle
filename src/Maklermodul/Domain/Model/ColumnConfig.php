@@ -101,6 +101,10 @@ class ColumnConfig
 
     private function cssMapBoolean($value)
     {
+        if (null === $value) {
+            return null;
+        }
+
         $value = strtolower($value);
 
         if (true === $value || 'true' === $value || 1 === $value || 1 === (int) $value) {
