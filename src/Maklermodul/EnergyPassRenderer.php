@@ -186,7 +186,7 @@ class EnergyPassRenderer
         }
         $energie = str_replace(',', '.', $energie);
 
-        if ('' === $wertklasse) {
+        if (null === $wertklasse) {
             if ($energie >= 0 && $energie < 30) {
                 $eClass = 'A+';
             }

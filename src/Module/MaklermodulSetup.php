@@ -28,6 +28,7 @@ use Contao\Controller;
 use Contao\Database;
 use Contao\File;
 use Contao\Files;
+use Contao\Input;
 use Contao\Message;
 use Contao\ZipReader;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
