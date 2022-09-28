@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -88,7 +90,7 @@ class AttachmentFieldRendererCollection implements \Iterator
         $returnValue = new \ArrayIterator($this->attachments);
 
         if ($int > 0) {
-            $tmpArray = array_slice($this->attachments, $int);
+            $tmpArray = \array_slice($this->attachments, $int);
             $returnValue = new \ArrayIterator($tmpArray);
         }
 
@@ -108,7 +110,7 @@ class AttachmentFieldRendererCollection implements \Iterator
      */
     public function range($offset, $endOffset)
     {
-        return new \ArrayIterator(array_slice($this->attachments, $offset, $endOffset));
+        return new \ArrayIterator(\array_slice($this->attachments, $offset, $endOffset));
     }
 
     /**
@@ -178,18 +180,18 @@ class AttachmentFieldRendererCollection implements \Iterator
         return '';
     }
 
-    protected function parseRawData()
+    protected function parseRawData(): void
     {
         $this->data = [];
 
         foreach ($this->rawData as $key => $value) {
             $parsedKey = str_replace(self::LIST_PREFIX, '', $key);
-            list($id, $parsedKey) = explode('.', $parsedKey, 2);
+            [$id, $parsedKey] = explode('.', $parsedKey, 2);
             $this->setData($id, $parsedKey, $value);
         }
     }
 
-    protected function sortData()
+    protected function sortData(): void
     {
         $sorted = [];
         $keys = array_keys($this->data);
@@ -201,7 +203,7 @@ class AttachmentFieldRendererCollection implements \Iterator
         $this->data = $sorted;
     }
 
-    private function setData($id, $key, $value)
+    private function setData($id, $key, $value): void
     {
         $id = self::LIST_PREFIX.$id;
 
@@ -212,7 +214,7 @@ class AttachmentFieldRendererCollection implements \Iterator
         $this->data[$id]["$id.$key"] = $value;
     }
 
-    private function createAttachmentObjects()
+    private function createAttachmentObjects(): void
     {
         $this->attachments = [];
 

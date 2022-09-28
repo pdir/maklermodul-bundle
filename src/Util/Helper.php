@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -20,6 +22,11 @@
 
 namespace Pdir\MaklermodulBundle\Util;
 
+use Contao\Controller;
+use Contao\Database;
+use Contao\File;
+use Contao\FrontendTemplate;
+use Contao\PageModel;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
@@ -30,7 +37,7 @@ class Helper extends \Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.8.0';
+    const VERSION = '2.8.1';
 
     /**
      * Extension mode.
@@ -63,19 +70,17 @@ class Helper extends \Frontend
     public function getAds()
     {
         // only used for demo presentation
-        $json = file_get_contents(self::$apiUrl.'list/all/'.\Environment::get('server'));
-        $arrAds = json_decode($json, true);
+        $json = file_get_contents(self::$apiUrl.'list/all/'.Environment::get('server'));
 
-        return $arrAds; // load from local cache
+        return json_decode($json, true); // load from local cache
     }
 
     public function getAdDetail($alias)
     {
         // only used for demo presentation
-        $json = file_get_contents(self::$apiUrl.'ad/'.$alias.'/'.\Environment::get('server'));
-        $arrAd = json_decode($json, true);
+        $json = file_get_contents(self::$apiUrl.'ad/'.$alias.'/'.Environment::get('server'));
 
-        return $arrAd;
+        return json_decode($json, true);
     }
 
     public function addPrivacyWidget($arrWidgets)
@@ -89,10 +94,10 @@ class Helper extends \Frontend
         return $arrWidgets;
     }
 
-    public function addListPagination($objTemplate)
+    public function addListPagination($objTemplate): void
     {
-        if (false !== strpos(get_class($objTemplate), 'FrontendTemplate')) {
-            $objTemplate->hookAddListPagination = function () use ($objTemplate) {
+        if (false !== strpos(\get_class($objTemplate), 'FrontendTemplate')) {
+            $objTemplate->hookAddListPagination = static function () use ($objTemplate) {
                 if ($objTemplate->addListPagination) {
                     $objListPaginationView = new ListPaginationView($objTemplate);
 
@@ -116,8 +121,9 @@ class Helper extends \Frontend
         $indexObjects = $indexConfigRepository->findAll();
 
         $newEstatePages = [];
+
         foreach ($indexObjects as $index) {
-            if ($index->getStorageFileUri() and 1 === $index->getListInSitemap()) {
+            if ($index->getStorageFileUri() && 1 === $index->getListInSitemap()) {
                 $allEstates = $this->loadJsonFile($index->getStorageFileUri());
 
                 foreach ($allEstates['data'] as $estate) {
@@ -135,7 +141,7 @@ class Helper extends \Frontend
 
     public static function loadJsonFile($fileNamePath)
     {
-        $objFile = new \File(self::imagePath.$fileNamePath);
+        $objFile = new File(self::imagePath.$fileNamePath);
         $decoded = json_decode($objFile->getContent(), true);
 
         if (null === $decoded) {
@@ -148,12 +154,14 @@ class Helper extends \Frontend
     public static function getPageUrl($id, $vars = '')
     {
         $websitePath = \DIRECTORY_SEPARATOR;
+
         if ($GLOBALS['TL_CONFIG']['websitePath']) {
             $websitePath = $GLOBALS['TL_CONFIG']['websitePath'].\DIRECTORY_SEPARATOR;
         }
-        $pageModel = \PageModel::findPublishedByIdOrAlias($id)->current()->row();
-        $strUrl = \Controller::generateFrontendUrl($pageModel, $vars); // example '/additionalquerystring/vars'
-        return \Environment::get('url').$websitePath.$strUrl;
+        $pageModel = PageModel::findPublishedByIdOrAlias($id)->current()->row();
+        $strUrl = Controller::generateFrontendUrl($pageModel, $vars); // example '/additionalquerystring/vars'
+
+        return Environment::get('url').$websitePath.$strUrl;
     }
 
     /**
@@ -168,17 +176,20 @@ class Helper extends \Frontend
         $arrIndexFiles = [];
         $arrItems = [];
 
-        $database = \Database::getInstance();
+        $database = Database::getInstance();
         $artResult = $database->query("SELECT `id` FROM `tl_article` WHERE `pid` = '".$item['id']."'");
 
         while ($artResult->next()) {
             $row = $artResult->row();
             $conResult = $database->query("SELECT `id`, `module` FROM `tl_content` WHERE `pid` = '".$row['id']."' AND `type` = 'module'");
+
             while ($conResult->next()) {
                 $row = $conResult->row();
                 $modResult = $database->query("SELECT `immo_actIndexFile`,`immo_readerPage` FROM `tl_module` WHERE `id` = '".$row['module']."' AND `type` = 'immoListView' AND `immo_listInSitemap` = 1");
+
                 while ($modResult->next()) {
                     $row = $modResult->row();
+
                     if ($row['immo_actIndexFile']) {
                         $arrIndexFiles[] = $row;
                     }
@@ -186,12 +197,13 @@ class Helper extends \Frontend
             }
         }
 
-        if (count($arrIndexFiles) < 1) {
+        if (\count($arrIndexFiles) < 1) {
             return '';
         }
 
         foreach ($arrIndexFiles as $index) {
             $allEstates = self::loadJsonFile($index['immo_actIndexFile']);
+
             foreach ($allEstates['data'] as $estate) {
                 $arrItems[] = [
                     'title' => $estate['freitexte-objekttitel'],
@@ -210,64 +222,107 @@ class Helper extends \Frontend
     }
 
     /**
-     * Change form template for open immo feedback xml
+     * Change form template for open immo feedback xml.
      *
      * @param $strBuffer
      * @param $strTemplate
      *
      * @return string
      */
-
-    function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate)
+    public function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate)
     {
-        if ($strTemplate == 'form_xml')
-        {
-            if(\Input::post('oobj_id')) {
-
+        if ('form_xml' === $strTemplate) {
+            if (Input::post('oobj_id')) {
                 $repository = EstateRepository::getInstance();
-                $objEstate = $repository->findByExternalObjectNumber(\Input::post('oobj_id'));
+                $objEstate = $repository->findByExternalObjectNumber(Input::post('oobj_id'));
 
-                if(null == $objEstate)
-                {
+                if (null === $objEstate) {
                     return $strBuffer;
                 }
 
-                /** @var \FrontendTemplate|object $objTemplate */
-                $objTemplate = new \FrontendTemplate('form_openimmo_feedback_xml');
+                $objTemplate = new FrontendTemplate('form_openimmo_feedback_xml');
 
-                $objTemplate->name = "makler modul für Contao v".self::VERSION;
-                $objTemplate->openimmo_anid = \Input::findPost("openimmo_anid")? \Input::findPost("openimmo_anid") : $objEstate->getValueOf('anbieter.openimmo_anid');
-                $objTemplate->datum = $this->parseDate("d.m.Y", $this->timestamp);
-                $objTemplate->makler_id = \Input::findPost("anbieternr")? \Input::findPost("anbieternr") : $objEstate->getValueOf('anbieter.anbieternr');
+                $objTemplate->name = 'makler modul für Contao v'.self::VERSION;
+                $objTemplate->openimmo_anid = Input::findPost('openimmo_anid') ?: $objEstate->getValueOf('anbieter.openimmo_anid');
+                $objTemplate->datum = $this->parseDate('d.m.Y', $this->timestamp);
+                $objTemplate->makler_id = Input::findPost('anbieternr') ?: $objEstate->getValueOf('anbieter.anbieternr');
 
-                $objTemplate->oobj_id = \Input::findPost("openimmo_anid")? \Input::findPost("openimmo_anid") : $objEstate->getValueOf('verwaltung_techn.openimmo_obid');
-                $objTemplate->expose_url = $this->Environment->url . $this->Environment->requestUri;
+                $objTemplate->oobj_id = Input::findPost('openimmo_anid') ?: $objEstate->getValueOf('verwaltung_techn.openimmo_obid');
+                $objTemplate->expose_url = $this->Environment->url.$this->Environment->requestUri;
                 $objTemplate->zusatz_refnr = $objEstate->getValueOf('verwaltung_techn.objektnr_extern');
                 $objTemplate->bezeichnung = $objEstate->getValueOf('freitexte.objekttitel');
                 $objTemplate->strasse = $objEstate->getValueOf('geo.strasse');
                 $objTemplate->ort = $objEstate->getValueOf('geo.ort');
 
                 // customer fields
-                $arrFields = array();
-                if (\Input::findPost("int_id")) $arrFields['int_id'] = \Input::findPost("int_id");
-                if (\Input::findPost("anrede")) $arrFields['anrede'] = \Input::findPost("anrede");
-                if (\Input::findPost("vorname")) $arrFields['vorname'] = \Input::findPost("vorname");
-                if (\Input::findPost("nachname")) $arrFields['nachname'] = \Input::findPost("nachname");
-                if (\Input::findPost("firma")) $arrFields['firma'] = \Input::findPost("firma");
-                if (\Input::findPost("strasse")) $arrFields['strasse'] = \Input::findPost("strasse");
-                if (\Input::findPost("postfach")) $arrFields['postfach'] = \Input::findPost("postfach");
-                if (\Input::findPost("plz")) $arrFields['plz'] = \Input::findPost("plz");
-                if (\Input::findPost("ort")) $arrFields['ort'] = \Input::findPost("ort");
-                if (\Input::findPost("tel")) $arrFields['tel'] = \Input::findPost("tel");
-                if (\Input::findPost("fax")) $arrFields['fax'] = \Input::findPost("fax");
-                if (\Input::findPost("mobil")) $arrFields['mobil'] = \Input::findPost("mobil");
-                if (\Input::findPost("email")) $arrFields['email'] = \Input::findPost("email");
-                if (\Input::findPost("bevorzugt")) $arrFields['bevorzugt'] = \Input::findPost("bevorzugt");
-                if (\Input::findPost("wunsch")) $arrFields['wunsch'] = \Input::findPost("wunsch");
-                if (\Input::findPost("anfrage")) $arrFields['anfrage'] = \Input::findPost("anfrage");
+                $arrFields = [];
+
+                if (Input::findPost('int_id')) {
+                    $arrFields['int_id'] = Input::findPost('int_id');
+                }
+
+                if (Input::findPost('anrede')) {
+                    $arrFields['anrede'] = Input::findPost('anrede');
+                }
+
+                if (Input::findPost('vorname')) {
+                    $arrFields['vorname'] = Input::findPost('vorname');
+                }
+
+                if (Input::findPost('nachname')) {
+                    $arrFields['nachname'] = Input::findPost('nachname');
+                }
+
+                if (Input::findPost('firma')) {
+                    $arrFields['firma'] = Input::findPost('firma');
+                }
+
+                if (Input::findPost('strasse')) {
+                    $arrFields['strasse'] = Input::findPost('strasse');
+                }
+
+                if (Input::findPost('postfach')) {
+                    $arrFields['postfach'] = Input::findPost('postfach');
+                }
+
+                if (Input::findPost('plz')) {
+                    $arrFields['plz'] = Input::findPost('plz');
+                }
+
+                if (Input::findPost('ort')) {
+                    $arrFields['ort'] = Input::findPost('ort');
+                }
+
+                if (Input::findPost('tel')) {
+                    $arrFields['tel'] = Input::findPost('tel');
+                }
+
+                if (Input::findPost('fax')) {
+                    $arrFields['fax'] = Input::findPost('fax');
+                }
+
+                if (Input::findPost('mobil')) {
+                    $arrFields['mobil'] = Input::findPost('mobil');
+                }
+
+                if (Input::findPost('email')) {
+                    $arrFields['email'] = Input::findPost('email');
+                }
+
+                if (Input::findPost('bevorzugt')) {
+                    $arrFields['bevorzugt'] = Input::findPost('bevorzugt');
+                }
+
+                if (Input::findPost('wunsch')) {
+                    $arrFields['wunsch'] = Input::findPost('wunsch');
+                }
+
+                if (Input::findPost('anfrage')) {
+                    $arrFields['anfrage'] = Input::findPost('anfrage');
+                }
 
                 $objTemplate->fields = $arrFields;
-                $objTemplate->charset = \Config::get('characterSet');
+                $objTemplate->charset = Config::get('characterSet');
 
                 return $objTemplate->parse();
 
@@ -276,5 +331,26 @@ class Helper extends \Frontend
         }
 
         return $strBuffer;
+    }
+
+    /*
+     * Workaround for \Contao\ArrayUtil in Contao 4.9
+     */
+    public static function arrayInsert(&$arrCurrent, $intIndex, $arrNew): void
+    {
+        if (!\is_array($arrCurrent)) {
+            $arrCurrent = $arrNew;
+
+            return;
+        }
+
+        if (\is_array($arrNew)) {
+            $arrBuffer = array_splice($arrCurrent, 0, $intIndex);
+            $arrCurrent = array_merge_recursive($arrBuffer, $arrNew, $arrCurrent);
+
+            return;
+        }
+
+        array_splice($arrCurrent, $intIndex, 0, $arrNew);
     }
 }

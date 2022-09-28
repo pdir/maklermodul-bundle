@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -14,7 +16,7 @@
  * file that was distributed with this source code.
  */
 
-/**
+/*
  * Add palettes to tl_content.
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['makler_headerImage']
@@ -53,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['makler_headerImageSource'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['makler_headerImageSource'],
     'inputType' => 'select',
     'default' => 1,
-    'options' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16, 17, 18, 19, 20],
+    'options' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
     'reference' => &$GLOBALS['TL_LANG']['tl_content']['makler_headerImageSource_select'],
     'eval' => ['tl_class' => 'w50'],
     'sql' => "varchar(255) NOT NULL default ''",

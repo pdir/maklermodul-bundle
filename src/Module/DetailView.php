@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -24,9 +26,9 @@ use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\Environment;
+use Contao\FilesModel;
 use Contao\Input;
 use Contao\Module;
-use Patchwork\Utf8;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
@@ -55,7 +57,7 @@ class DetailView extends Module
     {
         parent::__construct($objModule, $strColumn);
 
-        if (!empty($this->arrData['immo_readerTemplate']) and TL_MODE !== 'BE') {
+        if (!empty($this->arrData['immo_readerTemplate']) && TL_MODE !== 'BE') {
             $this->strTemplate = $this->arrData['immo_readerTemplate'];
         }
     }
@@ -94,9 +96,9 @@ class DetailView extends Module
     /**
      * Generate module.
      */
-    protected function compile()
+    protected function compile(): void
     {
-        /* @var PageModel $objPage */
+        /** @var PageModel $objPage */
         global $objPage;
 
         //$this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
@@ -111,7 +113,7 @@ class DetailView extends Module
         }
 
         $this->Template->estate = $this->createFieldRendererFactory($this->alias);
-        $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? \FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
+        $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
         $this->Template->showMap = $this->makler_showMap;
         $this->Template->debug = $this->makler_debug;
 
@@ -123,13 +125,13 @@ class DetailView extends Module
         $this->Template->detailImageHeight = '500';
         $this->Template->detailImageMode = 'crop';
 
-        if ($arrImgSize[2] !== '') {
+        if ('' !== $arrImgSize[2]) {
             $this->Template->detailImageWidth = $arrImgSize[0];
             $this->Template->detailImageHeight = $arrImgSize[1];
             $this->Template->detailImageSize = $arrImgSize[2];
             $this->Template->detailImageType = 'picture';
 
-            if(!is_numeric($arrImgSize[2])) {
+            if (!is_numeric($arrImgSize[2])) {
                 // image mode: proportional, crop or box
                 $this->Template->detailImageMode = $arrImgSize[2];
                 $this->Template->detailImageType = 'image';

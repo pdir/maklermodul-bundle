@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -17,11 +19,11 @@
 use Contao\Config;
 use Contao\System;
 
-/**
+/*
  * Module translation.
  */
 if (!isset($GLOBALS['TL_LANG']['MOD']['pdir'])) {
-    $GLOBALS['TL_LANG']['MOD']['pdir']= [];
+    $GLOBALS['TL_LANG']['MOD']['pdir'] = [];
 }
 $GLOBALS['TL_LANG']['MOD']['pdir'] = ['pdir Apps', 'Contains all apps from pdir.'];
 $GLOBALS['TL_LANG']['MOD']['maklermodulSetup'][0] = 'Maklermodul';
@@ -39,10 +41,10 @@ $GLOBALS['TL_LANG']['MOD']['maklermodul']['help_h2'] = 'Hilfe & Links';
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['optionalBundles'] = 'Optionale Erweiterungen';
 
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'] = [
-    ['href' => "contao/main.php?do=maklermodulSetup&act=emptyDataFolder&ref=" . System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Soll der Ordner " . Config::get('uploadPath').'/maklermodul/' . "data wirklich geleert werden?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => "contao/main.php?do=maklermodulSetup&act=emptyTmpFolder&ref=" . System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Soll der Ordner " . Config::get('uploadPath').'/maklermodul/' . "org wirklich geleert werden?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => "contao/main.php?do=maklermodulSetup&act=emptyUploadFolder&ref=" . System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Soll der Ordner " . Config::get('uploadPath').'/maklermodul/' . "upload wirklich geleert werden?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => "contao/main.php?do=maklermodulSetup&act=downloadDemoData&ref=" . System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'], 'image' => 'bundles/pdirmaklermodul/img/icon_demodata.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyDataFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Soll der Ordner ".Config::get('uploadPath').'/maklermodul/'."data wirklich geleert werden?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyTmpFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Soll der Ordner ".Config::get('uploadPath').'/maklermodul/'."org wirklich geleert werden?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyUploadFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Soll der Ordner ".Config::get('uploadPath').'/maklermodul/'."upload wirklich geleert werden?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=downloadDemoData&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'], 'image' => 'bundles/pdirmaklermodul/img/icon_demodata.png'],
 ];
 
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['setupLinks'] = [
@@ -76,7 +78,7 @@ $GLOBALS['TL_LANG']['MOD']['maklermodul']['editions']['openImmoSync'] = [
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['editions']['immoscoutSync'] = [
     'payment' => 'once, plus VAT',
     'product' => 'Immobilienscout24 API Sync',
-    'teaser' => "Automate! Import your estates from immobilienscout24.de fully automatically.",
+    'teaser' => 'Automate! Import your estates from immobilienscout24.de fully automatically.',
     'button_text' => 'buy',
     'features' => [
         '+Maintain ratings',

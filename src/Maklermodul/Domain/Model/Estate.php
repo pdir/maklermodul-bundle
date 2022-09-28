@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -20,7 +22,6 @@
 
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Model;
 
-use Contao\StringUtil;
 use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 
@@ -40,6 +41,7 @@ class Estate
         }
 
         $pointIdent = str_replace('/', '.', $ident);
+
         if (isset($this->rawData[$pointIdent])) {
             return $this->rawData[$pointIdent];
         }
@@ -66,14 +68,17 @@ class Estate
         $alias = System::getContainer()->getParameter('pdir_maklermodul.alias');
         $suffix = System::getContainer()->getParameter('pdir_maklermodul.aliasSuffix');
 
-        if(null !== $prefix)
+        if (null !== $prefix) {
             $strPrefix = (string) $this->getValueOf($prefix);
+        }
 
-        if(null !== $alias)
+        if (null !== $alias) {
             $strAlias = (string) $this->getValueOf($alias);
+        }
 
-        if(null !== $suffix)
+        if (null !== $suffix) {
             $strSuffix = (string) $this->getValueOf($suffix);
+        }
 
         return $this->sanizeFileName(
             sprintf('%s-%s-%s', $strPrefix, $strAlias, $strSuffix)
@@ -99,19 +104,27 @@ class Estate
         $locale = System::getContainer()->getParameter('pdir_maklermodul.aliasLocale');
 
         $options = [
-            'delimiter' => $delimiter ? : '-',
+            'delimiter' => $delimiter ?: '-',
             'validChars' => $validAliasCharacters,
-            'locale' => $locale ? : '',
+            'locale' => $locale ?: '',
         ];
+
+        if (is_object($strSource)) {
+            $strSource = (string)$strSource;
+        }
+
+        if (null === $strSource) {
+            $strSource = 'no-title-exists';
+        }
 
         // generate slug
         $strValue = System::getContainer()->get('contao.slug')->generate($strSource, $options);
 
         // remove the prefix if "id-" is set
-        if (strpos($strValue,"id-")!==false && !is_numeric($strSubstr = substr($strValue, 3)))
-        {
+        if (false !== strpos($strValue, 'id-') && !is_numeric($strSubstr = substr($strValue, 3))) {
             $strValue = substr($strValue, 3);
         }
+
         return $strValue;
     }
 
@@ -127,7 +140,7 @@ class Estate
         $options = [
             'delimiter' => '-',
             'validChars' => '0-9a-z_',
-            'locale' => ''
+            'locale' => '',
         ];
 
         foreach ($config->getColumnConfig() as $columnConfig) {
@@ -135,6 +148,7 @@ class Estate
                 $key = $columnConfig->getSourceIdentifier();
                 $value = $estate->getValueOf($key);
                 $class = $columnConfig->getCssClassOfValue($key, $value);
+
                 if (null !== $class) {
                     $returnValue[] = System::getContainer()->get('contao.slug')->generate($class, $options);
                 }

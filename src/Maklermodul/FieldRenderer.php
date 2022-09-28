@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -204,7 +206,7 @@ abstract class FieldRenderer
         return $returnValue;
     }
 
-    protected function setSetting($key, $value)
+    protected function setSetting($key, $value): void
     {
         $this->settings[$key] = $value;
     }

@@ -1,16 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * maklermodul bundle for Contao Open Source CMS
+ *
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
+ *
+ * @package    maklermodul-bundle
+ * @link       https://www.maklermodul.de
+ * @license    proprietary / pdir license - All-rights-reserved - commercial extension
+ * @author     Mathias Arzberger <develop@pdir.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Pdir\MaklermodulBundle\EventListener;
 
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
-use Contao\BackendTemplate;
-use Contao\Date;
 use Contao\DataContainer;
+use Contao\Date;
 use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
-use Pdir\MaklermodulBundle\Module\MaklermodulSetup;
 use Pdir\MaklermodulBundle\Util\Helper;
 
 class DataContainerListener
@@ -21,11 +36,11 @@ class DataContainerListener
     public function onLabelCallback(array $row): string
     {
         return sprintf(
-            '<span style="color: #999;">[%s]</span> %s<span style="color: #999; margin-left: .5em;">⭳ %s</span>' .
+            '<span style="color: #999;">[%s]</span> %s<span style="color: #999; margin-left: .5em;">⭳ %s</span>'.
             '<span style="color: #589b0e; margin-left: .5em;">↦ %s</span>',
             $row['extern'],
             $row['name'],
-            Date::parse(Config::get('datimFormat'), $row['tstamp'] ? : '-'),
+            Date::parse(Config::get('datimFormat'), $row['tstamp'] ?: '-'),
             Date::parse(Config::get('datimFormat'), $row['lastUpdate'])
         );
     }
@@ -57,7 +72,7 @@ class DataContainerListener
             'immoscoutSync' => [
                 'price' => 399,
                 'product_link' => 'https://www.maklermodul.de/',
-            ]
+            ],
         ];
 
         $template->arrLANG = $GLOBALS['TL_LANG']['MOD']['maklermodul'];
@@ -93,8 +108,9 @@ class DataContainerListener
         $maklerModel->save();
     }
 
-    private function deleteObjectFiles($identifier) {
-        $objectList = glob(Config::get('uploadPath') . '/maklermodul/data/' . $identifier);
+    private function deleteObjectFiles($identifier): void
+    {
+        $objectList = glob(Config::get('uploadPath').'/maklermodul/data/'.$identifier);
 
         if (!empty($objectList)) {
             foreach ($objectList as $object) {
@@ -114,9 +130,11 @@ class DataContainerListener
         if (!is_dir($dirPath)) {
             throw new \InvalidArgumentException("$dirPath must be a directory");
         }
-        if ('/' !== substr($dirPath, strlen($dirPath) - 1, 1)) {
+
+        if ('/' !== substr($dirPath, \strlen($dirPath) - 1, 1)) {
             $dirPath .= '/';
         }
+
         if ($this->keepImageFolders) { // keep image folders
             $files = glob($dirPath.'*.json', GLOB_MARK);
         } else { // full cleanup

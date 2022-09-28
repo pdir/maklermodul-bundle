@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -21,11 +23,14 @@
 namespace Pdir\MaklermodulBundle\Module;
 
 use Contao\BackendModule;
-use Contao\Database;
-use Contao\Environment;
 use Contao\Config;
 use Contao\Controller;
+use Contao\Database;
+use Contao\File;
+use Contao\Files;
+use Contao\Input;
 use Contao\Message;
+use Contao\ZipReader;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Util\Helper;
 
@@ -53,18 +58,18 @@ class MaklermodulSetup extends BackendModule
     public $debugMessages;
 
     /**
-     * Template.
-     *
-     * @var string
-     */
-    protected $strTemplate = 'be_maklermodul_setup';
-
-    /**
      * Storage directory path.
      *
      * @var string
      */
     public $storageDirectoryPath;
+
+    /**
+     * Template.
+     *
+     * @var string
+     */
+    protected $strTemplate = 'be_maklermodul_setup';
 
     /**
      * Demo data filename.
@@ -73,15 +78,15 @@ class MaklermodulSetup extends BackendModule
      */
     protected $demoDataFilename = 'data/demo-data.zip';
 
-    public function debug($message)
+    public function debug($message): void
     {
-        if (!is_array($message)) {
+        if (!\is_array($message)) {
             $this->debugMessages[] = [$message, 'info'];
 
             return;
         }
 
-        if (!defined('CRONJOB') or CRONJOB === false) {
+        if (!\defined('CRONJOB') || CRONJOB === false) {
             $this->debugMessages[] = $message;
         }
     }
@@ -96,43 +101,45 @@ class MaklermodulSetup extends BackendModule
      *
      * @throws \Exception
      */
-    protected function compile()
+    protected function compile(): void
     {
         // set upload folder
         $this->storageDirectoryPath = Config::get('uploadPath').'/maklermodul/';
 
-        // $className = '/vendor/pdir/maklermodul-bundle/src/Resources/contao/Classes/Helper.php';
-        $strDomain = Environment::get('httpHost');
+        /** @todo empty cache folder from backend */
+        $files = Files::getInstance();
 
-        /* @todo empty cache folder from backend */
-        $files = \Files::getInstance();
-
-        switch (\Input::get('act')) {
+        switch (Input::get('act')) {
             case 'index':
                 $this->setActIndexFile();
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['index']);
                 break;
+
             case 'emptyDataFolder':
                 $files->rrdir($this->storageDirectoryPath.'data', true);
 
                 // truncate makler table
                 $objDatabase = Database::getInstance();
-                $objDatabase->execute("TRUNCATE TABLE tl_makler");
+                $objDatabase->execute('TRUNCATE TABLE tl_makler');
 
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
+
             case 'emptyUploadFolder':
                 $files->rrdir($this->storageDirectoryPath.'upload', true);
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
+
             case 'emptyTmpFolder':
                 $files->rrdir($this->storageDirectoryPath.'org', true);
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
+
             case 'downloadDemoData':
                 $this->downloadDemoData();
                 Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['downloadDemoData']);
                 break;
+
             default:
                 $this->Template->base = $this->Environment->base;
                 $this->Template->version = Helper::VERSION;
@@ -142,37 +149,39 @@ class MaklermodulSetup extends BackendModule
         Controller::redirect(Controller::getReferer());
     }
 
-    protected function downloadDemoData()
+    protected function downloadDemoData(): void
     {
         $strFile = $this->storageDirectoryPath.$this->demoDataFilename;
 
         try {
-            \File::putContent($strFile, file_get_contents('https://pdir.de/api/data/maklermodul/demo-data.zip'));
+            File::putContent($strFile, file_get_contents('https://pdir.de/api/data/maklermodul/demo-data.zip'));
         } catch (\Exception $e) {
-            \Message::addError($e->getMessage());
+            Message::addError($e->getMessage());
         }
 
         $this->unzipDemoData();
     }
 
-    protected function unzipDemoData()
+    protected function unzipDemoData(): void
     {
-        $objArchive = new \ZipReader($this->storageDirectoryPath.$this->demoDataFilename);
+        $objArchive = new ZipReader($this->storageDirectoryPath.$this->demoDataFilename);
 
         // Extract all files
         while ($objArchive->next()) {
             // Extract the files
             try {
-                \File::putContent($this->storageDirectoryPath.'data/'.$objArchive->file_name, $objArchive->unzip());
+                File::putContent($this->storageDirectoryPath.'data/'.$objArchive->file_name, $objArchive->unzip());
             } catch (\Exception $e) {
                 \Message::addError($e->getMessage());
             }
 
             // add to makler table
-            if (strpos($objArchive->file_name, '.json') &&
-                strpos($objArchive->file_name, '00index') === false &&
-                strpos($objArchive->file_name, 'key-index') === false) {
-              $this->addObjectToMaklerTable(str_replace('.json', '', $objArchive->file_name));
+            if (
+                strpos($objArchive->file_name, '.json') &&
+                false === strpos($objArchive->file_name, '00index') &&
+                false === strpos($objArchive->file_name, 'key-index')
+            ) {
+                $this->addObjectToMaklerTable(str_replace('.json', '', $objArchive->file_name));
             }
         }
 
@@ -181,7 +190,7 @@ class MaklermodulSetup extends BackendModule
         $this->Automator->generateSymlinks();
     }
 
-    protected function addObjectToMaklerTable($slug)
+    protected function addObjectToMaklerTable($slug): void
     {
         /* use MaklerModel */
         $maklerModel = new MaklerModel();
@@ -196,7 +205,7 @@ class MaklermodulSetup extends BackendModule
         $maklerModel->save();
     }
 
-    protected function setActIndexFile()
+    protected function setActIndexFile(): void
     {
         $objDatabase = Database::getInstance();
         $objDatabase->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE type=?')->execute('00index-demo-00001.json', 'immoListView');

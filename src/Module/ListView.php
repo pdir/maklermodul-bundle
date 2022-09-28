@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -21,10 +23,9 @@
 namespace Pdir\MaklermodulBundle\Module;
 
 use Contao\BackendTemplate;
-use Contao\CoreBundle\Exception\PageNotFoundException;
-use Contao\Environment;
 use Contao\File;
 use Contao\FilesModel;
+use Contao\FrontendTemplate;
 use Contao\Module;
 use Contao\PageModel;
 use Contao\System;
@@ -33,6 +34,7 @@ use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\Routing\Exception\ExceptionInterface;
 
 /**
  * Class ListView.
@@ -80,14 +82,14 @@ class ListView extends Module
     {
         parent::__construct($objModule, $strColumn);
 
-        if (!empty($this->arrData['immo_listTemplate']) and TL_MODE !== 'BE') {
+        if (!empty($this->arrData['immo_listTemplate']) && TL_MODE !== 'BE') {
             $this->strTemplate = $this->arrData['immo_listTemplate'];
         }
 
         /** @var PageModel $pageModel */
         $pageModel = PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage']);
 
-        if(null === $pageModel) {
+        if (null === $pageModel) {
             throw new InvalidArgumentException(sprintf('%s [ID %s]', $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'], $objModule->id));
         }
 
@@ -96,8 +98,6 @@ class ListView extends Module
 
     /**
      * Display a wildcard in the back end.
-     *
-     * @return string
      */
     public function generate(): string
     {
@@ -119,7 +119,7 @@ class ListView extends Module
 
     public function toUri($path)
     {
-        return \str_replace('/var/www/', '', $path);
+        return str_replace('/var/www/', '', $path);
     }
 
     public function getRootDir()
@@ -127,7 +127,7 @@ class ListView extends Module
         $container = System::getContainer();
         $strRootDir = $container->getParameter('kernel.project_dir').\DIRECTORY_SEPARATOR.$container->getParameter('contao.upload_path');
 
-        return $strRootDir . \DIRECTORY_SEPARATOR.'maklermodul' . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR;
+        return $strRootDir.\DIRECTORY_SEPARATOR.'maklermodul'.\DIRECTORY_SEPARATOR.'data'.\DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -135,9 +135,10 @@ class ListView extends Module
      */
     public function getListSourceUri($full = false): string
     {
-        if (!\method_exists($this->Template->config, 'getStorageFileUri')) {
+        if (!method_exists($this->Template->config, 'getStorageFileUri')) {
             throw new \Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page']);
         }
+
         if ($full) {
             $path = Helper::imagePath.$this->Template->config->getStorageFileUri();
         } else {
@@ -148,7 +149,7 @@ class ListView extends Module
     }
 
     /**
-     * @throws \Symfony\Component\Routing\Exception\ExceptionInterface
+     * @throws ExceptionInterface
      */
     public function getDetailViewPrefix()
     {
@@ -161,14 +162,16 @@ class ListView extends Module
         $urlSuffix = '.html';
 
         $container = System::getContainer();
+
         if ($container->hasParameter('contao.url_suffix')) {
             $urlSuffix = $container->getParameter('contao.url_suffix');
         }
 
-        if($urlSuffix === '')
-            return \str_replace($this->detailPage->alias, $this->detailPage->alias . '/' . DetailView::PARAMETER_KEY, $baseUri);
+        if ('' === $urlSuffix) {
+            return str_replace($this->detailPage->alias, $this->detailPage->alias.'/'.DetailView::PARAMETER_KEY, $baseUri);
+        }
 
-        return \preg_replace('%'.\preg_quote($urlSuffix).'$%', '/' . DetailView::PARAMETER_KEY, $baseUri);
+        return preg_replace('%'.preg_quote($urlSuffix).'$%', '/'.DetailView::PARAMETER_KEY, $baseUri);
     }
 
     public function getObjects(): array
@@ -178,11 +181,12 @@ class ListView extends Module
 
     public function formatValue($sVal): string
     {
-        return \number_format((float) $sVal, 2, ',', '.');
+        return number_format((float) $sVal, 2, ',', '.');
     }
 
     /**
      * Generate the module.
+     *
      * @throws \Exception
      */
     protected function compile()
@@ -197,31 +201,32 @@ class ListView extends Module
             $GLOBALS['TL_JAVASCRIPT']['browser'] = $this->assetFolder.'js/jquery.browser.min.js|static';
             $GLOBALS['TL_JAVASCRIPT']['estate'] = $this->assetFolder.'js/estate.js|static';
         }
+
         if ($this->makler_useModuleCss) {
             $GLOBALS['TL_CSS']['estate'] = $this->assetFolder.'css/estate.scss||static';
         }
 
         if ('1' === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
-            $this->Template->staticListPage = '/' . PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
+            $this->Template->staticListPage = '/'.PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
 
         $this->Template->config = new IndexConfig($this->arrData);
 
         // image params
-        $arrImgSize = \unserialize($this->imgSize);
+        $arrImgSize = unserialize($this->imgSize);
         $this->Template->listImageType = 'image';
         $this->Template->listImageWidth = '300';
         $this->Template->listImageHeight = '200';
         $this->Template->listImageMode = 'crop';
 
-        if ($arrImgSize[2] !== '') {
+        if ('' !== $arrImgSize[2]) {
             $this->Template->listImageWidth = $arrImgSize[0];
             $this->Template->listImageHeight = $arrImgSize[1];
             $this->Template->listImageSize = $arrImgSize[2];
             $this->Template->listImageType = 'picture';
 
-            if(!\is_numeric($arrImgSize[2])) {
+            if (!is_numeric($arrImgSize[2])) {
                 // image mode: proportional, crop or box
                 $this->Template->listImageMode = $arrImgSize[2];
                 $this->Template->listImageType = 'image';
@@ -264,40 +269,42 @@ class ListView extends Module
         }
 
         // get data from json
-        $json = \json_decode($objFile->getContent(), true);
+        $json = json_decode($objFile->getContent(), true);
 
-        if ($json && 0 === count($json['data'])) {
+        if ($json && 0 === \count($json['data'])) {
             return $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'];
         }
 
-        if($this->arrData['immo_listSort'] && '-' !== $this->arrData['immo_listSort'])
-        {
-            $json['data'] = $this->sortByKeyValue($json['data'], $this->arrData['immo_listSort'], $this->arrData['makler_listSortAsc'] === 'true' ? SORT_ASC : SORT_DESC);
+        if ($this->arrData['immo_listSort'] && '-' !== $this->arrData['immo_listSort']) {
+            $json['data'] = $this->sortByKeyValue($json['data'], $this->arrData['immo_listSort'], 'true' === $this->arrData['makler_listSortAsc'] ? SORT_ASC : SORT_DESC);
         }
 
         $newEstates = [];
         $pageCount = 1;
+
         if ($this->makler_addListPagination && 'true' === $this->Input->get('estate-filter')) {
-            foreach ($json['data'] as $estate):
+            foreach ($json['data'] as $estate) {
                 foreach ($_REQUEST as $key => $value) {
                     if (false !== strpos($estate['css-filter-class-string'], $key.'-'.$value)) { // Yoshi version
                         $newEstates[$estate['uriident']] = $estate;
                     }
                 }
-            endforeach;
+            }
             $pages = array_chunk($newEstates, $this->makler_paginationCount);
         } elseif ($this->makler_addListPagination && $this->makler_paginationUseIsotope) {
             $count = 1;
-            foreach ($json['data'] as $estate):
-                $estate['css-filter-class-string'] = $estate['css-filter-class-string'].' page'.$pageCount;
+
+            foreach ($json['data'] as $estate) {
+                $estate['css-filter-class-string'] .= ' page'.$pageCount;
                 $newEstates[] = $estate;
+
                 if (0 !== $this->makler_paginationCount) {
-                    if (0 === ($count % $this->makler_paginationCount)) {
+                    if (0 === $count % $this->makler_paginationCount) {
                         ++$pageCount;
                     }
                 }
                 ++$count;
-            endforeach;
+            }
             $pages[] = $newEstates;
         } elseif ($this->makler_addListPagination) {
             $pages = array_chunk($json['data'], $this->makler_paginationCount);
@@ -311,6 +318,7 @@ class ListView extends Module
 
         //// render filter template
         $strFilterTemplate = 'makler_list_filter_button';
+
         if ('select' === $this->makler_listFilterTemplate) {
             $strFilterTemplate = 'makler_list_filter_select';
             $this->Template->filterClass = 'select-filter';
@@ -318,15 +326,19 @@ class ListView extends Module
             $this->Template->filterClass = 'button-filter';
         }
 
-        $objFilterTemplate = new \FrontendTemplate($strFilterTemplate);
+        $objFilterTemplate = new FrontendTemplate($strFilterTemplate);
 
         // filter translation
-        foreach($json['filterConfig']['values'] as $key => $filter) {
-            foreach($filter as $filterValueKey => $filterValue) {
+        foreach ($json['filterConfig']['values'] as $key => $filter) {
+            foreach ($filter as $filterValueKey => $filterValue) {
                 $filterKey = str_replace('-', '.', $key);
                 $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']]
                     ?: $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
-                if($name != '') $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
+
+                if (null !== $name) {
+                    $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
+                }
+
                 if (ctype_upper($filterValue['name'])) {
                     $str = ucfirst(strtolower($filterValue['name']));
                     $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $str;
@@ -343,7 +355,7 @@ class ListView extends Module
             natsort($keyIndex);
             $this->Template->debug = true;
             $this->Template->keyIndex = array_unique($keyIndex);
-            $this->Template->debugObjectCount = count($json['data']);
+            $this->Template->debugObjectCount = \count($json['data']);
             $this->Template->debugObjects = $json['data'];
         }
 
@@ -355,6 +367,7 @@ class ListView extends Module
         $this->Template->urlSuffix = '.html';
 
         $container = System::getContainer();
+
         if ($container->hasParameter('contao.url_suffix')) {
             $this->Template->urlSuffix = $container->getParameter('contao.url_suffix');
         }
@@ -365,7 +378,7 @@ class ListView extends Module
         return null !== json_decode($str);
     }
 
-    private function validateSettings()
+    private function validateSettings(): void
     {
         if ('0' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_readerPage']) {
             throw new Exception('Undefined reader page');
@@ -376,10 +389,12 @@ class ListView extends Module
         }
     }
 
-    private function sortByKeyValue($data, $sortKey, $dir = SORT_ASC) {
+    private function sortByKeyValue($data, $sortKey, $dir = SORT_ASC)
+    {
         $sort_col = [];
 
         $sortKey = str_replace('.', '-', $sortKey);
+
         foreach ($data as $key => $row) {
             $sort_col[$key] = $row[$sortKey];
         }

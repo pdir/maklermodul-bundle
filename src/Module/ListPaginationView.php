@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2019 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -33,13 +35,13 @@ class ListPaginationView extends ListView
     public function __construct($objListView)
     {
         // check if the parameter seems to be ok
-        if (!is_object($objListView) || false === strpos(get_class($objListView), 'FrontendTemplate')) {
+        if (!\is_object($objListView) || false === strpos(\get_class($objListView), 'FrontendTemplate')) {
             throw new \Exception('illegal call!');
         }
 
         $this->page = $this->Input->get('page');
-        $this->itemsToShow = !$objListView->makler_paginationCount ? 10 : $objListView->makler_paginationCount;
-        $this->linkItemsToShow = !$objListView->makler_paginationLinkCount ? 6 : $objListView->makler_paginationLinkCount;
+        $this->itemsToShow = $objListView->makler_paginationCount ?: 10;
+        $this->linkItemsToShow = $objListView->makler_paginationLinkCount ?: 6;
         $this->showtitle = $objListView->makler_paginationShowtitle;
         $this->detailPagePrefix = $objListView->helper->getDetailViewPrefix();
         $this->data = $objListView->objectData;
@@ -57,10 +59,8 @@ class ListPaginationView extends ListView
 
     /**
      * generate.
-     *
-     * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         return parent::generate();
     }
@@ -68,15 +68,13 @@ class ListPaginationView extends ListView
     /**
      * Generate module.
      */
-    protected function compile()
+    protected function compile(): void
     {
         // get page
         global $objPage;
         $arrAllArticles = [];
         $arrArticles = [];
         $intCounter = 0;
-        $intActive = 0;
-        $intTime = time();
 
         if (!$this->page) {
             $this->page = 0;
@@ -93,19 +91,21 @@ class ListPaginationView extends ListView
         ];
         $arrAllArticles[0] = $arrArticle;
 
-        for ($i = 1; $i < count($pages); ++$i) {
+        for ($i = 1; $i < \count($pages); ++$i) {
             $arrArticle = [
-                    'isActive' => $this->page === $i ? true : false,
-                    'href' => ampersand($this->generateFrontendUrl($objPage->row(), '/page/'.$i)),
-                    'title' => specialchars($i),
-                    'link' => !$this->showtitle ? $i : $objPage->title,
+                'isActive' => $this->page === $i ? true : false,
+                'href' => ampersand($this->generateFrontendUrl($objPage->row(), '/page/'.$i)),
+                'title' => specialchars($i),
+                'link' => !$this->showtitle ? $i : $objPage->title,
             ];
             ++$intCounter;
             $arrAllArticles[$i] = $arrArticle;
         }
 
         // assign total
-        if($this->page == 0) $this->page = 1;
+        if (0 === $this->page) {
+            $this->page = 1;
+        }
         $this->Template->total = sprintf($GLOBALS['TL_LANG']['MSC']['totalPages'], $this->page, $intCounter);
         // assign array first
         if ($this->page > 2) {
@@ -115,13 +115,13 @@ class ListPaginationView extends ListView
         }
         // assign array prev
         if ($this->page >= 1) {
-            $arrPrevious = $arrAllArticles[($this->page) - 1];
+            $arrPrevious = $arrAllArticles[$this->page - 1];
             $arrPrevious['link'] = $GLOBALS['TL_LANG']['MSC']['previous'];
             $this->Template->previous = $arrPrevious;
         }
         // assign array next
         if ($this->page < $intCounter) {
-            $arrNext = $arrAllArticles[($this->page) + 1];
+            $arrNext = $arrAllArticles[$this->page + 1];
             $arrNext['link'] = $GLOBALS['TL_LANG']['MSC']['next'];
             $this->Template->next = $arrNext;
         }
