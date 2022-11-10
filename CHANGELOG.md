@@ -12,7 +12,7 @@ Types of changes
 
 ## [2.8.2](https://github.com/pdir/maklermodul-bundle/tree/2.8.2) – 2022-11-10
 
-- [Fixed] fix database schema update
+- [Fixed] database schema update [#30](https://github.com/pdir/maklermodul-bundle/issues/30)
 
 ## [2.8.1](https://github.com/pdir/maklermodul-bundle/tree/2.8.1) – 2022-09-22
 
