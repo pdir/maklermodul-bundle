@@ -238,9 +238,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_addListPagination'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_addListPagination'],
     'exclude' => true,
     'filter' => true,
+    'default' => '',
     'inputType' => 'checkbox',
     'eval' => ['submitOnChange' => true],
-    'sql' => "int(1) NOT NULL default '0'",
+    'sql' => "int(1) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationCount'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationCount'],
@@ -269,11 +270,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationUseIsotope'] = [
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationShowtitle'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationShowtitle'],
+    'default' => '',
     'exclude' => true,
     'filter' => true,
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50'],
-    'sql' => "int(1) NOT NULL default '0'",
+    'sql' => "int(1) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_useModuleCss'] = [

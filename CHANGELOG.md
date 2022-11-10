@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.2](https://github.com/pdir/maklermodul-bundle/tree/2.8.2) – 2022-11-10
+
+- [Fixed] fix database schema update
+
 ## [2.8.1](https://github.com/pdir/maklermodul-bundle/tree/2.8.1) – 2022-09-22
 
 - [Fixed] fix pagination error
