@@ -25,6 +25,7 @@ namespace Pdir\MaklermodulBundle\Util;
 use Contao\Controller;
 use Contao\Database;
 use Contao\File;
+use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\PageModel;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
@@ -32,12 +33,12 @@ use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Module\ListPaginationView;
 
-class Helper extends \Frontend
+class Helper extends Frontend
 {
     /**
      * maklermodul version.
      */
-    const VERSION = '2.8.1';
+    const VERSION = '2.8.2';
 
     /**
      * Extension mode.
