@@ -206,7 +206,7 @@ class ListView extends Module
             $GLOBALS['TL_CSS']['estate'] = $this->assetFolder.'css/estate.scss||static';
         }
 
-        if ('1' === $this->arrData['immo_staticFilter']) {
+        if (1 === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
             $this->Template->staticListPage = '/'.PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
@@ -349,7 +349,7 @@ class ListView extends Module
         $objFilterTemplate->filterConfig = $json['filterConfig'];
         $this->Template->filter = $objFilterTemplate->parse();
 
-        if ('1' === $this->arrData['immo_listDebug']) {
+        if (1 === $this->arrData['immo_listDebug']) {
             $objFile = new File(Helper::imagePath.'/key-index.json');
             $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);

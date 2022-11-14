@@ -12,7 +12,9 @@ Types of changes
 
 ## [2.8.2](https://github.com/pdir/maklermodul-bundle/tree/2.8.2) – 2022-11-10
 
-- [Fixed] database schema update [#30](https://github.com/pdir/maklermodul-bundle/issues/30)
+- [Fixed] SQL Exceptions for PHP 8.1
+- [Fixed] Exception in PHP 8.1
+- [Fixed] Database schema update [#30](https://github.com/pdir/maklermodul-bundle/issues/30)
 
 ## [2.8.1](https://github.com/pdir/maklermodul-bundle/tree/2.8.1) – 2022-09-22
 

@@ -184,7 +184,10 @@ class EnergyPassRenderer
         } else {
             $energie = $this->rawData['zustand_angaben.energiepass.endenergiebedarf'];
         }
-        $energie = str_replace(',', '.', $energie);
+
+        if (null !== $energie) {
+            $energie = str_replace(',', '.', $energie);
+        }
 
         if (null === $wertklasse) {
             if ($energie >= 0 && $energie < 30) {

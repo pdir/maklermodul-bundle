@@ -121,6 +121,10 @@ class ColumnConfig
 
     private function cssMapNumber($value)
     {
+        if (null === $value) {
+            return null;
+        }
+
         $LocaleInfo = localeconv();
         $value = str_replace($LocaleInfo['mon_thousands_sep'], '', $value);
         $value = str_replace($LocaleInfo['mon_decimal_point'], '.', $value);

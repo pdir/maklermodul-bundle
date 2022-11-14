@@ -132,7 +132,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter' => true,
             'search' => true,
             'eval' => ['tl_class' => 'w50 clr'],
-            'sql' => 'text() NULL default',
+            'sql' => 'text NULL',
         ],
         'obid' => [
             'label' => &$GLOBALS['TL_LANG'][$tableName]['obid'],
@@ -142,7 +142,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter' => true,
             'search' => true,
             'eval' => ['tl_class' => 'w50'],
-            'sql' => "text() NOT NULL default ''",
+            'sql' => "text NULL",
         ],
         'intern' => [
             'label' => &$GLOBALS['TL_LANG'][$tableName]['intern'],
@@ -152,7 +152,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter' => true,
             'search' => true,
             'eval' => ['tl_class' => 'w50'],
-            'sql' => "text() NOT NULL default ''",
+            'sql' => "text NULL",
         ],
         'extern' => [
             'label' => &$GLOBALS['TL_LANG'][$tableName]['extern'],
@@ -162,7 +162,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
             'filter' => true,
             'search' => true,
             'eval' => ['tl_class' => 'w50'],
-            'sql' => "text() NOT NULL default ''",
+            'sql' => "text NULL",
         ],
         'visible' => [
             'label' => &$GLOBALS['TL_LANG'][$tableName]['visible'],
