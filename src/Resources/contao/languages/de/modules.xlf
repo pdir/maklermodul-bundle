@@ -66,22 +66,6 @@
         <source>Rebuild index</source>
         <target>Index aufbauen</target>
       </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.emptyDataFolder">
-        <source>Empty data folder</source>
-        <target>Data Ordner leeren</target>
-      </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.emptyTmpFolder">
-        <source>Empty temp folder</source>
-        <target>Temp Ordner leeren</target>
-      </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.emptyUploadFolder">
-        <source>Empty upload folder</source>
-        <target>Upload Ordner leeren</target>
-      </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.downloadDemoData">
-        <source>Download demo data</source>
-        <target>Demodaten herunterladen</target>
-      </trans-unit>
       <trans-unit id="MOD.makler_modul_mplus">
         <source>Estate modul</source>
         <target>makler modul</target>

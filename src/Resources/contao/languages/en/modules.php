@@ -36,6 +36,11 @@ $GLOBALS['TL_LANG']['MOD']['maklermodul']['tools'] = 'Tools';
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['help_h2'] = 'Help & links';
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['optionalBundles'] = 'Optional extensions';
 
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] = 'Empty data folder';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] = 'Empty temp folder';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] = 'Empty upload folder';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'] = 'Download demo data';
+
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'] = [
     ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyDataFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Should the folder ".Config::get('uploadPath').'/maklermodul/'."data really be emptied??'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
     ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyTmpFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Should the folder ".Config::get('uploadPath').'/maklermodul/'."org really be emptied??'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
