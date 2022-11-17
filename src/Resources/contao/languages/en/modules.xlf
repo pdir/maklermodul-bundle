@@ -52,18 +52,6 @@
       <trans-unit id="MOD.maklerSetup.label.rebuildIndex">
         <source>Rebuild index</source>
       </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.emptyDataFolder">
-        <source>Empty data folder</source>
-      </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.emptyTmpFolder">
-        <source>Empty temp folder</source>
-      </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.emptyUploadFolder">
-        <source>Empty upload folder</source>
-      </trans-unit>
-      <trans-unit id="MOD.maklerSetup.label.downloadDemoData">
-        <source>Download demo data</source>
-      </trans-unit>
       <trans-unit id="MOD.makler_modul_mplus">
         <source>Estate modul</source>
       </trans-unit>
