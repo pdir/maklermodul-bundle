@@ -173,7 +173,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['immo_listCondition'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_conditionFilterType'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_conditionFilterType'],
     'inputType' => 'select',
-    'default' => 'button',
+    'default' => 'and',
     'options' => ['and', 'or'],
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['makler_conditionFilterType'],
     'eval' => ['tl_class' => 'w50'],
@@ -238,7 +238,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_addListPagination'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_addListPagination'],
     'exclude' => true,
     'filter' => true,
-    'default' => '',
     'inputType' => 'checkbox',
     'eval' => ['submitOnChange' => true],
     'sql' => "int(1) unsigned NOT NULL default '0'",
@@ -270,7 +269,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationUseIsotope'] = [
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationShowtitle'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationShowtitle'],
-    'default' => '',
     'exclude' => true,
     'filter' => true,
     'inputType' => 'checkbox',
