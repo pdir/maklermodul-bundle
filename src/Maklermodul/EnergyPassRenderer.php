@@ -86,9 +86,9 @@ class EnergyPassRenderer
     public function render(): void
     {
         //epart
-        if ('VERBRAUCH' === $this->rawData['zustand_angaben.energiepass.epart']) {
+        if (isset($this->rawData['zustand_angaben.energiepass.epart']) && 'VERBRAUCH' === $this->rawData['zustand_angaben.energiepass.epart']) {
             $epart = 'Verbrauch';
-        } elseif ('BEDARF' === $this->rawData['zustand_angaben.energiepass.epart']) {
+        } elseif (isset($this->rawData['zustand_angaben.energiepass.epart']) && 'BEDARF' === $this->rawData['zustand_angaben.energiepass.epart']) {
             $epart = 'Bedarf';
         } else {
             $epart = 'Nicht notwendig';
@@ -279,15 +279,15 @@ class EnergyPassRenderer
         }
 
         $objFilterTemplate->gueltigBis = $this->rawData['zustand_angaben.energiepass.gueltig_bis']?? null;;
-        $objFilterTemplate->energy = $energie;
-        $objFilterTemplate->heizungsart = $heizung;
-        $objFilterTemplate->energietraeger = $energietraeger;
-        $objFilterTemplate->energyClass = $eClass;
+        $objFilterTemplate->energy = $energie?? null;
+        $objFilterTemplate->heizungsart = $heizung?? null;
+        $objFilterTemplate->energietraeger = $energietraeger?? null;
+        $objFilterTemplate->energyClass = $eClass?? null;
 
-        if ($this->rawData['zustand_angaben.energiepass.primaerenergietraeger']) {
+        if (isset($this->rawData['zustand_angaben.energiepass.primaerenergietraeger'])) {
             $objFilterTemplate->primaererEnergietraeger = isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$this->rawData['zustand_angaben.energiepass.primaerenergietraeger']]) ?? $this->rawData['zustand_angaben.energiepass.primaerenergietraeger'];
         } else {
-            $objFilterTemplate->primaererEnergietraeger = $energietraeger;
+            $objFilterTemplate->primaererEnergietraeger = $energietraeger?? null;
         }
 
         if ('2008' === $jahrgang) {
@@ -302,8 +302,8 @@ class EnergyPassRenderer
             $objFilterTemplate->jahrgang = $jahrgang;
         }
 
-        $objFilterTemplate->ausstelldatum = $ausstelldatum;
-        $objFilterTemplate->gebaeudeart = $gebaeudeart;
+        $objFilterTemplate->ausstelldatum = $ausstelldatum?? null;
+        $objFilterTemplate->gebaeudeart = $gebaeudeart?? null;
 
         echo $objFilterTemplate->parse();
     }
