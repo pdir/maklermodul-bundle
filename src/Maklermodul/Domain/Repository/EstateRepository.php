@@ -30,6 +30,9 @@ class EstateRepository
 {
     private $storageDirectoryPath;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct($storageDirectoryPath)
     {
         $this->storageDirectoryPath = $storageDirectoryPath;
@@ -39,7 +42,10 @@ class EstateRepository
         }
     }
 
-    public function findByObjectId($objectId)
+    /**
+     * @throws \Exception
+     */
+    public function findByObjectId($objectId): ?Estate
     {
         $fileNamePath = sprintf('%s%s.json', $this->storageDirectoryPath, $objectId);
 
@@ -50,7 +56,10 @@ class EstateRepository
         return $this->loadJsonFile($fileNamePath);
     }
 
-    public function findByExternalObjectNumber($id)
+    /**
+     * @throws \Exception
+     */
+    public function findByExternalObjectNumber($id): ?Estate
     {
         $alias = Estate::sanizeFileName($id);
         $fileNamePath = sprintf('%s*-%s.json', $this->storageDirectoryPath, $alias);
@@ -68,7 +77,10 @@ class EstateRepository
         return $this->loadJsonFile($files[0]);
     }
 
-    public function findAll()
+    /**
+     * @throws \Exception
+     */
+    public function findAll(): array
     {
         $directoryIterator = new \DirectoryIterator($this->storageDirectoryPath);
         $returnValue = [];
@@ -83,24 +95,37 @@ class EstateRepository
         return $returnValue;
     }
 
-    public static function getInstance()
+    /**
+     * @throws \Exception
+     */
+    public static function getInstance(): EstateRepository
     {
-        return new self(Helper::imagePath);
+        return new self(Helper::getImagePath());
     }
 
-    public function loadJsonFile($fileNamePath)
+    /**
+     * @throws \Exception
+     */
+    public function loadJsonFile($fileNamePath): ?Estate
     {
-        $objFile = new File(str_replace($this->storageDirectoryPath, Helper::imagePath, $fileNamePath));
+        $objFile = new File(str_replace($this->storageDirectoryPath, Helper::getImagePath(), $fileNamePath));
+
+        $content = $objFile->getContent();
+
+        if (!$content) {
+            return null;
+        }
+
         $decoded = json_decode($objFile->getContent(), true);
 
-        if (null === $decoded) {
+        if (null === $decoded || false === $decoded) {
             return null;
         }
 
         return new Estate($decoded);
     }
 
-    private function isRelevantJson($filename)
+    private function isRelevantJson($filename): bool
     {
         if (false === strpos($filename, '.json')) {
             return false;

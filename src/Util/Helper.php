@@ -57,9 +57,9 @@ class Helper extends Frontend
     /**
      * Path to Image.
      *
-     * @var string
+     * @var array
      */
-    const imagePath = 'files/maklermodul/data/';
+    const imagePath = ['files','maklermodul', 'data'];
 
     /**
      * API Url.
@@ -353,5 +353,15 @@ class Helper extends Frontend
         }
 
         array_splice($arrCurrent, $intIndex, 0, $arrNew);
+    }
+
+    public static function getImageLinkPath(): string
+    {
+        return join('/', self::imagePath) . '/';
+    }
+
+    public static function getImagePath(): string
+    {
+        return join(\DIRECTORY_SEPARATOR, self::imagePath) . \DIRECTORY_SEPARATOR;
     }
 }

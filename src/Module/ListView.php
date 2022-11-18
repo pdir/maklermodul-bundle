@@ -140,7 +140,7 @@ class ListView extends Module
         }
 
         if ($full) {
-            $path = Helper::imagePath.$this->Template->config->getStorageFileUri();
+            $path = Helper::getImageLinkPath().$this->Template->config->getStorageFileUri();
         } else {
             $path = $this->Template->config->getStorageFileUri();
         }
@@ -332,8 +332,12 @@ class ListView extends Module
         foreach ($json['filterConfig']['values'] as $key => $filter) {
             foreach ($filter as $filterValueKey => $filterValue) {
                 $filterKey = str_replace('-', '.', $key);
-                $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']]
-                    ?: $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.'.$filterValue['name']];
+
+                $name = isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']])?: null;
+
+                if (null === $name) {
+                    $name = isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey . '.' . $filterValue['name']]) ?: null;
+                }
 
                 if (null !== $name) {
                     $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
@@ -350,7 +354,7 @@ class ListView extends Module
         $this->Template->filter = $objFilterTemplate->parse();
 
         if (1 === $this->arrData['immo_listDebug']) {
-            $objFile = new File(Helper::imagePath.'/key-index.json');
+            $objFile = new File(Helper::getImageLinkPath().'/key-index.json');
             $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);
             $this->Template->debug = true;

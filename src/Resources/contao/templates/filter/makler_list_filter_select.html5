@@ -1,13 +1,15 @@
-<?php foreach ($this->filterConfig['groups'] as $filter): ?>
-<div class="<?= $filter['key'] ?>">
+<?php if(isset($this->filterConfig['groups'])): ?>
+  <?php foreach ($this->filterConfig['groups'] as $filter): ?>
+  <div class="<?= $filter['key'] ?>">
     <label class="header" for="<?= $filter['key'] ?>"><?= $filter['name'] ?></label>
     <select class="content mm-filter-sel" name="<?= $filter['key'] ?>" id="<?= $filter['key'] ?>">
-        <option value="-1">Alle</option>
-        <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
+      <option value="-1">Alle</option>
+      <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
         <option value=".<?= $filter['key'] ?>-<?= $values['css'] ?>" <?php if($this->Input->get($filter['key']) == $values['css']) echo " selected"; ?>>
-            <?= $values['name'] ?>
+          <?= $values['name'] ?>
         </option>
-        <?php endforeach; ?>
+      <?php endforeach; ?>
     </select>
-</div>
-<?php endforeach; ?>
+  </div>
+  <?php endforeach; ?>
+<?php endif; ?>

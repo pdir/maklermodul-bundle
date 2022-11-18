@@ -1,14 +1,15 @@
-    <?php foreach ($this->filterConfig['groups'] as $filter): ?>
-<div class="<?= $filter['key'] ?>">
+<?php if(isset($this->filterConfig['groups'])): ?>
+  <?php foreach ($this->filterConfig['groups'] as $filter): ?>
+  <div class="<?= $filter['key'] ?>">
     <span class="header"><?= $filter['name'] ?></span>
     <span class="buttons content">
-        <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
-            <button class="button mm-filter-btn
-                <?php if($this->Input->get($filter['key']) == $values['css']):?> active<?php endif; ?>"
-                data-filter=".<?= $filter['key'] ?>-<?= $values['css'] ?>">
-                <?= $values['name'] ?>
-            </button>
-        <?php endforeach; ?>
+      <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
+        <button class="button mm-filter-btn
+          <?php if($this->Input->get($filter['key']) == $values['css']):?> active<?php endif; ?>" data-filter=".<?= $filter['key'] ?>-<?= $values['css'] ?>">
+          <?= $values['name'] ?>
+        </button>
+      <?php endforeach; ?>
     </span>
-</div>
-<?php endforeach; ?>
+  </div>
+  <?php endforeach; ?>
+<?php endif; ?>

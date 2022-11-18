@@ -283,6 +283,7 @@ $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@ZENTRAL'] = 'Zentral';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@ETAGE'] = 'Etage';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@OFEN'] = 'Ofen';
+$GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@GAS'] = 'Gas';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.kamin'] = 'Kamin';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.boden'] = 'Boden';
 $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.boden.@TERRAKOTTA'] = 'Terrakota';

@@ -157,7 +157,7 @@ class Attachment extends FieldRenderer
                     $this->template = $this->getShortTemplateDoc();
 
                     return sprintf($this->template,
-                        $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                        $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
                         substr($this->getValueOf('format'), 1),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('anhangtitel')
@@ -181,7 +181,7 @@ class Attachment extends FieldRenderer
 
                     return sprintf($this->template,
                         substr($this->getValueOf('format'), 1),
-                        $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                        $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('anhangtitel')
                     );
@@ -195,7 +195,7 @@ class Attachment extends FieldRenderer
                         $this->template = $this->getShortTemplateDoc();
 
                         return sprintf($this->template,
-                            $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                            $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
                             substr($this->getValueOf('format'), 1),
                             $this->getValueOf('anhangtitel'),
                             $this->getValueOf('anhangtitel')
@@ -224,7 +224,7 @@ class Attachment extends FieldRenderer
                     }
 
                         return sprintf($this->template,
-                            $this->getUrlOfPath(Helper::imagePath.$this->getValueOf('daten.pfad')),
+                            $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
                             $this->getValueOf('anhangtitel'),
                             $renderedThumbnail
                         );
@@ -238,6 +238,10 @@ class Attachment extends FieldRenderer
     {
         if (isset($this->websitePath)) {
             return $this->websitePath.'/'.str_replace(TL_ROOT, '', $path);
+        }
+
+        if (null === $path) {
+            return null;
         }
 
         return str_replace(TL_ROOT, '', $path);
@@ -297,14 +301,14 @@ class Attachment extends FieldRenderer
 
     private function resizeImage($orgPath, $size)
     {
-        return Image::get(Helper::imagePath.$orgPath, $size[0], $size[1], $size[2]);
+        return Image::get(Helper::getImagePath().$orgPath, $size[0], $size[1], $size[2]);
     }
 
     private function resizePicture($orgPath, $size, $alt)
     {
         $container = System::getContainer();
         $rootDir = $container->getParameter('kernel.project_dir');
-        $imagePath = Helper::imagePath.$orgPath;
+        $imagePath = Helper::getImagePath().$orgPath;
 
         $picture = $container
             ->get('contao.image.picture_factory')

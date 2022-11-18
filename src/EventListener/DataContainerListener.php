@@ -27,6 +27,7 @@ use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Pdir\MaklermodulSyncBundle\Module\Sync;
 
 class DataContainerListener
 {
@@ -59,6 +60,10 @@ class DataContainerListener
         $template->version = Helper::VERSION;
         $template->arrButtons = $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'];
         $template->arrLinks = $GLOBALS['TL_LANG']['MOD']['maklermodul']['setupLinks'];
+
+        if (class_exists(Sync::class)) {
+            $template->syncVersion = Sync::SYNC_VERSION;
+        }
 
         $template->arrEditions = [
             'free' => [
