@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.3](https://github.com/pdir/maklermodul-bundle/tree/2.8.3) – 2022-12-22
+
+- [Fixed] Fix filter translation ([#34](https://github.com/pdir/maklermodul-bundle/issues/34) thanks to [agonyz](https://github.com/agonyz))
+
 ## [2.8.2](https://github.com/pdir/maklermodul-bundle/tree/2.8.2) – 2022-11-10
 
 - [Fixed] SQL Exceptions for PHP 8.1
