@@ -333,10 +333,10 @@ class ListView extends Module
             foreach ($filter as $filterValueKey => $filterValue) {
                 $filterKey = str_replace('-', '.', $key);
 
-                $name = isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']])?: null;
+                $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey.'.@'.$filterValue['name']] ?? null;
 
                 if (null === $name) {
-                    $name = isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey . '.' . $filterValue['name']]) ?: null;
+                    $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey . '.' . $filterValue['name']] ?? null;
                 }
 
                 if (null !== $name) {
