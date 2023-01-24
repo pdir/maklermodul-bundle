@@ -176,6 +176,10 @@ class IndexConfig implements IndexConfigInterface
 
     private function configureFilterSettings($displayFields, $filterConfig)
     {
+        if (null === $filterConfig) {
+            $filterConfig = $this->getDefaultFilter();
+        }
+
         $lines = explode("\n", $filterConfig);
 
         foreach ($lines as $line) {
@@ -229,5 +233,15 @@ class IndexConfig implements IndexConfigInterface
         }
 
         return $returnValue;
+    }
+
+    private function getDefaultFilter(): string
+    {
+        return "geo.ort\n".
+            "geo.strasse\n".
+            "preise.kaltmiete\n".
+            "preise.kaufpreis\n".
+            "flaechen.wohnflaeche"
+            ;
     }
 }

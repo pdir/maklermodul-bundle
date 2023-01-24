@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.4](https://github.com/pdir/maklermodul-bundle/tree/2.8.4) – 2023-01-24
+
+- [Added] filter fallback in list view
+
 ## [2.8.3](https://github.com/pdir/maklermodul-bundle/tree/2.8.3) – 2022-12-22
 
 - [Fixed] Fix filter translation ([#34](https://github.com/pdir/maklermodul-bundle/issues/34) thanks to [agonyz](https://github.com/agonyz))
