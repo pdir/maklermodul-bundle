@@ -106,7 +106,7 @@
 <?php endif; ?>
 
 <?php
-$eClassAplus = $eClassA = $eClassB = $eClassC = $eClassE = $eClassF = $eClassG = $eClassH = '';
+$eClassAplus = $eClassA = $eClassB = $eClassC = $eClassD = $eClassE = $eClassF = $eClassG = $eClassH = '';
 if($this->energyClass == "A+") { $eClassAplus = "class='active_eclass'";}
 if($this->energyClass == "A") { $eClassA = "class='active_eclass'"; }
 if($this->energyClass == "B") { $eClassB = "class='active_eclass'"; }
