@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.5](https://github.com/pdir/maklermodul-bundle/tree/2.8.5) – 2023-03-06
+
+- [Fixed] Fix immoscout import
+
 ## [2.8.4](https://github.com/pdir/maklermodul-bundle/tree/2.8.4) – 2023-01-24
 
 - [Added] filter fallback in list view
