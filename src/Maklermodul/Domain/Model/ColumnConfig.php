@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2022 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -126,8 +126,8 @@ class ColumnConfig
         }
 
         $LocaleInfo = localeconv();
-        $value = str_replace($LocaleInfo['mon_thousands_sep'], '', $value);
-        $value = str_replace($LocaleInfo['mon_decimal_point'], '.', $value);
+        $value = str_replace($LocaleInfo['mon_thousands_sep'], '', (string) $value);
+        $value = str_replace($LocaleInfo['mon_decimal_point'], '.', (string) $value);
 
         return round((int) $value, 0);
     }
