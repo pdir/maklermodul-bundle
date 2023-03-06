@@ -224,7 +224,7 @@ class EnergyPassRenderer
         }
 
         if (null !== $energie) {
-            $energie = str_replace(',', '.', $energie);
+            $energie = str_replace(',', '.', (string) $energie);
         }
 
         if (null === $wertklasse) {
