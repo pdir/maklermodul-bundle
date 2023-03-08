@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.6](https://github.com/pdir/maklermodul-bundle/tree/2.8.6) – 2023-03-06
+
+- [Fixed] Fix exception for list view with no objects
+
 ## [2.8.5](https://github.com/pdir/maklermodul-bundle/tree/2.8.5) – 2023-03-06
 
 - [Fixed] Fix immoscout import
