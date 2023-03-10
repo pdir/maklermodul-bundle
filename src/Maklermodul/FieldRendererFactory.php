@@ -118,7 +118,7 @@ class FieldRendererFactory
      */
     public function energyPass()
     {
-        return new EnergyPassRenderer($this->getFilteredValuesBy('zustand_angaben'), $this->translationMap, $this->getFilteredValuesBy('ausstattung'));
+        return new EnergyPassRenderer($this->getAllValues(), $this->translationMap, $this->getFilteredValuesBy('ausstattung'));
     }
 
     private function getRawValueOfArray($key)
@@ -147,6 +147,17 @@ class FieldRendererFactory
             if ('' === $startOfKey || 0 === strpos($key, $startOfKey)) {
                 $returnValue[$key] = $value;
             }
+        }
+
+        return $returnValue;
+    }
+
+    private function getAllValues()
+    {
+        $returnValue = [];
+
+        foreach ($this->estateData->getFieldsIterator() as $key => $value) {
+            $returnValue[$key] = $value;
         }
 
         return $returnValue;

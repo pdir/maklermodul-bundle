@@ -29,7 +29,6 @@ use Contao\FrontendTemplate;
 use Contao\Module;
 use Contao\PageModel;
 use Contao\System;
-use http\Exception\InvalidArgumentException;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
@@ -90,7 +89,7 @@ class ListView extends Module
         $pageModel = PageModel::findPublishedByIdOrAlias($this->arrData['immo_readerPage']);
 
         if (null === $pageModel) {
-            throw new InvalidArgumentException(sprintf('%s [ID %s]', $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page'], $objModule->id));
+            throw new \Exception(sprintf('%s [ID %s]', $GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['no_detail_page'], $objModule->id));
         }
 
         $this->detailPage = $pageModel->current();
@@ -136,7 +135,7 @@ class ListView extends Module
     public function getListSourceUri($full = false): string
     {
         if (!method_exists($this->Template->config, 'getStorageFileUri')) {
-            throw new \Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['no_detail_page']);
+            throw new \Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['no_detail_page']);
         }
 
         if ($full) {
@@ -265,14 +264,14 @@ class ListView extends Module
         $objFile = new File($this->getListSourceUri(true));
 
         if (null === $objFile) {
-            return $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'];
+            return $GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['has-no-objects'];
         }
 
         // get data from json
         $json = json_decode($objFile->getContent(), true);
 
         if ($json && 0 === \count($json['data'])) {
-            return $GLOBALS['TL_LANG']['MOD']['makler_modul_mplus']['error']['has-no-objects'];
+            return $GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['has-no-objects'];
         }
 
         if ($this->arrData['immo_listSort'] && '-' !== $this->arrData['immo_listSort']) {

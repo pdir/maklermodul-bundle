@@ -86,9 +86,9 @@ class EnergyPassRenderer
     public function render(): void
     {
         //epart
-        if (isset($this->rawData['zustand_angaben.energiepass.epart']) && 'VERBRAUCH' === $this->rawData['zustand_angaben.energiepass.epart']) {
+        if ((isset($this->rawData['zustand_angaben.energiepass.epart']) && 'VERBRAUCH' === $this->rawData['zustand_angaben.energiepass.epart']) || (isset($this->rawData['immoscout.buildingEnergyRatingType']) && 'ENERGY_CONSUMPTION' === $this->rawData['immoscout.buildingEnergyRatingType'])) {
             $epart = 'Verbrauch';
-        } elseif (isset($this->rawData['zustand_angaben.energiepass.epart']) && 'BEDARF' === $this->rawData['zustand_angaben.energiepass.epart']) {
+        } elseif ((isset($this->rawData['zustand_angaben.energiepass.epart']) && 'BEDARF' === $this->rawData['zustand_angaben.energiepass.epart']) || (isset($this->rawData['immoscout.buildingEnergyRatingType']) && 'ENERGY_REQUIRED' === $this->rawData['immoscout.buildingEnergyRatingType'])) {
             $epart = 'Bedarf';
         } else {
             $epart = 'Nicht notwendig';
@@ -314,7 +314,11 @@ class EnergyPassRenderer
 
         foreach ($this->rawData as $key => $value) {
             $parsedKey = str_replace(self::LIST_PREFIX, '', $key);
-            [$id, $parsedKey] = explode('.', $parsedKey, 2);
+
+            if(strpos($parsedKey, '.') !== false) {
+                [$id, $parsedKey] = explode('.', $parsedKey, 2);
+            }
+
             $this->setData($id, $parsedKey, $value);
         }
     }
