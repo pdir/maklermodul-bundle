@@ -118,7 +118,7 @@ class FieldRendererFactory
      */
     public function energyPass()
     {
-        return new EnergyPassRenderer($this->getAllValues(''), $this->translationMap, $this->getFilteredValuesBy('ausstattung'));
+        return new EnergyPassRenderer($this->getAllValues(), $this->translationMap, $this->getFilteredValuesBy('ausstattung'));
     }
 
     private function getRawValueOfArray($key)
