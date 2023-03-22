@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.7](https://github.com/pdir/maklermodul-bundle/tree/2.8.7) – 2023-03-23
+
+- [Fixed] image path for sitemap generation
+
 ## [2.8.6](https://github.com/pdir/maklermodul-bundle/tree/2.8.6) – 2023-03-08
 
 - [Fixed] Fix exception for list view with no objects
