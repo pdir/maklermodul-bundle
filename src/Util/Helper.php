@@ -24,6 +24,7 @@ namespace Pdir\MaklermodulBundle\Util;
 
 use Contao\Controller;
 use Contao\Database;
+use Contao\Environment;
 use Contao\File;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
@@ -142,7 +143,7 @@ class Helper extends Frontend
 
     public static function loadJsonFile($fileNamePath)
     {
-        $objFile = new File(self::imagePath.$fileNamePath);
+        $objFile = new File(self::getImagePath().$fileNamePath);
         $decoded = json_decode($objFile->getContent(), true);
 
         if (null === $decoded) {
@@ -156,7 +157,7 @@ class Helper extends Frontend
     {
         $websitePath = \DIRECTORY_SEPARATOR;
 
-        if ($GLOBALS['TL_CONFIG']['websitePath']) {
+        if (isset($GLOBALS['TL_CONFIG']['websitePath'])) {
             $websitePath = $GLOBALS['TL_CONFIG']['websitePath'].\DIRECTORY_SEPARATOR;
         }
         $pageModel = PageModel::findPublishedByIdOrAlias($id)->current()->row();
