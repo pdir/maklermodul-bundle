@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.8.8](https://github.com/pdir/maklermodul-bundle/tree/2.8.8) – 2023-04-19
+
+- [Fixed] Fix field 'ausstattung.stellplatzart' in makler_details_extended template
+
 ## [2.8.7](https://github.com/pdir/maklermodul-bundle/tree/2.8.7) – 2023-03-23
 
 - [Fixed] image path for sitemap generation
