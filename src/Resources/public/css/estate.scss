@@ -57,6 +57,8 @@
       list-style-type: none;
       padding: 0;
       line-height: 25px;
+      display: flex;
+      flex-wrap: wrap;
 
       .label, .value {
         width: 50%;

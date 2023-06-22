@@ -1,0 +1,100 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_content.php" source-language="en">
+    <body>
+      <trans-unit id="tl_content.header_legend">
+        <source>element type</source>
+      <target>element type</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_showHeadline.0">
+        <source>Show headline</source>
+      <target>Show headline</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_showHeadline.1">
+          <source>Show headline in header image</source>
+        <target>Show headline in header image</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_showBackgroundImage.0">
+          <source>Show background image</source>
+        <target>Show background image</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_showBackgroundImage.1">
+          <source>Show background image by css instead of image tag in header image</source>
+        <target>Show background image by css instead of image tag in header image</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImagePlaceholder.0">
+          <source>placeholder image</source>
+        <target>placeholder image</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImagePlaceholder.1">
+          <source>show placeholder image (only header image)</source>
+        <target>show placeholder image (only header image)</target>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource.0">
+        <source>Select image source</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource.1">
+        <source>Please select the attachment number to use for header image.</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.1">
+        <source>Attachment 1</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.2">
+        <source>Attachment 2</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.3">
+        <source>Attachment 3</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.4">
+        <source>Attachment 4</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.5">
+        <source>Attachment 5</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.6">
+        <source>Attachment 6</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.7">
+        <source>Attachment 7</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.8">
+        <source>Attachment 8</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.9">
+        <source>Attachment 9</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.10">
+        <source>Attachment 10</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.11">
+        <source>Attachment 11</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.12">
+        <source>Attachment 12</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.13">
+        <source>Attachment 13</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.14">
+        <source>Attachment 14</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.15">
+        <source>Attachment 15</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.16">
+        <source>Attachment 16</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.17">
+        <source>Attachment 17</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.18">
+        <source>Attachment 18</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.19">
+        <source>Attachment 19</source>
+      </trans-unit>
+      <trans-unit id="tl_content.makler_headerImageSource_select.20">
+        <source>Attachment 20</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
