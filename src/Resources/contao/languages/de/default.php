@@ -21,6 +21,26 @@ declare(strict_types=1);
  */
 $GLOBALS['TL_LANG']['MSC']['totalPages'] = 'Seite %s von %s';
 $GLOBALS['TL_LANG']['MSC']['points'] = '...';
+$GLOBALS['TL_LANG']['MSC']['prices'] = 'Preise';
+$GLOBALS['TL_LANG']['MSC']['area'] = 'Flächen';
+$GLOBALS['TL_LANG']['MSC']['distances'] = 'Entfernungen';
+$GLOBALS['TL_LANG']['MSC']['other'] = 'Sonstiges';
+$GLOBALS['TL_LANG']['MSC']['sampleOutputs'] = 'Beispielausgaben';
+$GLOBALS['TL_LANG']['MSC']['contact'] = 'Ansprechpartner';
+$GLOBALS['TL_LANG']['MSC']['moreObjectImages'] = 'Weitere Objektbilder';
+$GLOBALS['TL_LANG']['MSC']['documents'] = 'Dokumente';
+$GLOBALS['TL_LANG']['MSC']['map'] = 'Karte';
+$GLOBALS['TL_LANG']['MSC']['objectAddress'] = 'Objektanschrift';
+$GLOBALS['TL_LANG']['MSC']['yes'] = 'Ja';
+$GLOBALS['TL_LANG']['MSC']['no'] = 'Nein';
+$GLOBALS['TL_LANG']['MSC']['energyCertificate'] = 'Energieausweis';
+$GLOBALS['TL_LANG']['MSC']['energyDemandValue'] = 'Energiebedarfskennwert';
+$GLOBALS['TL_LANG']['MSC']['energyConsumptionIndex'] = 'Energieverbrauchskennwert';
+$GLOBALS['TL_LANG']['MSC']['filterReset'] = 'Filter zurücksetzen';
+$GLOBALS['TL_LANG']['MSC']['searchEstate'] = 'Immobilien suchen';
+$GLOBALS['TL_LANG']['MSC']['all'] = 'Alle';
+$GLOBALS['TL_LANG']['MSC']['objectDetails'] = 'Objektangaben';
+$GLOBALS['TL_LANG']['MSC']['placeholderImage'] = 'Platzhalter-Bild';
 
 $GLOBALS['TL_LANG']['CTE']['makler_headerImage'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];
 $GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];

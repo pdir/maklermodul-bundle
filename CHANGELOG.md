@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.9.0](https://github.com/pdir/maklermodul-bundle/tree/2.9.0) – 2023-06-22
+
+- [Added] Add english and russian translations
+
 ## [2.8.7](https://github.com/pdir/maklermodul-bundle/tree/2.8.7) – 2023-03-23
 
 - [Fixed] image path for sitemap generation
