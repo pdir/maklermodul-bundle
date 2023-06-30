@@ -29,7 +29,11 @@
 <li class="field epass_ausweisart">
     <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.epart'] ?></div>
     <div class="value">
-        <?= $this->epart ?>
+        <?php if('Nicht notwendig' === $this->epart): ?>
+            <?= $GLOBALS['TL_LANG']['MSC']['notNecessary'] ?>
+        <?php else: ?>
+            <?= $this->epart ?>
+        <?php endif; ?>
     </div>
 </li>
 

@@ -41,6 +41,7 @@ $GLOBALS['TL_LANG']['MSC']['searchEstate'] = 'Immobilien suchen';
 $GLOBALS['TL_LANG']['MSC']['all'] = 'Alle';
 $GLOBALS['TL_LANG']['MSC']['objectDetails'] = 'Objektangaben';
 $GLOBALS['TL_LANG']['MSC']['placeholderImage'] = 'Platzhalter-Bild';
+$GLOBALS['TL_LANG']['MSC']['notNecessary'] = 'Nicht notwendig';
 
 $GLOBALS['TL_LANG']['CTE']['makler_headerImage'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];
 $GLOBALS['TL_LANG']['FMD']['immoHeaderImageView'] = ['MaklerModul Kopfbild', 'MaklerModul Kopfbild'];
