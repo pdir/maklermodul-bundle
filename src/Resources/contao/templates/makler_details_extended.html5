@@ -121,12 +121,12 @@ else:
                 <?php $this->estate->renderer('ausstattung.rollstuhlgerecht')->asFlag('Ja', 'Nein')->render(); ?>
                 <?php $this->estate->renderer('ausstattung.gartennutzung')->asFlag('Ja', 'Nein')->render(); ?>
                 <?php $this->estate->renderer('verwaltung_objekt.haustiere')->asFlag('Ja', 'Nein')->render(); ?>
-                <?php $this->estate->renderer('ausstattung.stellplatzart.@TIEFGARAGE')->asText()->render(); ?>
-                <?php $this->estate->renderer('ausstattung.stellplatzart.@GARAGE')->asText()->render(); ?>
-                <?php $this->estate->renderer('ausstattung.stellplatzart.@CARPORT')->asText()->render(); ?>
-                <?php $this->estate->renderer('ausstattung.stellplatzart.@FREIPLATZ')->asText()->render(); ?>
-                <?php $this->estate->renderer('ausstattung.stellplatzart.@PARKHAUS')->asText()->render(); ?>
-                <?php $this->estate->renderer('ausstattung.stellplatzart.@DUPLEX')->asText()->render(); ?>
+                <?php $this->estate->renderer('ausstattung.stellplatzart.@TIEFGARAGE')->asFlag('Ja', 'Nein')->render(); ?>
+                <?php $this->estate->renderer('ausstattung.stellplatzart.@GARAGE')->asFlag('Ja', 'Nein')->render(); ?>
+                <?php $this->estate->renderer('ausstattung.stellplatzart.@CARPORT')->asFlag('Ja', 'Nein')->render(); ?>
+                <?php $this->estate->renderer('ausstattung.stellplatzart.@FREIPLATZ')->asFlag('Ja', 'Nein')->render(); ?>
+                <?php $this->estate->renderer('ausstattung.stellplatzart.@PARKHAUS')->asFlag('Ja', 'Nein')->render(); ?>
+                <?php $this->estate->renderer('ausstattung.stellplatzart.@DUPLEX')->asFlag('Ja', 'Nein')->render(); ?>
                 <?php $this->estate->renderer('ausstattung.boden.@TERRAKOTTA')->asFlag('Ja', 'Nein')->render(); ?>
                 <?php $this->estate->renderer('ausstattung.boden.@MARMOR')->asFlag('Ja', 'Nein')->render(); ?>
                 <?php $this->estate->renderer('ausstattung.boden.@LINOLEUM')->asFlag('Ja', 'Nein')->render(); ?>
