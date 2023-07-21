@@ -1,65 +1,82 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-  <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en">
+  <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en" target-language="de">
     <body>
       <trans-unit id="MOD.makler_modul_mplus">
         <source>estate modul</source>
+        <target>брокерский модуль</target>
       </trans-unit>
       <trans-unit id="FMD.immoDetailView.0">
         <source>Estate reader</source>
+        <target>Раскрыть</target>
       </trans-unit>
       <trans-unit id="FMD.immoDetailView.1">
         <source>Add a single estate to page.</source>
+        <target>Добавляет на страницу одно свойство.</target>
       </trans-unit>
       <trans-unit id="FMD.immoListView.0">
         <source>Estatelist</source>
+        <target>Список объектов недвижимости</target>
       </trans-unit>
       <trans-unit id="FMD.immoListView.1">
         <source>Add a estate list to page.</source>
+        <target>Добавляет на страницу листинг объектов недвижимости.</target>
       </trans-unit>
       <trans-unit id="MOD.makler.0">
         <source>estate module</source>
+        <target>брокерский модуль</target>
       </trans-unit>
       <trans-unit id="MOD.makler.1">
         <source>estate module tools</source>
+        <target>брокерский модуль Инструменты</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.0">
         <source>tools</source>
+        <target>Инструменты</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.1">
         <source>show tools</source>
+        <target>Показать инструменты</target>
       </trans-unit>
       <trans-unit id="MOD.makler.maklerSetup.0">
         <source>tools</source>
+        <target>Инструменты</target>
       </trans-unit>
-
       <trans-unit id="MOD.maklerSetup.message.import">
         <source>Import wurde ausgeführt.</source>
+        <target>Осуществлен импорт.</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.message.index">
         <source>Index wurde aufgebaut.</source>
+        <target>Был построен индекс.</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.message.emptyFolder">
-        <source>Folder was emptied.</source>
+        <source>Folder was emptied</source>
+        <target>Папка была очищена</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.message.downloadDemoData">
         <source>Demo data has downloaded.</source>
+        <target>Загрузка демонстрационных данных завершена.</target>
       </trans-unit>
-
       <trans-unit id="MOD.maklerSetup.label.runImport">
         <source>Run import</source>
+        <target>Выполнить импорт</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.label.rebuildIndex">
         <source>Rebuild index</source>
+        <target>Строительный индекс</target>
       </trans-unit>
       <trans-unit id="MOD.makler_modul_mplus">
         <source>Estate modul</source>
+        <target>брокерский модуль</target>
       </trans-unit>
+
       <trans-unit id="MOD.maklermodulPrivacy">
         <source>If you use the OpenImmo Feedback Form on the Exposé pages, data protection relevant information
-          could be collected.
-        </source>
+          could be collected.</source>
+        <target>Если вы воспользуетесь формой обратной связи OpenImmo на страницах сайта Exposé, вы можете будет собрана информация, относящаяся к защите данных.</target>
       </trans-unit>
+
     </body>
   </file>
 </xliff>

@@ -25,34 +25,34 @@ use Contao\System;
 if (!isset($GLOBALS['TL_LANG']['MOD']['pdir'])) {
     $GLOBALS['TL_LANG']['MOD']['pdir'] = [];
 }
-$GLOBALS['TL_LANG']['MOD']['pdir'] = ['pdir Apps', 'Enthält alle Apps aus dem Hause pdir.'];
-$GLOBALS['TL_LANG']['MOD']['maklermodul']['type'] = 'Maklermodul';
-$GLOBALS['TL_LANG']['MOD']['maklermodul'][0] = 'Maklermodul';
-$GLOBALS['TL_LANG']['MOD']['maklermodul'][1] = 'Organize your Maklermodul here';
+$GLOBALS['TL_LANG']['MOD']['pdir'] = ['pdir Приложения', 'Содержит все приложения из pdir.'];
+$GLOBALS['TL_LANG']['MOD']['maklermodul']['type'] = 'Брокерский модуль';
+$GLOBALS['TL_LANG']['MOD']['maklermodul'][0] = 'Брокерский модуль';
+$GLOBALS['TL_LANG']['MOD']['maklermodul'][1] = 'Организуйте свой Маклермодуль здесь';
 
-$GLOBALS['TL_LANG']['MOD']['maklermodul']['greeting'] = 'Welcome to %s Bundle for Contao';
-$GLOBALS['TL_LANG']['MOD']['maklermodul']['text'] = 'The broker module for Contao forms the interface between your broker software and the content management system Contao. <br> The data is automatically imported here, displayed as a filterable object list and presented in the detailed view as an exposé according to the guidelines of the corporate design of the brokerage offices.';
-$GLOBALS['TL_LANG']['MOD']['maklermodul']['tools'] = 'Tools';
-$GLOBALS['TL_LANG']['MOD']['maklermodul']['help_h2'] = 'Help & links';
-$GLOBALS['TL_LANG']['MOD']['maklermodul']['optionalBundles'] = 'Optional extensions';
+$GLOBALS['TL_LANG']['MOD']['maklermodul']['greeting'] = 'Добро пожаловать в %s Пакет для Contao';
+$GLOBALS['TL_LANG']['MOD']['maklermodul']['text'] = 'Модуль брокера для Contao формирует интерфейс между вашим брокерским ПО и системой управления контентом Contao. <br> Данные автоматически импортируются сюда, отображаются в виде фильтруемого списка объектов и представляются в детальном виде в виде экспозиции в соответствии с рекомендациями корпоративного дизайна брокерских офисов.';
+$GLOBALS['TL_LANG']['MOD']['maklermodul']['tools'] = 'Инструменты';
+$GLOBALS['TL_LANG']['MOD']['maklermodul']['help_h2'] = 'Помощь и ссылки';
+$GLOBALS['TL_LANG']['MOD']['maklermodul']['optionalBundles'] = 'Дополнительные расширения';
 
-$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] = 'Empty data folder';
-$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] = 'Empty temp folder';
-$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] = 'Empty upload folder';
-$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'] = 'Download demo data';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'] = 'Пустая папка с данными';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'] = 'Пустая папка temp';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] = 'Пустая папка загрузки';
+$GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'] = 'Скачать демо-данные';
 
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'] = [
-    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyDataFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Should the folder ".Config::get('uploadPath').'/maklermodul/'."data really be emptied??'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyTmpFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Should the folder ".Config::get('uploadPath').'/maklermodul/'."org really be emptied??'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyUploadFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Should the folder ".Config::get('uploadPath').'/maklermodul/'."upload really be emptied??'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyDataFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".Config::get('uploadPath').'/maklermodul/'."data должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyTmpFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".Config::get('uploadPath').'/maklermodul/'."org должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => 'contao/main.php?do=maklermodulSetup&act=emptyUploadFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".Config::get('uploadPath').'/maklermodul/'."upload должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
     ['href' => 'contao/main.php?do=maklermodulSetup&act=downloadDemoData&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'], 'image' => 'bundles/pdirmaklermodul/img/icon_demodata.png'],
 ];
 
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['setupLinks'] = [
-    ['href' => 'https://pdir.de/docs/de/contao/extensions/maklermodul/', 'target' => '_blank', 'html' => 'Documentation'],
-    ['href' => 'https://github.com/pdir/maklermodul-bundle/issues', 'target' => '_blank', 'html' => 'Report issues'],
+    ['href' => 'https://pdir.de/docs/de/contao/extensions/maklermodul/', 'target' => '_blank', 'html' => 'Документация'],
+    ['href' => 'https://github.com/pdir/maklermodul-bundle/issues', 'target' => '_blank', 'html' => 'Вопросы отчетности'],
     ['href' => 'https://github.com/pdir/maklermodul-bundle/', 'target' => '_blank', 'html' => 'Github'],
-    ['href' => 'https://www.maklermodul.de/', 'target' => '_blank', 'html' => 'Demo'],
+    ['href' => 'https://www.maklermodul.de/', 'target' => '_blank', 'html' => 'Демоверсия'],
 ];
 
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['editions']['free'] = [
