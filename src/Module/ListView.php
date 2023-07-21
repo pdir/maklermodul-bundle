@@ -328,6 +328,15 @@ class ListView extends Module
         $objFilterTemplate = new FrontendTemplate($strFilterTemplate);
 
         // filter translation
+        foreach ($json['filterConfig']['groups'] as $key => $filter) {
+            $filterKey = str_replace('-', '.', $filter['key']);
+            $name = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$filterKey] ?? null;
+
+            if (null !== $name) {
+                $json['filterConfig']['groups'][$key]['name'] = $name;
+            }
+        }
+
         foreach ($json['filterConfig']['values'] as $key => $filter) {
             foreach ($filter as $filterValueKey => $filterValue) {
                 $filterKey = str_replace('-', '.', $key);
@@ -342,7 +351,7 @@ class ListView extends Module
                     $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $name;
                 }
 
-                if (ctype_upper($filterValue['name'])) {
+                if (null === $name && ctype_upper($filterValue['name'])) {
                     $str = ucfirst(strtolower($filterValue['name']));
                     $json['filterConfig']['values'][$key][$filterValueKey]['name'] = $str;
                 }

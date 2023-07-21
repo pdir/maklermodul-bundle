@@ -1,0 +1,429 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_module.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_module.field_legend">
+        <source>Fields and Filter</source>
+        <target>Поля и фильтры</target>
+      </trans-unit>
+      <trans-unit id="tl_module.option_legend">
+        <source>Options</source>
+        <target>Опции</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerPage.0">
+        <source>Estate Reader</source>
+        <target>Детальный обзор</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerPage.1">
+        <source>Please select the page with the estate details module.</source>
+        <target>Пожалуйста, выберите страницу, на которой будет отображаться информация о недвижимости.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerTemplate.0">
+        <source>Estate Reader</source>
+        <target>Шаблоны для недвижимости</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_readerTemplate.1">
+        <source>Please select the template with the estate readermodule.</source>
+        <target>Пожалуйста, выберите шаблон, с помощью которого будут отображаться данные о недвижимости.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listPage.0">
+        <source>Estatelist</source>
+        <target>Список объектов недвижимости</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listPage.1">
+        <source>Please select the page with the estate list module.</source>
+        <target>Выберите страницу, на которой будет отображаться список объектов недвижимости.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listTemplate.0">
+        <source>Estate List</source>
+        <target>Шаблоны для недвижимости</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listTemplate.1">
+        <source>Please select the template with the estate list module.</source>
+        <target>Выберите шаблон, с помощью которого будет отображаться список недвижимости.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listContent.0">
+        <source>Estate List Content</source>
+        <target>Отображаемые поля</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listContent.1">
+        <source>Please add the column keys which should be visible in the estate list module.</source>
+        <target>Пожалуйста, добавьте колонки содержимого для отображения в списке свойств.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listFilter.0">
+        <source>Estate List Filter</source>
+        <target>Фильтр</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listFilter.1">
+        <source>Please add the filter rules which should be used for display the filter of this liste.</source>
+        <target>Добавьте, пожалуйста, поля, которые можно использовать в качестве фильтров в списке свойств. (Поля, не указанные выше, не будут отображаться)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplate.0">
+        <source>Filter template</source>
+        <target>Шаблон фильтров</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplate.1">
+        <source>Please select a template to use for filters.</source>
+        <target>Пожалуйста, выберите шаблон фильтра.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplateOptions.select">
+        <source>Select fields</source>
+        <target>Отборочные списки</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listFilterTemplateOptions.button">
+        <source>Buttons</source>
+        <target>Кнопки</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.0">
+        <source>Type</source>
+        <target>Ссылка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.1">
+        <source>Select the type for the conditions here.</source>
+        <target>Выберите ссылку для ознакомления с условиями здесь.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.and">
+        <source>AND</source>
+        <target>И</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_conditionFilterType.or">
+        <source>OR</source>
+        <target>ИЛИ</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_sort_legend">
+        <source>Sortierung</source>
+        <target>Сортировка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listSort.0">
+        <source>Estate List Sorting</source>
+        <target>Выбор месторождения</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listSort.1">
+        <source>Please add the sorting rule which should be used for display the sorting of this list.</source>
+        <target>Добавьте, пожалуйста, поле, которое должно использоваться в качестве сортировки в списке свойств.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAsc.0">
+      	<source>sorting</source>
+        <target>Сортировка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAsc.1">
+      	<source>sorting</source>
+        <target>Сортировка должна быть по возрастанию или по убыванию?</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAscOptions.true">
+      	<source>true</source>
+        <target>Восходящий</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortAscOptions.false">
+      	<source>false</source>
+        <target>Нисходящий</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortType.0">
+      	<source>field type</source>
+        <target>Тип поля</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortType.1">
+      	<source>which field type you want to use?</source>
+        <target>Какой тип поля следует использовать?</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortTypeOptions.int">
+      	<source>int</source>
+        <target>Номера</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortTypeOptions.float">
+      	<source>float</source>
+        <target>Число с плавающей точкой</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listSortTypeOptions.text">
+      	<source>text</source>
+        <target>Текст</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_cond_legend">
+        <source>Bedingungen</source>
+        <target>Условия</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listCondition.0">
+        <source>Estate List Condition</source>
+        <target>Состояние</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listCondition.1">
+        <source>The condition is used to reduce the results according to specific criteria. One condition per line. Example <strong>objektadresse_freigeben=true or geo.ort!=leipzig</strong></source>
+        <target>Условие используется для сокращения результатов по определенным критериям. Пример: <strong>objektadresse_freigeben=true, geo.ort!=Leipzig, flaechen.anzahl_zimmer=1, freitexte.objekttitel=%ruhig%</strong> Внимание: Пожалуйста, используйте одну строку для каждого условия, обращайте внимание на верхний и нижний регистр и не ставьте запятые после строки.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listDebug.0">
+          <source>Debug</source>
+          <target>Отладка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listDebug.1">
+          <source>Enable to show all available field keys</source>
+          <target>Показать все доступные клавиши полей</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listInSitemap.0">
+          <source>Show in sitemap navigation</source>
+          <target>Показывать в навигации по карте сайта</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_listInSitemap.1">
+          <source>Enable to show all available field keys</source>
+          <target>Активировать для отображения объектов данного представления списка также в навигации по карте сайта.
+          В настройках шаблона навигации по карте сайта должен быть выбран шаблон "nav_makler_sitemap".</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_staticFilter.0">
+        <source>Filter only</source>
+        <target>Только фильтр</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_staticFilter.1">
+        <source>Do not show filter result list</source>
+        <target>Скрывает результаты фильтрации. Если эта опция активна, должно быть сохранено списочное представление.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_filterListPage.0">
+        <source>Page Listview</source>
+        <target>Просмотр списка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.immo_filterListPage.1">
+        <source>
+          If submit button is pressed, the user is redirected to this page.
+          Filter settings are forwarded.
+        </source>
+        <target>
+          Посетитель перенаправляется на эту страницу, и настройки фильтра передаются. Это необходимо только в том
+          случае, если выбрана опция "Только фильтр".
+        </target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_pagination_legend">
+        <source>Pagination</source>
+        <target>Пагинация</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_addListPagination.0">
+        <source>Add Pagination</source>
+        <target>Добавить пагинацию</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_addListPagination.1">
+        <source>When active, the output of the pagination is activated in the template.</source>
+        <target>Если активен, то в шаблоне активируется вывод пагинации.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationCount.0">
+        <source>Number of objects</source>
+        <target>Количество объектов</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationCount.1">
+        <source>Specifies how many objects should be displayed on one page.</source>
+        <target>Определяет, сколько объектов должно быть отображено на странице.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationShowtitle.0">
+        <source>Show title?</source>
+        <target>Название выставки?</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationShowtitle.1">
+        <source>Should the title be displayed?</source>
+        <target>Должен ли отображаться заголовок страницы?</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationLinkCount.0">
+        <source>Number of links</source>
+        <target>Количество ссылок</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationLinkCount.1">
+        <source>Specifies how many links should be displayed in the pagination.</source>
+        <target>Определяет, сколько ссылок должно быть отображено в пагинации.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationUseIsotope.0">
+        <source>use isotope</source>
+        <target>Использование изотопов</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_paginationUseIsotope.1">
+        <source>Use Isotope(JS) for pagination.</source>
+        <target>Для пагинации используйте Isotope(JS).</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleCss.0">
+        <source>include CSS</source>
+        <target>Интеграция CSS</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleCss.1">
+        <source>Use module css in list view.</source>
+        <target>Интегрирует собственный CSS модуля в шаблон.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleDetailCss.0">
+        <source>include CSS</source>
+        <target>Интеграция CSS</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleDetailCss.1">
+        <source>Use module css in list view.</source>
+        <target>Интегрирует собственный CSS модуля в шаблон.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleJs.0">
+        <source>include JS</source>
+        <target>Встроить Javascript</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_useModuleJs.1">
+        <source>Use module js in list view.</source>
+        <target>Интегрирует собственный Javascript модуля в шаблон.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showHeadline.0">
+      	<source>Show headline</source>
+        <target>Показать заголовок</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showHeadline.1">
+      	<source>Show headline in header image</source>
+        <target>Показывать заголовок в изображении заголовка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showBackgroundImage.0">
+      	<source>Show background image</source>
+        <target>Показать как обои</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showBackgroundImage.1">
+      	<source>Show background image by css instead of image tag in header image</source>
+        <target>Отображение в качестве фонового изображения с помощью CSS вместо тега image в изображении заголовка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listViewPlaceholder.0">
+      	<source>placeholder image</source>
+        <target>Изображение-заглушка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_listViewPlaceholder.1">
+      	<source>show placeholder image (only list view)</source>
+        <target>Показывать изображение-заглушку (только для просмотра списка)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_detailViewPlaceholder.0">
+      	<source>placeholder image</source>
+        <target>Изображение-заглушка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_detailViewPlaceholder.1">
+      	<source>show placeholder image (only detail view)</source>
+        <target>Показывать изображение-заглушку (только для детального просмотра)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImagePlaceholder.0">
+      	<source>placeholder image</source>
+        <target>Изображение-заглушка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImagePlaceholder.1">
+      	<source>show placeholder image (only header image)</source>
+        <target>Показывать изображение-заполнитель (только для заголовков)</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_gmapApiKey.0">
+        <source>Google Maps API Key</source>
+        <target>Ключ API Google Maps</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_gmapApiKey.1">
+        <source>Add Google Maps API Key here.</source>
+        <target>Введите API-ключ Google Maps, который будет использоваться для отображения карты.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showMap.0">
+        <source>Show Google Map</source>
+        <target>Показать карту Google Maps</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_showMap.1">
+        <source>Include Google Maps</source>
+        <target>Интегрирована карта Google Maps.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_debug.0">
+        <source>Debug</source>
+        <target>Отладка</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_debug.1">
+        <source>Enable to show available object fields, object data and translations (var_dump).</source>
+        <target>Активировать для отображения всех доступных полей объекта, данных объекта и трансляций (var_dump).</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_filter_type.0">
+        <source>Filter type AND</source>
+        <target>Тип фильтра И</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_filter_type.1">
+        <source>Enable to use AND for filtering (geo.ort = "Dresden" AND geo.ort = "Meissen"); Default is "OR" (geo.ort = "Dresden" OR geo.ort = "Meißen").</source>
+        <target>Активировать для связи фильтров с помощью "И" (geo.ort = "Dresden" UND geo.ort = "Meißen"); По умолчанию установлено значение "ИЛИ" (geo.ort = "Dresden" ИЛИ geo.ort = "Meißen").</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource.0">
+        <source>Select image source</source>
+        <target>Выбор источника изображения</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource.1">
+        <source>Please select the attachment number to use for header image.</source>
+        <target>Пожалуйста, выберите номер вложения для изображения заголовка.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.1">
+        <source>Attachment 1</source>
+        <target>Приложение 1</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.2">
+        <source>Attachment 2</source>
+        <target>Приложение 2</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.3">
+        <source>Attachment 3</source>
+        <target>Приложение 3</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.4">
+        <source>Attachment 4</source>
+        <target>Приложение 4</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.5">
+        <source>Attachment 5</source>
+        <target>Приложение 5</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.6">
+        <source>Attachment 6</source>
+        <target>Приложение 6</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.7">
+        <source>Attachment 7</source>
+        <target>Приложение 7</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.8">
+        <source>Attachment 8</source>
+        <target>Приложение 8</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.9">
+        <source>Attachment 9</source>
+        <target>Приложение 9</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.10">
+        <source>Attachment 10</source>
+        <target>Приложение 10</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.11">
+        <source>Attachment 11</source>
+        <target>Приложение 11</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.12">
+        <source>Attachment 12</source>
+        <target>Приложение 12</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.13">
+        <source>Attachment 13</source>
+        <target>Приложение 13</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.14">
+        <source>Attachment 14</source>
+        <target>Приложение 14</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.15">
+        <source>Attachment 15</source>
+        <target>Приложение 15</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.16">
+        <source>Attachment 16</source>
+        <target>Приложение 16</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.17">
+        <source>Attachment 17</source>
+        <target>Приложение 17</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.18">
+        <source>Attachment 18</source>
+        <target>Приложение 18</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.19">
+        <source>Attachment 19</source>
+        <target>Приложение 19</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_headerImageSource_select.20">
+        <source>Attachment 20</source>
+        <target>Приложение 20</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_attachmentSize.0">
+        <source>Image size for more images</source>
+        <target>Размер изображения для получения большего количества изображений</target>
+      </trans-unit>
+      <trans-unit id="tl_module.makler_attachmentSize.1">
+        <source>Here you can set the image dimensions and the resize mode.</source>
+        <target>Здесь можно задать размеры изображения и режим масштабирования.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

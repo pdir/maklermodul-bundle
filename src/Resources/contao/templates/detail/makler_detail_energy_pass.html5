@@ -1,8 +1,8 @@
-<h3>Energieausweis</h3>
+<h3><?= $GLOBALS['TL_LANG']['MSC']['energyCertificate'] ?></h3>
 
 <?php if($this->heizungsart): ?>
     <li class="field heizung">
-        <div class="label">Heizung</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart'] ?></div>
         <div class="value">
             <?= $this->heizungsart ?>
         </div>
@@ -10,7 +10,7 @@
 <?php endif; ?>
 <?php if($this->energietraeger): ?>
     <li class="field energietraeger">
-        <div class="label">Befeuerung</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung'] ?></div>
         <div class="value">
             <?= $this->energietraeger ?>
         </div>
@@ -19,7 +19,7 @@
 
 <?php if($this->primaererEnergietraeger): ?>
     <li class="field epass_primaererEnergietraeger">
-        <div class="label">Wesentliche Energieträger</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.primaerenergietraeger'] ?></div>
         <div class="value">
             <?= $this->primaererEnergietraeger ?>
         </div>
@@ -27,15 +27,19 @@
 <?php endif; ?>
 
 <li class="field epass_ausweisart">
-    <div class="label">Ausweisart</div>
+    <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.epart'] ?></div>
     <div class="value">
-        <?= $this->epart ?>
+        <?php if('Nicht notwendig' === $this->epart): ?>
+            <?= $GLOBALS['TL_LANG']['MSC']['notNecessary'] ?>
+        <?php else: ?>
+            <?= $this->epart ?>
+        <?php endif; ?>
     </div>
 </li>
 
 <?php if($this->baujahr): ?>
     <li class="field epass_baujahr">
-        <div class="label">Baujahr</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.baujahr'] ?></div>
         <div class="value">
             <?= $this->baujahr ?>
         </div>
@@ -44,7 +48,7 @@
 
 <?php if($this->jahrgang): ?>
     <li class="field epass_jahrgang">
-        <div class="label">Jahrgang</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.jahrgang'] ?></div>
         <div class="value">
             <?= $this->jahrgang ?>
         </div>
@@ -53,7 +57,7 @@
 
 <?php if($this->stromwert): ?>
     <li class="field epass_stromwert">
-        <div class="label">Stromjahr</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.stromwert'] ?></div>
         <div class="value">
             <?= $this->stromwert ?>
         </div>
@@ -62,7 +66,7 @@
 
 <?php if($this->waermewert): ?>
     <li class="field epass_waermewert">
-        <div class="label">Wärmewert</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.waermewert'] ?></div>
         <div class="value">
             <?= $this->waermewert ?>
         </div>
@@ -71,7 +75,7 @@
 
 <?php if($this->mitwarmwasser): ?>
     <li class="field epass_mitwarmwasser">
-        <div class="label">Mit Warmwasser</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.mitwarmwasser'] ?></div>
         <div class="value">
             <?= $this->mitwarmwasser ?>
         </div>
@@ -80,7 +84,7 @@
 
 <?php if($this->gueltigBis): ?>
     <li class="field epass_gueltig">
-        <div class="label">Gültig bis</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.gueltig_bis'] ?></div>
         <div class="value">
             <?= date('d.m.Y',strtotime($this->gueltigBis)) ?>
         </div>
@@ -89,7 +93,7 @@
 
 <?php if($this->ausstelldatum): ?>
     <li class="field epass_ausstelldatum">
-        <div class="label">Ausstelldatum</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.ausstelldatum'] ?></div>
         <div class="value">
             <?= date('d.m.Y',strtotime($this->ausstelldatum)) ?>
         </div>
@@ -98,7 +102,7 @@
 
 <?php if($this->gebaeudeart): ?>
     <li class="field epass_gebaeudeart">
-        <div class="label">Gebäudeart</div>
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.gebaeudeart'] ?></div>
         <div class="value">
             <?= $this->gebaeudeart ?>
         </div>
@@ -120,8 +124,8 @@ if($this->energyClass == "H") { $eClassH = "class='active_eclass'"; }
 
 <?php if($this->energy != 0): ?>
     <div class="energie-scale">
-        <li class="field energieverbrauchskennwert"><?php if($this->epart == 'Bedarf'): ?><div class="label">Energiebedarfskennwert</div><?php else: ?><div class="label">Energieverbrauchskennwert</div><?php endif; ?> <div class="value-number"><?php echo $this->energy; ?> kWh/(m²*a)</div></li>
-        <li class="field energieeffizienzklasse"><div class="label">Energieeffizienzklasse</div> <div class="value"><?php echo $this->energyClass; ?></div></li>
+        <li class="field energieverbrauchskennwert"><?php if($this->epart == 'Bedarf'): ?><div class="label"><?= $GLOBALS['TL_LANG']['MSC']['energyDemandValue'] ?></div><?php else: ?><div class="label"><?= $GLOBALS['TL_LANG']['MSC']['energyConsumptionIndex'] ?></div><?php endif; ?> <div class="value-number"><?php echo $this->energy; ?> kWh/(m²*a)</div></li>
+        <li class="field energieeffizienzklasse"><div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.wertklasse'] ?></div> <div class="value"><?php echo $this->energyClass; ?></div></li>
         <div class="energy-slider">
             <ul>
                 <li <?php echo $eClassAplus; ?> style="width:11.1111%;">A+</li>
