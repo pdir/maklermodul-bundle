@@ -10,7 +10,7 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
-## [2.9.0](https://github.com/pdir/maklermodul-bundle/tree/2.9.0) – 2023-06-22
+## [2.9.0](https://github.com/pdir/maklermodul-bundle/tree/2.9.0) – 2023-07-21
 
 - [Added] Add english and russian translations
 - [Fixed] Fix field 'ausstattung.stellplatzart' in makler_details_extended template
