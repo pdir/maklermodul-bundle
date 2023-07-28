@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.9.1](https://github.com/pdir/maklermodul-bundle/tree/2.9.1) – 2023-07-31
+
+- [Fixed] back button error
+
 ## [2.9.0](https://github.com/pdir/maklermodul-bundle/tree/2.9.0) – 2023-07-21
 
 - [Added] Add english and russian translations
