@@ -49,8 +49,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
         ],
         'label' => [
             'fields' => ['extern', 'name', 'tstamp', 'lastUpdate'],
-            'showColumns' => true,
-            'format' => '<span style="color:#999;padding-right:3px">[%s]</span> %s, %s, %s',
+            'showColumns' => true
         ],
         'global_operations' => [
             'all' => [

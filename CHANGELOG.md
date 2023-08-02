@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.9.1](https://github.com/pdir/maklermodul-bundle/tree/2.9.1) – 2023-08-02
+
+- [Fixed] Fix dates in backend estate list view
+
 ## [2.9.0](https://github.com/pdir/maklermodul-bundle/tree/2.9.0) – 2023-07-21
 
 - [Added] Add english and russian translations
