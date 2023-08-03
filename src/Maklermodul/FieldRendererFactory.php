@@ -105,8 +105,8 @@ class FieldRendererFactory
      */
     public function backButton()
     {
-        $referer = $_SERVER['HTTP_REFERER'];
-        $request = $_SERVER['QUERY_STRING'];
+        $referer = $_SERVER['HTTP_REFERER']?? '';
+        $request = $_SERVER['QUERY_STRING']?? '';
 
         return new BackButtonRenderer($referer, $request, $this->translationMap);
     }
