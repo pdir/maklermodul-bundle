@@ -436,6 +436,10 @@ $pdir-color: #7AC0BC;
   }
 }
 
+.col_tstamp, .col_lastUpdate {
+  min-width: 120px;
+}
+
 #tl_navigation {
 
   .group-pdir {
