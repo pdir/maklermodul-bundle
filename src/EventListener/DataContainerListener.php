@@ -34,16 +34,18 @@ class DataContainerListener
     /**
      * @Callback(table="tl_makler", target="list.label.label")
      */
-    public function onLabelCallback(array $row): string
+    public function onLabelCallback(array $row, string $label, DataContainer $dc, array $labels): array
     {
-        return sprintf(
-            '<span style="color: #999;">[%s]</span> %s<span style="color: #999; margin-left: .5em;">⭳ %s</span>'.
-            '<span style="color: #589b0e; margin-left: .5em;">↦ %s</span>',
-            $row['extern'],
-            $row['name'],
-            Date::parse(Config::get('datimFormat'), $row['tstamp'] ?: '-'),
-            Date::parse(Config::get('datimFormat'), $row['lastUpdate'])
-        );
+        $fields = $GLOBALS['TL_DCA']['tl_makler']['list']['label']['fields'];
+        $keyExtern = array_search('extern', $fields, true);
+        $keyTstamp = array_search('tstamp', $fields, true);
+        $keyLastUpdate = array_search('lastUpdate', $fields, true);
+
+        $labels[$keyExtern] = $row['extern'];
+        $labels[$keyTstamp] = Date::parse(Config::get('datimFormat'), $row['tstamp'] ?: '-');
+        $labels[$keyLastUpdate] = Date::parse(Config::get('datimFormat'), $row['lastUpdate'] ?: '-');
+
+        return $labels;
     }
 
     /**
