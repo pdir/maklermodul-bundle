@@ -51,6 +51,12 @@ This is a commercial extension for Contao Open Source CMS<br>
 You can buy a license at https://www.maklermodul.de<br>
 2018 pdir GmbH - All-rights-reserved<br>
 
+Contao Themes
+-------
+
+| [![MATE Theme](https://contao-themes.net/files/contao-themes-net/screenshots/mate%20theme/maklermodul/matetheme_maklermodul_1.jpg)](https://contao-themes.net/theme-detail/mate.html) | [![ODD Theme](https://contao-themes.net/files/contao-themes-net/screenshots/odd_theme/maklermodul/oddtheme_maklermodul_1.jpg)](https://contao-themes.net/theme-detail/odd.html) | [![NATURE Theme](https://contao-themes.net/files/contao-themes-net/screenshots/nature_theme/maklermodul/naturetheme_maklermodul_1.jpg)](https://contao-themes.net/theme-detail/nature.html) |
+|:---:|:---:|:---:|
+| [**MATE Theme**](https://contao-themes.net/theme-detail/mate.html) <br> [Demo](https://mate.pdir.de/immobilien.html) | [**ODD Theme**](https://contao-themes.net/theme-detail/odd.html) <br> [Demo](https://odd.contao-themes.net/immobilien.html) | [**NATURE Theme**](https://contao-themes.net/theme-detail/nature.html) <br> [Demo](https://nature.contao-themes.net/immobilien.html) |
 
 Bildnachweise für Demodaten
 ---------------
