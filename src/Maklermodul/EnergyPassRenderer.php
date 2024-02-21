@@ -214,13 +214,10 @@ class EnergyPassRenderer
         $jahrgang = $this->rawData['zustand_angaben.energiepass.jahrgang']?? null;
         $ausstelldatum = $this->rawData['zustand_angaben.energiepass.ausstelldatum']?? null;
         $gebaeudeart = $this->rawData['zustand_angaben.energiepass.gebaeudeart']?? null;
+        $energie = $this->rawData['zustand_angaben.energiepass.energieverbrauchkennwert']?? null;
 
-        if (isset($this->rawData['zustand_angaben.energiepass.waermewert'])) {
-            $energie = $this->rawData['zustand_angaben.energiepass.waermewert'];
-        } elseif (isset($this->rawData['zustand_angaben.energiepass.energieverbrauchkennwert'])) {
-            $energie = $this->rawData['zustand_angaben.energiepass.energieverbrauchkennwert'];
-        } else {
-            $energie = $this->rawData['zustand_angaben.energiepass.endenergiebedarf']?? null;
+        if (isset($this->rawData['zustand_angaben.energiepass.endenergiebedarf'])) {
+            $energie = $this->rawData['zustand_angaben.energiepass.endenergiebedarf'];
         }
 
         if (null !== $energie) {
