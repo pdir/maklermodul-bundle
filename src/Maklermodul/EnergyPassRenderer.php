@@ -285,6 +285,10 @@ class EnergyPassRenderer
             $objFilterTemplate->primaererEnergietraeger = $this->rawData['zustand_angaben.energiepass.primaerenergietraeger'];
         }
 
+        if (isset($this->rawData['zustand_angaben.energiepass.endenergiebedarf.primaerenergietraeger'])) {
+            $objFilterTemplate->primaererEnergietraeger = $this->rawData['zustand_angaben.energiepass.endenergiebedarf.primaerenergietraeger'];
+        }
+
         if ('2008' === $jahrgang) {
             $objFilterTemplate->jahrgang = 'vor 2014';
         } elseif ('2014' === $jahrgang) {
