@@ -282,9 +282,7 @@ class EnergyPassRenderer
         $objFilterTemplate->energyClass = $eClass?? null;
 
         if (isset($this->rawData['zustand_angaben.energiepass.primaerenergietraeger'])) {
-            $objFilterTemplate->primaererEnergietraeger = isset($GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys'][$this->rawData['zustand_angaben.energiepass.primaerenergietraeger']]) ?? $this->rawData['zustand_angaben.energiepass.primaerenergietraeger'];
-        } else {
-            $objFilterTemplate->primaererEnergietraeger = $energietraeger?? null;
+            $objFilterTemplate->primaererEnergietraeger = $this->rawData['zustand_angaben.energiepass.primaerenergietraeger'];
         }
 
         if ('2008' === $jahrgang) {
