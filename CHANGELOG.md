@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.9.3](https://github.com/pdir/maklermodul-bundle/tree/2.9.2) – 2024-03-01
+
+- [Fixed] fix missing field in energy pass (energy carrier)
+
 ## [2.9.2](https://github.com/pdir/maklermodul-bundle/tree/2.9.2) – 2024-02-20
 
 - [Fixed] fix energy pass value
