@@ -10,7 +10,11 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
-## [2.9.3](https://github.com/pdir/maklermodul-bundle/tree/2.9.2) – 2024-03-01
+## [2.9.4](https://github.com/pdir/maklermodul-bundle/tree/2.9.4) – 2024-xx-xx
+
+- [Fixed] show attachments if group is empty
+
+## [2.9.3](https://github.com/pdir/maklermodul-bundle/tree/2.9.3) – 2024-03-01
 
 - [Fixed] fix missing field in energy pass (energy carrier)
 
