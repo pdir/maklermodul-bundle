@@ -149,9 +149,14 @@ class Attachment extends FieldRenderer
     {
         // show only given group
         $givenGroups = StringUtil::trimsplit(',', $this->getSetting('group'));
+        $group = $this->getValueOf('@gruppe');
 
-        if (empty($givenGroups) || \in_array($this->getValueOf('@gruppe'), $givenGroups, true)) {
-            switch ($this->getValueOf('@gruppe')) {
+        if ('' === $group && \in_array($this->getValueOf('format'), ['jpg', 'png', 'svg', 'webp'], true)) {
+            $group = 'BILD';
+        }
+
+        if (empty($givenGroups) || \in_array($group, $givenGroups, true)) {
+            switch ($group) {
                 case 'DOKUMENTE':
                     // render doc list
                     $this->template = $this->getShortTemplateDoc();
@@ -223,11 +228,11 @@ class Attachment extends FieldRenderer
                         );
                     }
 
-                        return sprintf($this->template,
-                            $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
-                            $this->getValueOf('anhangtitel'),
-                            $renderedThumbnail
-                        );
+                    return sprintf($this->template,
+                        $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
+                        $this->getValueOf('anhangtitel'),
+                        $renderedThumbnail
+                    );
             }
         }
 
