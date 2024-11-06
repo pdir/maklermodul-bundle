@@ -395,6 +395,9 @@
     delete listView.qsString;
 
     listView.pagination.show();
+    listView.pagination.find('li').removeClass('active');
+    listView.pagination.find('li:first-child').addClass('active');
+    listView.activePage.html(listView.pagination.find('li:first-child a').text());
 
     // reset range
     delete listView.rangeFilter;
@@ -536,10 +539,15 @@
       filters = filters.join('');     //AND
     }
 
-    if (filters === '')
+    if (filters === '') {
       delete listView.selectFilter;
-    else
+      listView.pagination.show();
+      listView.pagination.find('li').removeClass('active');
+      listView.pagination.find('li:first-child').addClass('active');
+      listView.activePage.html(listView.pagination.find('li:first-child a').text());
+    } else {
       listView.selectFilter = filters;
+    }
 
     listView.selectFilter = filters;
 
@@ -678,7 +686,7 @@
     // @todo deactivate via modul $('html,body').animate({ scrollTop: $("#slider .mod_article.last").offset().top - 85 }, 600);
 
     // update active pagination page
-    listView.activePage.html($(this).attr('title'));
+    listView.activePage.html($(this).text());
 
     listView.filter();
   };
