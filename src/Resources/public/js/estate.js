@@ -393,11 +393,7 @@
     delete listView.qsSelector;
     delete listView.selectFilter;
     delete listView.qsString;
-
-    listView.pagination.show();
-    listView.pagination.find('li').removeClass('active');
-    listView.pagination.find('li:first-child').addClass('active');
-    listView.activePage.html(listView.pagination.find('li:first-child a').text());
+    listView.resetPagination();
 
     // reset range
     delete listView.rangeFilter;
@@ -410,6 +406,13 @@
     delete listView.paginationFilter;
     listView.resetFilter = true;
     listView.filter("*");
+  };
+
+  listView.resetPagination = function () {
+    listView.pagination.show();
+    listView.pagination.find('li').removeClass('active');
+    listView.pagination.find('li:first-child').addClass('active');
+    listView.activePage.html(listView.pagination.find('li:first-child a').text());
   };
 
   listView.shuffle = function () {
@@ -501,10 +504,12 @@
       filters = filters.join('');     //AND
     }
 
-    if (filters === '')
+    if (filters === '') {
       delete listView.checkboxFilter;
-    else
+      listView.resetPagination();
+    } else {
       listView.checkboxFilter = filters;
+    }
 
     // call filter
     listView.filter();
@@ -541,10 +546,7 @@
 
     if (filters === '') {
       delete listView.selectFilter;
-      listView.pagination.show();
-      listView.pagination.find('li').removeClass('active');
-      listView.pagination.find('li:first-child').addClass('active');
-      listView.activePage.html(listView.pagination.find('li:first-child a').text());
+      listView.resetPagination();
     } else {
       listView.selectFilter = filters;
     }
