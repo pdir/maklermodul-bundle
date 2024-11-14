@@ -10,7 +10,12 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
-## [2.9.4](https://github.com/pdir/maklermodul-bundle/tree/2.9.4) – 2024-xx-xx
+## [2.9.5](https://github.com/pdir/maklermodul-bundle/tree/2.9.5) – 2024-11-07
+
+- [Fixed] fix pagination after resetting the filter
+- [Fixed] fix number of pagination items
+
+## [2.9.4](https://github.com/pdir/maklermodul-bundle/tree/2.9.4) – 2024-11-04
 
 - [Fixed] show attachments if group is empty
 
