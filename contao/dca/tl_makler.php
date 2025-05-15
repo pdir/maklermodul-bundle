@@ -16,6 +16,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use Contao\DataContainer;
+use Contao\DC_Table;
 use Pdir\MaklermodulBundle\EventListener\DataContainerListener;
 
 $tableName = 'tl_makler';
@@ -23,7 +25,7 @@ $tableName = 'tl_makler';
 $GLOBALS['TL_DCA'][$tableName] = [
     // Config
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'sql' => [
             'keys' => [
                 'id' => 'primary',
@@ -41,7 +43,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
     // List
     'list' => [
         'sorting' => [
-            'mode' => 2,
+            'mode' => DataContainer::MODE_SORTABLE,
             'fields' => ['extern', 'name', 'tstamp', 'lastUpdate'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['extern', 'name', 'tstamp', 'lastUpdate'],
@@ -94,8 +96,7 @@ $GLOBALS['TL_DCA'][$tableName] = [
     ],
 
     // Subpalettes
-    'subpalettes' => [
-    ],
+    'subpalettes' => [],
 
     // Fields
     'fields' => [

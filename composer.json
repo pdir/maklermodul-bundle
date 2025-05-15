@@ -25,28 +25,23 @@
     "source" : "https://github.com/pdir/maklermodul-bundle"
   },
   "require": {
-    "php": "^7.2 || ^8.0",
-    "contao/core-bundle": "^4.9"
+    "php": "^8.0",
+    "contao/core-bundle": "^4.13 || ^5.3"
   },
   "require-dev": {
+    "bamarni/composer-bin-plugin": "^1.5",
     "contao/manager-plugin": "^2.0",
     "contao/easy-coding-standard": "^3.0",
-    "phpunit/phpunit": "^8.5 || ^9.5",
-    "symfony/phpunit-bridge": "^5.3 || ^6.0"
+    "phpunit/phpunit": "^7.1 || ^8.4 || ^9.5",
+    "symfony/phpunit-bridge": "^4.4 || ^5.1",
+    "phpstan/phpstan": "^1.8",
+    "phpstan/phpstan-phpunit": "^1.1",
+    "phpstan/phpstan-symfony": "^1.2"
   },
   "autoload": {
     "psr-4": {
       "Pdir\\MaklermodulBundle\\": "src/"
-    },
-    "classmap": [
-      "src/Resources/contao/"
-    ],
-    "exclude-from-classmap": [
-      "src/Resources/contao/config/",
-      "src/Resources/contao/dca/",
-      "src/Resources/contao/languages/",
-      "src/Resources/contao/templates/"
-    ]
+    }
   },
   "extra": {
     "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManager\\Plugin",
@@ -67,7 +62,9 @@
       "contao-components/installer": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "contao/manager-plugin": true,
-      "contao-community-alliance/composer-plugin": true
+      "contao-community-alliance/composer-plugin": true,
+      "php-http/discovery": true,
+      "bamarni/composer-bin-plugin": true
     }
   }
 }

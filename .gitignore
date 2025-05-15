@@ -14,3 +14,5 @@
 #Docker Compose
 .env
 docker-compose.yml
+
+.DS_store

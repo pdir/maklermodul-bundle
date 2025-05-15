@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+
+    # Migration
+    Pdir\MaklermodulBundle\Migration\:
+        resource: "../src/Migration/*"
+        tags:
+            - { name: contao.migration, priority: 99 }

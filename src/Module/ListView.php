@@ -33,6 +33,7 @@ use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 
 /**
@@ -100,7 +101,7 @@ class ListView extends Module
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
@@ -108,7 +109,7 @@ class ListView extends Module
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
+            $objTemplate->href = System::getContainer()->get('router')->generate('contao_backend').'?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
@@ -232,7 +233,7 @@ class ListView extends Module
             }
         }
 
-        if (TL_MODE === 'FE' && '0' === $this->arrData['immo_staticFilter']) {
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')) && '0' === $this->arrData['immo_staticFilter']) {
             // @ToDo Fehler bei deaktivierter Detailseite beheben (Fatal error: Call to a member function current() on a non-object in /.../system/modules/makler_modul_mplus/modules/ListView.php on line 105
             $this->repository = EstateRepository::getInstance();
             $this->Template->objectData = $this->repository->findAll();

@@ -26,6 +26,7 @@ use Contao\BackendModule;
 use Contao\Config;
 use Contao\Controller;
 use Contao\Database;
+use Contao\Environment;
 use Contao\File;
 use Contao\Files;
 use Contao\Input;
@@ -141,7 +142,7 @@ class MaklermodulSetup extends BackendModule
                 break;
 
             default:
-                $this->Template->base = $this->Environment->base;
+                $this->Template->base = Environment::get('base');
                 $this->Template->version = Helper::VERSION;
                 $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
         }
@@ -172,14 +173,14 @@ class MaklermodulSetup extends BackendModule
             try {
                 File::putContent($this->storageDirectoryPath.'data/'.$objArchive->file_name, $objArchive->unzip());
             } catch (\Exception $e) {
-                \Message::addError($e->getMessage());
+                Message::addError($e->getMessage());
             }
 
             // add to makler table
             if (
                 strpos($objArchive->file_name, '.json') &&
-                false === strpos($objArchive->file_name, '00index') &&
-                false === strpos($objArchive->file_name, 'key-index')
+                !str_contains($objArchive->file_name, '00index') &&
+                !str_contains($objArchive->file_name, 'key-index')
             ) {
                 $this->addObjectToMaklerTable(str_replace('.json', '', $objArchive->file_name));
             }

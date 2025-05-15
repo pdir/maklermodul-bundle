@@ -5,13 +5,13 @@
       alt="Maklermodul für Contao" width="155" height="32" class="logo"></a>
     </div>
     <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
-      <a href="contao/main.php?do=maklermodulSetup&act=import&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
+      <a href="<?= $this->backendUrl ?>?do=maklermodulSetup&act=import&ref=<?= $this->referer ?>">
         <img src="bundles/pdirmaklermodul/img/icon_import.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['runImport'] ?>" width="30" height="30" />
         <?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['runImport'] ?>
       </a>
     </div>
     <div class="button<?php if($this->extMode == 'DEMO'): ?> inactive" title="inactive in demo"<?php else: ?>"<?php endif; ?>>
-      <a href="contao/main.php?do=maklermodulSetup&act=index&ref=<?= System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'); ?>">
+      <a href="<?= $this->backendUrl ?>?do=maklermodulSetup&act=index&ref=<?= $this->referer ?>">
         <img src="bundles/pdirmaklermodul/img/icon_index.png" alt="<?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['rebuildIndex'] ?>" width="30" height="30" />
         <?= $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['rebuildIndex'] ?>
       </a>

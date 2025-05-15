@@ -16,8 +16,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use Contao\Backend;
+use Contao\Config;
+use Contao\DataContainer;
+use Contao\Input;
 use Contao\System;
-
 /*
  * Add palettes to tl_module.
  */
@@ -185,7 +188,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_listViewPlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => Config::get('validImageTypes')],
     'sql' => 'binary(16) NULL',
 ];
 
@@ -194,7 +197,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_detailViewPlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'clr', 'extensions' => Config::get('validImageTypes')],
     'sql' => 'binary(16) NULL',
 ];
 
@@ -203,7 +206,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImagePlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => Config::get('validImageTypes')],
     'sql' => 'binary(16) NULL',
 ];
 
@@ -363,21 +366,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImageSource'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_attachmentSize'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_attachmentSize'],
     'inputType' => 'imageSize',
-    'options_callback' => static function () {
-        return System::getImageSizes();
-    },
+    'options_callback' => ['tl_module_makler', 'getImageSizes'],
+    # C5.5 'options' => System::getImageSizes(),
     'eval' => ['includeBlankOption' => true, 'rgxp' => 'digit', 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
 ];
 
 class tl_module_makler extends Backend
 {
-    public function getModuleTemplates(DataContainer $dc)
+    public function getModuleTemplates(DataContainer $dc): array
     {
         return $this->getTemplateGroup('makler');
     }
 
-    public function getFieldKeys($r)
+    public function getFieldKeys($r): array
     {
         $fieldKeysArr = ['-', '-'];
 
@@ -387,5 +389,30 @@ class tl_module_makler extends Backend
         sort($fieldKeysArr);
 
         return $fieldKeysArr;
+    }
+
+    /**
+     * Return all image sizes as array
+     * @return array
+     */
+    public function getImageSizes(): array
+    {
+        $sizes = [];
+
+        if (method_exists(System::class, 'getImageSizes')) {
+            dump('exists');
+            return System::getImageSizes();
+        }
+
+        $imageSize = $this->Database->prepare("SELECT id, name, width, height FROM tl_image_size ORDER BY pid, name")
+            ->execute();
+
+        while ($imageSize->next())
+        {
+            $sizes[$imageSize->id] = $imageSize->name;
+            $sizes[$imageSize->id] .= ' (' . $imageSize->width . 'x' . $imageSize->height . ')';
+        }
+
+        return array_merge(array('image_sizes'=>$sizes), $GLOBALS['TL_CROP']??[]);
     }
 }

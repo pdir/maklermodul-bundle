@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        public: true
+
+    pdir_maklermodul.listener.data_container:
+        class: Pdir\MaklermodulBundle\EventListener\DataContainerListener
+        public: true

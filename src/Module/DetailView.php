@@ -29,10 +29,12 @@ use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Input;
 use Contao\Module;
+use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DetailView.
@@ -57,7 +59,7 @@ class DetailView extends Module
     {
         parent::__construct($objModule, $strColumn);
 
-        if (!empty($this->arrData['immo_readerTemplate']) && TL_MODE !== 'BE') {
+        if (!empty($this->arrData['immo_readerTemplate']) && System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
             $this->strTemplate = $this->arrData['immo_readerTemplate'];
         }
     }
@@ -69,7 +71,7 @@ class DetailView extends Module
      */
     public function generate()
     {
-        if (TL_MODE === 'BE') {
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
@@ -77,7 +79,7 @@ class DetailView extends Module
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
+            $objTemplate->href = System::getContainer()->get('router')->generate('contao_backend').'?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }

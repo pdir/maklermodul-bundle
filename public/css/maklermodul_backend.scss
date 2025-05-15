@@ -495,3 +495,11 @@ $pdir-color: #7AC0BC;
     border: none;
   }
 }
+
+html[data-color-scheme=dark] {
+  .be_makler_toolbar .container .logo img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+

@@ -62,6 +62,8 @@ class DataContainerListener
         $template->version = Helper::VERSION;
         $template->arrButtons = $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'];
         $template->arrLinks = $GLOBALS['TL_LANG']['MOD']['maklermodul']['setupLinks'];
+        $template->backendUrl = System::getContainer()->get('router')->generate('contao_backend');
+        $template->referer = System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id');
 
         if (class_exists(Sync::class)) {
             $template->syncVersion = Sync::SYNC_VERSION;

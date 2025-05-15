@@ -16,14 +16,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-// use Contao\ArrayUtil;
+use Contao\ArrayUtil;
 use Contao\Combiner;
+use Contao\System;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Module\HeaderImageView;
 use Pdir\MaklermodulBundle\Module\ListView;
 use Pdir\MaklermodulBundle\Module\MaklermodulSetup;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\HttpFoundation\Request;
 
 $assetsDir = 'bundles/pdirmaklermodul';
 
@@ -31,19 +33,17 @@ $assetsDir = 'bundles/pdirmaklermodul';
  * Backend modules.
  */
 if (!isset($GLOBALS['BE_MOD']['pdir'])) {
-    // ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
-    Helper::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
+    ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, ['pdir' => []]);
 }
 
-//ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
-Helper::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodulSetup' => [
         'callback' => MaklermodulSetup::class,
+        'hideInNavigation' => true,
     ],
 ]);
 
-//ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
-Helper::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['pdir'], 0, [
     'maklermodul' => [
         'tables' => ['tl_makler'],
     ],
@@ -81,7 +81,7 @@ $GLOBALS['TL_AUTO_ITEM'][] = 'estate';
 /*
  * Javascript for Backend
  */
-if (TL_MODE === 'BE') {
+if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
     if (empty($GLOBALS['TL_JAVASCRIPT'])) {
         $GLOBALS['TL_JAVASCRIPT'] = [];
     }

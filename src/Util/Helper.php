@@ -117,7 +117,7 @@ class Helper extends Frontend
      *
      * @return array
      */
-    public function addProductsToSearchIndex($arrPages)
+    public function addProductsToSearchIndex($arrPages): array
     {
         $indexConfigRepository = new IndexConfigRepository();
         $indexObjects = $indexConfigRepository->findAll();
@@ -153,7 +153,7 @@ class Helper extends Frontend
         return $decoded;
     }
 
-    public static function getPageUrl($id, $vars = '')
+    public static function getPageUrl($id, $vars = ''): string
     {
         $websitePath = \DIRECTORY_SEPARATOR;
 
@@ -173,7 +173,7 @@ class Helper extends Frontend
      *
      * @return array|bool
      */
-    public static function getSubPages($item)
+    public static function getSubPages($item): bool|array|string
     {
         $arrIndexFiles = [];
         $arrItems = [];
@@ -231,7 +231,7 @@ class Helper extends Frontend
      *
      * @return string
      */
-    public function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate)
+    public function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate): string
     {
         if ('form_xml' === $strTemplate) {
             if (Input::post('oobj_id')) {
@@ -333,27 +333,6 @@ class Helper extends Frontend
         }
 
         return $strBuffer;
-    }
-
-    /*
-     * Workaround for \Contao\ArrayUtil in Contao 4.9
-     */
-    public static function arrayInsert(&$arrCurrent, $intIndex, $arrNew): void
-    {
-        if (!\is_array($arrCurrent)) {
-            $arrCurrent = $arrNew;
-
-            return;
-        }
-
-        if (\is_array($arrNew)) {
-            $arrBuffer = array_splice($arrCurrent, 0, $intIndex);
-            $arrCurrent = array_merge_recursive($arrBuffer, $arrNew, $arrCurrent);
-
-            return;
-        }
-
-        array_splice($arrCurrent, $intIndex, 0, $arrNew);
     }
 
     public static function getImageLinkPath(): string

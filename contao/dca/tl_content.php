@@ -16,6 +16,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use Contao\Config;
+
 /*
  * Add palettes to tl_content.
  */
@@ -47,7 +49,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['makler_headerImagePlaceholder'] = [
     'exclude' => true,
     'inputType' => 'fileTree',
     'reference' => &$GLOBALS['TL_LANG']['tl_content'],
-    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => $GLOBALS['TL_CONFIG']['validImageTypes']],
+    'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'tl_class' => 'w50', 'extensions' => Config::get('validImageTypes')],
     'sql' => 'binary(16) NULL',
 ];
 
