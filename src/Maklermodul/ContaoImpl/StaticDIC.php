@@ -28,7 +28,7 @@ use Contao\System;
 
 class StaticDIC
 {
-    const CONFIG_ROOT = '../../Resources/contao/config';
+    const CONFIG_ROOT = '../../../contao/config';
     const FILTER_CSS_MAPPING = 'filter.ini';
     const USER_FILTER_CSS_MAPPING = '/files/maklermodul/data.filter.ini';
 

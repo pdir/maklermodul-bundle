@@ -310,7 +310,7 @@ class Attachment extends FieldRenderer
 
     private function resizeImage($orgPath, $size)
     {
-        return Image::get(Helper::getImagePath().$orgPath, $size[0], $size[1], $size[2]);
+        return Image::getUrl(Helper::getImagePath().$orgPath, $size[0], $size[1], $size[2]);
     }
 
     private function resizePicture($orgPath, $size, $alt)

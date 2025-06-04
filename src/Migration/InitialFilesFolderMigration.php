@@ -49,7 +49,7 @@ class InitialFilesFolderMigration extends AbstractMigration
         $this->uploadPath = System::getContainer()->getParameter('contao.upload_path');
         $this->projectDir = System::getContainer()->getParameter('kernel.project_dir');
 
-        $dataFolder = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strDataFolder;
+        $dataFolder = $this->projectDir.'/'.$this->uploadPath.'/'.self::$strDataFolder;
 
         // If the folder exists we should do nothing
         if (is_dir($dataFolder)) {
@@ -67,9 +67,9 @@ class InitialFilesFolderMigration extends AbstractMigration
         $folders = [];
 
         // Add folders
-        $folders[] = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strDataFolder;
-        $folders[] = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strImportFolder;
-        $folders[] = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strOrgFolder;
+        $folders[] = $this->uploadPath.'/'.self::$strDataFolder;
+        $folders[] = $this->uploadPath.'/'.self::$strImportFolder;
+        $folders[] = $this->uploadPath.'/'.self::$strOrgFolder;
 
         // Create folders
         foreach ($folders as $folder) {

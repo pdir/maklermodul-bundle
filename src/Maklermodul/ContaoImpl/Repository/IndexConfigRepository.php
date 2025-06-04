@@ -22,16 +22,20 @@ declare(strict_types=1);
 
 namespace Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository;
 
+use Contao\Database;
+use Contao\Frontend;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfigInterface;
 
-class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryInterface
+class IndexConfigRepository extends Frontend implements IndexConfigRepositoryInterface
 {
     const CONTAO_MODULE_TYPE_LIST = 'immoListView';
 
     public function __construct()
     {
-        $this->import('Database');
+        $this->db = Database::getInstance();
+
+        parent::__construct();
     }
 
     /**
@@ -43,7 +47,7 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
      */
     public function update(IndexConfigInterface $config): void
     {
-        $objquery = $this->Database->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE id=?');
+        $objquery = $this->db->prepare('UPDATE tl_module SET immo_actIndexFile=? WHERE id=?');
         $objquery->execute($config->getStorageFileUri(), $config->getUid());
     }
 
@@ -56,9 +60,9 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
      *
      * @return object
      */
-    public function findById($configId)
+    public function findById($configId): ?IndexConfigInterface
     {
-        $result = $this->Database->prepare('SELECT * FROM tl_module WHERE id=?')->execute($configId);
+        $result = $this->db->prepare('SELECT * FROM tl_module WHERE id=?')->execute($configId);
 
         if ($result->count() <= 0) {
             return null;
@@ -74,9 +78,9 @@ class IndexConfigRepository extends \Frontend implements IndexConfigRepositoryIn
      *
      * @see \Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\IndexConfigRepositoryInterface::findAll()
      */
-    public function findAll()
+    public function findAll(): ?array
     {
-        $result = $this->Database->prepare('SELECT * FROM tl_module WHERE type=?')->execute(self::CONTAO_MODULE_TYPE_LIST);
+        $result = $this->db->prepare('SELECT * FROM tl_module WHERE type=?')->execute(self::CONTAO_MODULE_TYPE_LIST);
 
         if ($result->count() <= 0) {
             return null;

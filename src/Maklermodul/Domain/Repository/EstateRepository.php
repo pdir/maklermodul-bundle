@@ -87,8 +87,9 @@ class EstateRepository
         $returnValue = [];
 
         foreach ($directoryIterator as $child) {
+
             if ($this->isRelevantJson($child->getPathname())) {
-                $estate = $this->loadJsonFile($child->getPathname());
+                $estate = $this->loadJsonFile($child->getPathname(), true);
                 $returnValue[] = $estate;
             }
         }
@@ -107,9 +108,17 @@ class EstateRepository
     /**
      * @throws \Exception
      */
-    public function loadJsonFile($fileNamePath): ?Estate
+    public function loadJsonFile($fileNamePath, $relative = false): ?Estate
     {
-        $objFile = new File(Helper::getImageLinkPath().$fileNamePath);
+        if ($relative) {
+            $fileNamePath = str_replace(System::getContainer()->getParameter('kernel.project_dir'), '',$fileNamePath);
+        }
+
+        if (!$relative) {
+            $fileNamePath = Helper::getImageLinkPath().$fileNamePath;
+        }
+
+        $objFile = new File($fileNamePath);
 
         $content = $objFile->getContent();
 
