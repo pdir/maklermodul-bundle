@@ -36,6 +36,11 @@ class InitialFilesFolderMigration extends AbstractMigration
     private string $uploadPath;
     private string $projectDir;
 
+    public function __construct(
+        private ContaoFramework $framework,
+    ) {
+    }
+
     public function getName(): string
     {
         return 'Initial files folder migration - Maklermodul Bundle';
@@ -46,6 +51,8 @@ class InitialFilesFolderMigration extends AbstractMigration
      */
     public function shouldRun(): bool
     {
+        $this->framework->initialize();
+
         $this->uploadPath = System::getContainer()->getParameter('contao.upload_path');
         $this->projectDir = System::getContainer()->getParameter('kernel.project_dir');
 
