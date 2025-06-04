@@ -145,7 +145,7 @@ class ListView extends Module
 
         if (1 === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
-            $this->Template->staticListPage = '/'.PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
+            $this->Template->staticListPage = PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
 
         $this->Template->config = new IndexConfig($this->arrData);
