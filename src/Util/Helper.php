@@ -41,7 +41,7 @@ class Helper extends Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.9.5';
+    const VERSION = '2.10.0';
 
     /**
      * Extension mode.
