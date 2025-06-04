@@ -400,7 +400,6 @@ class tl_module_makler extends Backend
         $sizes = [];
 
         if (method_exists(System::class, 'getImageSizes')) {
-            dump('exists');
             return System::getImageSizes();
         }
 

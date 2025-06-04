@@ -99,15 +99,6 @@ class DetailView extends Module
             return '';
         }
 
-        dump($_GET['auto_item']);
-        dump(Input::get('auto_item'));
-        dump(Input::get('items'));
-
-        // Set auto item
-        //if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
-        //    Input::setGet('estate', Input::get('expose'));
-        //}
-
         // get alias from auto item
         $this->alias = Input::get('auto_item');
 
@@ -160,10 +151,6 @@ class DetailView extends Module
                 $this->Template->detailImageType = 'image';
             }
         }
-
-        dump($estate);
-        dump($estate->rawValue('freitexte.objektbeschreibung'));
-        dump($estate->rawValue('freitexte.objekttitel'));
 
         // Overwrite the page metadata (see #2853, #4955 and #87)
         $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();

@@ -223,11 +223,9 @@ class ListView extends Module
         $count = 0;
 
         // Add detail link to estates
-        dump($json['data']);
         foreach ($json['data'] as $key => $estate) {
             $json['data'][$key]['link'] = Helper::generateEstateUrl( $this->detailPage, true, $estate['uriident']);
         }
-        dump($json['data']);
 
         if ($this->makler_addListPagination && 'true' === Input::get('estate-filter')) {
             foreach ($json['data'] as $estate) {

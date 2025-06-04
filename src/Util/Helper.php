@@ -157,8 +157,6 @@ class Helper extends Frontend
 
     public static function generateEstateUrl(PageModel $page, $blnAbsolute=false, $strParam=null): string
     {
-        dump($page, $blnAbsolute, $strParam);
-
         // fix param
         if (null !== $strParam) {
             $strParam = '/'.$strParam;

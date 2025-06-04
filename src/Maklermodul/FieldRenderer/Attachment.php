@@ -217,9 +217,6 @@ class Attachment extends FieldRenderer
                         $this->getValueOf('@location')
                     );
 
-                    dump($renderedThumbnail);
-                    dump($this->getSetting('link'));
-
                     if ($this->getSetting('link')) {
                         return $renderedThumbnail;
                     }
