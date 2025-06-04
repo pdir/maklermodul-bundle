@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -25,6 +25,7 @@ namespace Pdir\MaklermodulBundle\Module;
 use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Input;
@@ -71,7 +72,9 @@ class DetailView extends Module
      */
     public function generate()
     {
-        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
@@ -84,13 +87,29 @@ class DetailView extends Module
             return $objTemplate->parse();
         }
 
-        // Set auto item
-        if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
-            Input::setGet('estate', Input::get('expose'));
+        // Set the item from the auto_item parameter
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem'))
+        {
+            Input::setGet('items', Input::get('auto_item'));
         }
 
+        // Return an empty string if "auto_item" is not set to combine list and reader on same page
+        if (Input::get('auto_item') === null)
+        {
+            return '';
+        }
+
+        dump($_GET['auto_item']);
+        dump(Input::get('auto_item'));
+        dump(Input::get('items'));
+
+        // Set auto item
+        //if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
+        //    Input::setGet('estate', Input::get('expose'));
+        //}
+
         // get alias from auto item
-        $this->alias = Input::get('estate');
+        $this->alias = Input::get('auto_item');
 
         return parent::generate();
     }
@@ -114,7 +133,9 @@ class DetailView extends Module
             $GLOBALS['TL_CSS'][] = Helper::assetFolder.'/css/estate-detail.scss||static';
         }
 
-        $this->Template->estate = $this->createFieldRendererFactory($this->alias);
+        $estate = $this->createFieldRendererFactory($this->alias);
+
+        $this->Template->estate = $estate;
         $this->Template->placeholderImg = $this->makler_detailViewPlaceholder ? FilesModel::findByUuid($this->makler_detailViewPlaceholder)->path : Helper::assetFolder.'/img/platzhalterbild.jpg';
         $this->Template->showMap = $this->makler_showMap;
         $this->Template->debug = $this->makler_debug;
@@ -137,6 +158,35 @@ class DetailView extends Module
                 // image mode: proportional, crop or box
                 $this->Template->detailImageMode = $arrImgSize[2];
                 $this->Template->detailImageType = 'image';
+            }
+        }
+
+        dump($estate);
+        dump($estate->rawValue('freitexte.objektbeschreibung'));
+        dump($estate->rawValue('freitexte.objekttitel'));
+
+        // Overwrite the page metadata (see #2853, #4955 and #87)
+        $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
+
+        if ($responseContext && $responseContext->has(c::class))
+        {
+            /** @var HtmlHeadBag $htmlHeadBag */
+            $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
+            $htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
+
+            if ($estate->rawValue('freitexte.objekttitel'))
+            {
+                $htmlHeadBag->setTitle($estate->rawValue('freitexte.objekttitel')); // Already stored decoded
+            }
+
+            if ($estate->rawValue('freitexte.objektbeschreibung'))
+            {
+                $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($estate->rawValue('freitexte.objektbeschreibung')));
+            }
+
+            if ($objPage->robots)
+            {
+                $htmlHeadBag->setMetaRobots($objPage->robots);
             }
         }
     }

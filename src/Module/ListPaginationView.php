@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -39,11 +39,10 @@ class ListPaginationView extends ListView
             throw new \Exception('illegal call!');
         }
 
-        $this->page = $this->Input->get('page');
+        $this->page = Input::get('page');
         $this->itemsToShow = $objListView->makler_paginationCount ?: 10;
         $this->linkItemsToShow = $objListView->makler_paginationLinkCount ?: 6;
         $this->showtitle = $objListView->makler_paginationShowtitle;
-        $this->detailPagePrefix = $objListView->helper->getDetailViewPrefix();
         $this->data = $objListView->objectData;
 
         /*

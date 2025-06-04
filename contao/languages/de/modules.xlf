@@ -54,8 +54,8 @@
         <target>Ordner wurde geleert</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.message.downloadDemoData">
-        <source>Demo data has downloaded.</source>
-        <target>Demo-Daten wurden heruntergeladen.</target>
+        <source>The demo data has been downloaded.</source>
+        <target>Die Demo-Daten wurden heruntergeladen.</target>
       </trans-unit>
 
       <trans-unit id="MOD.maklerSetup.label.runImport">

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -42,9 +42,9 @@ $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'] = 'Пу�
 $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'] = 'Скачать демо-данные';
 
 $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'] = [
-    ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=emptyDataFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".Config::get('uploadPath').'/maklermodul/'."data должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=emptyTmpFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".Config::get('uploadPath').'/maklermodul/'."org должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
-    ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=emptyUploadFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".Config::get('uploadPath').'/maklermodul/'."upload должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=emptyDataFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".System::getContainer()->getParameter('contao.upload_path').'/maklermodul/'."data должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyDataFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=emptyTmpFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".System::getContainer()->getParameter('contao.upload_path').'/maklermodul/'."org должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyTmpFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
+    ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=emptyUploadFolder&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'onclick' => "if(!confirm('Действительно ли папка ".System::getContainer()->getParameter('contao.upload_path').'/maklermodul/'."upload должна быть очищена?'))return false;Backend.getScrollOffset()", 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['emptyUploadFolder'], 'image' => 'bundles/pdirmaklermodul/img/icon_delete.png'],
     ['href' => System::getContainer()->get('router')->generate('contao_backend').'?do=maklermodulSetup&act=downloadDemoData&ref='.System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id'), 'target' => '_blank', 'alt' => $GLOBALS['TL_LANG']['MOD']['maklerSetup']['label']['downloadDemoData'], 'image' => 'bundles/pdirmaklermodul/img/icon_demodata.png'],
 ];
 

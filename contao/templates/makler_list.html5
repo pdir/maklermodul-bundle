@@ -1,17 +1,4 @@
 <?php
-  if (isset($this->debugbarRenderer)) {
-    $assets = $this->debugbarRenderer->getAssets();
-    foreach ($assets[0] as $filename) {
-      $GLOBALS['TL_CSS'][] = $this->helper->toUri($filename);
-    }
-    foreach ($assets[1] as $filename) {
-      if (strpos($filename, 'jquery') == false) {
-        $GLOBALS['TL_JAVASCRIPT'][] = $this->helper->toUri($filename);
-      }
-    }
-  }
-
-  global $objPage;
   $page = $this->page;
   $pages = $this->listObjects;
   $counter = 1;
@@ -57,7 +44,7 @@
     <div id="estate_list">
       <?php foreach ($pages[$page] as $obj): ?>
       <?php #if($this->makler_addListPagination && $counter < $this->makler_paginationCount+1): ?>
-      <a href="<?= $this->helper->getDetailViewPrefix() ?>/<?= $obj['uriident'] ?><?= $this->urlSuffix ?>" class="<?= $obj['css-filter-class-string'] ?>" title="{{iflng::de}}Objekt ansehen{{iflng::en}}View object{{iflng::ru}}Посмотреть объект{{iflng}}: '<?= $obj['freitexte-objekttitel'] ?>'">
+      <a href="<?= $obj['link'] ?>" class="<?= $obj['css-filter-class-string'] ?>" title="{{iflng::de}}Objekt ansehen{{iflng::en}}View object{{iflng::ru}}Посмотреть объект{{iflng}}: '<?= $obj['freitexte-objekttitel'] ?>'">
         <div class="inner">
           <div class="mix item<?php if($counter&1): ?> odd<?php else: ?> even<?php endif; ?>">
 
@@ -229,16 +216,13 @@
 </script>
 <?php endif; ?>
 
-<?= '<script type="text/javascript">' ?>
+<script type="text/javascript">
   // Sortierung
-  var sorting = <?php echo $this->sorting; ?>;
+  var sorting = <?= $this->sorting; ?>;
   var maklerTemplate = 'v2';
-  var sourceIndexUri = 'files/maklermodul/data/<?php echo $this->helper->getListSourceUri(); ?>';
-  var detailViewPrefix = '<?php echo $this->helper->getDetailViewPrefix(); ?>';
+  var sourceIndexUri = 'files/maklermodul/data/<?= $this->helper->getListSourceUri(); ?>';
   var filterType = <?= $this->filterType; ?>;
   <?php if ($this->staticFilter) : ?>var staticFilter = true;<?php endif; ?>
   var paginationUseIsotope = <?= $this->paginationUseIsotope ?>;
   <?php if ($this->addListPagination) : ?>var addListPagination = true;<?php endif; ?>
-<?= '</script>' ?>
-
-<?php if (isset($this->debugbarRenderer)) { echo $this->debugbarRenderer->render(); } ?>
+</script>

@@ -6,13 +6,13 @@ endif;
 ?>
 
 <!-- indexer::stop -->
-<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+<div class="<?= $this->class; ?> block"<?= $this->cssID; ?><?php if ($this->style): ?> style="<?= $this->style; ?>"<?php endif; ?>>
 <?php if ($this->headline): ?>
 
-<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<<?= $this->hl; ?>><?= $this->headline; ?></<?= $this->hl; ?>>
 <?php endif; ?>
 
-<div class="dlh_googlemap block" id="dlh_googlemap_<?= $this->map['id']; ?>" style="<?= $this->map['mapSize']['position'].$this->map['mapSize']['width'].$this->map['mapSize']['height'].$this->map['mapSize']['padding']; ?>"><?php if($_COOKIE['dlh_googlemaps'] || $this->map['protected']!='1'): ?><noscript><p><?= ($this->map['staticMapNoscript'] ? $this->map['staticMap'] : $this->labels['noscript']); ?></p></noscript><?php else: ?><div id="confirm-googlemaps" onClick="gmap<?= $this->map['id']; ?>_allow()"><?php echo ($this->map['protected']=='1' && $this->map['privacy']=='') ? $this->labels['privacy'] : $this->map['privacy']; ?></div><?php endif; ?></div>
+<div class="dlh_googlemap block" id="dlh_googlemap_<?= $this->map['id']; ?>" style="<?= $this->map['mapSize']['position'].$this->map['mapSize']['width'].$this->map['mapSize']['height'].$this->map['mapSize']['padding']; ?>"><?php if($_COOKIE['dlh_googlemaps'] || $this->map['protected']!='1'): ?><noscript><p><?= ($this->map['staticMapNoscript'] ? $this->map['staticMap'] : $this->labels['noscript']); ?></p></noscript><?php else: ?><div id="confirm-googlemaps" onClick="gmap<?= $this->map['id']; ?>_allow()"><?= ($this->map['protected']=='1' && $this->map['privacy']=='') ? $this->labels['privacy'] : $this->map['privacy']; ?></div><?php endif; ?></div>
 
 <script>
 
@@ -26,33 +26,33 @@ endif;
         window.setTimeout("gmap<?= $this->map['id']; ?>_initialize()", 500);
     }
 
-    var gmap<?php echo $this->map['id']; ?>;
+    var gmap<?= $this->map['id']; ?>;
 
-    function gmap<?php echo $this->map['id']; ?>_initialize() {
+    function gmap<?= $this->map['id']; ?>_initialize() {
 
         if(!window.google){
             return false;
         }
 
-        var gmap<?php echo $this->map['id']; ?>_Options = {
+        var gmap<?= $this->map['id']; ?>_Options = {
 
-            zoom: <?php echo $this->map['zoom']; ?>
-    , center: new google.maps.LatLng(<?php echo $this->map['center']; ?>)
-    , mapTypeId: google.maps.MapTypeId.<?php echo $this->map['mapTypeId']; ?>
-    , draggable: <?php echo $this->map['draggable']; ?>
-    , disableDoubleClickZoom: <?php echo $this->map['disableDoubleClickZoom']; ?>
-    , scrollwheel: <?php echo $this->map['scrollwheel']; ?>
+            zoom: <?= $this->map['zoom']; ?>
+    , center: new google.maps.LatLng(<?= $this->map['center']; ?>)
+    , mapTypeId: google.maps.MapTypeId.<?= $this->map['mapTypeId']; ?>
+    , draggable: <?= $this->map['draggable']; ?>
+    , disableDoubleClickZoom: <?= $this->map['disableDoubleClickZoom']; ?>
+    , scrollwheel: <?= $this->map['scrollwheel']; ?>
 
 
     <?php if ($this->map['useMapTypeControl']) : ?>
     , mapTypeControl: true
                 , mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.<?php echo $this->map['mapTypeControlStyle']; ?>
-        , position: google.maps.ControlPosition.<?php echo $this->map['mapTypeControlPos']; ?>
+            style: google.maps.MapTypeControlStyle.<?= $this->map['mapTypeControlStyle']; ?>
+        , position: google.maps.ControlPosition.<?= $this->map['mapTypeControlPos']; ?>
         <?php if (is_array($this->map['mapTypesAvailable'])) : ?>
         , mapTypeIds: [
             <?php foreach($this->map['mapTypesAvailable'] as $k=>$v) : ?>
-        <?php if($k>0) echo ','; ?>google.maps.MapTypeId.<?php echo $v; ?>
+        <?php if($k>0) echo ','; ?>google.maps.MapTypeId.<?= $v; ?>
         <?php endforeach; ?>
         ]
         <?php endif; ?>
@@ -65,7 +65,7 @@ endif;
     <?php if ($this->map['useOverviewMapControl']) : ?>
     , overviewMapControl: true
                 , overviewMapControlOptions: {
-            opened: <?php echo ($this->map['overviewMapControlOpened'] ? 'true':'false'); ?>
+            opened: <?= ($this->map['overviewMapControlOpened'] ? 'true':'false'); ?>
         }
     <?php else : ?>
     , overviewMapControl: false
@@ -75,7 +75,7 @@ endif;
     <?php if ($this->map['useStreetViewControl']) : ?>
     , streetViewControl: true
                 , streetViewControlOptions: {
-            position: google.maps.ControlPosition.<?php echo $this->map['streetViewControlPos']; ?>
+            position: google.maps.ControlPosition.<?= $this->map['streetViewControlPos']; ?>
         }
     <?php else : ?>
     , streetViewControl: false
@@ -85,7 +85,7 @@ endif;
     <?php if ($this->map['useRotateControl']) : ?>
     , rotateControl: true
                 , rotateControlOptions: {
-            position: google.maps.ControlPosition.<?php echo $this->map['rotateControlPos']; ?>
+            position: google.maps.ControlPosition.<?= $this->map['rotateControlPos']; ?>
         }
     <?php else : ?>
     , rotateControl: false
@@ -95,7 +95,7 @@ endif;
     <?php if ($this->map['usePanControl']) : ?>
     , panControl: true
                 , panControlOptions: {
-            position: google.maps.ControlPosition.<?php echo $this->map['panControlPos']; ?>
+            position: google.maps.ControlPosition.<?= $this->map['panControlPos']; ?>
         }
     <?php else : ?>
     , panControl: false
@@ -105,8 +105,8 @@ endif;
     <?php if ($this->map['useZoomControl']) : ?>
     , zoomControl: true
                 , zoomControlOptions: {
-            style: google.maps.ZoomControlStyle.<?php echo $this->map['zoomControlStyle']; ?>,
-            position: google.maps.ControlPosition.<?php echo $this->map['zoomControlPos']; ?>
+            style: google.maps.ZoomControlStyle.<?= $this->map['zoomControlStyle']; ?>,
+            position: google.maps.ControlPosition.<?= $this->map['zoomControlPos']; ?>
         }
     <?php else : ?>
     , zoomControl: false
@@ -116,7 +116,7 @@ endif;
     <?php if ($this->map['useScaleControl']) : ?>
     , scaleControl: true
                 , scaleControlOptions: {
-            position: google.maps.ControlPosition.<?php echo $this->map['scaleControlPos']; ?>
+            position: google.maps.ControlPosition.<?= $this->map['scaleControlPos']; ?>
         }
     <?php else : ?>
     , scaleControl: false
@@ -124,7 +124,7 @@ endif;
 
 
     <?php if ($this->map['parameter']) : ?>
-    , <?php echo $this->map['parameter']; ?>
+    , <?= $this->map['parameter']; ?>
     <?php endif; ?>
 
     };
@@ -136,8 +136,8 @@ endif;
         gmap<?=$this->map['id'];?>.setCenter(center);
     });
 
-    gmap<?php echo $this->map['id']; ?> = new google.maps.Map(document.getElementById("dlh_googlemap_<?php echo $this->map['id']; ?>"), gmap<?php echo $this->map['id']; ?>_Options);
-    var gmap<?php echo $this->map['id']; ?>_markers = [];
+    gmap<?= $this->map['id']; ?> = new google.maps.Map(document.getElementById("dlh_googlemap_<?= $this->map['id']; ?>"), gmap<?= $this->map['id']; ?>_Options);
+    var gmap<?= $this->map['id']; ?>_markers = [];
 
     <?php if ($this->map['moreParameter']) : echo $this->map['moreParameter']; endif; ?>
 

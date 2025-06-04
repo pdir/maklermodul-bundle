@@ -43,7 +43,7 @@
         <source>Folder was emptied.</source>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.message.downloadDemoData">
-        <source>Demo data has downloaded.</source>
+        <source>The demo data has been downloaded.</source>
       </trans-unit>
 
       <trans-unit id="MOD.maklerSetup.label.runImport">

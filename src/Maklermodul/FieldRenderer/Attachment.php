@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
+use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Image;
 use Contao\StringUtil;
@@ -147,6 +148,8 @@ class Attachment extends FieldRenderer
      */
     private function getShortString()
     {
+        $url = StringUtil::ampersand(Environment::get('url')).'/'.Helper::getImageLinkPath();
+
         // show only given group
         $givenGroups = StringUtil::trimsplit(',', $this->getSetting('group'));
         $group = $this->getValueOf('@gruppe');
@@ -209,10 +212,13 @@ class Attachment extends FieldRenderer
 
                     // render as image
                     $renderedThumbnail = $this->getThumbnailString(
-                        $this->getValueOf('daten.pfad'),
+                        $url.$this->getValueOf('daten.pfad'),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('@location')
                     );
+
+                    dump($renderedThumbnail);
+                    dump($this->getSetting('link'));
 
                     if ($this->getSetting('link')) {
                         return $renderedThumbnail;
@@ -229,7 +235,7 @@ class Attachment extends FieldRenderer
                     }
 
                     return sprintf($this->template,
-                        $this->getUrlOfPath(Helper::getImageLinkPath().$this->getValueOf('daten.pfad')),
+                        $this->getUrlOfPath($url.$this->getValueOf('daten.pfad')),
                         $this->getValueOf('anhangtitel'),
                         $renderedThumbnail
                     );
@@ -242,14 +248,14 @@ class Attachment extends FieldRenderer
     private function getUrlOfPath($path)
     {
         if (isset($this->websitePath)) {
-            return $this->websitePath.'/'.str_replace(TL_ROOT, '', $path);
+            return $this->websitePath.'/'.str_replace(System::getContainer()->getParameter('kernel.project_dir'), '', $path);
         }
 
         if (null === $path) {
             return null;
         }
 
-        return str_replace(TL_ROOT, '', $path);
+        return str_replace(System::getContainer()->getParameter('kernel.project_dir'), '', $path);
     }
 
     private function getThumbnailString($path, $alt, $location)
@@ -290,6 +296,7 @@ class Attachment extends FieldRenderer
             return $this->resizePicture($path, $size, $alt);
         } catch (\InvalidArgumentException $e) {
             $this->template = $this->getThumbnailTemplate();
+
             $url = $path;
             // @todo make it changeable in the config file
             if ('REMOTE' === $location) {

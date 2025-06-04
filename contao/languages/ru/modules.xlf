@@ -55,7 +55,7 @@
         <target>Папка была очищена</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.message.downloadDemoData">
-        <source>Demo data has downloaded.</source>
+        <source>The demo data has been downloaded.</source>
         <target>Загрузка демонстрационных данных завершена.</target>
       </trans-unit>
       <trans-unit id="MOD.maklerSetup.label.runImport">

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -29,6 +29,8 @@ use Contao\File;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\PageModel;
+use Contao\StringUtil;
+use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
@@ -60,7 +62,7 @@ class Helper extends Frontend
      *
      * @var array
      */
-    const imagePath = ['files','maklermodul', 'data'];
+    const imagePath = ['maklermodul', 'data'];
 
     /**
      * API Url.
@@ -151,6 +153,23 @@ class Helper extends Frontend
         }
 
         return $decoded;
+    }
+
+    public static function generateEstateUrl(PageModel $page, $blnAbsolute=false, $strParam=null): string
+    {
+        dump($page, $blnAbsolute, $strParam);
+
+        // fix param
+        if (null !== $strParam) {
+            $strParam = '/'.$strParam;
+        }
+
+        if (null !== $page)
+        {
+            return StringUtil::ampersand($blnAbsolute ? $page->getAbsoluteUrl($strParam) : $page->getFrontendUrl($strParam));
+        }
+
+        return $page->alias;
     }
 
     public static function getPageUrl($id, $vars = ''): string
@@ -337,11 +356,16 @@ class Helper extends Frontend
 
     public static function getImageLinkPath(): string
     {
-        return join('/', self::imagePath) . '/';
+        $uploadPath = System::getContainer()->getParameter('contao.upload_path');
+
+        return join('/', array_merge([$uploadPath], self::imagePath)) . '/';
     }
 
     public static function getImagePath(): string
     {
-        return join(\DIRECTORY_SEPARATOR, self::imagePath) . \DIRECTORY_SEPARATOR;
+        $projectDir = System::getContainer()->getParameter('kernel.project_dir');
+        $uploadPath = System::getContainer()->getParameter('contao.upload_path');
+
+        return join(\DIRECTORY_SEPARATOR, array_merge([$projectDir, $uploadPath], self::imagePath)) . \DIRECTORY_SEPARATOR;
     }
 }

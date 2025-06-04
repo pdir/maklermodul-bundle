@@ -33,10 +33,8 @@ class InitialFilesFolderMigration extends AbstractMigration
      * Backup folder.
      */
     public static string $strOrgFolder = self::strFolder.'org';
-
-    public function __construct(ContaoFramework $contaoFramework,)
-    {
-    }
+    private string $uploadPath;
+    private string $projectDir;
 
     public function getName(): string
     {
@@ -48,13 +46,13 @@ class InitialFilesFolderMigration extends AbstractMigration
      */
     public function shouldRun(): bool
     {
-        $this->contaoFramework->initialize();
-
         $this->uploadPath = System::getContainer()->getParameter('contao.upload_path');
-        #$this->projectDir = System::getContainer()->getParameter('kernel.project_dir');
+        $this->projectDir = System::getContainer()->getParameter('kernel.project_dir');
+
+        $dataFolder = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strDataFolder;
 
         // If the folder exists we should do nothing
-        if (file_exists($this->uploadPath.'/'.self::$strDataFolder)) {
+        if (is_dir($dataFolder)) {
             return false;
         }
 
@@ -66,14 +64,23 @@ class InitialFilesFolderMigration extends AbstractMigration
      */
     public function run(): MigrationResult
     {
-        // Create folders
-        $folder = new Folder($this->uploadPath.'/files/'.self::$strDataFolder);
-        $folder = new Folder($this->uploadPath.'/files/'.self::$strImportFolder);
-        $folder = new Folder($this->uploadPath.'/files/'.self::$strOrgFolder);
+        $folders = [];
 
-        // generate symlinks
+        // Add folders
+        $folders[] = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strDataFolder;
+        $folders[] = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strImportFolder;
+        $folders[] = $this->projectDir.'/'.$this->uploadPath.'/files/'.self::$strOrgFolder;
+
+        // Create folders
+        foreach ($folders as $folder) {
+            if (!is_dir($folder)) {
+                new Folder($folder);
+            }
+        }
+
+        // Generate symlinks
         (new Automator())->generateSymlinks();
 
-        return $this->createResult(true, 'Initial bundle folders created.');
+        return $this->createResult(true, 'Initial bundle folders created successfully.');
     }
 }

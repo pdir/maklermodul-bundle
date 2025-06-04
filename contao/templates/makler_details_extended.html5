@@ -1,32 +1,14 @@
-<?php
-if (!is_object($this->estate)) {
-  echo "<h1>Makler Modul M+ - Detailansicht</h1>";
-  return;
-}
+<?php if (!is_object($this->estate)): ?>
+  <h1>pdir Maklermodul - Detailansicht</h1>
+  <p><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['noestate'] ?></p>
+<?php return; endif; ?>
 
-// Übersetzungen
-$ja = $GLOBALS['TL_LANG']['MSC']['yes'];
-$nein = $GLOBALS['TL_LANG']['MSC']['no'];
-
-global $objPage;
-// Meta Angaben
-$objPage->title = $this->estate->renderer('freitexte.objekttitel')->asText()->value(true);
-$objPage->description = $this->estate->renderer('freitexte.objektbeschreibung')->asText()->crop(155)->value(true);
-$text = $objPage->title.' '.$objPage->description;
-preg_match_all("/[a-z0-9\-]{4,}/i", $text, $matches);
-$GLOBALS['TL_KEYWORDS']=join(',', $matches[0]);
-
-// DUMP LIST OF ALL AVAILABLE FIELDS
-if($this->debug)
-{
-  echo "<pre>"; var_dump($this->estate); echo "</pre>";
-}
-
-if($this->estate->renderer('freitexte.objekttitel')->asText()->value(true) == ''):
-// no objects
-echo $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['noestate'];
-else:
+<?php // Übersetzungen
+  $yes = $GLOBALS['TL_LANG']['MSC']['yes'];
+  $no = $GLOBALS['TL_LANG']['MSC']['no'];
 ?>
+
+<?php if($this->estate->renderer('freitexte.objekttitel')->asText()->value(true) !== ''): ?>
 <div class="estate-detail extended">
   <div class="obj-header">
     <?php $this->estate->renderer('verwaltung_techn.objektnr_extern')->asText()->render(); ?>
@@ -74,7 +56,7 @@ else:
         <?php $this->estate->renderer('preise.stp_garage.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
         <?php $this->estate->renderer('preise.stp_tiefgarage.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
         <?php $this->estate->renderer('preise.aussen_courtage')->asText()->render(); ?>
-        <?php $this->estate->renderer('preise.provisionspflichtig', true)->asFlag($ja, $nein)->render(); ?>
+        <?php $this->estate->renderer('preise.provisionspflichtig', true)->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('verwaltung_objekt.verfuegbar_ab')->asText()->render(); ?>
       </div>
       <div class="area">
@@ -110,38 +92,38 @@ else:
       </div>
       <div class="equipment">
         <h2><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.ausstatt_beschr'] ?></h2>
-        <?php $this->estate->renderer('ausstattung.kueche.@EBK')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.bad.@WANNE')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.bad.@DUSCHE')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.unterkellert.@keller')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.fahrstuhl.@PERSONEN')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.ausstattung.kantine_cafeteria')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.ausstattung.klimatisiert')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.dv_verkabelung', true)->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.kabel_sat_tv')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.gaestewc', true)->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.gastterrasse')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.barrierefrei')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.rollstuhlgerecht')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.gartennutzung')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('verwaltung_objekt.haustiere')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.stellplatzart.@TIEFGARAGE')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.stellplatzart.@GARAGE')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.stellplatzart.@CARPORT')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.stellplatzart.@FREIPLATZ')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.stellplatzart.@PARKHAUS')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.stellplatzart.@DUPLEX')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@TERRAKOTTA')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@MARMOR')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@LINOLEUM')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@DOPPELBODEN')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@ESTRICH')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@KUNSTSTOFF')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@FERTIGPARKETT')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@PARKETT')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@TEPPICH')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@STEIN')->asFlag($ja, $nein)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.boden.@FLIESEN')->asFlag($ja, $nein)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kueche.@EBK')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bad.@WANNE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bad.@DUSCHE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.unterkellert.@keller')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.fahrstuhl.@PERSONEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausstattung.kantine_cafeteria')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausstattung.klimatisiert')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dv_verkabelung', true)->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kabel_sat_tv')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.gaestewc', true)->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.gastterrasse')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.barrierefrei')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.rollstuhlgerecht')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.gartennutzung')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('verwaltung_objekt.haustiere')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stellplatzart.@TIEFGARAGE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stellplatzart.@GARAGE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stellplatzart.@CARPORT')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stellplatzart.@FREIPLATZ')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stellplatzart.@PARKHAUS')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stellplatzart.@DUPLEX')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@TERRAKOTTA')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@MARMOR')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@LINOLEUM')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@DOPPELBODEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@ESTRICH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@KUNSTSTOFF')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@FERTIGPARKETT')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@PARKETT')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@TEPPICH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@STEIN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.boden.@FLIESEN')->asFlag($yes, $no)->render(); ?>
 
       </div>
     </div>
@@ -181,8 +163,8 @@ else:
     <?php $this->estate->energyPass()->render() ?>
 
     <h3><?= $GLOBALS['TL_LANG']['MSC']['sampleOutputs'] ?></h3>
-    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@KAUF')->asFlag($ja, $nein)->render(); ?>
-    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@MIETE_PACHT', true)->asFlag($ja, $nein)->render(); ?>
+    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@KAUF')->asFlag($yes, $no)->render(); ?>
+    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@MIETE_PACHT', true)->asFlag($yes, $no)->render(); ?>
 
   </div>
   <div class="contact">
@@ -241,7 +223,7 @@ else:
           return false;
         });
 
-        var mapsCookie = "<?= \Input::cookie('dlh_googlemaps') ?>";
+        var mapsCookie = "<?= \Contao\Input::cookie('dlh_googlemaps') ?>";
         if(mapsCookie != "" || $(".dlh_googlemap > div").attr("id") != "confirm-googlemaps") {
           setMap();
         }
@@ -287,4 +269,8 @@ else:
     <?php $this->estate->backButton()->render() ?>
   </div>
 </div>
+<?php endif; ?>
+
+<?php if ($this->debug): // DUMP LIST OF ALL AVAILABLE FIELDS ?>
+  <pre><?php var_dump($this->estate) ?></pre>
 <?php endif; ?>
