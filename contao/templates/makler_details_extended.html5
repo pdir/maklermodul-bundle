@@ -207,62 +207,6 @@
       <?php $this->estate->renderer('geo.strasse')->asText()->value() ?> <?php $this->estate->renderer('geo.hausnummer')->asText()->value() ?><br />
       <?php $this->estate->renderer('geo.plz')->asText()->value() ?> <?php $this->estate->renderer('geo.ort')->asText()->value() ?>
     </div>
-
-    <script>
-      $(document).ready( function() {
-
-        if(typeof google === 'undefined')
-          return;
-
-        $("#confirm-googlemaps").click( function() {
-          setMap();
-        });
-
-        $("#confirm-googlemaps .btn").click( function() {
-          $("#confirm-googlemaps").trigger("click");
-          return false;
-        });
-
-        var mapsCookie = "<?= \Contao\Input::cookie('dlh_googlemaps') ?>";
-        if(mapsCookie != "" || $(".dlh_googlemap > div").attr("id") != "confirm-googlemaps") {
-          setMap();
-        }
-
-        function setMap() {
-          setTimeout( function() {
-            var geocoder = new google.maps.Geocoder();
-            var lat; var lng;
-            geocodeAddress(geocoder);
-          },500);
-        }
-
-        function geocodeAddress(geocoder, resultsMap) {
-          var address = "<?php $this->estate->renderer('geo.strasse')->asText()->value() ?>";
-          address = address + " <?php $this->estate->renderer('geo.hausnummer')->asText()->value() ?>";
-          address = address + ", <?php $this->estate->renderer('geo.ort')->asText()->value() ?>";
-          geocoder.geocode({'address': address}, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-              lat = results[0].geometry.location.lat();
-              lng = results[0].geometry.location.lng();
-              setCenter(lat, lng);
-              setMarker(lat, lng);
-            }
-          });
-        }
-
-        function setCenter(lat, lng) {
-          gmap1.setCenter(new google.maps.LatLng(lat, lng));
-        }
-
-        function setMarker(lat, lng) {
-          var gmap1_marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, lng),
-            map: gmap1,
-            zIndex: 1
-          });
-        }
-      });
-    </script>
   <?php endif; ?>
 
   <div class="back footer">
