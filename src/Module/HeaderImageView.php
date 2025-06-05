@@ -76,13 +76,20 @@ class HeaderImageView extends Module
             return $objTemplate->parse();
         }
 
-        // Set auto item
-        if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
-            Input::setGet('estate', Input::get('expose'));
+        // Set the item from the auto_item parameter
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem'))
+        {
+            Input::setGet('items', Input::get('auto_item'));
+        }
+
+        // Return an empty string if "auto_item" is not set to combine list and reader on same page
+        if (Input::get('auto_item') === null)
+        {
+            return '';
         }
 
         // get alias from auto item
-        $this->alias = Input::get('estate');
+        $this->alias = Input::get('auto_item');
 
         return parent::generate();
     }
