@@ -24,7 +24,7 @@ namespace Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
 
 use Contao\Environment;
 use Contao\FrontendTemplate;
-use Contao\Image\ResizeConfiguration;
+use Contao\Image;
 use Contao\StringUtil;
 use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRenderer;
@@ -40,6 +40,7 @@ class Attachment extends FieldRenderer
      * @var string
      */
     public $template;
+    private string|null|object $imageFactory;
 
     public function __construct($key, $value, FieldTranslator $translator, $group = 'BILD')
     {
@@ -58,6 +59,8 @@ class Attachment extends FieldRenderer
         $this->setSetting('location', '');
         $this->setSetting('link', false);
         $this->setSetting('mode', 'crop');
+
+        $this->imageFactory = System::getContainer()->get('contao.image.factory');
     }
 
     /**
@@ -212,7 +215,7 @@ class Attachment extends FieldRenderer
 
                     // render as image
                     $renderedThumbnail = $this->getThumbnailString(
-                        $url.$this->getValueOf('daten.pfad'),
+                        $this->getValueOf('daten.pfad'),
                         $this->getValueOf('anhangtitel'),
                         $this->getValueOf('@location')
                     );
@@ -223,7 +226,7 @@ class Attachment extends FieldRenderer
 
                     $this->template = $this->getShortTemplate();
 
-                    if (false !== strpos($this->getValueOf('daten.pfad'), 'http')) {
+                    if (\str_contains($this->getValueOf('daten.pfad'), 'http')) {
                         return sprintf($this->template,
                             $this->getUrlOfPath($this->getValueOf('daten.pfad')),
                             $this->getValueOf('anhangtitel'),
@@ -313,42 +316,22 @@ class Attachment extends FieldRenderer
 
     private function resizeImage($orgPath, $size)
     {
-        $imageFactory = System::getContainer()->get('contao.image.factory');
+        $image = $this->imageFactory->create(
+            Helper::getImagePath().$orgPath,
+            [$size[0], $size[1], $size[2]]
+        );
 
-        // Set resize config
-        $config = new ResizeConfiguration();
-
-        if ($size && is_array($size) && count($size) === 3) {
-            [$width, $height, $mode] = $size;
-            $config->setWidth($width)
-                ->setHeight($height)
-                ->setMode($mode?? null);
-        }
-
-        $processedImage = $imageFactory->create($orgPath, $config);
-
-        return $processedImage->getPath();
+        return Image::getPath(Helper::getImagePath().$orgPath, $size[0], $size[1], $size[2]);
     }
 
-    private function resizePicture($orgPath, $size, $alt): string
+    private function resizePicture($orgPath, $size, $alt = ''): string
     {
         $container = System::getContainer();
-        $rootDir = $container->getParameter('kernel.project_dir');
         $imagePath = Helper::getImagePath().$orgPath;
-
-        // Set resize config
-        $config = new ResizeConfiguration();
-
-        if ($size && is_array($size) && count($size) === 3) {
-            [$width, $height, $mode] = $size;
-            $config->setWidth($width)
-                ->setHeight($height)
-                ->setMode($mode?? null);
-        }
 
         $picture = $container
             ->get('contao.image.picture_factory')
-            ->create($rootDir.'/'.$imagePath, $config)
+            ->create($imagePath, $size[2])
         ;
 
         $staticUrl = $container->get('contao.assets.files_context')->getStaticUrl();
