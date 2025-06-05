@@ -89,9 +89,7 @@ class MaklermodulSetup extends BackendModule
             return;
         }
 
-        if (!\defined('CRONJOB') || CRONJOB === false) {
-            $this->debugMessages[] = $message;
-        }
+        $this->debugMessages[] = $message;
     }
 
     public function getDebugMessages()
