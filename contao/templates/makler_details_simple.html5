@@ -1,0 +1,142 @@
+<?php if (!is_object($this->estate)): ?>
+  <h1>pdir Maklermodul - Detailansicht</h1>
+  <p><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['noestate'] ?></p>
+<?php return; endif; ?>
+
+<?php // Übersetzungen
+  $yes = $GLOBALS['TL_LANG']['MSC']['yes'];
+  $no = $GLOBALS['TL_LANG']['MSC']['no'];
+?>
+
+<?php if($this->estate->renderer('freitexte.objekttitel')->asText()->value(true) !== ''): ?>
+<div class="estate-detail">
+
+  <div class="obj-header">
+    <?php $this->estate->renderer('verwaltung_techn.objektnr_extern')->asText()->render(); ?>
+    <h1>
+      <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value(); ?>
+    </h1>
+  </div>
+  <div class="content">
+    <div class="big-img">
+      <?php if($this->estate->renderer('anhaenge.anhang.#1.daten.pfad')->asText()->withoutLabel()->value(true)): ?>
+        <?php if( strpos($this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'),"http") !== false ): ?>
+          <img src="<?= $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="700" height="500">
+        <?php else: ?>
+          {{<?= $this->detailImageType ?>::<?= Pdir\MaklermodulBundle\Util\Helper::getImageLinkPath() . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
+        <?php endif; ?>
+      <?php else: ?>
+        <?php if(strpos($this->placeholderImg, 'files/') !== false): ?>
+          {{<?= $this->detailImageType ?>::<?= $this->placeholderImg ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
+        <?php else: ?>
+          <img src="<?= $this->placeholderImg ?>" alt="<?= $GLOBALS['TL_LANG']['MSC']['placeholderImage'] ?> <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="700" height="500">
+        <?php endif; ?>
+      <?php endif; ?>
+    </div>
+    <div class="small-pics">
+      <?php foreach ($this->estate->attachments()->range(1, 6) as $attachment) : ?>
+        <div class="pic"><?php $attachment->group("BILD,GRUNDRISS,KARTEN_LAGEPLAN,AUSSENANSICHTEN,INNENANSICHTEN,PANORAMA")->size(120,75,$this->attachmentSize)->render() ?></div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <div class="right">
+    <div class="obj-details">
+      <h3><?= $GLOBALS['TL_LANG']['MSC']['objectDetails'] ?></h3>
+      <?php $this->estate->renderer('preise.kaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('preise.kaltmiete')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('preise.nettokaltmiete')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('preise.nebenkosten')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('preise.heizkosten')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('preise.gesamtmiete')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('preise.kaution')->asNumber(2)->append(' EUR')->render(); ?>
+      <?php $this->estate->renderer('flaechen.wohnflaeche')->asNumber(0)->append(' m²')->render(); ?>
+      <?php $this->estate->renderer('flaechen.gesamtflaeche')->asNumber(2)->append(' m²')->render(); ?>
+      <?php $this->estate->renderer('flaechen.anzahl_zimmer')->asNumber(0)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.kueche.@EBK')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.unterkellert.@keller')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@TERRAKOTTA')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@MARMOR')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@LINOLEUM')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@DOPPELBODEN')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@ESTRICH')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@KUNSTSTOFF')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@FERTIGPARKETT')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@PARKETT')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@TEPPICH')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@STEIN')->asFlag($yes, $no)->render(); ?>
+      <?php $this->estate->renderer('ausstattung.boden.@FLIESEN')->asFlag($yes, $no)->render(); ?>
+    </div>
+  </div>
+  <div class="description">
+    <?php if($this->estate->renderer('freitexte.objektbeschreibung')->asText()->value(true) != ""): ?>
+      <h3><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.objektbeschreibung'] ?></h3>
+      <?php $this->estate->renderer('freitexte.objektbeschreibung')->asText()->value(); ?>
+    <?php endif; ?>
+    <?php if($this->estate->renderer('freitexte.ausstatt_beschr')->asText()->value(true) != ""): ?>
+      <h3><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.ausstatt_beschr'] ?></h3>
+      <?php $this->estate->renderer('freitexte.ausstatt_beschr')->asText()->value(); ?>
+    <?php endif; ?>
+    <?php if($this->estate->renderer('freitexte.lage')->asText()->value(true) != ""): ?>
+      <h3><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.lage'] ?></h3>
+      <?php $this->estate->renderer('freitexte.lage')->asText()->value(); ?>
+    <?php endif; ?>
+    <?php if($this->estate->renderer('freitexte.sonstige_angaben')->asText()->value(true) != ""): ?>
+      <h3><?= $GLOBALS['TL_LANG']['MSC']['other'] ?></h3>
+      <?php $this->estate->renderer('freitexte.sonstige_angaben')->asText()->value(); ?>
+    <?php endif; ?>
+    <h3><?= $GLOBALS['TL_LANG']['MSC']['sampleOutputs'] ?></h3>
+    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@KAUF')->asFlag($yes, $no)->render(); ?>
+    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@MIETE_PACHT', true)->asFlag($yes, $no)->render(); ?>
+
+  </div>
+  <div class="contact">
+    <h3><?= $GLOBALS['TL_LANG']['MSC']['contact'] ?></h3>
+    <?php if($this->estate->renderer('kontaktperson.anrede')->asText()->withoutLabel()->value(true)): ?>
+      <?php $this->estate->renderer('kontaktperson.anrede')->asText()->value(); ?><br>
+    <?php endif; ?>
+
+    <?php if($this->estate->renderer('kontaktperson.vorname')->asText()->withoutLabel()->value(true)): ?>
+      <?php $this->estate->renderer('kontaktperson.vorname')->asText()->value(); ?>, <?php $this->estate->renderer('kontaktperson.name')->asText()->value(); ?><br/>
+    <?php endif; ?>
+
+    <?php if($this->estate->renderer('kontaktperson.tel_zentrale')->asText()->withoutLabel()->value(true)): ?>
+      Tel.: <?php $this->estate->renderer('kontaktperson.tel_zentrale')->asText()->value(); ?>
+    <?php endif; ?>
+
+    <?php if($this->estate->renderer('kontaktperson.email_zentrale')->asText()->withoutLabel()->value(true)): ?>
+      <br>{{email::<?php $this->estate->renderer('kontaktperson.email_zentrale')->asText()->value(); ?>}}
+    <?php endif; ?>
+  </div>
+  <div class="any-pics">
+    <?php $i = 0; ?>
+    <?php foreach ($this->estate->attachments()->startAt(7) as $attachment): ?>
+      <?php if($i == 0): ?> <h3><?= $GLOBALS['TL_LANG']['MSC']['moreObjectImages'] ?></h3> <?php endif; ?>
+      <div class="more-pic"><?php $attachment->group("BILD,GRUNDRISS")->size(120,75)->render() ?></div>
+      <?php $i++; ?>
+    <?php endforeach; ?>
+  </div>
+  <div class="documents">
+    <h3><?= $GLOBALS['TL_LANG']['MSC']['documents'] ?></h3>
+    <?php foreach ($this->estate->attachments()->startAt(0) as $attachment): ?>
+      <?php $attachment->group("DOKUMENTE,FILMLINK")->render() ?>
+    <?php endforeach; ?>
+  </div>
+
+  <?php if($this->estate->renderer('verwaltung_objekt.objektadresse_freigeben')->asText()->value(true) == true && $this->showMap == 1): ?>
+    <h3><?= $GLOBALS['TL_LANG']['MSC']['map'] ?></h3>
+    <div class="address">
+      <h4><?= $GLOBALS['TL_LANG']['MSC']['objectAddress'] ?></h4>
+      <?php $this->estate->renderer('geo.strasse')->asText()->value() ?> <?php $this->estate->renderer('geo.hausnummer')->asText()->value() ?><br />
+      <?php $this->estate->renderer('geo.plz')->asText()->value() ?> <?php $this->estate->renderer('geo.ort')->asText()->value() ?>
+    </div>
+  <?php endif; // end Objektadresse freigegeben ?>
+
+  <div class="back footer">
+    <?php $this->estate->backButton()->render() ?>
+  </div>
+</div>
+<?php endif; ?>
+
+<?php if ($this->debug): // DUMP LIST OF ALL AVAILABLE FIELDS ?>
+  <pre><?php var_dump($this->estate) ?></pre>
+<?php endif; ?>

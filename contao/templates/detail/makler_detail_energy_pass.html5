@@ -1,0 +1,157 @@
+<h3><?= $GLOBALS['TL_LANG']['MSC']['energyCertificate'] ?></h3>
+
+<?php if($this->heizungsart): ?>
+    <li class="field heizung">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart'] ?></div>
+        <div class="value">
+            <?= $this->heizungsart ?>
+        </div>
+    </li>
+<?php endif; ?>
+<?php if($this->energietraeger): ?>
+    <li class="field energietraeger">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.befeuerung'] ?></div>
+        <div class="value">
+            <?= $this->energietraeger ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->primaererEnergietraeger): ?>
+    <li class="field epass_primaererEnergietraeger">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.primaerenergietraeger'] ?></div>
+        <div class="value">
+            <?= $this->primaererEnergietraeger ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<li class="field epass_ausweisart">
+    <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.epart'] ?></div>
+    <div class="value">
+        <?php if('Nicht notwendig' === $this->epart): ?>
+            <?= $GLOBALS['TL_LANG']['MSC']['notNecessary'] ?>
+        <?php else: ?>
+            <?= $this->epart ?>
+        <?php endif; ?>
+    </div>
+</li>
+
+<?php if($this->baujahr): ?>
+    <li class="field epass_baujahr">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.baujahr'] ?></div>
+        <div class="value">
+            <?= $this->baujahr ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->jahrgang): ?>
+    <li class="field epass_jahrgang">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.jahrgang'] ?></div>
+        <div class="value">
+            <?= $this->jahrgang ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->stromwert): ?>
+    <li class="field epass_stromwert">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.stromwert'] ?></div>
+        <div class="value">
+            <?= $this->stromwert ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->waermewert): ?>
+    <li class="field epass_waermewert">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.waermewert'] ?></div>
+        <div class="value">
+            <?= $this->waermewert ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->mitwarmwasser): ?>
+    <li class="field epass_mitwarmwasser">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.mitwarmwasser'] ?></div>
+        <div class="value">
+            <?= $this->mitwarmwasser ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->gueltigBis): ?>
+    <li class="field epass_gueltig">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.gueltig_bis'] ?></div>
+        <div class="value">
+            <?= date('d.m.Y',strtotime($this->gueltigBis)) ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->ausstelldatum): ?>
+    <li class="field epass_ausstelldatum">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.ausstelldatum'] ?></div>
+        <div class="value">
+            <?= date('d.m.Y',strtotime($this->ausstelldatum)) ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php if($this->gebaeudeart): ?>
+    <li class="field epass_gebaeudeart">
+        <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.gebaeudeart'] ?></div>
+        <div class="value">
+            <?= $this->gebaeudeart ?>
+        </div>
+    </li>
+<?php endif; ?>
+
+<?php
+$eClassAplus = $eClassA = $eClassB = $eClassC = $eClassD = $eClassE = $eClassF = $eClassG = $eClassH = '';
+if($this->energyClass == "A+") { $eClassAplus = "class='active_eclass'";}
+if($this->energyClass == "A") { $eClassA = "class='active_eclass'"; }
+if($this->energyClass == "B") { $eClassB = "class='active_eclass'"; }
+if($this->energyClass == "C") { $eClassC = "class='active_eclass'"; }
+if($this->energyClass == "D") { $eClassD = "class='active_eclass'"; }
+if($this->energyClass == "E") { $eClassE = "class='active_eclass'"; }
+if($this->energyClass == "F") { $eClassF = "class='active_eclass'"; }
+if($this->energyClass == "G") { $eClassG = "class='active_eclass'"; }
+if($this->energyClass == "H") { $eClassH = "class='active_eclass'"; }
+?>
+
+<?php if($this->energy != 0): ?>
+    <div class="energie-scale">
+        <li class="field energieverbrauchskennwert"><?php if($this->epart == 'Bedarf'): ?><div class="label"><?= $GLOBALS['TL_LANG']['MSC']['energyDemandValue'] ?></div><?php else: ?><div class="label"><?= $GLOBALS['TL_LANG']['MSC']['energyConsumptionIndex'] ?></div><?php endif; ?> <div class="value-number"><?= $this->energy; ?> kWh/(m²*a)</div></li>
+        <li class="field energieeffizienzklasse"><div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['zustand_angaben.energiepass.endenergiebedarf.wertklasse'] ?></div> <div class="value"><?= $this->energyClass; ?></div></li>
+        <div class="energy-slider">
+            <ul>
+                <li <?= $eClassAplus; ?> style="width:11.1111%;">A+</li>
+                <li <?= $eClassA; ?> style="width:7.4074%;">A</li>
+                <li <?= $eClassB; ?> style="width:9.2592%;">B</li>
+                <li <?= $eClassC; ?> style="width:9.2592%;">C</li>
+                <li <?= $eClassD; ?> style="width:11.1111%;">D</li>
+                <li <?= $eClassE; ?> style="width:11.1111%;">E</li>
+                <li <?= $eClassF; ?> style="width:14.8148%;">F</li>
+                <li <?= $eClassG; ?> style="width:18.5185%;">G</li>
+                <li <?= $eClassH; ?> style="width:7.4074%;">H</li>
+            </ul>
+            <div class="legende_eclass">
+                <span>0</span>
+                <span>25</span>
+                <span>50</span>
+                <span>75</span>
+                <span>100</span>
+                <span>125</span>
+                <span>150</span>
+                <span>175</span>
+                <span>200</span>
+                <span>225</span>
+                <span>&gt;250</span>
+            </div>
+            <input id="slider" type="range" min="0" max="270" step="1" value="<?= $this->energy ?>" readonly disabled />
+        </div>
+    </div>
+<?php endif; ?>

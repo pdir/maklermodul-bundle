@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -23,9 +23,11 @@ declare(strict_types=1);
 namespace Pdir\MaklermodulBundle\Module;
 
 use Contao\BackendTemplate;
+use Contao\Config;
 use Contao\File;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
+use Contao\Input;
 use Contao\Module;
 use Contao\PageModel;
 use Contao\System;
@@ -33,6 +35,7 @@ use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Domain\Model\IndexConfig;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\IndexConfigInterface;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 
 /**
@@ -81,7 +84,7 @@ class ListView extends Module
     {
         parent::__construct($objModule, $strColumn);
 
-        if (!empty($this->arrData['immo_listTemplate']) && TL_MODE !== 'BE') {
+        if (!empty($this->arrData['immo_listTemplate']) && System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
             $this->strTemplate = $this->arrData['immo_listTemplate'];
         }
 
@@ -100,7 +103,9 @@ class ListView extends Module
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
@@ -108,79 +113,12 @@ class ListView extends Module
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
+            $objTemplate->href = System::getContainer()->get('router')->generate('contao_backend').'?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
 
         return parent::generate();
-    }
-
-    public function toUri($path)
-    {
-        return str_replace('/var/www/', '', $path);
-    }
-
-    public function getRootDir()
-    {
-        $container = System::getContainer();
-        $strRootDir = $container->getParameter('kernel.project_dir').\DIRECTORY_SEPARATOR.$container->getParameter('contao.upload_path');
-
-        return $strRootDir.\DIRECTORY_SEPARATOR.'maklermodul'.\DIRECTORY_SEPARATOR.'data'.\DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function getListSourceUri($full = false): string
-    {
-        if (!method_exists($this->Template->config, 'getStorageFileUri')) {
-            throw new \Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['no_detail_page']);
-        }
-
-        if ($full) {
-            $path = Helper::getImageLinkPath().$this->Template->config->getStorageFileUri();
-        } else {
-            $path = $this->Template->config->getStorageFileUri();
-        }
-
-        return $path;
-    }
-
-    /**
-     * @throws ExceptionInterface
-     */
-    public function getDetailViewPrefix()
-    {
-        if ($this->Template->staticFilter) {
-            return '';
-        }
-
-        $baseUri = $this->detailPage->getFrontendUrl();
-
-        $urlSuffix = '.html';
-
-        $container = System::getContainer();
-
-        if ($container->hasParameter('contao.url_suffix')) {
-            $urlSuffix = $container->getParameter('contao.url_suffix');
-        }
-
-        if ('' === $urlSuffix) {
-            return str_replace($this->detailPage->alias, $this->detailPage->alias.'/'.DetailView::PARAMETER_KEY, $baseUri);
-        }
-
-        return preg_replace('%'.preg_quote($urlSuffix).'$%', '/'.DetailView::PARAMETER_KEY, $baseUri);
-    }
-
-    public function getObjects(): array
-    {
-        return $this->arrData;
-    }
-
-    public function formatValue($sVal): string
-    {
-        return number_format((float) $sVal, 2, ',', '.');
     }
 
     /**
@@ -207,7 +145,7 @@ class ListView extends Module
 
         if (1 === $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
-            $this->Template->staticListPage = '/'.PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
+            $this->Template->staticListPage = PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
 
         $this->Template->config = new IndexConfig($this->arrData);
@@ -232,7 +170,9 @@ class ListView extends Module
             }
         }
 
-        if (TL_MODE === 'FE' && '0' === $this->arrData['immo_staticFilter']) {
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest($request) && '0' === $this->arrData['immo_staticFilter']) {
             // @ToDo Fehler bei deaktivierter Detailseite beheben (Fatal error: Call to a member function current() on a non-object in /.../system/modules/makler_modul_mplus/modules/ListView.php on line 105
             $this->repository = EstateRepository::getInstance();
             $this->Template->objectData = $this->repository->findAll();
@@ -280,8 +220,14 @@ class ListView extends Module
 
         $newEstates = [];
         $pageCount = 1;
+        $count = 0;
 
-        if ($this->makler_addListPagination && 'true' === $this->Input->get('estate-filter')) {
+        // Add detail link to estates
+        foreach ($json['data'] as $key => $estate) {
+            $json['data'][$key]['link'] = Helper::generateEstateUrl( $this->detailPage, true, $estate['uriident']);
+        }
+
+        if ($this->makler_addListPagination && 'true' === Input::get('estate-filter')) {
             foreach ($json['data'] as $estate) {
                 foreach ($_REQUEST as $key => $value) {
                     if (false !== strpos($estate['css-filter-class-string'], $key.'-'.$value)) { // Yoshi version
@@ -312,7 +258,7 @@ class ListView extends Module
         }
 
         $this->Template->pageCount = ceil(($count - 1) / $this->makler_paginationCount);
-        $this->Template->page = !(int) $this->Input->get('page') ? (int) $this->Input->get('page') : 0;
+        $this->Template->page = !(int) Input::get('page') ? (int) Input::get('page') : 0;
         $this->Template->listObjects = $json['data'] ? $pages : null;
 
         //// render filter template
@@ -371,18 +317,38 @@ class ListView extends Module
             $this->Template->debugObjects = $json['data'];
         }
 
-        $this->Template->storageDirectoryPath = $this->getRootDir();
+        $this->Template->storageDirectoryPath = Helper::getImagePath();
         $this->Template->staticFilter = $this->immo_staticFilter ? true : false;
         $this->Template->filterType = $this->makler_filter_type;
+    }
 
-        // url suffix
-        $this->Template->urlSuffix = '.html';
 
-        $container = System::getContainer();
-
-        if ($container->hasParameter('contao.url_suffix')) {
-            $this->Template->urlSuffix = $container->getParameter('contao.url_suffix');
+    /**
+     * @throws \Exception
+     */
+    public function getListSourceUri($full = false): string
+    {
+        if (!method_exists($this->Template->config, 'getStorageFileUri')) {
+            throw new \Exception($GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['no_detail_page']);
         }
+
+        if ($full) {
+            $path = Helper::getImageLinkPath().$this->Template->config->getStorageFileUri();
+        } else {
+            $path = $this->Template->config->getStorageFileUri();
+        }
+
+        return $path;
+    }
+
+    public function getObjects(): array
+    {
+        return $this->arrData;
+    }
+
+    public function formatValue($sVal): string
+    {
+        return number_format((float) $sVal, 2, ',', '.');
     }
 
     private function isJsonString($str)

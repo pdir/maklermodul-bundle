@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -29,10 +29,12 @@ use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Input;
 use Contao\Module;
+use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\StaticDIC;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Maklermodul\FieldRendererFactory;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DetailView.
@@ -61,7 +63,7 @@ class HeaderImageView extends Module
      */
     public function generate()
     {
-        if (TL_MODE === 'BE') {
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
@@ -69,18 +71,25 @@ class HeaderImageView extends Module
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
+            $objTemplate->href = System::getContainer()->get('router')->generate('contao_backend').'?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
 
-        // Set auto item
-        if (!isset($_GET['estate']) && Config::get('useAutoItem') && isset($_GET['expose'])) {
-            Input::setGet('estate', Input::get('expose'));
+        // Set the item from the auto_item parameter
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem'))
+        {
+            Input::setGet('items', Input::get('auto_item'));
+        }
+
+        // Return an empty string if "auto_item" is not set to combine list and reader on same page
+        if (Input::get('auto_item') === null)
+        {
+            return '';
         }
 
         // get alias from auto item
-        $this->alias = Input::get('estate');
+        $this->alias = Input::get('auto_item');
 
         return parent::generate();
     }

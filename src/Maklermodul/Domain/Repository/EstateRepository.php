@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace Pdir\MaklermodulBundle\Maklermodul\Domain\Repository;
 
 use Contao\File;
+use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Model\Estate;
 use Pdir\MaklermodulBundle\Util\Helper;
 
@@ -53,7 +54,7 @@ class EstateRepository
             return null;
         }
 
-        return $this->loadJsonFile($fileNamePath);
+        return $this->loadJsonFile(sprintf('%s.json', $objectId));
     }
 
     /**
@@ -86,8 +87,9 @@ class EstateRepository
         $returnValue = [];
 
         foreach ($directoryIterator as $child) {
+
             if ($this->isRelevantJson($child->getPathname())) {
-                $estate = $this->loadJsonFile($child->getPathname());
+                $estate = $this->loadJsonFile($child->getPathname(), true);
                 $returnValue[] = $estate;
             }
         }
@@ -106,9 +108,17 @@ class EstateRepository
     /**
      * @throws \Exception
      */
-    public function loadJsonFile($fileNamePath): ?Estate
+    public function loadJsonFile($fileNamePath, $relative = false): ?Estate
     {
-        $objFile = new File(str_replace($this->storageDirectoryPath, Helper::getImagePath(), $fileNamePath));
+        if ($relative) {
+            $fileNamePath = str_replace(System::getContainer()->getParameter('kernel.project_dir'), '',$fileNamePath);
+        }
+
+        if (!$relative) {
+            $fileNamePath = Helper::getImageLinkPath().$fileNamePath;
+        }
+
+        $objFile = new File($fileNamePath);
 
         $content = $objFile->getContent();
 

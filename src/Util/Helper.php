@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -29,6 +29,8 @@ use Contao\File;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\PageModel;
+use Contao\StringUtil;
+use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
 use Pdir\MaklermodulBundle\Module\DetailView;
@@ -39,7 +41,7 @@ class Helper extends Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.9.5';
+    const VERSION = '2.10.0';
 
     /**
      * Extension mode.
@@ -60,7 +62,7 @@ class Helper extends Frontend
      *
      * @var array
      */
-    const imagePath = ['files','maklermodul', 'data'];
+    const imagePath = ['maklermodul', 'data'];
 
     /**
      * API Url.
@@ -117,7 +119,7 @@ class Helper extends Frontend
      *
      * @return array
      */
-    public function addProductsToSearchIndex($arrPages)
+    public function addProductsToSearchIndex($arrPages): array
     {
         $indexConfigRepository = new IndexConfigRepository();
         $indexObjects = $indexConfigRepository->findAll();
@@ -153,7 +155,22 @@ class Helper extends Frontend
         return $decoded;
     }
 
-    public static function getPageUrl($id, $vars = '')
+    public static function generateEstateUrl(PageModel $page, $blnAbsolute=false, $strParam=null): string
+    {
+        // fix param
+        if (null !== $strParam) {
+            $strParam = '/'.$strParam;
+        }
+
+        if (null !== $page)
+        {
+            return StringUtil::ampersand($blnAbsolute ? $page->getAbsoluteUrl($strParam) : $page->getFrontendUrl($strParam));
+        }
+
+        return $page->alias;
+    }
+
+    public static function getPageUrl($id, $vars = ''): string
     {
         $websitePath = \DIRECTORY_SEPARATOR;
 
@@ -173,7 +190,7 @@ class Helper extends Frontend
      *
      * @return array|bool
      */
-    public static function getSubPages($item)
+    public static function getSubPages($item): bool|array|string
     {
         $arrIndexFiles = [];
         $arrItems = [];
@@ -231,7 +248,7 @@ class Helper extends Frontend
      *
      * @return string
      */
-    public function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate)
+    public function parseOpenImmoFeedbackTemplate($strBuffer, $strTemplate): string
     {
         if ('form_xml' === $strTemplate) {
             if (Input::post('oobj_id')) {
@@ -335,34 +352,18 @@ class Helper extends Frontend
         return $strBuffer;
     }
 
-    /*
-     * Workaround for \Contao\ArrayUtil in Contao 4.9
-     */
-    public static function arrayInsert(&$arrCurrent, $intIndex, $arrNew): void
-    {
-        if (!\is_array($arrCurrent)) {
-            $arrCurrent = $arrNew;
-
-            return;
-        }
-
-        if (\is_array($arrNew)) {
-            $arrBuffer = array_splice($arrCurrent, 0, $intIndex);
-            $arrCurrent = array_merge_recursive($arrBuffer, $arrNew, $arrCurrent);
-
-            return;
-        }
-
-        array_splice($arrCurrent, $intIndex, 0, $arrNew);
-    }
-
     public static function getImageLinkPath(): string
     {
-        return join('/', self::imagePath) . '/';
+        $uploadPath = System::getContainer()->getParameter('contao.upload_path');
+
+        return join('/', array_merge([$uploadPath], self::imagePath)) . '/';
     }
 
     public static function getImagePath(): string
     {
-        return join(\DIRECTORY_SEPARATOR, self::imagePath) . \DIRECTORY_SEPARATOR;
+        $projectDir = System::getContainer()->getParameter('kernel.project_dir');
+        $uploadPath = System::getContainer()->getParameter('contao.upload_path');
+
+        return join(\DIRECTORY_SEPARATOR, array_merge([$projectDir, $uploadPath], self::imagePath)) . \DIRECTORY_SEPARATOR;
     }
 }

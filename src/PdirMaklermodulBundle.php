@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -27,4 +27,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class PdirMaklermodulBundle extends Bundle
 {
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
 }

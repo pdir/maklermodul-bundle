@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -28,7 +28,7 @@ use Contao\System;
 
 class StaticDIC
 {
-    const CONFIG_ROOT = '../../Resources/contao/config';
+    const CONFIG_ROOT = '../../../contao/config';
     const FILTER_CSS_MAPPING = 'filter.ini';
     const USER_FILTER_CSS_MAPPING = '/files/maklermodul/data.filter.ini';
 
@@ -44,8 +44,8 @@ class StaticDIC
                 // contao's build in feature: System::loadLanguageFile('makler_modul_mplus');
                 require_once __DIR__.'/'.self::CONFIG_ROOT.'/../languages/de/makler_modul_mplus.php';
                 // include Local configuration file
-                if (file_exists(TL_ROOT.'/system/config/langconfig.php')) {
-                    require_once TL_ROOT.'/system/config/langconfig.php';
+                if (file_exists(System::getContainer()->getParameter('kernel.project_dir').'/system/config/langconfig.php')) {
+                    require_once System::getContainer()->getParameter('kernel.project_dir').'/system/config/langconfig.php';
                 }
             }
         }
@@ -64,7 +64,7 @@ class StaticDIC
 
             self::$filterConfig = parse_ini_file($fileName);
             // load user filter css mapping
-            $userFileName = TL_ROOT.self::USER_FILTER_CSS_MAPPING;
+            $userFileName = System::getContainer()->getParameter('kernel.project_dir').self::USER_FILTER_CSS_MAPPING;
 
             if (file_exists($userFileName)) {
                 $userFilterConf = parse_ini_file($userFileName);

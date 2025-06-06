@@ -10,6 +10,11 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.10.0](https://github.com/pdir/maklermodul-bundle/tree/2.10.0) – 2025-05-16
+
+- [Added] Support for Contao 5.3 and higher
+- [Removed] Support for Contao 4.4
+
 ## [2.9.5](https://github.com/pdir/maklermodul-bundle/tree/2.9.5) – 2024-11-07
 
 - [Fixed] fix pagination after resetting the filter

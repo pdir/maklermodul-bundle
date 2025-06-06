@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * maklermodul bundle for Contao Open Source CMS
  *
- * Copyright (c) 2023 pdir / digital agentur // pdir GmbH
+ * Copyright (c) 2025 pdir / digital agentur // pdir GmbH
  *
  * @package    maklermodul-bundle
  * @link       https://www.maklermodul.de
@@ -22,14 +22,17 @@ declare(strict_types=1);
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\Automator;
 use Contao\BackendModule;
 use Contao\Config;
 use Contao\Controller;
 use Contao\Database;
+use Contao\Environment;
 use Contao\File;
 use Contao\Files;
 use Contao\Input;
 use Contao\Message;
+use Contao\System;
 use Contao\ZipReader;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Util\Helper;
@@ -86,9 +89,7 @@ class MaklermodulSetup extends BackendModule
             return;
         }
 
-        if (!\defined('CRONJOB') || CRONJOB === false) {
-            $this->debugMessages[] = $message;
-        }
+        $this->debugMessages[] = $message;
     }
 
     public function getDebugMessages()
@@ -104,7 +105,7 @@ class MaklermodulSetup extends BackendModule
     protected function compile(): void
     {
         // set upload folder
-        $this->storageDirectoryPath = Config::get('uploadPath').'/maklermodul/';
+        $this->storageDirectoryPath = System::getContainer()->getParameter('contao.upload_path').'/maklermodul/';
 
         /** @todo empty cache folder from backend */
         $files = Files::getInstance();
@@ -112,7 +113,7 @@ class MaklermodulSetup extends BackendModule
         switch (Input::get('act')) {
             case 'index':
                 $this->setActIndexFile();
-                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['index']);
+                Message::addConfirmation($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['index']);
                 break;
 
             case 'emptyDataFolder':
@@ -122,26 +123,26 @@ class MaklermodulSetup extends BackendModule
                 $objDatabase = Database::getInstance();
                 $objDatabase->execute('TRUNCATE TABLE tl_makler');
 
-                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
+                Message::addConfirmation($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
 
             case 'emptyUploadFolder':
                 $files->rrdir($this->storageDirectoryPath.'upload', true);
-                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
+                Message::addConfirmation($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
 
             case 'emptyTmpFolder':
                 $files->rrdir($this->storageDirectoryPath.'org', true);
-                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
+                Message::addConfirmation($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['emptyFolder']);
                 break;
 
             case 'downloadDemoData':
                 $this->downloadDemoData();
-                Message::addInfo($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['downloadDemoData']);
+                Message::addConfirmation($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['downloadDemoData']);
                 break;
 
             default:
-                $this->Template->base = $this->Environment->base;
+                $this->Template->base = Environment::get('base');
                 $this->Template->version = Helper::VERSION;
                 $this->Template->storageDirectoryPath = $this->storageDirectoryPath;
         }
@@ -172,22 +173,21 @@ class MaklermodulSetup extends BackendModule
             try {
                 File::putContent($this->storageDirectoryPath.'data/'.$objArchive->file_name, $objArchive->unzip());
             } catch (\Exception $e) {
-                \Message::addError($e->getMessage());
+                Message::addError($e->getMessage());
             }
 
             // add to makler table
             if (
                 strpos($objArchive->file_name, '.json') &&
-                false === strpos($objArchive->file_name, '00index') &&
-                false === strpos($objArchive->file_name, 'key-index')
+                !str_contains($objArchive->file_name, '00index') &&
+                !str_contains($objArchive->file_name, 'key-index')
             ) {
                 $this->addObjectToMaklerTable(str_replace('.json', '', $objArchive->file_name));
             }
         }
 
-        // Regenerating Symlinks
-        $this->import('Automator');
-        $this->Automator->generateSymlinks();
+        // Generate symlinks
+        (new Automator())->generateSymlinks();
     }
 
     protected function addObjectToMaklerTable($slug): void
