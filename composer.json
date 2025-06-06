@@ -44,12 +44,7 @@
     }
   },
   "extra": {
-    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManager\\Plugin",
-    "contao": {
-      "runonce":[
-        "src/Maklermodul/Runonce.php"
-      ]
-    }
+    "contao-manager-plugin": "Pdir\\MaklermodulBundle\\ContaoManager\\Plugin"
   },
   "suggest": {
     "contao-themes-net/mate-theme-bundle": "MATE Theme includes all styles for maklermodul bundle. MATE Theme enthält Stylesheets für das Maklermodul Bundle.",

@@ -8,6 +8,7 @@ use Contao\Automator;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
+use Contao\File;
 use Contao\Folder;
 use Contao\System;
 use Doctrine\DBAL\Exception;
@@ -85,9 +86,13 @@ class InitialFilesFolderMigration extends AbstractMigration
             }
         }
 
+        if (!file_exists($this->projectDir.'/'.$this->uploadPath.'/.public')) {
+            File::putContent($this->uploadPath.'/'.self::strFolder.'.public', '');
+        }
+
         // Generate symlinks
         (new Automator())->generateSymlinks();
 
-        return $this->createResult(true, 'Initial bundle folders created successfully.');
+        return $this->createResult(true, 'Initial bundle folders created successfully. Folder "'.$this->uploadPath.'/'.self::strFolder.'" is now public.');
     }
 }
