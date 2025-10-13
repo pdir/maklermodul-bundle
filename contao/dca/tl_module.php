@@ -366,7 +366,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_headerImageSource'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_attachmentSize'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_attachmentSize'],
     'inputType' => 'imageSize',
-    'options_callback' => ['tl_module_makler', 'getImageSizes'],
+    'options_callback' => ['tl_module_makler', 'getAvailableImageSizes'],
     # C5.5 'options' => System::getImageSizes(),
     'eval' => ['includeBlankOption' => true, 'rgxp' => 'digit', 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
@@ -395,7 +395,7 @@ class tl_module_makler extends Backend
      * Return all image sizes as array
      * @return array
      */
-    public function getImageSizes(): array
+    public function getAvailableImageSizes(): array
     {
         $sizes = [];
 
