@@ -41,7 +41,7 @@ class Helper extends Frontend
     /**
      * maklermodul version.
      */
-    const VERSION = '2.10.1';
+    const VERSION = '2.10.2';
 
     /**
      * Extension mode.
@@ -132,7 +132,7 @@ class Helper extends Frontend
 
                 foreach ($allEstates['data'] as $estate) {
                     if ($index->getReaderPageId()) {
-                        $newEstatePages[] = $this->getPageUrl($index->getReaderPageId(), \DIRECTORY_SEPARATOR.DetailView::PARAMETER_KEY.\DIRECTORY_SEPARATOR.$estate['uriident']);
+                        $newEstatePages[] = $this->getPageUrl($index->getReaderPageId(), \DIRECTORY_SEPARATOR.$estate['uriident']);
                     }
                 }
             }
@@ -145,8 +145,8 @@ class Helper extends Frontend
 
     public static function loadJsonFile($fileNamePath)
     {
-        $objFile = new File(self::getImagePath().$fileNamePath);
-        $decoded = json_decode($objFile->getContent(), true);
+        $content = file_get_contents(self::getImagePath().$fileNamePath);
+        $decoded = json_decode($content, true);
 
         if (null === $decoded) {
             return null;

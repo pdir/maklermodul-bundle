@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.10.2](https://github.com/pdir/maklermodul-bundle/tree/2.10.2) – 2025-12-12
+
+- [Fixed] Fix sitemap generation: add missing objects back to sitemap
+
 ## [2.10.1](https://github.com/pdir/maklermodul-bundle/tree/2.10.1) – 2025-10-13
 
 - [Fixed] PHP 8 compatibility error with static method getImageSizes() in Contao 4.13
