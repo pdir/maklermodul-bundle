@@ -277,8 +277,6 @@ class Attachment extends FieldRenderer
             $url = $path;
             // @todo make it changeable in the config file
             if ('REMOTE' === $location) {
-                $url = str_replace('.jpg', '_small.jpg', $url);
-
                 $this->template = $this->getThumbnailTemplate(true);
 
                 return sprintf($this->template, $url, $size[0], $size[1], $alt);
@@ -302,10 +300,6 @@ class Attachment extends FieldRenderer
 
             $url = $path;
             // @todo make it changeable in the config file
-            if ('REMOTE' === $location) {
-                $url = str_replace('.jpg', '_small.jpg', $url);
-            }
-
             if ('EXTERN' === $location || 'INTERN' === $location) {
                 $url = $this->getUrlOfPath($path);
             }
