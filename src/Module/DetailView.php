@@ -155,7 +155,7 @@ class DetailView extends Module
         // Overwrite the page metadata (see #2853, #4955 and #87)
         $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
 
-        if ($responseContext && $responseContext->has(c::class))
+        if ($responseContext && $responseContext->has(HtmlHeadBag::class))
         {
             /** @var HtmlHeadBag $htmlHeadBag */
             $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
