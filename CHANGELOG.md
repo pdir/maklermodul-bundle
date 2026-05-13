@@ -10,6 +10,10 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.10.3](https://github.com/pdir/maklermodul-bundle/tree/2.10.3) – 2026-03-06
+
+- [Fixed] Real estate metadata not being set due to wrong response context class check
+
 ## [2.10.2](https://github.com/pdir/maklermodul-bundle/tree/2.10.2) – 2026-01-27
 
 - [Fixed] Fix sitemap generation: add missing objects back to sitemap
