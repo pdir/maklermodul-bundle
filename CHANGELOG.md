@@ -10,6 +10,11 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## [2.11.0](https://github.com/pdir/maklermodul-bundle/tree/2.11.0) – 2026-06-09
+
+- [Added] Updated the template to display the contact person's image and contact details
+(note: the Sync Bundle must also be updated to import the contact image).
+
 ## [2.10.3](https://github.com/pdir/maklermodul-bundle/tree/2.10.3) – 2026-03-06
 
 - [Fixed] Real estate metadata not being set due to wrong response context class check

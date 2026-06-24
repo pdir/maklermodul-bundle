@@ -91,20 +91,35 @@
   </div>
   <div class="contact">
     <h3><?= $GLOBALS['TL_LANG']['MSC']['contact'] ?></h3>
-    <?php if($this->estate->renderer('kontaktperson.anrede')->asText()->withoutLabel()->value(true)): ?>
-      <?php $this->estate->renderer('kontaktperson.anrede')->asText()->value(); ?><br>
-    <?php endif; ?>
-
     <?php if($this->estate->renderer('kontaktperson.vorname')->asText()->withoutLabel()->value(true)): ?>
-      <?php $this->estate->renderer('kontaktperson.vorname')->asText()->value(); ?>, <?php $this->estate->renderer('kontaktperson.name')->asText()->value(); ?><br/>
+      <div>
+        <?php if($this->estate->renderer('kontaktperson.anrede')->asText()->withoutLabel()->value(true)): ?>
+          <?php $this->estate->renderer('kontaktperson.anrede')->asText()->value(); ?>
+        <?php endif; ?>
+        <?php $this->estate->renderer('kontaktperson.vorname')->asText()->value(); ?> <?php $this->estate->renderer('kontaktperson.name')->asText()->value(); ?>
+      </div>
     <?php endif; ?>
 
     <?php if($this->estate->renderer('kontaktperson.tel_zentrale')->asText()->withoutLabel()->value(true)): ?>
-      Tel.: <?php $this->estate->renderer('kontaktperson.tel_zentrale')->asText()->value(); ?>
+      <div>Tel.: <?php $this->estate->renderer('kontaktperson.tel_zentrale')->asText()->value(); ?></div>
+    <?php elseif($this->estate->renderer('kontaktperson.tel_durchw')->asText()->withoutLabel()->value(true)): ?>
+      <div>Tel.: <?php $this->estate->renderer('kontaktperson.tel_durchw')->asText()->value(); ?></div>
+    <?php endif; ?>
+
+    <?php if($this->estate->renderer('kontaktperson.tel_fax')->asText()->withoutLabel()->value(true)): ?>
+      <div>Fax: <?php $this->estate->renderer('kontaktperson.tel_fax')->asText()->value(); ?></div>
+    <?php endif; ?>
+
+    <?php if($this->estate->renderer('kontaktperson.tel_handy')->asText()->withoutLabel()->value(true)): ?>
+      <div>Mobil: <?php $this->estate->renderer('kontaktperson.tel_handy')->asText()->value(); ?></div>
     <?php endif; ?>
 
     <?php if($this->estate->renderer('kontaktperson.email_zentrale')->asText()->withoutLabel()->value(true)): ?>
-      <br>{{email::<?php $this->estate->renderer('kontaktperson.email_zentrale')->asText()->value(); ?>}}
+      <div>E-Mail: {{email::<?php $this->estate->renderer('kontaktperson.email_zentrale')->asText()->value(); ?>}}</div>
+    <?php endif; ?>
+
+    <?php if ($this->estate->rawValue('kontaktperson.foto.daten.pfad')): ?>
+      {{image::/<?= Pdir\MaklermodulBundle\Util\Helper::getImageLinkPath() . $this->estate->rawValue('kontaktperson.foto.daten.pfad'); ?>?width=200}}
     <?php endif; ?>
   </div>
   <div class="any-pics">
