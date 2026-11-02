@@ -137,12 +137,7 @@
       <trans-unit id="tl_module.makler_addListPagination.1">
         <source>When active, the output of the pagination is activated in the template.</source>
       </trans-unit>
-      <trans-unit id="tl_module.makler_paginationCount.0">
-        <source>Number of objects</source>
-      </trans-unit>
-      <trans-unit id="tl_module.makler_paginationCount.1">
-        <source>Specifies how many objects should be displayed on one page.</source>
-      </trans-unit>
+
       <trans-unit id="tl_module.makler_paginationShowtitle.0">
         <source>Show title?</source>
       </trans-unit>

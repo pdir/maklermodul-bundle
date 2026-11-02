@@ -200,14 +200,6 @@
         <source>When active, the output of the pagination is activated in the template.</source>
         <target>Если активен, то в шаблоне активируется вывод пагинации.</target>
       </trans-unit>
-      <trans-unit id="tl_module.makler_paginationCount.0">
-        <source>Number of objects</source>
-        <target>Количество объектов</target>
-      </trans-unit>
-      <trans-unit id="tl_module.makler_paginationCount.1">
-        <source>Specifies how many objects should be displayed on one page.</source>
-        <target>Определяет, сколько объектов должно быть отображено на странице.</target>
-      </trans-unit>
       <trans-unit id="tl_module.makler_paginationShowtitle.0">
         <source>Show title?</source>
         <target>Название выставки?</target>

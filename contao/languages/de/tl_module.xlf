@@ -204,14 +204,7 @@
         <source>When active, the output of the pagination is activated in the template.</source>
         <target>Wenn aktiv, wird im Template die Ausgabe der Paginierung aktiviert.</target>
       </trans-unit>
-      <trans-unit id="tl_module.makler_paginationCount.0">
-        <source>Number of objects</source>
-        <target>Anzahl Objekte</target>
-      </trans-unit>
-      <trans-unit id="tl_module.makler_paginationCount.1">
-        <source>Specifies how many objects should be displayed on one page.</source>
-        <target>Gibt an wie viele Objekte auf einer Seite dargestellt werden sollen.</target>
-      </trans-unit>
+
       <trans-unit id="tl_module.makler_paginationShowtitle.0">
         <source>Show title?</source>
         <target>Titel anzeigen?</target>

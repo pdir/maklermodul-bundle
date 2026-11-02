@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoListView']
     .'{template_legend},immo_readerPage,immo_listTemplate;'
     .'{field_legend},immo_listContent,immo_listFilter,makler_listFilterTemplate,makler_filter_type;'
     .'{makler_sort_legend},immo_listSort,makler_listSortType,makler_listSortAsc;'
-    .'{makler_cond_legend},immo_listCondition,makler_conditionFilterType;'
+    .'{makler_cond_legend},immo_listCondition,makler_conditionFilterType,maklerLimit;'
     .'{image_legend},imgSize,makler_listViewPlaceholder;'
     .'{makler_pagination_legend},makler_addListPagination;'
     .'{option_legend},immo_staticFilter,immo_filterListPage,immo_listInSitemap,immo_listDebug,makler_useModuleCss,makler_useModuleJs;';
@@ -46,7 +46,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['immoHeaderImageView']
     .';{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'makler_addListPagination';
-$GLOBALS['TL_DCA']['tl_module']['subpalettes']['makler_addListPagination'] = 'makler_paginationCount,makler_paginationLinkCount,makler_paginationUseIsotope'; // ,makler_paginationShowtitle';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['makler_addListPagination'] = 'perPage,makler_paginationLinkCount,makler_paginationUseIsotope'; // ,makler_paginationShowtitle';
 
 /*
  * Add fields to tl_module
@@ -246,13 +246,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_addListPagination'] = [
     'eval' => ['submitOnChange' => true],
     'sql' => "int(1) unsigned NOT NULL default '0'",
 ];
-$GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationCount'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationCount'],
-    'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['mandatory' => true, 'rgxp' => 'digit', 'tl_class' => 'w50'],
-    'sql' => "int(2) NOT NULL default '10'",
-];
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['makler_paginationLinkCount'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['makler_paginationLinkCount'],
     'exclude' => true,
@@ -370,6 +364,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['makler_attachmentSize'] = [
     # C5.5 'options' => System::getImageSizes(),
     'eval' => ['includeBlankOption' => true, 'rgxp' => 'digit', 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['maklerLimit'] = [
+    'inputType' => 'text',
+    'eval' => ['maxlength'=>5, 'rgxp'=>'natural', 'tl_class'=>'w25'],
+    'sql' => ['type'=>'smallint', 'unsigned'=>true, 'default'=>0]
 ];
 
 class tl_module_makler extends Backend

@@ -157,7 +157,7 @@ class ListView extends Module
         $this->Template->listImageHeight = '200';
         $this->Template->listImageMode = 'crop';
 
-        if ('' !== $arrImgSize[2]) {
+        if (isset($arrImgSize[2]) && '' !== $arrImgSize[2]) {
             $this->Template->listImageWidth = $arrImgSize[0];
             $this->Template->listImageHeight = $arrImgSize[1];
             $this->Template->listImageSize = $arrImgSize[2];
@@ -203,11 +203,11 @@ class ListView extends Module
 
         $objFile = new File($this->getListSourceUri(true));
 
-        if (null === $objFile) {
+        if (!$objFile->exists()) {
             return $GLOBALS['TL_LANG']['MOD']['makler_modul_errors']['has-no-objects'];
         }
 
-        // get data from json
+        // Get data from json
         $json = json_decode($objFile->getContent(), true);
 
         if ($json && 0 === \count($json['data'])) {
@@ -222,9 +222,14 @@ class ListView extends Module
         $pageCount = 1;
         $count = 0;
 
+        // perPage
+        if ($this->maklerLimit > 0) {
+            array_splice($json['data'], $this->maklerLimit);
+        }
+
         // Add detail link to estates
         foreach ($json['data'] as $key => $estate) {
-            $json['data'][$key]['link'] = Helper::generateEstateUrl( $this->detailPage, true, $estate['uriident']);
+            $json['data'][$key]['link'] = Helper::generateEstateUrl($this->detailPage, true, $estate['uriident']);
         }
 
         if ($this->makler_addListPagination && 'true' === Input::get('estate-filter')) {
@@ -235,7 +240,7 @@ class ListView extends Module
                     }
                 }
             }
-            $pages = array_chunk($newEstates, $this->makler_paginationCount);
+            $pages = array_chunk($newEstates, $this->perPage);
         } elseif ($this->makler_addListPagination && $this->makler_paginationUseIsotope) {
             $count = 1;
 
@@ -243,21 +248,26 @@ class ListView extends Module
                 $estate['css-filter-class-string'] .= ' page'.$pageCount;
                 $newEstates[] = $estate;
 
-                if (0 !== $this->makler_paginationCount) {
-                    if (0 === $count % $this->makler_paginationCount) {
+                if (0 !== $this->perPage) {
+                    if (0 === $count % $this->perPage) {
                         ++$pageCount;
                     }
                 }
                 ++$count;
             }
             $pages[] = $newEstates;
-        } elseif ($this->makler_addListPagination) {
-            $pages = array_chunk($json['data'], $this->makler_paginationCount);
+        } elseif ($this->makler_addListPagination && 0 < $this->perPage) {
+            $pages = array_chunk($json['data'], $this->perPage);
         } else {
             $pages[] = $json['data'];
         }
 
-        $this->Template->pageCount = ceil(($count - 1) / $this->makler_paginationCount);
+        $this->Template->pageCount = 0;
+
+        if (0 < $this->perPage) {
+            $this->Template->pageCount = $this->makler_addListPagination? ceil(($count - 1) / $this->perPage) : 0;
+        }
+
         $this->Template->page = !(int) Input::get('page') ? (int) Input::get('page') : 0;
         $this->Template->listObjects = $json['data'] ? $pages : null;
 

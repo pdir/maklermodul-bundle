@@ -171,8 +171,14 @@
 
     listView.rangeFilters = listView.setDefaultRangeFilter();
 
-    // map
+    // Map
     listView.map = $('.ce_makler_map');
+
+    // Filter config
+    listView.filterConfig = {
+      groups: {},
+      values: {}
+    };
   };
 
   listView.setDefaultRangeFilter = function () {
@@ -183,6 +189,10 @@
   };
 
   listView.render = function () {
+    console.log('render');
+    // For Bootstrap selects
+    listView.renderSelectFilter();
+
     // get existing filters from hash
     if (listView.hashFilter !== null) {
       var arrFilter = listView.hashFilter.split(',');
@@ -289,7 +299,7 @@
           var sortByClass = '.' + sorting.sortBy.replace(".", "-");
           sortByClass = sortByClass.replace(".@", "-");
           var sort = jQuery(itemElem).find(sortByClass).text();
-          // fix enpty values
+          // fix empty values
           if (sort === '' && sorting.sortAscending)
             sort = '999999999';
           if (sort === '' && !sorting.sortAscending)
@@ -356,7 +366,10 @@
   };
 
   listView.reset = function (e) {
-    e.preventDefault();
+    if (typeof e !== 'undefined') {
+      e.preventDefault();
+    }
+
     // reset checkboxes
     listView.checkboxes.each(function () {
       $(this).prop("checked", false).show();
@@ -942,8 +955,12 @@
   };
 
   listView.getEstates = function () {
+    console.log('getEstates');
     $.getJSON(sourceIndexUri, function (data) {
+      console.log('--> getJSON');
       listView.objEstates = data;
+      listView.filterConfig = data.filterConfig;
+
       // init Isotope
       listView.render();
     });
@@ -961,7 +978,198 @@
     }, 'slow');
   };
 
+  listView.resetAllSelectFilter = function () {
+
+    $("#estate_list").isotope({filter: '*'});
+    location.hash = ''; // remove filter hashes
+
+    listView.renderSelectPicker();
+  };
+
+  // Additional by MA
+  listView.renderSelectFilter = function () {
+    // Do we need filter?
+    if ($("#estate_list").hasClass('no-filter')) {
+      return;
+    }
+
+    let groupsTemplateConfig = [];
+
+    $.each(listView.filterConfig['groups'], function(index, group) {
+      groupsTemplateConfig.push({css: group.key, name: group.name + ': '});
+    });
+
+    $('#estate_filter_list').loadTemplate($("#estate_filter_group_template"), groupsTemplateConfig);
+
+    $('#estate_filter_list').children('div').each(function (index, groupElem) {
+      let valueTemplateConfig = [];
+
+      $.each(listView.filterConfig['values'][$(groupElem).attr('class')], function (valueIndex, valueValue) {
+        valueTemplateConfig.push({
+          css: '.' + $(groupElem).attr('class') + '-' + valueValue.css,
+          name: valueValue.name
+        });
+      });
+
+      listView.renderConfig = {append:true};
+
+      if (typeof listView.renderConfig != "undefined") {
+        $(groupElem).children('div').children('.content').loadTemplate($("#estate_filter_value_template"), valueTemplateConfig, listView.renderConfig);
+      } else {
+        $(groupElem).children('div').children('.content').loadTemplate($("#estate_filter_value_template"), valueTemplateConfig);
+      }
+    });
+
+    if (typeof this.recoverFilterFn != "undefined") {
+      this.recoverFilterFn();
+    }
+
+    listView.renderSelectPicker();
+  };
+
+  listView.filterByBootstrapSelect = function (select) {
+    let index;
+
+    const rawData2 = [];
+    $( ".selectpicker" ).each(function( index ) {
+      if ($( this ).val() != null && $( this ).val() != '-1') {
+        rawData2.push($( this ).val());
+      }
+    });
+
+    const rawData = [];
+    $('#estate_filter_list select.content').map(function (index, value) {
+      const optionValue = $(value).val();
+      if (optionValue !== -1) {
+        rawData.push($(value).val());
+      }
+    });
+
+    let filters = {};
+
+    for (var i=0; i<rawData2.length; i++) {
+      if (rawData2[i][0] != null) {
+        index = rawData2[i][0].replace(/[^a-zA-Z]/g, "");
+        let filterGroup = filters[index];
+        if (!filterGroup) {
+          filterGroup = filters[index] = [];
+        }
+        filters[index] = rawData2[i];
+      }
+    }
+
+    let filterString = listView.getComboFilter(filters);
+
+    if(filterString !== '' && filterString !== '*') // ma add support for history api
+      window.location.hash = '#filter='+filterString;
+    else
+      location.hash = ''; // remove filter hashes
+
+    listView.filter(filterString);
+
+    const titleObj = $(select).prev().children('button');
+    const title = titleObj.attr('title');
+    if(typeof title != "undefined") {
+      const titleArr = title.split(',');
+      titleObj.children('span.filter-option').html(titleArr[titleArr.length - 1]);
+    }
+
+    if (typeof select != "undefined") {
+      listView.updateAvailableSelectOptions(select);
+    }
+  };
+
+  listView.getComboFilter = function (filters) {
+    let i = 0;
+    let comboFilters = [];
+    const message = [];
+
+    for ( var prop in filters ) {
+      message.push( filters[ prop ].join(' ') );
+      var filterGroup = filters[ prop ];
+      // skip to next filter group if it doesn't have any values
+      if ( !filterGroup.length ) {
+        continue;
+      }
+      if ( i === 0 ) {
+        // copy to a new array
+        comboFilters = filterGroup.slice(0);
+      } else {
+        let filterSelectors = [];
+        // copy to a fresh array
+        var groupCombo = comboFilters.slice(0); // [ A, B ]
+        // merge filter Groups
+        for (var k=0, len3 = filterGroup.length; k < len3; k++) {
+          for (var j=0, len2 = groupCombo.length; j < len2; j++) {
+            filterSelectors.push( groupCombo[j] + filterGroup[k] ); // [ 1, 2 ]
+          }
+
+        }
+        // apply filter selectors to combo filters for next group
+        comboFilters = filterSelectors;
+      }
+      i++;
+    }
+
+    return comboFilters.join(', ');
+  };
+
+  listView.updateAvailableSelectOptions = function (select) {
+    $('#estate_filter_list select.content option').map(function(index, value) {
+      var optionValue = $(value).val();
+      var length = $('#estate_list ' + optionValue).filter(':not(.isotope-hidden)').length;
+
+      if (length == 0 && optionValue != -1) {
+        $(value).hide();
+      } else {
+        $(value).show();
+      }
+    });
+  };
+
+  listView.renderSelectPicker = function () {
+    $('.selectpicker').selectpicker('val', '-1');
+  };
+
+  listView.filter = function (value) {
+    // Use default
+    if (typeof sorting === "undefined") {
+      $('#estate_list').isotope({ filter: value });
+    }
+
+    // With sorting
+    if (typeof sorting !== "undefined") {
+
+      $('#estate_list').isotope({
+        filter: value,
+        getSortData: {
+          sorting: function ( itemElem ) {
+            var sortByClass = '.'+ sorting.sortBy.replace(".", "-");
+
+            sortByClass = sortByClass.replace(".@", "-");
+            var sort = $( itemElem ).find(sortByClass).text();
+
+            if(sort == 'Ja') sort = 'XJa';
+            if(sorting.sortType == 'text')
+              return sort;
+            if(sorting.sortType == 'int')
+              return parseInt(sort.replace( /[\(\)]/g, ''));
+            if(sorting.sortType == 'float')
+              return parseFloat(sort.replace( /[\(\)]/g, ''));
+          },
+          standVom: '.stand_vom parseInt'
+        },
+        sortBy: ['sorting', 'standVom'],
+        sortAscending: {
+          standVom: false,
+          sorting: sorting.sortAscending
+        }
+      });
+    }
+  };
+
   $(function(){
+    console.log('init listView');
     listView.init();
   });
 

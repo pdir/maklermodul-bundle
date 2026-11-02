@@ -40,7 +40,7 @@ class ListPaginationView extends ListView
         }
 
         $this->page = Input::get('page');
-        $this->itemsToShow = $objListView->makler_paginationCount ?: 10;
+        $this->itemsToShow = $objListView->perPage ?: 10;
         $this->linkItemsToShow = $objListView->makler_paginationLinkCount ?: 6;
         $this->showtitle = $objListView->makler_paginationShowtitle;
         $this->data = $objListView->objectData;
