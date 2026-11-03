@@ -16,3 +16,8 @@
 docker-compose.yml
 
 .DS_store
+
+# dev files
+analyse.md
+todo.md
+
