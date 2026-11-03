@@ -22,18 +22,19 @@ declare(strict_types=1);
 
 namespace Pdir\MaklermodulBundle\Util;
 
-use Contao\Controller;
+use Contao\Config;
 use Contao\Database;
+use Contao\Date;
 use Contao\Environment;
 use Contao\File;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
+use Contao\Input;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Pdir\MaklermodulBundle\Maklermodul\ContaoImpl\Repository\IndexConfigRepository;
 use Pdir\MaklermodulBundle\Maklermodul\Domain\Repository\EstateRepository;
-use Pdir\MaklermodulBundle\Module\DetailView;
 use Pdir\MaklermodulBundle\Module\ListPaginationView;
 
 class Helper extends Frontend
@@ -126,27 +127,34 @@ class Helper extends Frontend
 
         $newEstatePages = [];
 
-        foreach ($indexObjects as $index) {
-            if ($index->getStorageFileUri() && 1 === $index->getListInSitemap()) {
-                $allEstates = $this->loadJsonFile($index->getStorageFileUri());
+        foreach ($indexObjects ?? [] as $index) {
+            if (!$index->getStorageFileUri() || 1 !== (int) $index->getListInSitemap() || !$index->getReaderPageId()) {
+                continue;
+            }
 
-                foreach ($allEstates['data'] as $estate) {
-                    if ($index->getReaderPageId()) {
-                        $newEstatePages[] = $this->getPageUrl($index->getReaderPageId(), \DIRECTORY_SEPARATOR.$estate['uriident']);
-                    }
+            $allEstates = self::loadJsonFile($index->getStorageFileUri());
+
+            foreach ($allEstates['data'] ?? [] as $estate) {
+                if (!empty($estate['uriident'])) {
+                    $newEstatePages[] = self::getPageUrl($index->getReaderPageId(), '/'.$estate['uriident']);
                 }
             }
         }
 
-        $newEstatePages = array_unique($newEstatePages);
+        $newEstatePages = array_unique(array_filter($newEstatePages));
 
         return array_merge($arrPages, $newEstatePages);
     }
 
     public static function loadJsonFile($fileNamePath)
     {
-        $content = file_get_contents(self::getImagePath().$fileNamePath);
-        $decoded = json_decode($content, true);
+        $filePath = self::getImagePath().$fileNamePath;
+
+        if (!is_file($filePath)) {
+            return null;
+        }
+
+        $decoded = json_decode((string) file_get_contents($filePath), true);
 
         if (null === $decoded) {
             return null;
@@ -172,15 +180,18 @@ class Helper extends Frontend
 
     public static function getPageUrl($id, $vars = ''): string
     {
-        $websitePath = \DIRECTORY_SEPARATOR;
+        $pageModel = PageModel::findPublishedByIdOrAlias($id);
 
-        if (isset($GLOBALS['TL_CONFIG']['websitePath'])) {
-            $websitePath = $GLOBALS['TL_CONFIG']['websitePath'].\DIRECTORY_SEPARATOR;
+        if (null === $pageModel) {
+            return '';
         }
-        $pageModel = PageModel::findPublishedByIdOrAlias($id)->current()->row();
-        $strUrl = Controller::generateFrontendUrl($pageModel, $vars); // example '/additionalquerystring/vars'
 
-        return Environment::get('url').$websitePath.$strUrl;
+        if ($pageModel instanceof \Contao\Model\Collection) {
+            $pageModel = $pageModel->current();
+        }
+
+        // example '/additionalquerystring/vars'
+        return $pageModel->getAbsoluteUrl($vars ?: null);
     }
 
     /**
@@ -196,15 +207,15 @@ class Helper extends Frontend
         $arrItems = [];
 
         $database = Database::getInstance();
-        $artResult = $database->query("SELECT `id` FROM `tl_article` WHERE `pid` = '".$item['id']."'");
+        $artResult = $database->prepare('SELECT `id` FROM `tl_article` WHERE `pid` = ?')->execute((int) $item['id']);
 
         while ($artResult->next()) {
             $row = $artResult->row();
-            $conResult = $database->query("SELECT `id`, `module` FROM `tl_content` WHERE `pid` = '".$row['id']."' AND `type` = 'module'");
+            $conResult = $database->prepare("SELECT `id`, `module` FROM `tl_content` WHERE `pid` = ? AND `type` = 'module'")->execute((int) $row['id']);
 
             while ($conResult->next()) {
                 $row = $conResult->row();
-                $modResult = $database->query("SELECT `immo_actIndexFile`,`immo_readerPage` FROM `tl_module` WHERE `id` = '".$row['module']."' AND `type` = 'immoListView' AND `immo_listInSitemap` = 1");
+                $modResult = $database->prepare("SELECT `immo_actIndexFile`,`immo_readerPage` FROM `tl_module` WHERE `id` = ? AND `type` = 'immoListView' AND `immo_listInSitemap` = 1")->execute((int) $row['module']);
 
                 while ($modResult->next()) {
                     $row = $modResult->row();
@@ -223,10 +234,10 @@ class Helper extends Frontend
         foreach ($arrIndexFiles as $index) {
             $allEstates = self::loadJsonFile($index['immo_actIndexFile']);
 
-            foreach ($allEstates['data'] as $estate) {
+            foreach ($allEstates['data'] ?? [] as $estate) {
                 $arrItems[] = [
                     'title' => $estate['freitexte-objekttitel'],
-                    'href' => self::getPageUrl($index['immo_readerPage'], $GLOBALS['TL_CONFIG']['websitePath'].\DIRECTORY_SEPARATOR.DetailView::PARAMETER_KEY.\DIRECTORY_SEPARATOR.$estate['uriident']),
+                    'href' => self::getPageUrl($index['immo_readerPage'], '/'.$estate['uriident']),
                     'alias' => $estate['uriident'],
                     'type' => 'regular',
                     'redirect' => 'permanent',
@@ -263,11 +274,11 @@ class Helper extends Frontend
 
                 $objTemplate->name = 'makler modul für Contao v'.self::VERSION;
                 $objTemplate->openimmo_anid = Input::findPost('openimmo_anid') ?: $objEstate->getValueOf('anbieter.openimmo_anid');
-                $objTemplate->datum = $this->parseDate('d.m.Y', $this->timestamp);
+                $objTemplate->datum = Date::parse('d.m.Y', time());
                 $objTemplate->makler_id = Input::findPost('anbieternr') ?: $objEstate->getValueOf('anbieter.anbieternr');
 
                 $objTemplate->oobj_id = Input::findPost('openimmo_anid') ?: $objEstate->getValueOf('verwaltung_techn.openimmo_obid');
-                $objTemplate->expose_url = $this->Environment->url.$this->Environment->requestUri;
+                $objTemplate->expose_url = Environment::get('url').Environment::get('requestUri');
                 $objTemplate->zusatz_refnr = $objEstate->getValueOf('verwaltung_techn.objektnr_extern');
                 $objTemplate->bezeichnung = $objEstate->getValueOf('freitexte.objekttitel');
                 $objTemplate->strasse = $objEstate->getValueOf('geo.strasse');
@@ -350,6 +361,50 @@ class Helper extends Frontend
         }
 
         return $strBuffer;
+    }
+
+    /**
+     * Escape imported estate data for HTML output (text and attributes).
+     *
+     * Insert tags are stripped, because estate data comes from external software
+     * and must never be able to inject Contao insert tags.
+     */
+    public static function escape(mixed $value): string
+    {
+        if (null === $value || \is_array($value)) {
+            return '';
+        }
+
+        return StringUtil::specialcharsAttribute(StringUtil::stripInsertTags((string) $value));
+    }
+
+    /**
+     * Sanitize a value used as parameter inside an insert tag (e.g. {{image::...?alt=VALUE}}).
+     *
+     * Contao decodes entities and splits parameters at "&", "?" and "=", so these
+     * characters and curly braces are removed. Contao escapes the alt text itself.
+     */
+    public static function escapeInsertTagParam(mixed $value): string
+    {
+        if (null === $value || \is_array($value)) {
+            return '';
+        }
+
+        $value = StringUtil::stripInsertTags(StringUtil::decodeEntities((string) $value));
+
+        return trim(str_replace(['{', '}', '&', '?', '=', '|', '"', '<', '>'], ' ', $value));
+    }
+
+    /**
+     * Escape a value for XML text nodes.
+     */
+    public static function escapeXml(mixed $value): string
+    {
+        if (null === $value || \is_array($value)) {
+            return '';
+        }
+
+        return htmlspecialchars((string) $value, ENT_XML1 | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
     public static function getImageLinkPath(): string

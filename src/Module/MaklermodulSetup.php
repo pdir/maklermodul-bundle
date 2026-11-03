@@ -36,6 +36,7 @@ use Contao\System;
 use Contao\ZipReader;
 use Pdir\MaklermodulBundle\Model\MaklerModel;
 use Pdir\MaklermodulBundle\Util\Helper;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 class MaklermodulSetup extends BackendModule
 {
@@ -110,7 +111,15 @@ class MaklermodulSetup extends BackendModule
         /** @todo empty cache folder from backend */
         $files = Files::getInstance();
 
-        switch (Input::get('act')) {
+        $action = Input::get('act');
+
+        // All actions change data: require a valid request token (CSRF protection)
+        if (null !== $action && '' !== $action && !$this->isRequestTokenValid()) {
+            Message::addError($GLOBALS['TL_LANG']['ERR']['invalidRequestToken'] ?? 'Invalid request token.');
+            Controller::redirect(Controller::getReferer());
+        }
+
+        switch ($action) {
             case 'index':
                 $this->setActIndexFile();
                 Message::addConfirmation($GLOBALS['TL_LANG']['MOD']['maklerSetup']['message']['index']);
@@ -148,6 +157,20 @@ class MaklermodulSetup extends BackendModule
         }
 
         Controller::redirect(Controller::getReferer());
+    }
+
+    protected function isRequestTokenValid(): bool
+    {
+        $container = System::getContainer();
+        $value = (string) Input::get('rt');
+
+        if ('' === $value) {
+            return false;
+        }
+
+        return $container->get('contao.csrf.token_manager')->isTokenValid(
+            new CsrfToken($container->getParameter('contao.csrf_token_name'), $value)
+        );
     }
 
     protected function downloadDemoData(): void

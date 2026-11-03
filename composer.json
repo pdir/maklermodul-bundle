@@ -36,7 +36,8 @@
     "symfony/phpunit-bridge": "^4.4 || ^5.1",
     "phpstan/phpstan": "^1.8",
     "phpstan/phpstan-phpunit": "^1.1",
-    "phpstan/phpstan-symfony": "^1.2"
+    "phpstan/phpstan-symfony": "^1.2",
+    "contao/test-case": "^4.13 || ^5.3"
   },
   "autoload": {
     "psr-4": {

@@ -48,9 +48,16 @@ class EstateRepository
      */
     public function findByObjectId($objectId): ?Estate
     {
+        $objectId = (string) $objectId;
+
+        // The alias comes from the URL: never allow path traversal or nested paths
+        if ('' === $objectId || preg_match('#[/\\\\\x00]|\.\.#', $objectId)) {
+            return null;
+        }
+
         $fileNamePath = sprintf('%s%s.json', $this->storageDirectoryPath, $objectId);
 
-        if (null === File($fileNamePath)) {
+        if (!is_file($fileNamePath)) {
             return null;
         }
 

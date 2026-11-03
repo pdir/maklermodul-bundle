@@ -10,6 +10,22 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+## Unreleased
+
+- [Security] Escape all values in the OpenImmo feedback XML (XML injection via form input)
+- [Security] Escape imported estate data in list, filter, header image and detail templates (XSS / insert tag injection)
+- [Security] Protect the setup actions (empty folders, demo data) with a request token (CSRF)
+- [Security] Prevent path traversal when loading an estate by its alias
+- [Fixed] Fatal error in detail view caused by calling the undefined function `File()`
+- [Fixed] Unknown estates now return a real 404 instead of an empty detail page
+- [Fixed] Missing `Input`/`Config` imports in the OpenImmo feedback hook and the list pagination
+- [Fixed] Replace functions removed in Contao 5 (`ampersand()`, `specialchars()`, `generateFrontendUrl()`, `parseDate()`)
+- [Fixed] Sitemap URLs for estates in Contao 5, prepared statements in the sitemap navigation
+- [Fixed] List view: page number from URL was always ignored, wrong page count without Isotope, type-safe option checks
+- [Fixed] Undefined property `$keepImageFolders` when deleting an estate
+- [Changed] CI runs on `master` with PHP 8.1–8.4 and Contao 4.13/5.3/5.6, tests run again (`contao/test-case`)
+- [Removed] Obsolete `.travis.yml` and `.php_cs.dist`
+
 ## [2.11.0](https://github.com/pdir/maklermodul-bundle/tree/2.11.0) – 2026-06-09
 
 - [Added] Updated the template to display the contact person's image and contact details

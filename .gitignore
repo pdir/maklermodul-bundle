@@ -21,3 +21,6 @@ docker-compose.yml
 analyse.md
 todo.md
 
+
+# PHPUnit cache
+.phpunit.result.cache

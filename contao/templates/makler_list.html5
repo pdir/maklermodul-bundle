@@ -2,6 +2,10 @@
   $page = $this->page;
   $pages = $this->listObjects;
   $counter = 1;
+
+  // Escaping helpers for imported estate data
+  $e = static fn ($v): string => \Pdir\MaklermodulBundle\Util\Helper::escape($v);
+  $tagParam = static fn ($v): string => \Pdir\MaklermodulBundle\Util\Helper::escapeInsertTagParam($v);
 ?>
 
 <?php if ($this->debug): ?>
@@ -44,7 +48,7 @@
     <div id="estate_list">
       <?php foreach ($pages[$page] as $obj): ?>
       <?php #if($this->makler_addListPagination && $counter < $this->perPage+1): ?>
-      <a href="<?= $obj['link'] ?>" class="<?= $obj['css-filter-class-string'] ?>" title="{{iflng::de}}Objekt ansehen{{iflng::en}}View object{{iflng::ru}}Посмотреть объект{{iflng}}: '<?= $obj['freitexte-objekttitel']?? '' ?>'">
+      <a href="<?= $obj['link'] ?>" class="<?= $e($obj['css-filter-class-string'] ?? '') ?>" title="{{iflng::de}}Objekt ansehen{{iflng::en}}View object{{iflng::ru}}Посмотреть объект{{iflng}}: '<?= $e($obj['freitexte-objekttitel'] ?? '') ?>'">
         <div class="inner">
           <div class="mix item<?php if($counter&1): ?> odd<?php else: ?> even<?php endif; ?>">
 
@@ -57,30 +61,30 @@
             <?php // Ausgabe des Objektbildes ?>
             <?php if(!isset($obj['anhaenge-anhang-#1-daten-pfad']) OR $obj['anhaenge-anhang-#1-daten-pfad'] == ''): ?>
               <?php if(strpos($this->placeholderImg, 'files/') !== false): ?>
-                {{<?= $this->listImageType ?>::/<?= $this->placeholderImg ?>?<?php if($this->listImageSize): ?>size=<?= $this->listImageSize ?>&<?php endif; ?>width=<?= $this->listImageWidth ?>&height=<?= $this->listImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->listImageMode): ?>&mode=<?= $this->listImageMode ?><?php endif; ?>}}
+                {{<?= $this->listImageType ?>::/<?= $this->placeholderImg ?>?<?php if($this->listImageSize): ?>size=<?= $this->listImageSize ?>&<?php endif; ?>width=<?= $this->listImageWidth ?>&height=<?= $this->listImageHeight ?>&alt=<?= $tagParam($obj['freitexte-objekttitel'] ?? '') ?><?php if($this->listImageMode): ?>&mode=<?= $this->listImageMode ?><?php endif; ?>}}
               <?php else: ?>
-                <img src="/<?= $this->placeholderImg; ?>" alt="<?= $GLOBALS['TL_LANG']['MSC']['placeholderImage'] ?> <?= $obj['freitexte-objekttitel'] ?>" width="300" height="200">
+                <img src="/<?= $this->placeholderImg; ?>" alt="<?= $GLOBALS['TL_LANG']['MSC']['placeholderImage'] ?> <?= $e($obj['freitexte-objekttitel'] ?? '') ?>" width="300" height="200">
               <?php endif; ?>
             <?php else: ?>
-              <?php if( strpos($obj['anhaenge-anhang-#1-daten-pfad'],"http") !== false ): ?>
-                <img src="<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>" alt="<?= $obj['freitexte-objekttitel'] ?>">
+              <?php if (preg_match('#^https?://#i', $obj['anhaenge-anhang-#1-daten-pfad'])): ?>
+                <img src="<?= $e($obj['anhaenge-anhang-#1-daten-pfad']) ?>" alt="<?= $e($obj['freitexte-objekttitel'] ?? '') ?>">
               <?php else: ?>
-                {{<?= $this->listImageType ?>::files/maklermodul/data/<?= $obj['anhaenge-anhang-#1-daten-pfad'] ?>?<?php if($this->listImageSize): ?>size=<?= $this->listImageSize ?>&<?php endif; ?>width=<?= $this->listImageWidth ?>&height=<?= $this->listImageHeight ?>&alt=<?= $obj['freitexte-objekttitel'] ?><?php if($this->listImageMode): ?>&mode=<?= $this->listImageMode ?><?php endif; ?>}}
+                {{<?= $this->listImageType ?>::files/maklermodul/data/<?= $tagParam($obj['anhaenge-anhang-#1-daten-pfad']) ?>?<?php if($this->listImageSize): ?>size=<?= $this->listImageSize ?>&<?php endif; ?>width=<?= $this->listImageWidth ?>&height=<?= $this->listImageHeight ?>&alt=<?= $tagParam($obj['freitexte-objekttitel'] ?? '') ?><?php if($this->listImageMode): ?>&mode=<?= $this->listImageMode ?><?php endif; ?>}}
               <?php endif; ?>
             <?php endif; ?>
           </div>
           <div class="content objectDescr">
-            <h2 class="freitexte-objekttitel"><?= $obj['freitexte-objekttitel'] ?></h2>
+            <h2 class="freitexte-objekttitel"><?= $e($obj['freitexte-objekttitel'] ?? '') ?></h2>
             <ul>
               <?php if(isset($obj['verwaltung_techn-openimmo_obid'])): ?>
                 <li class="field obid">
                   <div class="label">ID</div>
-                  <div class="value verwaltung_techn-openimmo_obid"><?= str_replace(" ","",$obj['verwaltung_techn-openimmo_obid']) ?></div>
+                  <div class="value verwaltung_techn-openimmo_obid"><?= $e(str_replace(" ", "", (string) $obj['verwaltung_techn-openimmo_obid'])) ?></div>
                 </li>
               <?php endif; ?>
               <li class="field">
                 <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.lage'] ?></div>
-                <div class="value"><span class="geo-plz"><?= $obj['geo-plz'] ?></span> <span class="geo-ort"><?= $obj['geo-ort'] ?></span></div>
+                <div class="value"><span class="geo-plz"><?= $e($obj['geo-plz'] ?? '') ?></span> <span class="geo-ort"><?= $e($obj['geo-ort'] ?? '') ?></span></div>
               </li>
               <?php if(isset($obj['preise-kaufpreis'])): ?>
                 <li class="field">

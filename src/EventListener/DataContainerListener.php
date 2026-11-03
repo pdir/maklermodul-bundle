@@ -32,6 +32,11 @@ use Pdir\MaklermodulSyncBundle\Module\Sync;
 class DataContainerListener
 {
     /**
+     * Keep image folders when deleting an object (only delete json files).
+     */
+    private bool $keepImageFolders = false;
+
+    /**
      * @Callback(table="tl_makler", target="list.label.label")
      */
     public function onLabelCallback(array $row, string $label, DataContainer $dc, array $labels): array
@@ -60,7 +65,7 @@ class DataContainerListener
         $template->strBundleName = $GLOBALS['TL_LANG']['MOD']['maklermodul'][0];
         $template->strBundleGreeting = sprintf($GLOBALS['TL_LANG']['MOD']['maklermodul']['greeting'], $template->strBundleName);
         $template->version = Helper::VERSION;
-        $template->arrButtons = $GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'];
+        $template->arrButtons = $this->addRequestTokenToSetupButtons($GLOBALS['TL_LANG']['MOD']['maklermodul']['buttons'] ?? []);
         $template->arrLinks = $GLOBALS['TL_LANG']['MOD']['maklermodul']['setupLinks'];
         $template->backendUrl = System::getContainer()->get('router')->generate('contao_backend');
         $template->referer = System::getContainer()->get('request_stack')->getCurrentRequest()->get('_contao_referer_id');
@@ -115,6 +120,26 @@ class DataContainerListener
         $maklerModel = MaklerModel::findByPk($dc->activeRecord->id);
         $maklerModel->lastUpdate = time();
         $maklerModel->save();
+    }
+
+    /**
+     * Setup actions (e.g. emptying the data folder) change data and must be protected against CSRF.
+     */
+    private function addRequestTokenToSetupButtons(array $buttons): array
+    {
+        $container = System::getContainer();
+        $token = $container->get('contao.csrf.token_manager')
+            ->getToken($container->getParameter('contao.csrf_token_name'))
+            ->getValue()
+        ;
+
+        foreach ($buttons as $key => $button) {
+            if (isset($button['href']) && str_contains($button['href'], 'do=maklermodulSetup')) {
+                $buttons[$key]['href'] = $button['href'].'&rt='.rawurlencode($token);
+            }
+        }
+
+        return $buttons;
     }
 
     private function deleteObjectFiles($identifier): void

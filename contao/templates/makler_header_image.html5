@@ -1,16 +1,20 @@
-<div class="estate-header-image"<?php if($this->showBackgroundImage): ?> style="background-image:url('<?= $this->headerImage ?>')" <?php endif; ?>>
+<?php
+  $e = static fn ($v): string => \Pdir\MaklermodulBundle\Util\Helper::escape($v);
+  $tagParam = static fn ($v): string => \Pdir\MaklermodulBundle\Util\Helper::escapeInsertTagParam($v);
+?>
+<div class="estate-header-image"<?php if($this->showBackgroundImage): ?> style="background-image:url('<?= $e($this->headerImage) ?>')" <?php endif; ?>>
   <?php if ($this->showHeadline): ?>
     <div class="ce_text first block">
-        <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+        <<?= $this->hl ?>><?= $e($this->headline) ?></<?= $this->hl ?>>
     </div>
   <?php endif; ?>
 
   <?php if(!$this->showBackgroundImage): ?>
     <div class="ce_image last block">
         <?php if(strpos($this->headerImage, 'files/') !== false): ?>
-            {{<?= $this->imageType ?>::<?= $this->headerImage ?>?<?php if($this->imageSize): ?>size=<?= $this->imageSize ?>&<?php endif; ?>width=<?= $this->imageWidth ?>&height=<?= $this->imageHeight ?>&alt=<?= $this->headline ?><?php if($this->imageMode): ?>&mode=<?= $this->imageMode ?><?php endif; ?>}}
+            {{<?= $this->imageType ?>::<?= $tagParam($this->headerImage) ?>?<?php if($this->imageSize): ?>size=<?= $this->imageSize ?>&<?php endif; ?>width=<?= $this->imageWidth ?>&height=<?= $this->imageHeight ?>&alt=<?= $tagParam($this->headline) ?><?php if($this->imageMode): ?>&mode=<?= $this->imageMode ?><?php endif; ?>}}
         <?php else: ?>
-            <img src="<?= $this->headerImage ?>" alt="<?= $this->headline ?>">
+            <img src="<?= $e($this->headerImage) ?>" alt="<?= $e($this->headline) ?>">
         <?php endif; ?>
     </div>
   <?php endif; ?>

@@ -22,6 +22,9 @@ declare(strict_types=1);
 
 namespace Pdir\MaklermodulBundle\Module;
 
+use Contao\Input;
+use Contao\StringUtil;
+
 class ListPaginationView extends ListView
 {
     /**
@@ -39,7 +42,7 @@ class ListPaginationView extends ListView
             throw new \Exception('illegal call!');
         }
 
-        $this->page = Input::get('page');
+        $this->page = (int) Input::get('page');
         $this->itemsToShow = $objListView->perPage ?: 10;
         $this->linkItemsToShow = $objListView->makler_paginationLinkCount ?: 6;
         $this->showtitle = $objListView->makler_paginationShowtitle;
@@ -84,8 +87,8 @@ class ListPaginationView extends ListView
         // first page
         $arrArticle = [
             'isActive' => 0 === $this->page ? true : false,
-            'href' => ampersand($this->generateFrontendUrl($objPage->row())),
-            'title' => specialchars(1),
+            'href' => StringUtil::ampersand($objPage->getFrontendUrl()),
+            'title' => StringUtil::specialchars((string) 1),
             'link' => !$this->showtitle ? 1 : $objPage->title,
         ];
         $arrAllArticles[0] = $arrArticle;
@@ -93,8 +96,8 @@ class ListPaginationView extends ListView
         for ($i = 1; $i < \count($pages); ++$i) {
             $arrArticle = [
                 'isActive' => $this->page === $i ? true : false,
-                'href' => ampersand($this->generateFrontendUrl($objPage->row(), '/page/'.$i)),
-                'title' => specialchars($i),
+                'href' => StringUtil::ampersand($objPage->getFrontendUrl('/page/'.$i)),
+                'title' => StringUtil::specialchars((string) $i),
                 'link' => !$this->showtitle ? $i : $objPage->title,
             ];
             ++$intCounter;

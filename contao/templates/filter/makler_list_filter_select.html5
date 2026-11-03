@@ -1,12 +1,13 @@
+<?php $e = static fn ($v): string => \Pdir\MaklermodulBundle\Util\Helper::escape($v); ?>
 <?php if(isset($this->filterConfig['groups'])): ?>
   <?php foreach ($this->filterConfig['groups'] as $filter): ?>
-  <div class="<?= $filter['key'] ?>">
-    <label class="header" for="<?= $filter['key'] ?>"><?= $filter['name'] ?></label>
-    <select class="content mm-filter-sel" name="<?= $filter['key'] ?>" id="<?= $filter['key'] ?>">
+  <div class="<?= $e($filter['key']) ?>">
+    <label class="header" for="<?= $e($filter['key']) ?>"><?= $e($filter['name']) ?></label>
+    <select class="content mm-filter-sel" name="<?= $e($filter['key']) ?>" id="<?= $e($filter['key']) ?>">
       <option value="-1"><?= $GLOBALS['TL_LANG']['MSC']['all'] ?></option>
       <?php foreach ($this->filterConfig['values'][$filter['key']] as $values): ?>
-        <option value=".<?= $filter['key'] ?>-<?= $values['css'] ?>" <?php if(\Contao\Input::get($filter['key']) == $values['css']) echo " selected"; ?>>
-          <?= $values['name'] ?>
+        <option value=".<?= $e($filter['key']) ?>-<?= $e($values['css']) ?>" <?php if(\Contao\Input::get($filter['key']) == $values['css']) echo " selected"; ?>>
+          <?= $e($values['name']) ?>
         </option>
       <?php endforeach; ?>
     </select>

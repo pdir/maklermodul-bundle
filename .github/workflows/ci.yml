@@ -1,38 +1,42 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
     push:
-        branches: [ main ]
+        branches: [ master ]
     pull_request:
-        branches: [ main ]
+        branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
     tests:
-        name: PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }} / Contao ${{ matrix.contao }}
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
-                php: [7.2, 7.3, 7.4, 8.0]
+                include:
+                    - { php: '8.1', contao: '4.13.*' }
+                    - { php: '8.2', contao: '4.13.*' }
+                    - { php: '8.2', contao: '5.3.*' }
+                    - { php: '8.3', contao: '5.3.*' }
+                    - { php: '8.4', contao: '5.3.*' }
+                    - { php: '8.4', contao: '5.6.*' }
 
         steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, fileinfo, filter, gd, hash, intl, json, mbstring, pcre, pdo_mysql, zlib
-                  tools: flex
                   coverage: none
 
-            - name: Checkout
-              uses: actions/checkout@v1
-
             - name: Install the dependencies
-              run: composer install --no-interaction --no-suggest
+              run: |
+                  composer require contao/core-bundle:"${{ matrix.contao }}" --no-update --no-interaction
+                  composer update --no-interaction --no-progress --prefer-dist
 
             - name: Run the unit tests
               run: vendor/bin/phpunit --colors=always
+
