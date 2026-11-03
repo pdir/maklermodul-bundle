@@ -19,16 +19,16 @@
   <div class="content">
     <div class="big-img">
       <?php if($this->estate->renderer('anhaenge.anhang.#1.daten.pfad')->asText()->withoutLabel()->value(true)): ?>
-        <?php if( strpos($this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'),"http") !== false ): ?>
-          <img src="<?= $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>" width="700" height="500">
+        <?php if (preg_match('#^https?://#i', (string) $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'))): ?>
+          <img src="<?= \Pdir\MaklermodulBundle\Util\Helper::escape($this->estate->rawValue('anhaenge.anhang.#1.daten.pfad')) ?>" width="700" height="500">
         <?php else: ?>
-          {{<?= $this->detailImageType ?>::<?= Pdir\MaklermodulBundle\Util\Helper::getImageLinkPath() . $this->estate->rawValue('anhaenge.anhang.#1.daten.pfad'); ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
+          {{<?= $this->detailImageType ?>::<?= Pdir\MaklermodulBundle\Util\Helper::getImageLinkPath() . \Pdir\MaklermodulBundle\Util\Helper::escapeInsertTagParam($this->estate->rawValue('anhaenge.anhang.#1.daten.pfad')); ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= \Pdir\MaklermodulBundle\Util\Helper::escapeInsertTagParam($this->estate->rawValue('freitexte.objekttitel')) ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
         <?php endif; ?>
       <?php else: ?>
         <?php if(strpos($this->placeholderImg, 'files/') !== false): ?>
-          {{<?= $this->detailImageType ?>::<?= $this->placeholderImg ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
+          {{<?= $this->detailImageType ?>::<?= $this->placeholderImg ?>?<?php if($this->detailImageSize): ?>size=<?= $this->detailImageSize ?>&<?php endif; ?>width=<?= $this->detailImageWidth ?>&height=<?= $this->detailImageHeight ?>&alt=<?= \Pdir\MaklermodulBundle\Util\Helper::escapeInsertTagParam($this->estate->rawValue('freitexte.objekttitel')) ?><?php if($this->detailImageMode): ?>&mode=<?= $this->detailImageMode ?><?php endif; ?>}}
         <?php else: ?>
-          <img src="<?= $this->placeholderImg ?>" alt="<?= $GLOBALS['TL_LANG']['MSC']['placeholderImage'] ?> <?php $this->estate->renderer('freitexte.objekttitel')->asText()->value() ?>" width="700" height="500">
+          <img src="<?= $this->placeholderImg ?>" alt="<?= $GLOBALS['TL_LANG']['MSC']['placeholderImage'] ?> <?= \Pdir\MaklermodulBundle\Util\Helper::escape($this->estate->rawValue('freitexte.objekttitel')) ?>" width="700" height="500">
         <?php endif; ?>
       <?php endif; ?>
     </div>

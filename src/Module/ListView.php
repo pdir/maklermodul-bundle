@@ -143,7 +143,7 @@ class ListView extends Module
             $GLOBALS['TL_CSS']['estate'] = $this->assetFolder.'css/estate.scss||static';
         }
 
-        if (1 === $this->arrData['immo_staticFilter']) {
+        if (1 === (int) $this->arrData['immo_staticFilter']) {
             $this->Template->staticFilter = true;
             $this->Template->staticListPage = PageModel::findPublishedByIdOrAlias($this->arrData['immo_filterListPage'])->current()->getFrontendUrl();
         }
@@ -172,7 +172,7 @@ class ListView extends Module
 
         $request = System::getContainer()->get('request_stack')->getCurrentRequest();
 
-        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest($request) && '0' === $this->arrData['immo_staticFilter']) {
+        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isFrontendRequest($request) && 0 === (int) $this->arrData['immo_staticFilter']) {
             // @ToDo Fehler bei deaktivierter Detailseite beheben (Fatal error: Call to a member function current() on a non-object in /.../system/modules/makler_modul_mplus/modules/ListView.php on line 105
             $this->repository = EstateRepository::getInstance();
             $this->Template->objectData = $this->repository->findAll();
@@ -221,6 +221,7 @@ class ListView extends Module
         $newEstates = [];
         $pageCount = 1;
         $count = 0;
+        $perPage = (int) $this->perPage;
 
         // perPage
         if ($this->maklerLimit > 0) {
@@ -240,7 +241,7 @@ class ListView extends Module
                     }
                 }
             }
-            $pages = array_chunk($newEstates, $this->perPage);
+            $pages = array_chunk($newEstates, max(1, $perPage));
         } elseif ($this->makler_addListPagination && $this->makler_paginationUseIsotope) {
             $count = 1;
 
@@ -248,27 +249,36 @@ class ListView extends Module
                 $estate['css-filter-class-string'] .= ' page'.$pageCount;
                 $newEstates[] = $estate;
 
-                if (0 !== $this->perPage) {
-                    if (0 === $count % $this->perPage) {
+                if (0 !== $perPage) {
+                    if (0 === $count % $perPage) {
                         ++$pageCount;
                     }
                 }
                 ++$count;
             }
             $pages[] = $newEstates;
-        } elseif ($this->makler_addListPagination && 0 < $this->perPage) {
-            $pages = array_chunk($json['data'], $this->perPage);
+        } elseif ($this->makler_addListPagination && 0 < $perPage) {
+            $pages = array_chunk($json['data'], $perPage);
         } else {
             $pages[] = $json['data'];
         }
 
         $this->Template->pageCount = 0;
 
-        if (0 < $this->perPage) {
-            $this->Template->pageCount = $this->makler_addListPagination? ceil(($count - 1) / $this->perPage) : 0;
+        if ($this->makler_addListPagination && 0 < $perPage) {
+            // Isotope mode renders all estates on one page and paginates on the client
+            $this->Template->pageCount = $this->makler_paginationUseIsotope
+                ? (int) ceil(($count - 1) / $perPage)
+                : \count($pages);
         }
 
-        $this->Template->page = !(int) Input::get('page') ? (int) Input::get('page') : 0;
+        $page = max(0, (int) Input::get('page'));
+
+        if (!isset($pages[$page])) {
+            $page = 0;
+        }
+
+        $this->Template->page = $page;
         $this->Template->listObjects = $json['data'] ? $pages : null;
 
         //// render filter template
@@ -317,7 +327,7 @@ class ListView extends Module
         $objFilterTemplate->filterConfig = $json['filterConfig'];
         $this->Template->filter = $objFilterTemplate->parse();
 
-        if (1 === $this->arrData['immo_listDebug']) {
+        if (1 === (int) $this->arrData['immo_listDebug']) {
             $objFile = new File(Helper::getImageLinkPath().'/key-index.json');
             $keyIndex = json_decode($objFile->getContent(), true);
             natsort($keyIndex);
@@ -368,12 +378,12 @@ class ListView extends Module
 
     private function validateSettings(): void
     {
-        if ('0' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_readerPage']) {
-            throw new Exception('Undefined reader page');
+        if (0 === (int) $this->arrData['immo_staticFilter'] && 0 === (int) $this->arrData['immo_readerPage']) {
+            throw new \Exception('Undefined reader page');
         }
 
-        if ('1' === $this->arrData['immo_staticFilter'] && '0' === $this->arrData['immo_filterListPage']) {
-            throw new Exception('Undefined filter list page');
+        if (1 === (int) $this->arrData['immo_staticFilter'] && 0 === (int) $this->arrData['immo_filterListPage']) {
+            throw new \Exception('Undefined filter list page');
         }
     }
 

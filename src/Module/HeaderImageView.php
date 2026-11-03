@@ -105,7 +105,7 @@ class HeaderImageView extends Module
 
         $estate = $this->createFieldRendererFactory($this->alias);
 
-        if ('1' === $this->makler_showHeadline) {
+        if ($this->makler_showHeadline) {
             $this->Template->headline = $this->headline ?: $estate->rawValue('freitexte.objekttitel');
             $this->Template->showHeadline = true;
         }
@@ -155,7 +155,11 @@ class HeaderImageView extends Module
     private function createFieldRendererFactory($objectId)
     {
         $repository = EstateRepository::getInstance();
-        $estate = $repository->findByObjectId($objectId);
+        $estate = $repository->findByObjectId((string) $objectId);
+
+        if (null === $estate) {
+            throw new PageNotFoundException('Estate not found: '.Environment::get('uri'));
+        }
 
         return new FieldRendererFactory($estate, $this->getTranslationMap());
     }
