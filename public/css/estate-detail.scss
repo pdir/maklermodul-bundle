@@ -295,6 +295,32 @@
           text-align: right;
         }
       }
+
+      > .details {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+
+      .details-groups {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+      }
+
+      .details-group {
+        -ms-flex: 0 0 33.33%;
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+        padding: 0 15px;
+        box-sizing: border-box;
+
+        &:not(:has(.field)) {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -615,6 +641,14 @@ body.ie .estate-detail .energie-scale input[type='range']::-ms-thumb {
   .estate-detail.extended .right .obj-details {
     display: block;
     > div {
+      max-width: 100%;
+    }
+
+    .details-groups {
+      display: block;
+    }
+
+    .details-group {
       max-width: 100%;
     }
   }

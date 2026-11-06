@@ -30,6 +30,35 @@ class Text extends FieldRenderer
     private $crop = false;
 
     /**
+     * Gibt den Wert zurück. Codes wie GEPFLEGT werden über den Sprachschlüssel "<Feld>.@<Wert>" übersetzt, sofern es einen gibt.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        $value = parent::getValue();
+
+        if (!\is_string($value) || '' === $value) {
+            return $value;
+        }
+
+        $parts = explode(', ', $value);
+
+        foreach ($parts as $index => $part) {
+            $labelKey = $this->getKey().'.@'.$part;
+            $label = $this->translator->translate($labelKey);
+
+            if ($label === $labelKey) {
+                return $value;
+            }
+
+            $parts[$index] = $label;
+        }
+
+        return implode(', ', $parts);
+    }
+
+    /**
      * Rückgabe des Wertes als String.
      *
      * @return string

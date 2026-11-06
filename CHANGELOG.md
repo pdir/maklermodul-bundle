@@ -10,8 +10,16 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
-## Unreleased
+## [2.12.0](https://github.com/pdir/maklermodul-bundle/tree/2.12.0) – 2026-11-06
 
+- [Added] Extended detail template shows all available fields if they are filled, new block "Objektangaben" in three columns
+- [Added] `asText()` shows readable values for codes if a language key `<field>.@<value>` exists
+- [Added] Readable labels for object age, condition, interior quality and furnishing codes
+- [Added] Energy pass shows gas heating
+- [Changed] Unique labels for heating types, e.g. "Fernheizung" and "Fernwärme"
+- [Changed] Extended detail template shows travel times in minutes instead of kilometres
+- [Fixed] List view: "There was an error loading the template." replaced the filter if the filter group template does not exist
+- [Fixed] Extended detail template: wrong field keys for cafeteria, air conditioning and number of balconies
 - [Security] Escape all values in the OpenImmo feedback XML (XML injection via form input)
 - [Security] Escape imported estate data in list, filter, header image and detail templates (XSS / insert tag injection)
 - [Security] Protect the setup actions (empty folders, demo data) with a request token (CSRF)

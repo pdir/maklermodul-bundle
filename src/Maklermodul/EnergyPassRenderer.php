@@ -95,6 +95,12 @@ class EnergyPassRenderer
         }
 
         // heizung & energietraeger
+        if (isset($this->ausstattungRawData['ausstattung.heizungsart.@GAS'])) {
+            if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@GAS'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@GAS']) {
+                $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@GAS'];
+            }
+        }
+
         if (isset($this->ausstattungRawData['ausstattung.heizungsart.@OFEN'])) {
             if ('true' === $this->ausstattungRawData['ausstattung.heizungsart.@OFEN'] || '1' === $this->ausstattungRawData['ausstattung.heizungsart.@OFEN']) {
                 $heizung = $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['ausstattung.heizungsart.@OFEN'];
