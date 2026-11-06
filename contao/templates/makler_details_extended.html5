@@ -6,6 +6,7 @@
 <?php // Übersetzungen
   $yes = $GLOBALS['TL_LANG']['MSC']['yes'];
   $no = $GLOBALS['TL_LANG']['MSC']['no'];
+
 ?>
 
 <?php if($this->estate->renderer('freitexte.objekttitel')->asText()->value(true) !== ''): ?>
@@ -42,71 +43,171 @@
     <div class="obj-details">
       <div class="prices">
         <h2><?= $GLOBALS['TL_LANG']['MSC']['prices'] ?></h2>
-        <?php $this->estate->renderer('objektkategorie.objektart.wohnung.wohnungtyp')->asText()->render(); ?>
         <?php $this->estate->renderer('preise.kaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
         <?php $this->estate->renderer('preise.kaltmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php if ($this->estate->rawValue('preise.kaltmiete') != $this->estate->rawValue('preise.nettokaltmiete')): ?>
         <?php $this->estate->renderer('preise.nettokaltmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php endif; ?>
         <?php $this->estate->renderer('preise.gesamtmietenetto')->asNumber(2)->append(' EUR')->render(); ?>
         <?php $this->estate->renderer('preise.mietpreis_pro_qm')->asNumber(2)->append(' EUR pro m²')->render(); ?>
+        <?php $this->estate->renderer('preise.kaufpreis_pro_qm')->asNumber(2)->append(' EUR pro m²')->render(); ?>
+        <?php if ($this->estate->rawValue('immoscout.additionalCostsPerMonth')): ?>
+        <?php $this->estate->renderer('preise.nebenkosten')->asNumber(2)->append(' EUR pro Monat oder pro m²')->render(); ?>
+        <?php else: ?>
         <?php $this->estate->renderer('preise.nebenkosten')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php endif; ?>
         <?php $this->estate->renderer('preise.heizkosten')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.heizkosten_enthalten')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('preise.warmmiete')->asNumber(2)->append(' EUR')->render(); ?>
         <?php $this->estate->renderer('preise.gesamtmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.hausgeld')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.pacht')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.erbpacht')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.preis_zeiteinheit.@zeiteinheit')->asText()->render(); ?>
+        <?php $this->estate->renderer('preise.preis_zeitraum_von')->asText()->render(); ?>
+        <?php $this->estate->renderer('preise.preis_zeitraum_bis')->asText()->render(); ?>
+        <?php $this->estate->renderer('preise.freitext_preis')->asText()->render(); ?>
+        <?php $this->estate->renderer('immoscout.calculatedPrice')->asNumber(2)->append(' EUR')->render(); ?>
         <?php $this->estate->renderer('preise.kaution')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.kaution_text')->asText()->render(); ?>
+        <?php $this->estate->renderer('preise.abstand')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.mietzuschlaege')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.erschliessungskosten')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.geschaeftsguthaben')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.mieteinnahmen_ist')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.mieteinnahmen_soll')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.mwst_gesamt')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.mwst_satz')->asNumber(2)->append(' %')->render(); ?>
+        <?php $this->estate->renderer('preise.nettorendite')->asNumber(2)->append(' %')->render(); ?>
+        <?php $this->estate->renderer('preise.nettorendite_ist')->asNumber(2)->append(' %')->render(); ?>
+        <?php $this->estate->renderer('preise.nettorendite_soll')->asNumber(2)->append(' %')->render(); ?>
+        <?php $this->estate->renderer('preise.x_fache')->asNumber(2)->render(); ?>
         <?php $this->estate->renderer('preise.stp_garage.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_garage.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_garage.@anzahl')->asNumber(0)->render(); ?>
         <?php $this->estate->renderer('preise.stp_tiefgarage.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_tiefgarage.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_tiefgarage.@anzahl')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('preise.stp_carport.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_carport.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_carport.@anzahl')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('preise.stp_duplex.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_duplex.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_duplex.@anzahl')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('preise.stp_freiplatz.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_freiplatz.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_freiplatz.@anzahl')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('preise.stp_parkhaus.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_parkhaus.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_parkhaus.@anzahl')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('preise.stp_sonstige.@stellplatzmiete')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_sonstige.@stellplatzkaufpreis')->asNumber(2)->append(' EUR')->render(); ?>
+        <?php $this->estate->renderer('preise.stp_sonstige.@anzahl')->asNumber(0)->render(); ?>
         <?php $this->estate->renderer('preise.aussen_courtage')->asText()->render(); ?>
-        <?php $this->estate->renderer('preise.provisionspflichtig', true)->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('preise.innen_courtage')->asText()->render(); ?>
+        <?php $this->estate->renderer('preise.courtage_hinweis')->asText()->render(); ?>
+        <?php $this->estate->renderer('preise.provisionspflichtig')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('preise.zzg_mehrwertsteuer')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('verwaltung_objekt.verfuegbar_ab')->asText()->render(); ?>
       </div>
       <div class="area">
         <h2><?= $GLOBALS['TL_LANG']['MSC']['area'] ?></h2>
-        <?php $this->estate->renderer('geo.etage')->asNumber(0)->render(); ?>
-        <?php $this->estate->renderer('flaechen.wohnflaeche')->asNumber(0)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.wohnflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.gesamtflaeche')->asNumber(2)->append(' m²')->render(); ?>
-        <?php $this->estate->renderer('flaechen.nutzflaeche')->asNumber(0)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.nutzflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.verkaufsflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.ladenflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.lagerflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.freiflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.bueroflaeche')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.bueroteilflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.gastroflaeche')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.verwaltungsflaeche')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.vermietbare_flaeche')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.beheizbare_flaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.grundstuecksflaeche')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.teilbar_ab')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.sonstflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.balkon_terrasse_flaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.gartenflaeche')->asNumber(2)->append(' m²')->render(); ?>
         <?php $this->estate->renderer('flaechen.kellerflaeche')->asNumber(2)->append(' m²')->render(); ?>
-        <?php $this->estate->renderer('geo.anzahl_etagen')->asNumber()->render(); ?>
-        <?php $this->estate->renderer('geo.etage')->asNumber()->render(); ?>
+        <?php $this->estate->renderer('flaechen.dachbodenflaeche')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.bgf')->asNumber(2)->append(' m²')->render(); ?>
+        <?php $this->estate->renderer('flaechen.grundstuecksfront')->asNumber(2)->append(' m')->render(); ?>
+        <?php $this->estate->renderer('flaechen.fensterfront')->asNumber(2)->append(' m')->render(); ?>
+        <?php $this->estate->renderer('flaechen.bmz')->asNumber(2)->render(); ?>
+        <?php $this->estate->renderer('flaechen.gfz')->asNumber(2)->render(); ?>
+        <?php $this->estate->renderer('flaechen.grz')->asNumber(2)->render(); ?>
+        <?php $this->estate->renderer('geo.anzahl_etagen')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('geo.etage')->asNumber(0)->render(); ?>
         <?php $this->estate->renderer('flaechen.anzahl_zimmer')->asNumber(0)->render(); ?>
         <?php $this->estate->renderer('flaechen.anzahl_schlafzimmer')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.anzahl_wohn_schlafzimmer')->asNumber(0)->render(); ?>
         <?php $this->estate->renderer('flaechen.anzahl_badezimmer')->asNumber(0)->render(); ?>
-        <?php $this->estate->renderer('flaechen.anzahl_balkon')->asNumber()->render() ?>
-        <?php $this->estate->renderer('flaechen.anzahl_terrassen')->asNumber()->render() ?>
+        <?php $this->estate->renderer('flaechen.anzahl_balkone')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.anzahl_terrassen')->asNumber(0)->render(); ?>
         <?php $this->estate->renderer('flaechen.anzahl_stellplaetze')->asNumber(0)->render(); ?>
-        <?php $this->estate->renderer('flaechen.anzahl_sep_wc')->asNumber()->render() ?>
-        <?php $this->estate->renderer('flaechen.plaetze_gastraum')->asNumber()->render() ?>
-        <?php $this->estate->renderer('flaechen.anzahl_betten')->asNumber()->render() ?>
-        <?php $this->estate->renderer('flaechen.anzahl_tagungsraeume')->asNumber()->render() ?>
-        <?php $this->estate->renderer('flaechen.anzahl_wohneinheiten')->asNumber()->render() ?>
+        <?php $this->estate->renderer('flaechen.anzahl_sep_wc')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.plaetze_gastraum')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.anzahl_betten')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.anzahl_tagungsraeume')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.anzahl_wohneinheiten')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.anzahl_gewerbeeinheiten')->asNumber(0)->render(); ?>
+        <?php $this->estate->renderer('flaechen.einliegerwohnung')->asFlag($yes, $no)->render(); ?>
       </div>
       <div class="equipment">
         <h2><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.ausstatt_beschr'] ?></h2>
+        <?php $this->estate->renderer('ausstattung.ausstatt_kategorie')->asText()->render(); ?>
+        <?php $this->estate->renderer('immoscout.flooringType')->asText()->render(); ?>
+        <?php $this->estate->renderer('ausstattung.moebliert.@moeb')->asText()->render(); ?>
         <?php $this->estate->renderer('ausstattung.kueche.@EBK')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kueche.@OFFEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kueche.@PANTRY')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.bad.@WANNE')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.bad.@DUSCHE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bad.@FENSTER')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bad.@BIDET')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bad.@PISSOIR')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.unterkellert.@keller')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.fahrstuhl.@PERSONEN')->asFlag($yes, $no)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.ausstattung.kantine_cafeteria')->asFlag($yes, $no)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.ausstattung.klimatisiert')->asFlag($yes, $no)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.dv_verkabelung', true)->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.fahrstuhl.@LASTEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kantine_cafeteria')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.teekueche')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.klimatisiert')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.wg_geeignet')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('verwaltung_objekt.wbs_sozialwohnung')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dv_verkabelung')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kabelkanaele')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.kabel_sat_tv')->asFlag($yes, $no)->render(); ?>
-        <?php $this->estate->renderer('ausstattung.gaestewc', true)->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.gaestewc')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.gastterrasse')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.barrierefrei')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.rollstuhlgerecht')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.gartennutzung')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('verwaltung_objekt.haustiere')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('verwaltung_objekt.nichtraucher')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachboden')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bibliothek')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.rolladen')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.fahrradraum')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.abstellraum')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.wintergarten')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.wasch_trockenraum')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.sauna')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.swimmingpool')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kamin')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.wellnessbereich')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.sporteinrichtungen')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.brauereibindung')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.kran')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.hebebuehne')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.rampe')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.raeume_veraenderbar')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.telefon_ferienimmobilie')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('immoscout.highVoltage')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('immoscout.additionalServicesIncluded')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.hallenhoehe')->asNumber(2)->append(' m')->render(); ?>
+        <?php $this->estate->renderer('ausstattung.stromanschlusswert')->asNumber(0)->append(' kW')->render(); ?>
         <?php $this->estate->renderer('ausstattung.stellplatzart.@TIEFGARAGE')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.stellplatzart.@GARAGE')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.stellplatzart.@CARPORT')->asFlag($yes, $no)->render(); ?>
@@ -124,7 +225,184 @@
         <?php $this->estate->renderer('ausstattung.boden.@TEPPICH')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.boden.@STEIN')->asFlag($yes, $no)->render(); ?>
         <?php $this->estate->renderer('ausstattung.boden.@FLIESEN')->asFlag($yes, $no)->render(); ?>
-
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@NORD')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@NORDOST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@OST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@SUEDOST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@SUED')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@SUEDWEST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@WEST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausricht_balkon_terrasse.@NORDWEST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bauweise.@MASSIV')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bauweise.@FERTIGTEILE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.bauweise.@HOLZ')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@SATTELDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@WALMDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@KRUEPPELWALMDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@MANSARDDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@PULTDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@PYRAMIDENDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.dachform.@FLACHDACH')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.energietyp.@PASSIVHAUS')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.energietyp.@NIEDRIGENERGIE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.energietyp.@NEUBAUSTANDARD')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.energietyp.@KFW40')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.energietyp.@KFW60')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausbaustufe.@SCHLUESSELFERTIGMITKELLER')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausbaustufe.@SCHLUESSELFERTIGMITBODENPLATTE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausbaustufe.@SCHLUESSELFERTIGOHNEBODENPLATTE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausbaustufe.@AUSBAUHAUS')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.ausbaustufe.@BAUSATZHAUS')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.sicherheitstechnik.@ALARMANLAGE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.sicherheitstechnik.@KAMERA')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.sicherheitstechnik.@POLIZEIRUF')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.serviceleistungen.@BETREUTES_WOHNEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.serviceleistungen.@CATERING')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.serviceleistungen.@REINIGUNG')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.serviceleistungen.@EINKAUF')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.serviceleistungen.@WACHDIENST')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.angeschl_gastronomie.@HOTELRESTAURANT')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.angeschl_gastronomie.@BAR')->asFlag($yes, $no)->render(); ?>
+        <?php // Der Immoscout-Import liefert die Heizung als Code, andere Importe als einzelne Merkmale ?>
+        <?php if ($this->estate->rawValue('immoscout.heatingTypeEnev2014') || $this->estate->rawValue('immoscout.heatingType')): ?>
+        <?php $this->estate->renderer('immoscout.heatingTypeEnev2014')->asText()->render(); ?>
+        <?php $this->estate->renderer('immoscout.heatingType')->asText()->render(); ?>
+        <?php else: ?>
+        <?php $this->estate->renderer('ausstattung.heizungsart.@OFEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.heizungsart.@ETAGE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.heizungsart.@ZENTRAL')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.heizungsart.@FERN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.heizungsart.@FUSSBODEN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.heizungsart.@GAS')->asFlag($yes, $no)->render(); ?>
+        <?php endif; ?>
+        <?php if ($this->estate->rawValue('immoscout.firingTypes')): ?>
+        <?php $this->estate->renderer('immoscout.firingTypes')->asText()->render(); ?>
+        <?php else: ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@OEL')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@GAS')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@ELEKTRO')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@ALTERNATIV')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@SOLAR')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@ERDWAERME')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@LUFTWP')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@FERN')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@BLOCK')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@WASSER-ELEKTRO')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@PELLET')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@KOHLE')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@HOLZ')->asFlag($yes, $no)->render(); ?>
+        <?php $this->estate->renderer('ausstattung.befeuerung.@FLUESSIGGAS')->asFlag($yes, $no)->render(); ?>
+        <?php endif; ?>
+      </div>
+      <div class="details">
+        <h2><?= $GLOBALS['TL_LANG']['MSC']['objectDetails'] ?></h2>
+        <div class="details-groups">
+          <div class="details-group details-object">
+            <?php if ($this->estate->rawValue('objektkategorie.vermarktungsart')): ?>
+            <?php $this->estate->renderer('objektkategorie.vermarktungsart')->asText()->render(); ?>
+            <?php else: ?>
+            <?php $this->estate->renderer('objektkategorie.vermarktungsart.@KAUF')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.vermarktungsart.@MIETE_PACHT')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.vermarktungsart.@ERBPACHT')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.vermarktungsart.@LEASING')->asFlag($yes, $no)->render(); ?>
+            <?php endif; ?>
+            <?php if ($this->estate->rawValue('objektkategorie.nutzungsart')): ?>
+            <?php $this->estate->renderer('objektkategorie.nutzungsart')->asText()->render(); ?>
+            <?php else: ?>
+            <?php $this->estate->renderer('objektkategorie.nutzungsart.@WOHNEN')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.nutzungsart.@GEWERBE')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.nutzungsart.@ANLAGE')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.nutzungsart.@WAZ')->asFlag($yes, $no)->render(); ?>
+            <?php endif; ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.wohnung.wohnungtyp')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.haus.haustyp')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.zimmer')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.buero_praxen.buero_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.einzelhandel.handel_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.gastgewerbe.gastgew_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.hallen_lager_prod.hallen_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.land_und_forstwirtschaft.haustyp')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.grundstueck.grundst_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.parken.parken_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.sonstige.sonstige_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.freizeitimmobilie_gewerblich.freizeit_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.zinshaus_renditeobjekt.zins_typ')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.storeType')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.gastronomyType')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.industryType')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.specialPurposePropertyType')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.investmentType')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.utilizationTradeSite')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.recommendedUseTypes')->asText()->render(); ?>
+            <?php $this->estate->renderer('objektkategorie.objektart.objektart_zusatz')->asText()->render(); ?>
+            <?php if ($this->estate->rawValue('geo.plz') || $this->estate->rawValue('geo.ort')): ?>
+              <div class="field geo-lage">
+                <div class="label"><?= $GLOBALS['TL_LANG']['makler_modul_mplus']['field_keys']['freitexte.lage'] ?></div>
+                <div class="value-text"><?php $this->estate->renderer('geo.plz')->asText()->value() ?> <?php $this->estate->renderer('geo.ort')->asText()->value() ?></div>
+              </div>
+            <?php endif; ?>
+            <?php $this->estate->renderer('geo.regionaler_zusatz')->asText()->render(); ?>
+            <?php $this->estate->renderer('geo.bundesland')->asText()->render(); ?>
+            <?php $this->estate->renderer('geo.gemarkung')->asText()->render(); ?>
+            <?php $this->estate->renderer('geo.flur')->asText()->render(); ?>
+            <?php $this->estate->renderer('geo.flurstueck')->asText()->render(); ?>
+            <?php $this->estate->renderer('geo.lage_gebiet.@gebiete')->asText()->render(); ?>
+            <?php $this->estate->renderer('geo.lage_im_bau.@VORNE')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('geo.lage_im_bau.@HINTEN')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('geo.lage_im_bau.@LINKS')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('geo.lage_im_bau.@RECHTS')->asFlag($yes, $no)->render(); ?>
+          </div>
+          <div class="details-group details-condition">
+            <?php $this->estate->renderer('zustand_angaben.zustand.@zustand_art')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.baujahr')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.lastRefurbishment')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.alter')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.alter.@alter_attr')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.erschliessung')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.bebaubar_nach')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.bebaubar_nach.@bebaubar_attr')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.constructionPhase')->asText()->render(); ?>
+            <?php $this->estate->renderer('zustand_angaben.altlasten')->asText()->render(); ?>
+            <?php $this->estate->renderer('immoscout.shortTermConstructible')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('immoscout.buildingPermission')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('immoscout.demolition')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.denkmalgeschuetzt')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.hochhaus')->asFlag($yes, $no)->render(); ?>
+          </div>
+          <div class="details-group details-letting">
+            <?php $this->estate->renderer('immoscout.officeRentDurations')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.laufzeit')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.min_mietdauer')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.min_mietdauer.@min_dauer')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.max_mietdauer')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.max_mietdauer.@max_dauer')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.abdatum')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.bisdatum')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.branchen')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.geschlecht')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.zugang')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.gruppennummer')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.max_personen')->asText()->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.vermietet')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.als_ferien')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('verwaltung_objekt.gewerbliche_nutzung')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('infrastruktur.ausblick')->asText()->render(); ?>
+            <?php $this->estate->renderer('infrastruktur.ausblick.@blick')->asText()->render(); ?>
+            <?php $this->estate->renderer('infrastruktur.zulieferung')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('freitexte.dreizeiler')->asText()->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.beginn_angebotsphase')->asText()->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.besichtigungstermin')->asText()->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.besichtigungstermin_2')->asText()->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.beginn_bietzeit')->asText()->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.ende_bietzeit')->asText()->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.mindestpreis')->asNumber(2)->append(' EUR')->render(); ?>
+            <?php $this->estate->renderer('bieterverfahren.hoechstgebot_zeigen')->asFlag($yes, $no)->render(); ?>
+            <?php $this->estate->renderer('versteigerung.aktenzeichen')->asText()->render(); ?>
+            <?php $this->estate->renderer('versteigerung.zvtermin')->asText()->render(); ?>
+            <?php $this->estate->renderer('versteigerung.zusatztermin')->asText()->render(); ?>
+            <?php $this->estate->renderer('versteigerung.amtsgericht')->asText()->render(); ?>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -142,16 +420,13 @@
       <?php $this->estate->renderer('freitexte.lage')->asText()->value(); ?>
     <?php endif; ?>
 
-    <?php if($this->estate->renderer('fussweg_oeffentlverkehr')->asText()->value(true) != "" ||
-      $this->estate->renderer('fahrzeit_hauptbahnhof')->asText()->value(true) != "" ||
-      $this->estate->renderer('fahrzeit_bab')->asText()->value(true) != "" ||
-      $this->estate->renderer('fahrzeit_flughafen')->asText()->value(true) != ""): ?>
+    <?php if($this->estate->rawValue('fussweg_oeffentlverkehr') || $this->estate->rawValue('fahrzeit_hauptbahnhof') || $this->estate->rawValue('fahrzeit_bab') || $this->estate->rawValue('fahrzeit_flughafen')): ?>
       <div class="distances">
         <h3><?= $GLOBALS['TL_LANG']['MSC']['distances'] ?></h3>
-        <?php $this->estate->renderer('fussweg_oeffentlverkehr')->asNumber(2)->append(' km')->render(); ?>
-        <?php $this->estate->renderer('fahrzeit_hauptbahnhof')->asNumber(2)->append(' km')->render(); ?>
-        <?php $this->estate->renderer('fahrzeit_bab')->asNumber(2)->append(' km')->render(); ?>
-        <?php $this->estate->renderer('fahrzeit_flughafen')->asNumber(2)->append(' km')->render(); ?>
+        <?php $this->estate->renderer('fussweg_oeffentlverkehr')->asNumber(0)->append(' Min.')->render(); ?>
+        <?php $this->estate->renderer('fahrzeit_hauptbahnhof')->asNumber(0)->append(' Min.')->render(); ?>
+        <?php $this->estate->renderer('fahrzeit_bab')->asNumber(0)->append(' Min.')->render(); ?>
+        <?php $this->estate->renderer('fahrzeit_flughafen')->asNumber(0)->append(' Min.')->render(); ?>
       </div>
     <?php endif; ?>
 
@@ -162,9 +437,6 @@
 
     <?php $this->estate->energyPass()->render() ?>
 
-    <h3><?= $GLOBALS['TL_LANG']['MSC']['sampleOutputs'] ?></h3>
-    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@KAUF')->asFlag($yes, $no)->render(); ?>
-    <?php $this->estate->renderer('objektkategorie.vermarktungsart.@MIETE_PACHT', true)->asFlag($yes, $no)->render(); ?>
 
   </div>
   <div class="contact">

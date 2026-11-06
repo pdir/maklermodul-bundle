@@ -993,6 +993,11 @@
       return;
     }
 
+    // Only custom templates provide this; otherwise keep the filter rendered by the server
+    if (!$("#estate_filter_group_template").length) {
+      return;
+    }
+
     let groupsTemplateConfig = [];
 
     $.each(listView.filterConfig['groups'], function(index, group) {
